@@ -68,6 +68,9 @@ nmap <silent> <leader>mr :make run<cr>
 nmap <silent> <C-Tab> :tabn<cr>
 nmap <silent> <C-S-Tab> :tabp<cr>
 
+" Tweaking {} motion behavior
+let g:ip_boundary = '"\?\s*$' 
+
 " super tab and other completion settings
 let g:SuperTabNoCompleteAfter = ['//', '\s', ',']
 let g:SuperTabNoCompleteBefore = ['\w']
