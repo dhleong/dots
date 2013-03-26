@@ -1,6 +1,10 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
 
+" load pathogen
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect()
+
 set autoindent
 set copyindent    " copy the previous indentation on autoindenting
 set showcmd
