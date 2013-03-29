@@ -10,6 +10,7 @@ NDK=/lib/android-ndk-r7c/
 PATH=$PATH:/usr/local/mysql/bin
 
 export ANDROID_HOME=/lib/android-sdk
+export PROGUARD_HOME=$ANDROID_HOME/tools/proguard
 
 alias airportcycle='networksetup -setairportpower airport off; networksetup -setairportpower airport on'
 alias l='ls -al'
