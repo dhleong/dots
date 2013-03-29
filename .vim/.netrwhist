@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/dhleong/code/avatar-mud/lib/world/zones/examples/rproto'
-let g:netrw_dirhist_2='/Users/dhleong/.vim'
-let g:netrw_dirhist_3='/Users/dhleong/.vim/plugin'

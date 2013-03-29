@@ -190,3 +190,5 @@ endfunction
 command! OpenTodoList call OpenTodoListFunc()
 
 nmap <leader>T :OpenTodoList<cr>
+
+let g:EclimDisabled=1
