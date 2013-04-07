@@ -12,3 +12,4 @@ supertab.vmb: call delete('/Users/dhleong/.vim/doc/supertab.txt')|call delete('/
 supertab.vmb: call delete('/Users/dhleong/.vim/doc/supertab.txt')|call delete('/Users/dhleong/.vim/plugin/supertab.vim')|call delete('/Users/dhleong/.vim/')|call delete('/Users/dhleong/.vim/  endif')|call delete('/Users/dhleong/.vim/')|call delete('/Users/dhleong/.vim/')
 supertab.vmb: call delete('/Users/dhleong/.vim/doc/supertab.txt')|call delete('/Users/dhleong/.vim/plugin/supertab.vim')|call delete('/Users/dhleong/.vim/')|call delete('/Users/dhleong/.vim/  endif')|call delete('/Users/dhleong/.vim/')|call delete('/Users/dhleong/.vim/')
 supertab.vmb: call delete('/Users/dhleong/.vim/doc/supertab.txt')|call delete('/Users/dhleong/.vim/plugin/supertab.vim')
+visincr.vba: call delete('/Users/dhleong/.vim/plugin/visincrPlugin.vim')|call delete('/Users/dhleong/.vim/autoload/visincr.vim')|call delete('/Users/dhleong/.vim/doc/visincr.txt')
