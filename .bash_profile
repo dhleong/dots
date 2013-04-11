@@ -19,6 +19,7 @@ alias gits='git status'
 alias gitco='git commit -a'
 
 alias antgo='ant debug install && sh run.sh'
+alias adbrestart='adb kill-server && adb start-server && adb devices'
 
 test -r /sw/bin/init.sh && . /sw/bin/init.sh
 
