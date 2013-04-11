@@ -72,6 +72,9 @@ nmap <silent> <leader>mr :make run<cr>
 nmap <silent> <C-Tab> :tabn<cr>
 nmap <silent> <C-S-Tab> :tabp<cr>
 
+" ctrl+a to get to front of line in commandline mode
+cnoremap <C-A> <Home>
+
 " eregex config
 let g:eregex_default_enable = 0  " doesn't do incremental search, so no
 nnoremap <leader>/ :call eregex#toggle()<CR>
