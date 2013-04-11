@@ -72,6 +72,10 @@ nmap <silent> <leader>mr :make run<cr>
 nmap <silent> <C-Tab> :tabn<cr>
 nmap <silent> <C-S-Tab> :tabp<cr>
 
+" eregex config
+let g:eregex_default_enable = 0  " doesn't do incremental search, so no
+nnoremap <leader>/ :call eregex#toggle()<CR>
+
 " Tweaking {} motion behavior
 let g:ip_boundary = '"\?\s*$' 
 
