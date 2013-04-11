@@ -1,12 +1,15 @@
 [user]
 	name = dhleong
 	email = falcone88@gmail.com
+[gui]
+	recentrepo = /Users/dhleong/git/eclipse-cdt
 [core]
+	excludesfile = /Users/dhleong/.gitignore_global
 	editor = /usr/bin/vim
 [alias]
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     co = checkout
 [color]
 	ui = auto
-[push]
-	default = simple
+#[push]
+	#default = simple
