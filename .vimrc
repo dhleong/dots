@@ -87,6 +87,7 @@ let g:SuperTabNoCompleteAfter = ['//', '\s', ',']
 let g:SuperTabNoCompleteBefore = ['\w']
 let g:SuperTabLongestEnhanced = 1
 let g:SuperTabLongestHighlight = 1
+let g:SuperTabMappingBackward = '<s-c-space>' " don't override our custom guy!
 
 " use shift-tab in normal mode, or insert mode with no popup, to unindent
 " crazy redundancy required because just <C-p> goes forward, for some
