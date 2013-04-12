@@ -149,10 +149,16 @@ function! ConfigureJava()
     inoremap <c-n> <c-x><c-n> 
 endfunction
 
+function! ConfigurePython()
+    nmap <silent> <F19> :!python %<cr>
+endfunction
+
 if has('autocmd')
     " some java stuff
     autocmd BufEnter *.java call ConfigureJava()
     "autocmd BufWrite *.java silent! JavaImportOrganize " import missing on save
+    
+    autocmd BufEnter *.py call ConfigurePython()
 
     autocmd BufEnter * if &ft == '' | let b:SuperTabDisabled = 1 | endif
 
