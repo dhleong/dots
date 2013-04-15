@@ -79,6 +79,9 @@ cnoremap <C-A> <Home>
 let g:eregex_default_enable = 0  " doesn't do incremental search, so no
 nnoremap <leader>/ :call eregex#toggle()<CR>
 
+" add :gitco alias
+nnoremap <leader>gc :Gcommit -a<CR>
+
 " Tweaking {} motion behavior
 let g:ip_boundary = '"\?\s*$' 
 
