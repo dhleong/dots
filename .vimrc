@@ -213,3 +213,5 @@ command! OpenTodoList call OpenTodoListFunc()
 nmap <leader>T :OpenTodoList<cr>
 
 let g:EclimDisabled=1
+
+:source /Users/dhleong/code/vim-javadocer/javadocer.vim
