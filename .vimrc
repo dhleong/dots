@@ -86,7 +86,7 @@ nnoremap <leader>gc :Gcommit -a<CR>
 let g:ip_boundary = '"\?\s*$' 
 
 " super tab and other completion settings
-let g:SuperTabNoCompleteAfter = ['//', '\s', ',']
+let g:SuperTabNoCompleteAfter = ['//', '\s', ',', '#']
 let g:SuperTabNoCompleteBefore = ['\w']
 let g:SuperTabLongestEnhanced = 1
 let g:SuperTabLongestHighlight = 1
@@ -163,7 +163,7 @@ if has('autocmd')
     
     autocmd BufEnter *.py call ConfigurePython()
 
-    autocmd BufEnter * if &ft == '' | let b:SuperTabDisabled = 1 | endif
+    autocmd BufEnter * if &ft == '' | let b:SuperTabDisabled = 1 | else | let b:SuperTabDisabled = 0 | endif
 
     " have some nice auto paths
     autocmd BufEnter * call SetPathToProject()
