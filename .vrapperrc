@@ -2,6 +2,7 @@ set ignorecase
 set smartcase
 set incsearch
 set autochdir
+set gvimpath=/Users/dhleong/bin/mvim
 
 eclipseaction commit org.eclipse.egit.ui.team.Commit
 eclipseaction blame org.eclipse.egit.ui.team.ShowBlame

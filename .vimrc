@@ -79,14 +79,18 @@ cnoremap <C-A> <Home>
 let g:eregex_default_enable = 0  " doesn't do incremental search, so no
 nnoremap <leader>/ :call eregex#toggle()<CR>
 
+" add :gitco alias
+nnoremap <leader>gc :Gcommit -a<CR>
+
 " Tweaking {} motion behavior
 let g:ip_boundary = '"\?\s*$' 
 
 " super tab and other completion settings
-let g:SuperTabNoCompleteAfter = ['//', '\s', ',']
+let g:SuperTabNoCompleteAfter = ['//', '\s', ',', '#']
 let g:SuperTabNoCompleteBefore = ['\w']
 let g:SuperTabLongestEnhanced = 1
 let g:SuperTabLongestHighlight = 1
+let g:SuperTabMappingBackward = '<s-c-space>' " don't override our custom guy!
 
 " use shift-tab in normal mode, or insert mode with no popup, to unindent
 " crazy redundancy required because just <C-p> goes forward, for some
@@ -148,12 +152,18 @@ function! ConfigureJava()
     inoremap <c-n> <c-x><c-n> 
 endfunction
 
+function! ConfigurePython()
+    nmap <silent> <F19> :!python %<cr>
+endfunction
+
 if has('autocmd')
     " some java stuff
     autocmd BufEnter *.java call ConfigureJava()
     "autocmd BufWrite *.java silent! JavaImportOrganize " import missing on save
+    
+    autocmd BufEnter *.py call ConfigurePython()
 
-    autocmd BufEnter * if &ft == '' | let b:SuperTabDisabled = 1 | endif
+    autocmd BufEnter * if &ft == '' | let b:SuperTabDisabled = 1 | else | let b:SuperTabDisabled = 0 | endif
 
     " have some nice auto paths
     autocmd BufEnter * call SetPathToProject()
@@ -203,3 +213,5 @@ command! OpenTodoList call OpenTodoListFunc()
 nmap <leader>T :OpenTodoList<cr>
 
 "let g:EclimDisabled=0
+
+:source /Users/dhleong/code/vim-javadocer/javadocer.vim
