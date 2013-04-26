@@ -202,4 +202,4 @@ command! OpenTodoList call OpenTodoListFunc()
 
 nmap <leader>T :OpenTodoList<cr>
 
-let g:EclimDisabled=1
+"let g:EclimDisabled=0
