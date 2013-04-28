@@ -215,3 +215,5 @@ nmap <leader>T :OpenTodoList<cr>
 "let g:EclimDisabled=0
 
 :source /Users/dhleong/code/vim-javadocer/javadocer.vim
+
+let g:jedi#squelch_py_warning = 1
