@@ -139,7 +139,9 @@ function! SetPathToProject()
 endfunction
 
 function! ConfigureJava()
-    let b:SuperTabDefaultCompletionType = "<c-x><c-u>"
+
+    "let <buffer>g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+    call SuperTabSetDefaultCompletionType("<c-x><c-u>")
 
     nmap <silent> <leader>fi :JavaImportOrganize<cr>
     nmap <silent> <leader>ji :JavaImpl<cr>
@@ -149,11 +151,19 @@ function! ConfigureJava()
     nmap <silent> <leader>jd :JavaDocPreview<cr> 
 
     " let c-n do the regular local search
-    inoremap <c-n> <c-x><c-n> 
+    inoremap <buffer> <c-n> <c-x><c-n> 
 endfunction
 
 function! ConfigurePython()
     nmap <silent> <F19> :!python %<cr>
+    "let <buffer> g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+    call SuperTabSetDefaultCompletionType("<c-x><c-o>")
+
+    " let c-n do the regular local search
+    inoremap <buffer> <c-n> <c-x><c-n> 
+
+    " the one above doesn't cooperate with vim-jedi for some reason
+    inoremap <buffer> <expr><S-Tab> pumvisible()? "\<up>\<C-n>\<C-p>" : "\<c-d>"
 endfunction
 
 if has('autocmd')
@@ -216,4 +226,6 @@ nmap <leader>T :OpenTodoList<cr>
 
 :source /Users/dhleong/code/vim-javadocer/javadocer.vim
 
+" jedi configs
 let g:jedi#squelch_py_warning = 1
+let g:jedi#popup_select_first = 1
