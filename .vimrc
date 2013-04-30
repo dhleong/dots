@@ -166,7 +166,10 @@ function! ConfigurePython()
     inoremap <buffer> <expr><S-Tab> pumvisible()? "\<up>\<C-n>\<C-p>" : "\<c-d>"
 endfunction
 
-if has('autocmd')
+if has('autocmd') && !exists('autocmds_loaded')
+
+    let autocmds_loaded = 1
+
     " some java stuff
     autocmd BufEnter *.java call ConfigureJava()
     "autocmd BufWrite *.java silent! JavaImportOrganize " import missing on save
