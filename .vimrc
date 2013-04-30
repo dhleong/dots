@@ -55,6 +55,9 @@ set guioptions=ac
 " 'e'dit 'v'imrc)
 nmap <silent> <leader>ev :e $MYVIMRC<cr>
 
+" And, in a new tab
+nmap <silent> <leader>tev :tabe $MYVIMRC<cr>
+
 " And to source this file as well (mnemonic for the key sequence is
 " 's'ource 'v'imrc)
 nmap <silent> <leader>sv :so $MYVIMRC<cr>
@@ -100,6 +103,17 @@ nnoremap <S-Tab> <<_
 nnoremap <Tab> >>_
 
 set completeopt=menu,preview,longest
+
+"
+" some abbreviations/typo fixes
+"
+
+" I do this ALL the time
+abbr ~? ~/
+
+"
+" My project path script
+"
 
 let g:ProjectGrepPath = "*"
 
