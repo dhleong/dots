@@ -175,6 +175,9 @@ if has('autocmd')
 
     autocmd BufEnter * if &ft == '' | let b:SuperTabDisabled = 1 | else | let b:SuperTabDisabled = 0 | endif
 
+    " let K call vim 'help' when in a vim file
+    autocmd FileType vim nnoremap <buffer> K :exe 'help ' .expand('<cword>')<cr>
+
     " have some nice auto paths
     autocmd BufEnter * call SetPathToProject()
 endif
