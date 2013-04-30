@@ -178,6 +178,7 @@ function! ConfigurePython()
 
     " the one above doesn't cooperate with vim-jedi for some reason
     inoremap <buffer> <expr><S-Tab> pumvisible()? "\<up>\<C-n>\<C-p>" : "\<c-d>"
+
 endfunction
 
 if has('autocmd') && !exists('autocmds_loaded')
@@ -249,3 +250,4 @@ nmap <leader>T :OpenTodoList<cr>
 " jedi configs
 let g:jedi#squelch_py_warning = 1
 let g:jedi#popup_select_first = 1
+let g:jedi#get_definition_command = "gd"
