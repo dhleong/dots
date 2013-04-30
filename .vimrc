@@ -95,6 +95,7 @@ function! WriteAndPush()
 endfunction
 nnoremap <leader>gp :call WriteAndPush()<CR>
 
+
 " Tweaking {} motion behavior
 let g:ip_boundary = '"\?\s*$' 
 
