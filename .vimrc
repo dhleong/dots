@@ -87,10 +87,10 @@ nnoremap <leader>gc :Gcommit -a<CR>
 
 function! WriteAndPush()
     if expand('%') == "COMMIT_EDITMSG" 
-        :Gwrite<CR>
-        :Git push<CR>
+        :Gwrite
+        :Git push
     else
-        :Git push<CR>
+        :Git push
     endif
 endfunction
 nnoremap <leader>gp :call WriteAndPush()<CR>
