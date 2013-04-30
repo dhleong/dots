@@ -1,4 +1,4 @@
-" This must be first, because it changes other options as side effect
+    " This must be first, because it changes other options as side effect
 set nocompatible
 
 " load pathogen
@@ -154,8 +154,11 @@ endfunction
 
 function! ConfigureJava()
 
-    "let <buffer>g:SuperTabDefaultCompletionType = "<c-x><c-u>"
-    call SuperTabSetDefaultCompletionType("<c-x><c-u>")
+    " this is good for eclim, but not for now
+    "call SuperTabSetDefaultCompletionType("<c-x><c-u>")
+
+    " ...but the default is super slow
+    call SuperTabSetDefaultCompletionType("<c-x><c-n>") 
 
     nmap <silent> <leader>fi :JavaImportOrganize<cr>
     nmap <silent> <leader>ji :JavaImpl<cr>
@@ -165,7 +168,10 @@ function! ConfigureJava()
     nmap <silent> <leader>jd :JavaDocPreview<cr> 
 
     " let c-n do the regular local search
-    inoremap <buffer> <c-n> <c-x><c-n> 
+    inoremap <buffer> <c-n> <c-x><c-n>
+
+    " the one above doesn't cooperate here, either...
+    inoremap <buffer> <expr><S-Tab> pumvisible()? "\<up>\<C-n>\<C-p>" : "\<c-d>"
 endfunction
 
 function! ConfigurePython()
