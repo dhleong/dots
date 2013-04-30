@@ -84,16 +84,8 @@ nnoremap <leader>/ :call eregex#toggle()<CR>
 
 " some git configs
 nnoremap <leader>gc :Gcommit -a<CR>
-
-function! WriteAndPush()
-    if expand('%') == "COMMIT_EDITMSG" 
-        :Gwrite<CR>
-        :Git push<CR>
-    else
-        :Git push<CR>
-    endif
-endfunction
-nnoremap <leader>gp :call WriteAndPush()<CR>
+nnoremap <leader>gp if expand('%') == "COMMIT_EDITMSG" | :Gwrite<CR> | 
+    \:Git push<CR> | else | :Git push<CR> | endif
 
 " Tweaking {} motion behavior
 let g:ip_boundary = '"\?\s*$' 
