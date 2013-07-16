@@ -113,6 +113,14 @@ inoremap <expr><S-Tab> pumvisible()? "\<down>\<C-n>\<C-p>" : "\<c-d>"
 nnoremap <S-Tab> <<_
 nnoremap <Tab> >>_
 
+" If we have suggestions open, we want some keys
+" to accept the suggestion *and* add their key, 
+" for more fluid typing
+let acceptSuggestionKeys = ['<Space>', '.', ':', ';']
+for key in acceptSuggestionKeys
+    exe 'inoremap <expr>' . key . ' pumvisible() ? "\<CR>' . key . '" : "' . key . '"'
+endfor
+
 set completeopt=menu,preview,longest
 
 "

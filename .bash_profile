@@ -24,6 +24,7 @@ alias adbrestart='adb kill-server && adb start-server && adb devices'
 test -r /sw/bin/init.sh && . /sw/bin/init.sh
 
 set complete='enhance' # make sure this is always done
+set -o vi
 
 ##
 # Your previous /Users/dhleong/.bash_profile file was backed up as /Users/dhleong/.bash_profile.macports-saved_2011-06-27_at_18:30:37
