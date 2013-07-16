@@ -63,7 +63,19 @@ nmap <silent> <leader>tev :tabe $MYVIMRC<cr>
 nmap <silent> <leader>sv :so $MYVIMRC<cr>
 
 " Quick make 
-nmap <silent> <leader>mm :make<cr>
+function! CompileLess()
+    silent !lessc % %:t:r.css > /dev/null
+endfunction
+function! MapMake()
+    if &ft == 'less'
+        " the make shortcut should just compile lesscss
+        nnoremap <silent> <leader>mm :w<cr> <BAR> call CompileLess()
+    else
+        " otherwise, just make
+        nmap <silent> <leader>mm :make<cr>
+    endif 
+endfunction
+autocmd BufEnter * call MapMake()
 
 " Quick make clean
 nmap <silent> <leader>mc :make clean<cr>
@@ -207,7 +219,6 @@ function! ConfigurePython()
 endfunction
 
 if has('autocmd') && !exists('autocmds_loaded')
-
     let autocmds_loaded = 1
 
     " some java stuff
@@ -220,6 +231,8 @@ if has('autocmd') && !exists('autocmds_loaded')
 
     " let K call vim 'help' when in a vim file
     autocmd FileType vim nnoremap <buffer> K :exe 'help ' .expand('<cword>')<cr>
+
+    autocmd BufWritePost *.less call CompileLess()
 
     " have some nice auto paths
     autocmd BufEnter * call SetPathToProject()
