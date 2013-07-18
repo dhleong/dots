@@ -65,6 +65,13 @@ nmap <silent> <leader>sv :so $MYVIMRC<cr>
 " Quick make 
 function! CompileLess()
     silent !lessc % %:t:r.css > /dev/null
+
+    " quickly open, write, and close the file.
+    " this helps trick Tincr into reloading
+    " the updated css file more reliably
+    silent new %:t:r.css
+    silent w
+    silent q
 endfunction
 function! MapMake()
     if &ft == 'less'
@@ -130,7 +137,7 @@ nnoremap <Tab> >>_
 " for more fluid typing
 let acceptSuggestionKeys = ['<Space>', '.', ':', ';']
 for key in acceptSuggestionKeys
-    exe 'inoremap <expr>' . key . ' pumvisible() ? "\<CR>' . key . '" : "' . key . '"'
+    exe 'inoremap <expr>' . key . ' pumvisible() ? "\<C-y>' . key . '" : "' . key . '"'
 endfor
 
 set completeopt=menu,preview,longest
