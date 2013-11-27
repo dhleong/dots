@@ -1,3 +1,4 @@
+export EDITOR=vim
 export CLICOLOR=1
 #export LSCOLORS=ExFxCxDxBxegedabagacad
 export LSCOLORS=GxFxCxDxBxegedabagaced
@@ -17,13 +18,18 @@ alias l='ls -al'
 alias seriestracker='(cd ~/SeriesTracker-v6/; java -jar seriestracker.jar)'
 alias gits='git status'
 alias gitco='git commit -a'
+alias gitpp='git pull && git push'
 
 alias antgo='ant debug install && sh run.sh'
 alias adbrestart='adb kill-server && adb start-server && adb devices'
 
 test -r /sw/bin/init.sh && . /sw/bin/init.sh
 
-set complete='enhance' # make sure this is always done
+# make sure this is always done
+set complete='enhance' 
+
+# vim input mode! Crazy!
+set -o vi 
 
 ##
 # Your previous /Users/dhleong/.bash_profile file was backed up as /Users/dhleong/.bash_profile.macports-saved_2011-06-27_at_18:30:37

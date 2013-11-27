@@ -121,6 +121,7 @@ set completeopt=menu,preview,longest
 
 " I do this ALL the time
 abbr ~? ~/
+iabbr mfa Miners/minus-for-Android
 
 "
 " My project path script
@@ -226,6 +227,12 @@ endfunction
 
 command! FixLineEndings call FixLineEndingsFunc()
 
+function! DocToJson()
+    :%!python -mjson.tool
+    set ft=javascript
+endfunction
+command! JSON call DocToJson()
+
 " For converting XML stuff into style;
 " Select some lines, then run :'<,'>norm @x
 function! XmlToStyleFunc()
@@ -268,3 +275,29 @@ nmap <leader>T :OpenTodoList<cr>
 let g:jedi#squelch_py_warning = 1
 let g:jedi#popup_select_first = 1
 let g:jedi#get_definition_command = "gd"
+
+"
+" Github fun
+"
+let g:gh_cmd = "/Users/dhleong/code/hubr/gh-cmd"
+function! GithubAcceptFunc()
+    let ticket=expand("<cword>")
+    echo "Accepting Github ticket #" . ticket . "..."
+    let cmd=":!" . g:gh_cmd . ' accept ' . ticket
+    exe cmd
+endfunction
+command! GithubAccept call GithubAcceptFunc()
+
+function! GithubTakeFunc()
+    let ticket=expand("<cword>")
+    echo "Taking Github ticket #" . ticket . "..."
+    let cmd=":!" . g:gh_cmd . ' take ' . ticket
+    exe cmd
+endfunction
+
+command! GithubTake call GithubTakeFunc()
+" mark the issue number under the cursor as accept
+nnoremap gha :GithubAccept<cr>
+
+" 'take' the issue under the cursor (assign to 'me')
+nnoremap ght :GithubTake<cr>
