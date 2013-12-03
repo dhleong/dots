@@ -135,7 +135,7 @@ nnoremap <Tab> >>_
 " If we have suggestions open, we want some keys
 " to accept the suggestion *and* add their key, 
 " for more fluid typing
-let acceptSuggestionKeys = ['<Space>', '.', ':', ';']
+let acceptSuggestionKeys = ['<Space>', '.', ':', ';', '(', ')', '[', ']']
 for key in acceptSuggestionKeys
     exe 'inoremap <expr>' . key . ' pumvisible() ? "\<C-y>' . key . '" : "' . key . '"'
 endfor
