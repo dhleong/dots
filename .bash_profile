@@ -5,6 +5,7 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 PATH=$PATH:/lib/android-sdk
 PATH=$PATH:/lib/android-sdk/platform-tools
 PATH=$PATH:/lib/android-sdk/tools
+PATH=$PATH:/usr/local/git/bin
 PATH=$PATH:~/bin
 NDK=/lib/android-ndk-r7c/
 
