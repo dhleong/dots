@@ -150,10 +150,31 @@ set completeopt=menu,preview,longest
 abbr ~? ~/
 iabbr mfa Miners/minus-for-Android
 
+
+"
+" unite configs
+"
+
+" borrow ignore extensions from wildignore setting
+let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
+let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
+let _wilds = '\%(^\|/\)\.\.\?$\|\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
+call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
+
+" keymaps
+function! MapCtrlP(path)
+    execute 'nnoremap <C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert<cr>'
+endfunction
+
+" default map for C-p (we'll remap with project directory soon)
+call MapCtrlP("")
+nnoremap <leader>/ :Unite grep:. -auto-preview<cr>
+
+
 "
 " My project path script
 "
-
+let g:ProjectPath = "./"
 let g:ProjectGrepPath = "*"
 
 " function to automatically set the appropriate path :)
@@ -177,7 +198,9 @@ function! SetPathToProject()
 
             " set it
             exe 'set path='.pathDir
-            let g:ProjectGrepPath = projDir . projName . '*'
+            let g:ProjectPath = projDir . projName 
+            let g:ProjectGrepPath = g:ProjectPath . '*'
+            call MapCtrlP(g:ProjectPath)
             return
         endif
     endfor
@@ -189,6 +212,9 @@ function! SetPathToProject()
         " vim default path
         exe 'set path=.,/usr/include,,'
     endif
+
+    " reset ctrl-p to default
+    call MapCtrlP("")
 endfunction
 
 function! ConfigureJava()
@@ -307,18 +333,6 @@ let g:jedi#get_definition_command = "gd"
 
 " session configs
 let g:session_autosave = 'yes'
-
-" unite configs
-" borrow ignore extensions from wildignore setting
-let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
-let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
-let _wilds = '\%(^\|/\)\.\.\?$\|\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
-call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
-
-" keymaps
-nnoremap <C-p> :Unite tab file_rec/async -start-insert<cr>
-nnoremap <leader>/ :Unite grep:. -auto-preview<cr>
-
 
 " airline configs
 set laststatus=2
