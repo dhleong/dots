@@ -27,6 +27,7 @@ minus-api.zip
 node_modules
 pre-resized-avatar.jpg
 resized-avatar.jpg
+sessions
 squared-avatar.jpg
 test.bmp
 test.data
@@ -56,6 +57,7 @@ test.data
 .repopickle_.gitconfig
 .sqlite_history
 .ssh/
+.unite/
 .vim/.netrwhist
 .vim/eclim/doc/tags
 .viminfo
