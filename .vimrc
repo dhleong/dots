@@ -1,4 +1,4 @@
-    " This must be first, because it changes other options as side effect
+" This must be first, because it changes other options as side effect
 set nocompatible
 
 " load pathogen
@@ -30,7 +30,7 @@ endif
 "colorscheme desert
 colorscheme zenburn
 
-set wildignore=*.bak,*~,*.o,*.h,*.info,*.swp,*.class
+set wildignore=.svn,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.swo,*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak,*.beam,*~,*.info
 
 " array of paths pointing to parent directories
 "   of project directories; IE: each path here
@@ -304,6 +304,26 @@ nmap <leader>tq :sign unplace *<cr>
 let g:jedi#squelch_py_warning = 1
 let g:jedi#popup_select_first = 1
 let g:jedi#get_definition_command = "gd"
+
+" session configs
+let g:session_autosave = 'yes'
+
+" unite configs
+" borrow ignore extensions from wildignore setting
+let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
+let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
+let _wilds = '\%(^\|/\)\.\.\?$\|\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
+call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
+
+" keymaps
+nnoremap <C-p> :Unite tab file_rec/async -start-insert<cr>
+nnoremap <leader>/ :Unite grep:. -auto-preview<cr>
+
+
+" airline configs
+set laststatus=2
+let g:airline_detect_whitespace = 0
+
 
 "
 " Github fun
