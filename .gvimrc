@@ -1,4 +1,12 @@
-set gfn=Inconsolata:h17
+
+let _fontName='Inconsolata+for+Powerline.otf'
+
+set gfn=Inconsolata\ for\ Powerline:h17,Inconsolata:h17
+if !empty(glob("~/Library/Fonts/" . _fontName)) " could check more places, but....
+    " only enable powerline if available
+    let g:airline_powerline_fonts = 1
+endif
+
 
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
