@@ -30,7 +30,10 @@ endif
 "colorscheme desert
 colorscheme zenburn
 
-set wildignore=.svn,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.swo,*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak,*.beam,*~,*.info
+set wildignore=.svn,.git,*.o,*.a,*.class,*.pyc
+set wildignore+=*.mo,*.la,*.so,*.obj,*.swp,*.swo
+set wildignore+=*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak
+set wildignore+=*.beam,*~,*.info
 
 " array of paths pointing to parent directories
 "   of project directories; IE: each path here
@@ -164,6 +167,7 @@ call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
 " keymaps
 function! MapCtrlP(path)
     execute 'nnoremap <C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert<cr>'
+    execute 'nnoremap <C-w><C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert -default-action=tabopen<cr>'
 endfunction
 
 " default map for C-p (we'll remap with project directory soon)
@@ -330,7 +334,7 @@ nmap <leader>tq :sign unplace *<cr>
 " jedi configs
 let g:jedi#squelch_py_warning = 1
 let g:jedi#popup_select_first = 1
-let g:jedi#get_definition_command = "gd"
+let g:jedi#goto_definitions_command = "gd"
 
 " session configs
 let g:session_autosave = 'yes'
