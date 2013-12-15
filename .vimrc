@@ -248,10 +248,6 @@ function! ConfigurePython()
     nmap <silent> <F19> :!python %<cr>
     "let <buffer> g:SuperTabDefaultCompletionType = "<c-x><c-o>"
     "call SuperTabSetDefaultCompletionType("<c-x><c-o>")
-    if &omnifunc != '' |
-        call SuperTabChain(&omnifunc, "<c-x><c-n>")
-        call SuperTabSetDefaultCompletionType("<c-x><c-u>")
-    endif
 
     " let c-n do the regular local search
     inoremap <buffer> <c-n> <c-x><c-n>
@@ -279,6 +275,14 @@ if has('autocmd') && !exists('autocmds_loaded')
 
     " have some nice auto paths
     autocmd BufEnter * call SetPathToProject()
+
+    " Use omnifunc when available, and chain back to normal
+    autocmd FileType * 
+        \ if &omnifunc != '' |
+        \   call SuperTabChain(&omnifunc, "<c-x><c-n>") |
+        \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+        \ endif
+
 endif
 
 function! FixLineEndingsFunc()
@@ -353,7 +357,6 @@ let g:airline#extensions#default#section_truncate_width = {
   \ 'y': 88,
   \ 'z': 45,
   \ }
-
 
 "
 " Github fun
