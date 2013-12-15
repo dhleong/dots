@@ -347,6 +347,7 @@ let g:jedi#goto_definitions_command = "gd"
 
 " session configs
 let g:session_autosave = 'yes'
+let g:session_autoload = 'no'
 
 " airline configs
 set laststatus=2
