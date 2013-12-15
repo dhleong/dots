@@ -247,7 +247,11 @@ endfunction
 function! ConfigurePython()
     nmap <silent> <F19> :!python %<cr>
     "let <buffer> g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-    call SuperTabSetDefaultCompletionType("<c-x><c-o>")
+    "call SuperTabSetDefaultCompletionType("<c-x><c-o>")
+    if &omnifunc != '' |
+        call SuperTabChain(&omnifunc, "<c-x><c-n>")
+        call SuperTabSetDefaultCompletionType("<c-x><c-u>")
+    endif
 
     " let c-n do the regular local search
     inoremap <buffer> <c-n> <c-x><c-n>
@@ -328,6 +332,7 @@ nmap <leader>T :OpenTodoList<cr>
 nmap <leader>tq :sign unplace *<cr>
 
 "let g:EclimDisabled=0
+let g:EclimJavascriptValidate = 0 
 
 :source /Users/dhleong/code/vim-javadocer/javadocer.vim
 
