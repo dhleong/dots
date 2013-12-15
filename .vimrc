@@ -333,7 +333,7 @@ endfunction
 command! OpenTodoList call OpenTodoListFunc()
 
 nmap <leader>T :OpenTodoList<cr>
-nmap <leader>tq :sign unplace *<cr>
+nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 
 "let g:EclimDisabled=0
 let g:EclimJavascriptValidate = 0 
