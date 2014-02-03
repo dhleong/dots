@@ -80,6 +80,9 @@ function! MapMake()
     if &ft == 'less'
         " the make shortcut should just compile lesscss
         nnoremap <silent> <leader>mm :w<cr> <BAR> call CompileLess()
+    elseif &ft == 'javascript'
+        " make green
+        nmap <silent> <leader>mm :MakeGreen<cr>
     else
         " otherwise, just make
         nmap <silent> <leader>mm :make<cr>
