@@ -10,6 +10,7 @@ PATH=$PATH:~/bin
 NDK=/lib/android-ndk-r7c/
 
 PATH=$PATH:/usr/local/mysql/bin
+PATH=$PATH:/lib/gradle/bin
 
 export ANDROID_HOME=/lib/android-sdk
 export PROGUARD_HOME=$ANDROID_HOME/tools/proguard

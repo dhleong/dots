@@ -341,7 +341,7 @@ nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 "let g:EclimDisabled=0
 let g:EclimJavascriptValidate = 0 
 
-:source /Users/dhleong/code/vim-javadocer/javadocer.vim
+silent! source /Users/dhleong/code/vim-javadocer/javadocer.vim
 
 " jedi configs
 let g:jedi#squelch_py_warning = 1
