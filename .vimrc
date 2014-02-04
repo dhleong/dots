@@ -80,6 +80,9 @@ function! MapMake()
     if &ft == 'less'
         " the make shortcut should just compile lesscss
         nnoremap <silent> <leader>mm :w<cr> <BAR> call CompileLess()
+    elseif &ft == 'javascript'
+        " make green
+        nmap <silent> <leader>mm :MakeGreen<cr>
     else
         " otherwise, just make
         nmap <silent> <leader>mm :make<cr>
@@ -339,7 +342,7 @@ nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 let g:EclimJavascriptValidate = 0 
 
 ":source /Users/dhleong/code/vim-javadocer/javadocer.vim
-:source /Users/dhleong/code/njast/njast.vim
+silent! source /Users/dhleong/code/njast/njast.vim
 
 " jedi configs
 let g:jedi#squelch_py_warning = 1
