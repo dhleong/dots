@@ -322,7 +322,7 @@ endfunction
 function! OpenTodoListFunc()
     " we just use the tasklist var for tokens
     if !exists('g:tlTokenList')
-        let g:tlTokenList = ["FIXME", "TODO", "XXX"]
+        let g:tlTokenList = ["FIXME", "TODO", "XXX", "STOPSHIP"]
     endif
 
     autocmd BufWinEnter quickfix call SetTitleAndClearAutoCmd()
@@ -338,7 +338,8 @@ nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 "let g:EclimDisabled=0
 let g:EclimJavascriptValidate = 0 
 
-:source /Users/dhleong/code/vim-javadocer/javadocer.vim
+":source /Users/dhleong/code/vim-javadocer/javadocer.vim
+:source /Users/dhleong/code/njast/njast.vim
 
 " jedi configs
 let g:jedi#squelch_py_warning = 1
