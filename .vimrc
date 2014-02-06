@@ -17,12 +17,12 @@ set nocompatible
 
     Bundle 'gmarik/vundle'
     "Add your bundles here
-    Bundle 'Conque-Shell'
     Bundle 'eregex.vim'
 
     Bundle 'bling/vim-airline'
     Bundle 'davidhalter/jedi-vim'
     Bundle 'marijnh/tern_for_vim'
+    Bundle 'oplatek/Conque-Shell'
     Bundle 'reinh/vim-makegreen'
     Bundle 'Shougo/unite.vim'
     Bundle 'Shougo/vimproc.vim'
