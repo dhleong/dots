@@ -1,9 +1,58 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
 
-" load pathogen
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-execute pathogen#infect()
+" From http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
+" Setting up Vundle - the vim plugin bundler
+    let iCanHazVundle=1
+    let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+    if !filereadable(vundle_readme)
+        echo "Installing Vundle.."
+        echo ""
+        silent !mkdir -p ~/.vim/bundle
+        silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+        let iCanHazVundle=0
+    endif
+    set rtp+=~/.vim/bundle/vundle/
+    call vundle#rc()
+
+    Bundle 'gmarik/vundle'
+    "Add your bundles here
+    Bundle 'Conque-Shell'
+    Bundle 'eregex.vim'
+
+    Bundle 'bling/vim-airline'
+    Bundle 'davidhalter/jedi-vim'
+    Bundle 'marijnh/tern_for_vim'
+    Bundle 'reinh/vim-makegreen'
+    Bundle 'Shougo/unite.vim'
+    Bundle 'Shougo/vimproc.vim'
+    Bundle 'tpope/vim-fugitive' 
+    Bundle 'xolox/vim-misc'
+    Bundle 'xolox/vim-session'
+
+    " Syntax plugins
+    Bundle 'groenewege/vim-less'
+
+    "...All your other bundles...
+    if iCanHazVundle == 0
+        echo "Installing Bundles, please ignore key map error messages"
+        echo ""
+        :BundleInstall
+
+        echo "Building vimproc"
+        silent !cd ~/.vim/bundle/vimproc.vim && make
+
+        echo "Installing Tern"
+        silent !cd ~/.vim/bundle/tern_for_vim && npm install
+
+        echo "Installing jedi"
+        silent !cd ~/.vim/bundle/jedi-vim && git submodule update --init
+
+        echo "Done!"
+        echo "Note that you may need to restart vim for airline fonts to work!"
+    endif
+" Setting up Vundle - the vim plugin bundler end
+
 
 set autoindent
 set copyindent    " copy the previous indentation on autoindenting

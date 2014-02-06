@@ -60,6 +60,7 @@ untitled folder
 .ssh/
 .unite/
 .vim/.netrwhist
+.vim/bundle
 .vim/eclim/doc/tags
 .viminfo
 .vimsession
