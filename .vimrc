@@ -26,7 +26,9 @@ set nocompatible
     Bundle 'reinh/vim-makegreen'
     Bundle 'Shougo/unite.vim'
     Bundle 'Shougo/vimproc.vim'
+    Bundle 'skammer/vim-css-color'
     Bundle 'tpope/vim-fugitive' 
+    Bundle 'tpope/vim-repeat' 
     Bundle 'xolox/vim-misc'
     Bundle 'xolox/vim-session'
 
@@ -177,6 +179,9 @@ nnoremap <leader>gp :call WriteAndPush()<CR>
 
 " Tweaking {} motion behavior
 let g:ip_boundary = '"\?\s*$' 
+" don't open folds when jumping over blocks
+let g:ip_skipfold = 1
+
 
 " super tab and other completion settings
 let g:SuperTabNoCompleteAfter = ['//', '\s', ',', '#']
