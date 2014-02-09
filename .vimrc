@@ -23,6 +23,8 @@ set nocompatible
     Bundle 'davidhalter/jedi-vim'
     Bundle 'marijnh/tern_for_vim'
     Bundle 'oplatek/Conque-Shell'
+    "Bundle 'cinaeco/vim-autocomplpop'
+    Bundle 'file:///Users/dhleong/git/vim-autocomplpop/'
     Bundle 'reinh/vim-makegreen'
     Bundle 'Shougo/unite.vim'
     Bundle 'Shougo/vimproc.vim'
@@ -421,6 +423,11 @@ let g:airline#extensions#default#section_truncate_width = {
   \ 'y': 88,
   \ 'z': 45,
   \ }
+
+" autocomplpop configs
+let g:acp_completeoptPreview = 1
+" fix unshift when popup isn't open
+let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 
 "
 " Github fun
