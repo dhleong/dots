@@ -24,7 +24,7 @@ set nocompatible
     Bundle 'marijnh/tern_for_vim'
     Bundle 'oplatek/Conque-Shell'
     "Bundle 'cinaeco/vim-autocomplpop'
-    Bundle 'file:///Users/dhleong/git/vim-autocomplpop/'
+    Bundle 'dhleong/vim-autocomplpop'
     Bundle 'reinh/vim-makegreen'
     Bundle 'Shougo/unite.vim'
     Bundle 'Shougo/vimproc.vim'
