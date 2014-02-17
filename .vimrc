@@ -18,12 +18,12 @@ set nocompatible
     Bundle 'gmarik/vundle'
     "Add your bundles here
     Bundle 'eregex.vim'
+    Bundle 'VisIncr'
 
     Bundle 'bling/vim-airline'
     Bundle 'davidhalter/jedi-vim'
     Bundle 'marijnh/tern_for_vim'
     Bundle 'oplatek/Conque-Shell'
-    "Bundle 'cinaeco/vim-autocomplpop'
     Bundle 'dhleong/vim-autocomplpop'
     Bundle 'reinh/vim-makegreen'
     Bundle 'Shougo/unite.vim'
@@ -31,6 +31,7 @@ set nocompatible
     Bundle 'skammer/vim-css-color'
     Bundle 'tpope/vim-fugitive' 
     Bundle 'tpope/vim-repeat' 
+    Bundle 'tpope/vim-surround' 
     Bundle 'xolox/vim-misc'
     Bundle 'xolox/vim-session'
 
