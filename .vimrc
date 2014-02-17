@@ -63,6 +63,11 @@ let useYcmCompletion = 1 " else, acp and supertab
         echo "Installing jedi"
         silent !cd ~/.vim/bundle/jedi-vim && git submodule update --init
 
+        if useYcmCompletion == 1
+            echo "Installing YCM"
+            silent !cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer
+        endif
+
         echo "Done!"
         echo "Note that you may need to restart vim for airline fonts to work!"
     endif
