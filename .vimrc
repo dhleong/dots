@@ -136,6 +136,7 @@ nmap <silent> <leader>sv :so $MYVIMRC<cr>
 
 " While we're here, how about a vim shell? :)
 let g:ConqueTerm_CloseOnEnd = 1 " close the tab/split when the shell exits
+let g:ConqueTerm_StartMessages = 0 " shhh. it's fine
 nmap <silent> <leader>vs :ConqueTermVSplit bash -l<cr>
 nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
 
