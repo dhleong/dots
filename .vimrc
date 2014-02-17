@@ -26,6 +26,7 @@ set nocompatible
     Bundle 'oplatek/Conque-Shell'
     Bundle 'dhleong/vim-autocomplpop'
     Bundle 'reinh/vim-makegreen'
+    Bundle 'scrooloose/syntastic'
     Bundle 'Shougo/unite.vim'
     Bundle 'Shougo/vimproc.vim'
     Bundle 'skammer/vim-css-color'
