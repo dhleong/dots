@@ -1,4 +1,4 @@
-export EDITOR=vim
+export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 export CLICOLOR=1
 #export LSCOLORS=ExFxCxDxBxegedabagacad
 export LSCOLORS=GxFxCxDxBxegedabagaced
@@ -24,6 +24,8 @@ alias gitpp='git pull && git push'
 
 alias antgo='ant debug install && sh run.sh'
 alias adbrestart='adb kill-server && adb start-server && adb devices'
+
+alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 
 test -r /sw/bin/init.sh && . /sw/bin/init.sh
 

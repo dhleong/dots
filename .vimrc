@@ -1,7 +1,7 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
 
-let useYcmCompletion = 1 " else, acp and supertab
+let g:useYcmCompletion = 1 " else, acp and supertab
 
 " From http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
 " Setting up Vundle - the vim plugin bundler
@@ -38,7 +38,7 @@ let useYcmCompletion = 1 " else, acp and supertab
     Bundle 'xolox/vim-session'
 
     " completion
-    if useYcmCompletion == 1
+    if g:useYcmCompletion == 1
         Bundle 'Valloric/YouCompleteMe'
     else
         Bundle 'dhleong/vim-autocomplpop'
@@ -63,7 +63,7 @@ let useYcmCompletion = 1 " else, acp and supertab
         echo "Installing jedi"
         silent !cd ~/.vim/bundle/jedi-vim && git submodule update --init
 
-        if useYcmCompletion == 1
+        if g:useYcmCompletion == 1
             echo "Installing YCM"
             silent !cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer
         endif
@@ -305,7 +305,7 @@ endfunction
 
 function! ConfigureJava()
 
-    if useYcmCompletion == 0
+    if g:useYcmCompletion == 0
         " this is good for eclim, but not for now
         "call SuperTabSetDefaultCompletionType("<c-x><c-u>")
 
@@ -360,7 +360,7 @@ if has('autocmd') && !exists('autocmds_loaded')
     autocmd BufEnter * call SetPathToProject()
 
     " Use omnifunc when available, and chain back to normal
-    if useYcmCompletion == 0
+    if g:useYcmCompletion == 0
         autocmd FileType * 
             \ if &omnifunc != '' |
             \   call SuperTabChain(&omnifunc, "<c-x><c-n>") |
@@ -450,7 +450,7 @@ let g:acp_completeoptPreview = 1
 " fix unshift when popup isn't open
 let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 
-if useYcmCompletion == 1
+if g:useYcmCompletion == 1
 
   let g:ycm_filetype_blacklist = {
         \ 'tagbar' : 1,
