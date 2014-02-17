@@ -34,6 +34,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'tpope/vim-fugitive' 
     Bundle 'tpope/vim-repeat' 
     Bundle 'tpope/vim-surround' 
+    Bundle 'Valloric/MatchTagAlways'
     Bundle 'xolox/vim-misc'
     Bundle 'xolox/vim-session'
 
