@@ -1,6 +1,8 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
 
+let useYcmCompletion = 1 " else, acp and supertab
+
 " From http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
 " Setting up Vundle - the vim plugin bundler
     let iCanHazVundle=1
@@ -24,7 +26,6 @@ set nocompatible
     Bundle 'davidhalter/jedi-vim'
     Bundle 'marijnh/tern_for_vim'
     Bundle 'oplatek/Conque-Shell'
-    Bundle 'dhleong/vim-autocomplpop'
     Bundle 'reinh/vim-makegreen'
     Bundle 'scrooloose/syntastic'
     Bundle 'Shougo/unite.vim'
@@ -35,6 +36,14 @@ set nocompatible
     Bundle 'tpope/vim-surround' 
     Bundle 'xolox/vim-misc'
     Bundle 'xolox/vim-session'
+
+    " completion
+    if useYcmCompletion == 1
+        Bundle 'Valloric/YouCompleteMe'
+    else
+        Bundle 'dhleong/vim-autocomplpop'
+        Bundle 'ervandew/supertab'
+    endif
 
     " Syntax plugins
     Bundle 'groenewege/vim-less'
@@ -343,11 +352,13 @@ if has('autocmd') && !exists('autocmds_loaded')
     autocmd BufEnter * call SetPathToProject()
 
     " Use omnifunc when available, and chain back to normal
-    autocmd FileType * 
-        \ if &omnifunc != '' |
-        \   call SuperTabChain(&omnifunc, "<c-x><c-n>") |
-        \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
-        \ endif
+    if useYcmCompletion == 0
+        autocmd FileType * 
+            \ if &omnifunc != '' |
+            \   call SuperTabChain(&omnifunc, "<c-x><c-n>") |
+            \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+            \ endif
+    endif
 
 endif
 
@@ -430,6 +441,24 @@ let g:airline#extensions#default#section_truncate_width = {
 let g:acp_completeoptPreview = 1
 " fix unshift when popup isn't open
 let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
+
+if useYcmCompletion == 1
+
+  let g:ycm_filetype_blacklist = {
+        \ 'tagbar' : 1,
+        \ 'qf' : 1,
+        \ 'notes' : 1,
+        \ 'markdown' : 1,
+        \ 'unite' : 1,
+        \ 'text' : 1,
+        \ 'vimwiki' : 1,
+        \ 'pandoc' : 1,
+        \ 'conque_term' : 1
+        \}
+    
+    let g:ycm_key_list_previous_completion = ['<Up>'] " NOT s-tab; we do the right thing below:
+    inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
+endif
 
 "
 " Github fun
