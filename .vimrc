@@ -242,7 +242,7 @@ iabbr mfa Miners/minus-for-Android
 " borrow ignore extensions from wildignore setting
 let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
 let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
-let _wilds = '\%(^\|/\)\.\.\?$\|\.git/\|\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
+let _wilds = '\%(^\|/\)\.\.\?$\|\.git/\|node_modules/\|\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
 call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
 
 " keymaps
