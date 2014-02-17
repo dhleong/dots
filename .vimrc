@@ -305,11 +305,13 @@ endfunction
 
 function! ConfigureJava()
 
-    " this is good for eclim, but not for now
-    "call SuperTabSetDefaultCompletionType("<c-x><c-u>")
+    if useYcmCompletion == 0
+        " this is good for eclim, but not for now
+        "call SuperTabSetDefaultCompletionType("<c-x><c-u>")
 
-    " ...but the default is super slow
-    call SuperTabSetDefaultCompletionType("<c-x><c-n>") 
+        " ...but the default is super slow
+        call SuperTabSetDefaultCompletionType("<c-x><c-n>") 
+    endif 
 
     nmap <silent> <leader>fi :JavaImportOrganize<cr>
     nmap <silent> <leader>ji :JavaImpl<cr>
