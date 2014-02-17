@@ -466,6 +466,10 @@ if g:useYcmCompletion == 1
     
     let g:ycm_key_list_previous_completion = ['<Up>'] " NOT s-tab; we do the right thing below:
     inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
+
+    " most useful for gitcommit
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1
+    
 endif
 
 "
