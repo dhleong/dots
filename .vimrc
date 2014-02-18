@@ -89,6 +89,8 @@ set ruler       " we may want to know where we are in the file
 set ignorecase  " ignore case in search....
 set smartcase   " but if we WANT case, use it
 
+set splitright  " horizontal splits should not open on the left... 
+
 if exists('+autochdir')
     " use the builtin if we have it
     set autochdir
