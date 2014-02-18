@@ -31,6 +31,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'Shougo/unite.vim'
     Bundle 'Shougo/vimproc.vim'
     Bundle 'skammer/vim-css-color'
+    Bundle 'tomtom/tcomment_vim'
     Bundle 'tpope/vim-fugitive' 
     Bundle 'tpope/vim-repeat' 
     Bundle 'tpope/vim-surround' 
