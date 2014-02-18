@@ -147,6 +147,11 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Ctrl-S 2x to open a vertical split (I use these a lot)
+" It's 2x because <C-S><C-P> does Unite Search to open in vsp,
+"  so this is faster if I just want a straight split
+nnoremap <C-S><C-S> :vsp<cr>
+
 " Quick make 
 function! CompileLess()
     silent !lessc % %:t:r.css > /dev/null
@@ -256,6 +261,7 @@ call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
 function! MapCtrlP(path)
     execute 'nnoremap <C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert<cr>'
     execute 'nnoremap <C-w><C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert -default-action=tabopen<cr>'
+    execute 'nnoremap <C-s><C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert -default-action=vsplit<cr>'
 endfunction
 
 " default map for C-p (we'll remap with project directory soon)
