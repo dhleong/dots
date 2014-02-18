@@ -141,6 +141,12 @@ let g:ConqueTerm_StartMessages = 0 " shhh. it's fine
 nmap <silent> <leader>vs :ConqueTermVSplit bash -l<cr>
 nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
 
+" Enable faster splits navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 " Quick make 
 function! CompileLess()
     silent !lessc % %:t:r.css > /dev/null
