@@ -68,3 +68,55 @@ untitled folder
 .wireshark-etc/
 .wireshark/
 .zshrc
+
+
+# more, from elayne
+.adobe/
+.appcfg_cookies
+.appcfg_nag
+.appletviewer
+.bash_profile.macports-saved_2011-06-27_at_18:30:37
+.dropbox/
+.eclim/
+.eclipse/
+.flexlmrc
+.fontconfig-2.4/
+.fonts/
+.gdb_history
+.gitconfig.bak
+.hgrc
+.inkscape-etc/
+.jline-jython.history
+.keystore
+.luke
+.macports/
+.manga-fetcher.tmp
+.mediatomb/
+.mplayer/
+.mysql_history
+.packages.yml
+.recently-used.xbel
+.serverauth.*
+.slocdata/
+.subversion/
+.vimshell/
+.wine/
+.ypp_42
+ActionBarSherlock/
+Applications (Parallels)/
+Calibre Library/
+Dropbox/
+Google Drive/
+SeriesTracker-v6/
+Sites/
+VirtualBox VMs/
+debug.keystore
+htdocs/
+manga/
+public_html/
+rssfs/
+synergy.conf
+tmp.avi
+tmp.jpg
+tmp/
+wireshark/
