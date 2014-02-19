@@ -32,6 +32,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'Shougo/unite.vim'
     Bundle 'Shougo/vimproc.vim'
     Bundle 'skammer/vim-css-color'
+    Bundle 'suan/vim-instant-markdown'
     Bundle 'tomtom/tcomment_vim'
     Bundle 'tpope/vim-fugitive' 
     Bundle 'tpope/vim-repeat' 
@@ -71,6 +72,9 @@ let g:useYcmCompletion = 1 " else, acp and supertab
 
         echo "Installing jedi"
         silent !cd ~/.vim/bundle/jedi-vim && git submodule update --init
+
+        echo "Installing vim-instant-markdown"
+        silent sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d
 
         if g:useYcmCompletion == 1
             echo "Installing YCM"
@@ -491,9 +495,7 @@ if g:useYcmCompletion == 1
         \ 'tagbar' : 1,
         \ 'qf' : 1,
         \ 'notes' : 1,
-        \ 'markdown' : 1,
         \ 'unite' : 1,
-        \ 'text' : 1,
         \ 'vimwiki' : 1,
         \ 'pandoc' : 1,
         \ 'conque_term' : 1
