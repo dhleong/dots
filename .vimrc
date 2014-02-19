@@ -48,6 +48,12 @@ let g:useYcmCompletion = 1 " else, acp and supertab
         Bundle 'ervandew/supertab'
     endif
 
+    " I would prefer to user MarcWeber's,
+    "  but it seems to be broken with YCM
+    " Bundle 'MarcWeber/ultisnips'
+    Bundle 'SirVer/ultisnips'
+    "Bundle 'honza/vim-snippets' " unneeded with SirVer
+
     " Syntax plugins
     Bundle 'groenewege/vim-less'
 
@@ -177,6 +183,9 @@ function! MapMake()
     if &ft == 'less'
         " the make shortcut should just compile lesscss
         nnoremap <silent> <leader>mm :w<cr> <BAR> call CompileLess()
+    elseif expand('%:p') == $MYVIMRC
+        " make green
+        nmap <silent> <leader>mm :BundleInstall<cr>
     elseif &ft == 'javascript'
         " make green
         nmap <silent> <leader>mm :MakeGreen<cr>
@@ -185,7 +194,10 @@ function! MapMake()
         nmap <silent> <leader>mm :make<cr>
     endif 
 endfunction
-autocmd BufEnter * call MapMake()
+augroup MakeMapper
+    autocmd!
+    autocmd BufEnter * call MapMake()
+augroup END
 
 " Quick make clean
 nmap <silent> <leader>mc :make clean<cr>
@@ -494,6 +506,11 @@ if g:useYcmCompletion == 1
     let g:ycm_collect_identifiers_from_comments_and_strings = 1
     
 endif
+
+let g:UltiSnipsListSnippets="<c-m-tab>"
+let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<C-J>"
+
 "
 " Github fun
 "
