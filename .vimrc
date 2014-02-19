@@ -14,6 +14,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
         silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
         let iCanHazVundle=0
     endif
+
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
 
@@ -81,7 +82,7 @@ set copyindent    " copy the previous indentation on autoindenting
 set showcmd
 set incsearch
 syntax enable
-filetype plugin on
+filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -137,6 +138,12 @@ nmap <silent> <leader>tev :tabe $MYVIMRC<cr>
 " And to source this file as well (mnemonic for the key sequence is
 " 's'ource 'v'imrc)
 nmap <silent> <leader>sv :so $MYVIMRC<cr>
+
+" Also, just source it automatically on write
+augroup VimAutoSource
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
 
 " While we're here, how about a vim shell? :)
 let g:ConqueTerm_CloseOnEnd = 1 " close the tab/split when the shell exits
@@ -487,7 +494,6 @@ if g:useYcmCompletion == 1
     let g:ycm_collect_identifiers_from_comments_and_strings = 1
     
 endif
-
 "
 " Github fun
 "
