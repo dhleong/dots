@@ -286,15 +286,39 @@ call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
 
 " keymaps
 function! MapCtrlP(path)
-    execute 'nnoremap <C-p> :Unite tab:no-current file_rec/async:' . a:path .  ' -start-insert<cr>'
-    execute 'nnoremap <C-w><C-p> :Unite tab:no-current file_rec/async:' . a:path .  ' -start-insert -default-action=tabopen<cr>'
-    execute 'nnoremap <C-s><C-p> :Unite tab:no-current file_rec/async:' . a:path .  ' -start-insert -default-action=vsplit<cr>'
+    " craziness to ensure pwd is always set correctly
+    " when creating the Unite buffer; for some reason it
+    " isn't set as expected when opening Unite after using
+    " the projectopen func below...
+    let suffix = a:path . '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
+    execute 'nnoremap <C-p> :Unite tab:no-current file_rec/async:' . suffix
+    execute 'nnoremap <C-w><C-p> :Unite tab:no-current file_rec/async:' . suffix
+    execute 'nnoremap <C-s><C-p> :Unite tab:no-current file_rec/async:' . suffix
 endfunction
 
 " default map for C-p (we'll remap with project directory soon)
 call MapCtrlP("")
 nnoremap <leader>/ :Unite grep:. -auto-preview<cr>
 let g:unite_enable_ignore_case = 1
+
+" new projectopen action to cooperate with SetPathToProject thingy
+let my_projectopen = {
+\ 'is_selectable' : 0,
+\ }
+function! my_projectopen.func(candidates)
+    let pathDir = a:candidates.word . '/'
+
+    " set path, etc.
+    exe 'set path=' . pathDir . '**'
+    let g:ProjectPath = pathDir
+    let g:ProjectGrepPath = g:ProjectPath . '*'
+    call MapCtrlP(pathDir)
+
+    execute 'Unite file_rec/async:' . pathDir . ' -start-insert'
+    execute 'lcd `=pathDir`' 
+endfunction
+call unite#custom#action('directory', 'projectopen', my_projectopen)
+unlet my_projectopen
 
 " use \p to open a list of project dirs, from which we can rec/async a file
 " It's disappointingly slow to open, but... oh well
@@ -304,7 +328,8 @@ for path in g:ProjectParentPaths
 endfor
 call unite#custom#source('directory', 'matchers', 'matcher_fuzzy')
 execute 'nnoremap <silent> <leader>p :Unite ' . g:UniteProjects .
-    \ ' -start-insert -default-action=rec/async<cr>'
+    \ ' -start-insert -sync -unique -hide-source-names ' .
+    \ ' -default-action=projectopen<cr>'
 
 
 "
@@ -330,11 +355,11 @@ function! SetPathToProject()
 
             " build the path
             let projName = strpart(noDir, 0, idx+1)
-            let pathDir = projDir . projName . '**'
+            let pathDir = projDir . projName 
 
             " set it
-            exe 'set path='.pathDir
-            let g:ProjectPath = projDir . projName 
+            exe 'set path=' . pathDir . '**'
+            let g:ProjectPath = pathDir
             let g:ProjectGrepPath = g:ProjectPath . '*'
             call MapCtrlP(g:ProjectPath)
             return
