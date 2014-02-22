@@ -296,6 +296,16 @@ call MapCtrlP("")
 nnoremap <leader>/ :Unite grep:. -auto-preview<cr>
 let g:unite_enable_ignore_case = 1
 
+" use \p to open a list of project dirs, from which we can rec/async a file
+" It's disappointingly slow to open, but... oh well
+let g:UniteProjects = ''
+for path in g:ProjectParentPaths
+    let g:UniteProjects = g:UniteProjects . ' directory:' . path
+endfor
+call unite#custom#source('directory', 'matchers', 'matcher_fuzzy')
+execute 'nnoremap <silent> <leader>p :Unite ' . g:UniteProjects .
+    \ ' -start-insert -default-action=rec/async<cr>'
+
 
 "
 " My project path script
