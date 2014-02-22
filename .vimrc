@@ -286,9 +286,9 @@ call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
 
 " keymaps
 function! MapCtrlP(path)
-    execute 'nnoremap <C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert<cr>'
-    execute 'nnoremap <C-w><C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert -default-action=tabopen<cr>'
-    execute 'nnoremap <C-s><C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert -default-action=vsplit<cr>'
+    execute 'nnoremap <C-p> :Unite tab:no-current file_rec/async:' . a:path .  ' -start-insert<cr>'
+    execute 'nnoremap <C-w><C-p> :Unite tab:no-current file_rec/async:' . a:path .  ' -start-insert -default-action=tabopen<cr>'
+    execute 'nnoremap <C-s><C-p> :Unite tab:no-current file_rec/async:' . a:path .  ' -start-insert -default-action=vsplit<cr>'
 endfunction
 
 " default map for C-p (we'll remap with project directory soon)
