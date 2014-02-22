@@ -14,6 +14,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
         silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
         let iCanHazVundle=0
     endif
+
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
 
@@ -31,6 +32,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'Shougo/unite.vim'
     Bundle 'Shougo/vimproc.vim'
     Bundle 'skammer/vim-css-color'
+    Bundle 'suan/vim-instant-markdown'
     Bundle 'tomtom/tcomment_vim'
     Bundle 'tpope/vim-fugitive' 
     Bundle 'tpope/vim-repeat' 
@@ -46,6 +48,12 @@ let g:useYcmCompletion = 1 " else, acp and supertab
         Bundle 'dhleong/vim-autocomplpop'
         Bundle 'ervandew/supertab'
     endif
+
+    " I would prefer to user MarcWeber's,
+    "  but it seems to be broken with YCM
+    " Bundle 'MarcWeber/ultisnips'
+    Bundle 'SirVer/ultisnips'
+    "Bundle 'honza/vim-snippets' " unneeded with SirVer
 
     " Syntax plugins
     Bundle 'groenewege/vim-less'
@@ -65,6 +73,9 @@ let g:useYcmCompletion = 1 " else, acp and supertab
         echo "Installing jedi"
         silent !cd ~/.vim/bundle/jedi-vim && git submodule update --init
 
+        echo "Installing vim-instant-markdown"
+        silent sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d
+
         if g:useYcmCompletion == 1
             echo "Installing YCM"
             silent !cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer
@@ -81,7 +92,7 @@ set copyindent    " copy the previous indentation on autoindenting
 set showcmd
 set incsearch
 syntax enable
-filetype plugin on
+filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -138,6 +149,12 @@ nmap <silent> <leader>tev :tabe $MYVIMRC<cr>
 " 's'ource 'v'imrc)
 nmap <silent> <leader>sv :so $MYVIMRC<cr>
 
+" Also, just source it automatically on write
+augroup VimAutoSource
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
 " While we're here, how about a vim shell? :)
 let g:ConqueTerm_CloseOnEnd = 1 " close the tab/split when the shell exits
 let g:ConqueTerm_StartMessages = 0 " shhh. it's fine
@@ -170,6 +187,9 @@ function! MapMake()
     if &ft == 'less'
         " the make shortcut should just compile lesscss
         nnoremap <silent> <leader>mm :w<cr> <BAR> call CompileLess()
+    elseif expand('%:p') == $MYVIMRC
+        " make green
+        nmap <silent> <leader>mm :BundleInstall<cr>
     elseif &ft == 'javascript'
         " make green
         nmap <silent> <leader>mm :MakeGreen<cr>
@@ -178,7 +198,10 @@ function! MapMake()
         nmap <silent> <leader>mm :make<cr>
     endif 
 endfunction
-autocmd BufEnter * call MapMake()
+augroup MakeMapper
+    autocmd!
+    autocmd BufEnter * call MapMake()
+augroup END
 
 " Quick make clean
 nmap <silent> <leader>mc :make clean<cr>
@@ -475,9 +498,7 @@ if g:useYcmCompletion == 1
         \ 'tagbar' : 1,
         \ 'qf' : 1,
         \ 'notes' : 1,
-        \ 'markdown' : 1,
         \ 'unite' : 1,
-        \ 'text' : 1,
         \ 'vimwiki' : 1,
         \ 'pandoc' : 1,
         \ 'conque_term' : 1
@@ -490,6 +511,10 @@ if g:useYcmCompletion == 1
     let g:ycm_collect_identifiers_from_comments_and_strings = 1
     
 endif
+
+let g:UltiSnipsListSnippets="<c-m-tab>"
+let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<C-J>"
 
 "
 " Github fun
