@@ -25,6 +25,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
 
     Bundle 'bling/vim-airline'
     Bundle 'davidhalter/jedi-vim'
+    Bundle 'dhleong/tcomment_vim'
     Bundle 'marijnh/tern_for_vim'
     Bundle 'oplatek/Conque-Shell'
     Bundle 'reinh/vim-makegreen'
@@ -33,7 +34,6 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'Shougo/vimproc.vim'
     Bundle 'skammer/vim-css-color'
     Bundle 'suan/vim-instant-markdown'
-    Bundle 'tomtom/tcomment_vim'
     Bundle 'tpope/vim-fugitive' 
     Bundle 'tpope/vim-repeat' 
     Bundle 'tpope/vim-surround' 
@@ -515,6 +515,16 @@ endif
 let g:UltiSnipsListSnippets="<c-m-tab>"
 let g:UltiSnipsExpandTrigger="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-J>"
+
+"
+" Commenting configs
+"
+let g:tcomment_types = {
+    \ 'java': '// %s',
+    \ 'java_inline': '// %s',
+    \ 'java_block': '// %s'
+    \ }
+
 
 "
 " Github fun
