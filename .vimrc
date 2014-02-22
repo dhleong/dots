@@ -466,6 +466,9 @@ let g:acp_completeoptPreview = 1
 " fix unshift when popup isn't open
 let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 
+" syntastic configs
+let g:syntastic_java_checkers = ['checkstyle']
+
 if g:useYcmCompletion == 1
 
   let g:ycm_filetype_blacklist = {
