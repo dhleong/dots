@@ -21,6 +21,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'gmarik/vundle'
     "Add your bundles here
     Bundle 'eregex.vim'
+    Bundle 'matchit.zip'
     Bundle 'VisIncr'
 
     Bundle 'bling/vim-airline'
