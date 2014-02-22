@@ -523,9 +523,10 @@ if g:useYcmCompletion == 1
     
 endif
 
-let g:UltiSnipsListSnippets="<c-m-tab>"
-let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsListSnippets="<C-M-Tab>"
+let g:UltiSnipsExpandTrigger="<C-Enter>"
 let g:UltiSnipsJumpForwardTrigger="<C-J>"
+let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 
 "
 " Commenting configs
