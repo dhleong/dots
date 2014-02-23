@@ -93,7 +93,7 @@ set copyindent    " copy the previous indentation on autoindenting
 set showcmd
 set incsearch
 syntax enable
-filetype plugin indent on
+filetype plugin on
 set tabstop=4
 set shiftwidth=4
 set expandtab
