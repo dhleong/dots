@@ -290,10 +290,13 @@ function! MapCtrlP(path)
     " when creating the Unite buffer; for some reason it
     " isn't set as expected when opening Unite after using
     " the projectopen func below...
-    let suffix = a:path . '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
-    execute 'nnoremap <C-p> :Unite tab:no-current file_rec/async:' . suffix
-    execute 'nnoremap <C-w><C-p> :Unite tab:no-current file_rec/async:' . suffix
-    execute 'nnoremap <C-s><C-p> :Unite tab:no-current file_rec/async:' . suffix
+
+    let suffix =  '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
+    execute 'nnoremap <C-p> :Unite tab:no-current file_rec/async:' . a:path . suffix
+    execute 'nnoremap <C-w><C-p> :Unite tab:no-current file_rec/async:' .
+        \ a:path . ' -default-action=tabopen' . suffix
+    execute 'nnoremap <C-s><C-p> :Unite tab:no-current file_rec/async:' . 
+        \ a:path . ' -default-action=vsplit' . suffix
 endfunction
 
 " default map for C-p (we'll remap with project directory soon)
