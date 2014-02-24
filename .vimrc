@@ -21,10 +21,12 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'gmarik/vundle'
     "Add your bundles here
     Bundle 'eregex.vim'
+    Bundle 'matchit.zip'
     Bundle 'VisIncr'
 
     Bundle 'bling/vim-airline'
     Bundle 'davidhalter/jedi-vim'
+    Bundle 'dhleong/tcomment_vim'
     Bundle 'marijnh/tern_for_vim'
     Bundle 'oplatek/Conque-Shell'
     Bundle 'reinh/vim-makegreen'
@@ -33,7 +35,6 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'Shougo/vimproc.vim'
     Bundle 'skammer/vim-css-color'
     Bundle 'suan/vim-instant-markdown'
-    Bundle 'tomtom/tcomment_vim'
     Bundle 'tpope/vim-fugitive' 
     Bundle 'tpope/vim-markdown' 
     Bundle 'tpope/vim-repeat' 
@@ -93,7 +94,7 @@ set copyindent    " copy the previous indentation on autoindenting
 set showcmd
 set incsearch
 syntax enable
-filetype plugin indent on
+filetype plugin on
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -286,15 +287,53 @@ call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
 
 " keymaps
 function! MapCtrlP(path)
-    execute 'nnoremap <C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert<cr>'
-    execute 'nnoremap <C-w><C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert -default-action=tabopen<cr>'
-    execute 'nnoremap <C-s><C-p> :Unite tab file_rec/async:' . a:path .  ' -start-insert -default-action=vsplit<cr>'
+    " craziness to ensure pwd is always set correctly
+    " when creating the Unite buffer; for some reason it
+    " isn't set as expected when opening Unite after using
+    " the projectopen func below...
+
+    let suffix =  '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
+    execute 'nnoremap <C-p> :Unite tab:no-current file_rec/async:' . a:path . suffix
+    execute 'nnoremap <C-w><C-p> :Unite tab:no-current file_rec/async:' .
+        \ a:path . ' -default-action=tabopen' . suffix
+    execute 'nnoremap <C-s><C-p> :Unite tab:no-current file_rec/async:' . 
+        \ a:path . ' -default-action=vsplit' . suffix
 endfunction
 
 " default map for C-p (we'll remap with project directory soon)
 call MapCtrlP("")
 nnoremap <leader>/ :Unite grep:. -auto-preview<cr>
 let g:unite_enable_ignore_case = 1
+
+" new projectopen action to cooperate with SetPathToProject thingy
+let my_projectopen = {
+\ 'is_selectable' : 0,
+\ }
+function! my_projectopen.func(candidates)
+    let pathDir = a:candidates.word . '/'
+
+    " set path, etc.
+    exe 'set path=' . pathDir . '**'
+    let g:ProjectPath = pathDir
+    let g:ProjectGrepPath = g:ProjectPath . '*'
+    call MapCtrlP(pathDir)
+
+    execute 'Unite file_rec/async:' . pathDir . ' -start-insert'
+    execute 'lcd `=pathDir`' 
+endfunction
+call unite#custom#action('directory', 'projectopen', my_projectopen)
+unlet my_projectopen
+
+" use \p to open a list of project dirs, from which we can rec/async a file
+" It's disappointingly slow to open, but... oh well
+let g:UniteProjects = ''
+for path in g:ProjectParentPaths
+    let g:UniteProjects = g:UniteProjects . ' directory:' . path
+endfor
+call unite#custom#source('directory', 'matchers', 'matcher_fuzzy')
+execute 'nnoremap <silent> <leader>p :Unite ' . g:UniteProjects .
+    \ ' -start-insert -sync -unique -hide-source-names ' .
+    \ ' -default-action=projectopen<cr>'
 
 
 "
@@ -320,11 +359,11 @@ function! SetPathToProject()
 
             " build the path
             let projName = strpart(noDir, 0, idx+1)
-            let pathDir = projDir . projName . '**'
+            let pathDir = projDir . projName 
 
             " set it
-            exe 'set path='.pathDir
-            let g:ProjectPath = projDir . projName 
+            exe 'set path=' . pathDir . '**'
+            let g:ProjectPath = pathDir
             let g:ProjectGrepPath = g:ProjectPath . '*'
             call MapCtrlP(g:ProjectPath)
             return
@@ -490,6 +529,9 @@ let g:acp_completeoptPreview = 1
 " fix unshift when popup isn't open
 let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 
+" syntastic configs
+let g:syntastic_java_checkers = ['checkstyle']
+
 if g:useYcmCompletion == 1
 
   let g:ycm_filetype_blacklist = {
@@ -510,9 +552,20 @@ if g:useYcmCompletion == 1
     
 endif
 
-let g:UltiSnipsListSnippets="<c-m-tab>"
-let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsListSnippets="<C-M-Tab>"
+let g:UltiSnipsExpandTrigger="<C-Enter>"
 let g:UltiSnipsJumpForwardTrigger="<C-J>"
+let g:UltiSnipsJumpBackwardTrigger="<C-K>"
+
+"
+" Commenting configs
+"
+let g:tcomment_types = {
+    \ 'java': '// %s',
+    \ 'java_inline': '// %s',
+    \ 'java_block': '// %s'
+    \ }
+
 
 "
 " Github fun
