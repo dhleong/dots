@@ -35,6 +35,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'suan/vim-instant-markdown'
     Bundle 'tomtom/tcomment_vim'
     Bundle 'tpope/vim-fugitive' 
+    Bundle 'tpope/vim-markdown' 
     Bundle 'tpope/vim-repeat' 
     Bundle 'tpope/vim-surround' 
     Bundle 'Valloric/MatchTagAlways'
@@ -538,3 +539,15 @@ nnoremap gha :GithubAccept<cr>
 
 " 'take' the issue under the cursor (assign to 'me')
 nnoremap ght :GithubTake<cr>
+
+
+"
+" Convenience for Markdown editing
+"
+let g:markdown_tmp_file = $HOME . '/.tmp.markdown'
+function! MarkdownFunc()
+    silent exe "!rm " . g:markdown_tmp_file
+    silent exe "edit " . g:markdown_tmp_file
+    echo "Editing new Markdown file"
+endfunction
+command! Markdown call MarkdownFunc()
