@@ -261,7 +261,7 @@ nnoremap <Tab> >>_
 " for more fluid typing
 let acceptSuggestionKeys = ['<Space>', '.', ',', ':', ';', '(', ')', '[', ']']
 for key in acceptSuggestionKeys
-    exe 'inoremap <expr>' . key . ' pumvisible() ? "\<C-y>' . key . '" : "' . key . '"'
+    exe 'imap <expr>' . key . ' pumvisible() ? "\<C-y>' . key . '" : "' . key . '"'
 endfor
 
 set completeopt=menu,preview,longest
@@ -272,6 +272,7 @@ set completeopt=menu,preview,longest
 
 " I do this ALL the time
 abbr ~? ~/
+iabbr CLoses Closes
 iabbr mfa Miners/minus-for-Android
 
 
