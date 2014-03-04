@@ -26,7 +26,6 @@ let g:useYcmCompletion = 1 " else, acp and supertab
 
     Bundle 'bling/vim-airline'
     Bundle 'davidhalter/jedi-vim'
-    Bundle 'dhleong/tcomment_vim'
     Bundle 'marijnh/tern_for_vim'
     Bundle 'oplatek/Conque-Shell'
     Bundle 'reinh/vim-makegreen'
@@ -35,6 +34,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'Shougo/vimproc.vim'
     Bundle 'skammer/vim-css-color'
     Bundle 'suan/vim-instant-markdown'
+    Bundle 'tomtom/tcomment_vim'
     Bundle 'tpope/vim-fugitive' 
     Bundle 'tpope/vim-markdown' 
     Bundle 'tpope/vim-repeat' 
@@ -261,7 +261,7 @@ nnoremap <Tab> >>_
 " for more fluid typing
 let acceptSuggestionKeys = ['<Space>', '.', ',', ':', ';', '(', ')', '[', ']']
 for key in acceptSuggestionKeys
-    exe 'inoremap <expr>' . key . ' pumvisible() ? "\<C-y>' . key . '" : "' . key . '"'
+    exe 'imap <expr>' . key . ' pumvisible() ? "\<C-y>' . key . '" : "' . key . '"'
 endfor
 
 set completeopt=menu,preview,longest
@@ -272,6 +272,7 @@ set completeopt=menu,preview,longest
 
 " I do this ALL the time
 abbr ~? ~/
+iabbr CLoses Closes
 iabbr mfa Miners/minus-for-Android
 
 
