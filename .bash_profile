@@ -19,6 +19,7 @@ alias airportcycle='networksetup -setairportpower airport off; networksetup -set
 alias l='ls -al'
 alias seriestracker='(cd ~/SeriesTracker-v6/; java -jar seriestracker.jar)'
 alias gits='git status'
+alias guts='git status'
 alias gitco='git commit -a'
 alias gitpp='git pull && git push'
 
