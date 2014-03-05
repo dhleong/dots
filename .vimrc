@@ -1,7 +1,8 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
 
-let g:useYcmCompletion = 1 " else, acp and supertab
+" YCM is SUPER slow right now :(
+let g:useYcmCompletion = 0 " else, acp and supertab
 
 " From http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
 " Setting up Vundle - the vim plugin bundler
@@ -29,11 +30,13 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'marijnh/tern_for_vim'
     Bundle 'oplatek/Conque-Shell'
     Bundle 'reinh/vim-makegreen'
+    Bundle 'rstacruz/sparkup', {'rtp': 'vim'}
     Bundle 'scrooloose/syntastic'
     Bundle 'Shougo/unite.vim'
     Bundle 'Shougo/vimproc.vim'
     Bundle 'skammer/vim-css-color'
     Bundle 'suan/vim-instant-markdown'
+    Bundle 'terryma/vim-multiple-cursors'
     Bundle 'tomtom/tcomment_vim'
     Bundle 'tpope/vim-fugitive' 
     Bundle 'tpope/vim-markdown' 
@@ -42,6 +45,8 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'Valloric/MatchTagAlways'
     Bundle 'xolox/vim-misc'
     Bundle 'xolox/vim-session'
+
+    Bundle 'file:///Users/dhleong/code/hubr'
 
     " completion
     if g:useYcmCompletion == 1
@@ -55,7 +60,8 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     "  but it seems to be broken with YCM
     " Bundle 'MarcWeber/ultisnips'
     Bundle 'SirVer/ultisnips'
-    "Bundle 'honza/vim-snippets' " unneeded with SirVer
+    " needed again
+    Bundle 'honza/vim-snippets' 
 
     " Syntax plugins
     Bundle 'groenewege/vim-less'
@@ -306,7 +312,9 @@ call MapCtrlP("")
 nnoremap <leader>/ :Unite grep:. -auto-preview<cr>
 let g:unite_enable_ignore_case = 1
 
+"
 " new projectopen action to cooperate with SetPathToProject thingy
+"
 let my_projectopen = {
 \ 'is_selectable' : 0,
 \ }
@@ -511,6 +519,9 @@ let g:jedi#squelch_py_warning = 1
 let g:jedi#popup_select_first = 1
 let g:jedi#goto_definitions_command = "gd"
 
+" tern configs
+let g:tern_show_signature_in_pum = 1
+
 " session configs
 let g:session_autosave = 'yes'
 let g:session_autoload = 'no'
@@ -594,6 +605,8 @@ nnoremap gha :GithubAccept<cr>
 " 'take' the issue under the cursor (assign to 'me')
 nnoremap ght :GithubTake<cr>
 
+" awesome Unite plugin for issues
+nnoremap ghi :Unite gh_issue<cr>
 
 "
 " Convenience for Markdown editing
