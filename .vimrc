@@ -2,7 +2,7 @@
 set nocompatible
 
 " YCM is SUPER slow right now :(
-let g:useYcmCompletion = 1 " else, acp and supertab
+let g:useYcmCompletion = 0 " else, acp and supertab
 
 " From http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
 " Setting up Vundle - the vim plugin bundler
@@ -175,6 +175,10 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Navigation in insert mode, for use with multicursor
+inoremap <C-A> <esc>I
+inoremap <C-E> <esc>A
+
 " Ctrl-S 2x to open a vertical split (I use these a lot)
 " It's 2x because <C-S><C-P> does Unite Search to open in vsp,
 "  so this is faster if I just want a straight split
@@ -281,6 +285,10 @@ abbr ~? ~/
 iabbr CLoses Closes
 iabbr mfa Miners/minus-for-Android
 
+"
+" Sparkup/zen coding
+"
+let g:sparkupExecuteMapping = '<c-s>'
 
 "
 " unite configs
@@ -553,8 +561,10 @@ if g:useYcmCompletion == 1
         \ 'unite' : 1,
         \ 'vimwiki' : 1,
         \ 'pandoc' : 1,
-        \ 'conque_term' : 1
+        \ 'conque_term' : 1,
+        \ 'gitcommit': 1
         \}
+        " TODO remove gitcommit above
     
     let g:ycm_key_list_previous_completion = ['<Up>'] " NOT s-tab; we do the right thing below:
     inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
