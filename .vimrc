@@ -1,7 +1,6 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
 
-" YCM is SUPER slow right now :(
 let g:useYcmCompletion = 1 " else, acp and supertab
 
 " From http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
@@ -557,8 +556,9 @@ let g:EclimJavascriptValidate = 0
 silent! source /Users/dhleong/code/njast/njast.vim
 
 " jedi configs
+let g:jedi#completions_enabled = 0
 let g:jedi#squelch_py_warning = 1
-let g:jedi#popup_select_first = 0
+let g:jedi#popup_select_first = 1
 let g:jedi#popup_on_dot = 0
 let g:jedi#goto_definitions_command = "gd"
 
