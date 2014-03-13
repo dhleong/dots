@@ -178,12 +178,18 @@ function! RunCurrentInSplitTerm()
         let fullPath = expand('%:p:h')
 
         let mainBuf = bufnr('%')
+        let mainWin = winnr()
         let term = conque_term#open('bash', ['below split', 'resize 20'])
         call setbufvar(mainBuf, "my_terminal", term)
         call setbufvar(mainBuf, "my_terminal_winno", winnr())
 
         " NB Can't seem to unset the variable correctly,
         "  so we just check the active status
+
+        " We're not really planning to do much real input 
+        "  in this window, so let's take over easy the 
+        "  relatively easy S-Tab to jump back to our main window
+        exe 'inoremap <buffer> <S-Tab> <esc>:' . mainWin . 'wincmd w<cr>'
 
         call term.writeln("cd " . fullPath)
     else
