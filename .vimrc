@@ -167,7 +167,38 @@ augroup END
 let g:ConqueTerm_CloseOnEnd = 1 " close the tab/split when the shell exits
 let g:ConqueTerm_StartMessages = 0 " shhh. it's fine
 nmap <silent> <leader>vs :ConqueTermVSplit bash -l<cr>
+nmap <silent> <leader>hs :ConqueTermSplit bash -l<cr>
 nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
+
+function! RunCurrentInSplitTerm()
+    let fileName = expand('%')
+
+     " do we already have a term?
+    if !exists('b:my_terminal') || b:my_terminal.active == 0
+        " nope... set it up
+        let fullPath = expand('%:p:h')
+
+        let mainBuf = bufnr('%')
+        let term = conque_term#open('bash', ['below split', 'resize 20'])
+        call setbufvar(mainBuf, "my_terminal", term)
+        call setbufvar(mainBuf, "my_terminal_winno", winnr())
+
+        " NB Can't seem to unset the variable correctly,
+        "  so we just check the active status
+
+        call term.writeln("cd " . fullPath)
+    else
+        " yes! reuse it
+        let term = b:my_terminal
+
+        exe b:my_terminal_winno . 'wincmd w'
+        :startinsert
+    endif
+
+    call term.writeln("clear")
+    call term.writeln("./" . fileName)
+endfunction
+nmap <silent> <leader>rs :call RunCurrentInSplitTerm()<cr>
 
 " convenient new tab
 nnoremap <C-W><C-W> :tabe<cr>
