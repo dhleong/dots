@@ -189,7 +189,7 @@ function! RunCurrentInSplitTerm()
         " We're not really planning to do much real input 
         "  in this window, so let's take over easy the 
         "  relatively easy S-Tab to jump back to our main window
-        exe 'inoremap <buffer> <S-Tab> <esc>:' . mainWin . 'wincmd w<cr>'
+        exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
 
         call term.writeln("cd " . fullPath)
     else
