@@ -64,6 +64,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
 
     " Syntax plugins
     Bundle 'groenewege/vim-less'
+    Bundle 'tfnico/vim-gradle'
 
     "...All your other bundles...
     if iCanHazVundle == 0
