@@ -1,7 +1,6 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
 
-" YCM is SUPER slow right now :(
 let g:useYcmCompletion = 1 " else, acp and supertab
 
 " From http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
@@ -52,7 +51,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     if g:useYcmCompletion == 1
         Bundle 'Valloric/YouCompleteMe'
     else
-        Bundle 'dhleong/vim-autocomplpop'
+        " Bundle 'dhleong/vim-autocomplpop'
         Bundle 'ervandew/supertab'
     endif
 
@@ -168,7 +167,47 @@ augroup END
 let g:ConqueTerm_CloseOnEnd = 1 " close the tab/split when the shell exits
 let g:ConqueTerm_StartMessages = 0 " shhh. it's fine
 nmap <silent> <leader>vs :ConqueTermVSplit bash -l<cr>
+nmap <silent> <leader>hs :ConqueTermSplit bash -l<cr>
 nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
+
+function! RunCurrentInSplitTerm()
+    let fileName = expand('%')
+
+     " do we already have a term?
+    if !exists('b:my_terminal') || b:my_terminal.active == 0
+        " nope... set it up
+        let fullPath = expand('%:p:h')
+
+        let mainBuf = bufnr('%')
+        let mainWin = winnr()
+        let term = conque_term#open('bash', ['below split', 'resize 20'])
+        call setbufvar(mainBuf, "my_terminal", term)
+        call setbufvar(mainBuf, "my_terminal_winno", winnr())
+
+        " NB Can't seem to unset the variable correctly,
+        "  so we just check the active status
+
+        " We're not really planning to do much real input 
+        "  in this window, so let's take over easy the 
+        "  relatively easy S-Tab to jump back to our main window
+        exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
+
+        call term.writeln("cd " . fullPath)
+    else
+        " yes! reuse it
+        let term = b:my_terminal
+
+        exe b:my_terminal_winno . 'wincmd w'
+        :startinsert
+    endif
+
+    call term.writeln("clear")
+    call term.writeln("./" . fileName)
+endfunction
+nmap <silent> <leader>rs :call RunCurrentInSplitTerm()<cr>
+
+" convenient new tab
+nnoremap <C-W><C-W> :tabe<cr>
 
 " Enable faster splits navigation
 nnoremap <C-J> <C-W><C-J>
@@ -524,8 +563,10 @@ let g:EclimJavascriptValidate = 0
 silent! source /Users/dhleong/code/njast/njast.vim
 
 " jedi configs
+let g:jedi#completions_enabled = 0
 let g:jedi#squelch_py_warning = 1
 let g:jedi#popup_select_first = 1
+let g:jedi#popup_on_dot = 0
 let g:jedi#goto_definitions_command = "gd"
 
 " tern configs
