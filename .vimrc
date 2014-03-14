@@ -171,6 +171,7 @@ nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
 
 function! RunCurrentInSplitTerm()
     let fileName = expand('%')
+    let winSize = 20
 
      " do we already have a term?
     if !exists('b:my_terminal') || b:my_terminal.active == 0
@@ -179,7 +180,8 @@ function! RunCurrentInSplitTerm()
 
         let mainBuf = bufnr('%')
         let mainWin = winnr()
-        let term = conque_term#open('bash', ['below split', 'resize 20'])
+        let term = conque_term#open('bash', ['below split', 
+            \ 'resize ' .  winSize])
         call setbufvar(mainBuf, "my_terminal", term)
         call setbufvar(mainBuf, "my_terminal_winno", winnr())
 
@@ -198,6 +200,7 @@ function! RunCurrentInSplitTerm()
 
         exe b:my_terminal_winno . 'wincmd w'
         :startinsert
+        exe 'resize ' . winSize
     endif
 
     call term.writeln("clear")
