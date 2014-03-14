@@ -94,6 +94,15 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     endif
 " Setting up Vundle - the vim plugin bundler end
 
+" A convenient function to delete a bundle and reinstall it
+function! ReinstallBundle(name)
+    BundleList
+    exe '/' . a:name
+    norm D
+    BundleInstall
+    norm q
+endfunction
+
 
 set autoindent
 set copyindent    " copy the previous indentation on autoindenting
@@ -110,6 +119,7 @@ set ignorecase  " ignore case in search....
 set smartcase   " but if we WANT case, use it
 
 set splitright  " horizontal splits should not open on the left... 
+set noea        " 'no equal always'--don't resize my splits!
 
 if exists('+autochdir')
     " use the builtin if we have it
@@ -174,7 +184,10 @@ function! RunCurrentInSplitTerm()
     let fileName = expand('%')
     let winSize = 20
 
-     " do we already have a term?
+    " make sure we're up to date
+    write
+
+    " do we already have a term?
     if !exists('b:my_terminal') || b:my_terminal.active == 0
         " nope... set it up
         let fullPath = expand('%:p:h')
@@ -660,6 +673,9 @@ nnoremap ght :GithubTake<cr>
 
 " awesome Unite plugin for issues
 nnoremap ghi :Unite gh_issue<cr>
+
+" re-install hubr for rapid development
+nnoremap <leader>rh :call ReinstallBundle('hubr')<cr>
 
 "
 " Convenience for Markdown editing
