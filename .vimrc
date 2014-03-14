@@ -2,7 +2,7 @@
 set nocompatible
 
 " YCM is SUPER slow right now :(
-let g:useYcmCompletion = 0 " else, acp and supertab
+let g:useYcmCompletion = 1 " else, acp and supertab
 
 " From http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
 " Setting up Vundle - the vim plugin bundler
@@ -65,6 +65,7 @@ let g:useYcmCompletion = 0 " else, acp and supertab
 
     " Syntax plugins
     Bundle 'groenewege/vim-less'
+    Bundle 'tfnico/vim-gradle'
 
     "...All your other bundles...
     if iCanHazVundle == 0
@@ -562,16 +563,13 @@ if g:useYcmCompletion == 1
         \ 'vimwiki' : 1,
         \ 'pandoc' : 1,
         \ 'conque_term' : 1,
-        \ 'gitcommit': 1
         \}
-        " TODO remove gitcommit above
     
     let g:ycm_key_list_previous_completion = ['<Up>'] " NOT s-tab; we do the right thing below:
     inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
 
     " most useful for gitcommit
-    " TODO Restore when fixed; right now, it causes super lag
-    " let g:ycm_collect_identifiers_from_comments_and_strings = 1
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1
     
 endif
 
