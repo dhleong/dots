@@ -121,6 +121,8 @@ set smartcase   " but if we WANT case, use it
 set splitright  " horizontal splits should not open on the left... 
 set noea        " 'no equal always'--don't resize my splits!
 
+let mapleader=","
+
 if exists('+autochdir')
     " use the builtin if we have it
     set autochdir
@@ -166,6 +168,11 @@ nmap <silent> <leader>tev :tabe $MYVIMRC<cr>
 " And to source this file as well (mnemonic for the key sequence is
 " 's'ource 'v'imrc)
 nmap <silent> <leader>sv :so $MYVIMRC<cr>
+
+" And the bundles dir, as well ('v'im 'b'undles)
+nmap <silent> <leader>vb :e ~/.vim/bundle/<cr>
+
+nmap <silent> <space> <enter>
 
 " Also, just source it automatically on write
 augroup VimAutoSource
@@ -290,6 +297,9 @@ nnoremap <leader>/ :call eregex#toggle()<CR>
 
 " some git configs
 nnoremap <leader>gc :Gcommit -a<CR>
+
+" some git configs
+nnoremap <leader>ga :Gcommit -a --amend<CR>
 
 function! WriteAndPush()
     if expand('%') == "COMMIT_EDITMSG" 
@@ -672,7 +682,7 @@ nnoremap gha :GithubAccept<cr>
 nnoremap ght :GithubTake<cr>
 
 " awesome Unite plugin for issues
-nnoremap ghi :Unite gh_issue<cr>
+nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
 " re-install hubr for rapid development
 nnoremap <leader>rh :call ReinstallBundle('hubr')<cr>
