@@ -121,6 +121,8 @@ set smartcase   " but if we WANT case, use it
 set splitright  " horizontal splits should not open on the left... 
 set noea        " 'no equal always'--don't resize my splits!
 
+set clipboard=unnamed
+
 if exists('+autochdir')
     " use the builtin if we have it
     set autochdir
@@ -156,6 +158,9 @@ set vb
 " hide useless gui
 set guioptions=ac
 
+" use comma as the map leader, because \ is too far
+let mapleader = ","
+
 " Let's make it easy to edit this file (mnemonic for the key sequence is
 " 'e'dit 'v'imrc)
 nmap <silent> <leader>ev :e $MYVIMRC<cr>
@@ -166,6 +171,9 @@ nmap <silent> <leader>tev :tabe $MYVIMRC<cr>
 " And to source this file as well (mnemonic for the key sequence is
 " 's'ource 'v'imrc)
 nmap <silent> <leader>sv :so $MYVIMRC<cr>
+
+" Let's make it easy to open the bundles directory
+nmap <silent> <leader>vb :e ~/.vim/bundle<cr>
 
 " Also, just source it automatically on write
 augroup VimAutoSource
@@ -290,6 +298,7 @@ nnoremap <leader>/ :call eregex#toggle()<CR>
 
 " some git configs
 nnoremap <leader>gc :Gcommit -a<CR>
+nnoremap <leader>ga :Gcommit -a --amend<CR>
 
 function! WriteAndPush()
     if expand('%') == "COMMIT_EDITMSG" 
@@ -350,10 +359,13 @@ let g:sparkupExecuteMapping = '<c-s>'
 " unite configs
 "
 
+" we don't want results from this dirs (inserted below)
+let _dirs = substitute("bin,node_modules,build,", ",", "\/\\\\|", "g") 
+
 " borrow ignore extensions from wildignore setting
 let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
 let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
-let _wilds = '\%(^\|/\)\.\.\?$\|\.git/\|node_modules/\|\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
+let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . _dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
 call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
 
 " keymaps
@@ -584,6 +596,8 @@ let g:jedi#squelch_py_warning = 1
 let g:jedi#popup_select_first = 1
 let g:jedi#popup_on_dot = 0
 let g:jedi#goto_definitions_command = "gd"
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#use_splits_not_buffers = "right"
 
 " tern configs
 let g:tern_show_signature_in_pum = 1
@@ -672,7 +686,7 @@ nnoremap gha :GithubAccept<cr>
 nnoremap ght :GithubTake<cr>
 
 " awesome Unite plugin for issues
-nnoremap ghi :Unite gh_issue<cr>
+nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
 " re-install hubr for rapid development
 nnoremap <leader>rh :call ReinstallBundle('hubr')<cr>
