@@ -172,8 +172,10 @@ nmap <silent> <leader>tev :tabe $MYVIMRC<cr>
 " 's'ource 'v'imrc)
 nmap <silent> <leader>sv :so $MYVIMRC<cr>
 
-" Let's make it easy to open the bundles directory
-nmap <silent> <leader>vb :e ~/.vim/bundle<cr>
+" And the bundles dir, as well ('v'im 'b'undles)
+nmap <silent> <leader>vb :e ~/.vim/bundle/<cr>
+
+nmap <silent> <space> <enter>
 
 " Also, just source it automatically on write
 augroup VimAutoSource
@@ -298,6 +300,9 @@ nnoremap <leader>/ :call eregex#toggle()<CR>
 
 " some git configs
 nnoremap <leader>gc :Gcommit -a<CR>
+nnoremap <leader>ga :Gcommit -a --amend<CR>
+
+" some git configs
 nnoremap <leader>ga :Gcommit -a --amend<CR>
 
 function! WriteAndPush()
