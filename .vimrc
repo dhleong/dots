@@ -156,7 +156,7 @@ let g:ProjectParentPaths = [
 set vb
 
 " hide useless gui
-set guioptions=ac
+set guioptions=c
 
 " use comma as the map leader, because \ is too far
 let mapleader = ","
@@ -231,6 +231,7 @@ function! RunCurrentInSplitTerm()
     call term.writeln("./" . fileName)
 endfunction
 nmap <silent> <leader>rs :call RunCurrentInSplitTerm()<cr>
+nmap <silent> <d-r> :call RunCurrentInSplitTerm()<cr>
 
 " convenient new tab
 nnoremap <C-W><C-W> :tabe<cr>
