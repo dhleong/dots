@@ -192,6 +192,7 @@ nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
 
 function! RunCurrentInSplitTerm()
     let fileName = expand('%')
+    let fullPath = expand('%:p:h')
     let winSize = 20
 
     " make sure we're up to date
@@ -200,7 +201,6 @@ function! RunCurrentInSplitTerm()
     " do we already have a term?
     if !exists('b:my_terminal') || b:my_terminal.active == 0
         " nope... set it up
-        let fullPath = expand('%:p:h')
 
         let mainBuf = bufnr('%')
         let mainWin = winnr()
@@ -216,8 +216,6 @@ function! RunCurrentInSplitTerm()
         "  in this window, so let's take over easy the 
         "  relatively easy S-Tab to jump back to our main window
         exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
-
-        call term.writeln("cd " . fullPath)
     else
         " yes! reuse it
         let term = b:my_terminal
@@ -227,6 +225,8 @@ function! RunCurrentInSplitTerm()
         exe 'resize ' . winSize
     endif
 
+    " always cd, just in case
+    call term.writeln("cd " . fullPath)
     call term.writeln("clear")
     call term.writeln("./" . fileName)
 endfunction
