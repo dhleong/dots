@@ -650,7 +650,7 @@ let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 "
 let g:tcomment_types = {
     \ 'java': '// %s',
-    \ 'java_inline': '// %s',
+    \ 'java_inline': '/* %s */',
     \ 'java_block': '// %s'
     \ }
 
