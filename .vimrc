@@ -121,7 +121,7 @@ set smartcase   " but if we WANT case, use it
 set splitright  " horizontal splits should not open on the left... 
 set noea        " 'no equal always'--don't resize my splits!
 
-let mapleader=","
+set clipboard=unnamed
 
 if exists('+autochdir')
     " use the builtin if we have it
@@ -156,7 +156,10 @@ let g:ProjectParentPaths = [
 set vb
 
 " hide useless gui
-set guioptions=ac
+set guioptions=c
+
+" use comma as the map leader, because \ is too far
+let mapleader = ","
 
 " Let's make it easy to edit this file (mnemonic for the key sequence is
 " 'e'dit 'v'imrc)
@@ -189,6 +192,7 @@ nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
 
 function! RunCurrentInSplitTerm()
     let fileName = expand('%')
+    let fullPath = expand('%:p:h')
     let winSize = 20
 
     " make sure we're up to date
@@ -197,7 +201,6 @@ function! RunCurrentInSplitTerm()
     " do we already have a term?
     if !exists('b:my_terminal') || b:my_terminal.active == 0
         " nope... set it up
-        let fullPath = expand('%:p:h')
 
         let mainBuf = bufnr('%')
         let mainWin = winnr()
@@ -213,8 +216,6 @@ function! RunCurrentInSplitTerm()
         "  in this window, so let's take over easy the 
         "  relatively easy S-Tab to jump back to our main window
         exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
-
-        call term.writeln("cd " . fullPath)
     else
         " yes! reuse it
         let term = b:my_terminal
@@ -224,10 +225,16 @@ function! RunCurrentInSplitTerm()
         exe 'resize ' . winSize
     endif
 
+    " always cd, just in case
+    call term.writeln("cd " . fullPath)
     call term.writeln("clear")
     call term.writeln("./" . fileName)
+    " call term.writeln("cd " . fugitive#repo().git_dir)
+    " call term.writeln("cd .. && clear")
+    " call term.writeln("gradle -Dtest.single=HandStrokeTest --offline test")
 endfunction
 nmap <silent> <leader>rs :call RunCurrentInSplitTerm()<cr>
+nmap <silent> <d-r> :call RunCurrentInSplitTerm()<cr>
 
 " convenient new tab
 nnoremap <C-W><C-W> :tabe<cr>
@@ -297,6 +304,7 @@ nnoremap <leader>/ :call eregex#toggle()<CR>
 
 " some git configs
 nnoremap <leader>gc :Gcommit -a<CR>
+nnoremap <leader>ga :Gcommit -a --amend<CR>
 
 " some git configs
 nnoremap <leader>ga :Gcommit -a --amend<CR>
@@ -360,10 +368,13 @@ let g:sparkupExecuteMapping = '<c-s>'
 " unite configs
 "
 
+" we don't want results from this dirs (inserted below)
+let _dirs = substitute("bin,node_modules,build,", ",", "\/\\\\|", "g") 
+
 " borrow ignore extensions from wildignore setting
 let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
 let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
-let _wilds = '\%(^\|/\)\.\.\?$\|\.git/\|node_modules/\|\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
+let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . _dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
 call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
 
 " keymaps
@@ -594,6 +605,8 @@ let g:jedi#squelch_py_warning = 1
 let g:jedi#popup_select_first = 1
 let g:jedi#popup_on_dot = 0
 let g:jedi#goto_definitions_command = "gd"
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#use_splits_not_buffers = "right"
 
 " tern configs
 let g:tern_show_signature_in_pum = 1
@@ -697,3 +710,5 @@ function! MarkdownFunc()
     echo "Editing new Markdown file"
 endfunction
 command! Markdown call MarkdownFunc()
+
+nmap <Leader>ijf <Plug>IMAP_JumpForward
