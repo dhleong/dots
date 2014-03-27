@@ -229,6 +229,9 @@ function! RunCurrentInSplitTerm()
     call term.writeln("cd " . fullPath)
     call term.writeln("clear")
     call term.writeln("./" . fileName)
+    " call term.writeln("cd " . fugitive#repo().git_dir)
+    " call term.writeln("cd .. && clear")
+    " call term.writeln("gradle -Dtest.single=HandStrokeTest --offline test")
 endfunction
 nmap <silent> <leader>rs :call RunCurrentInSplitTerm()<cr>
 nmap <silent> <d-r> :call RunCurrentInSplitTerm()<cr>
@@ -707,3 +710,5 @@ function! MarkdownFunc()
     echo "Editing new Markdown file"
 endfunction
 command! Markdown call MarkdownFunc()
+
+nmap <Leader>ijf <Plug>IMAP_JumpForward
