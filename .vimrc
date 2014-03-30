@@ -121,8 +121,6 @@ set smartcase   " but if we WANT case, use it
 set splitright  " horizontal splits should not open on the left... 
 set noea        " 'no equal always'--don't resize my splits!
 
-set clipboard=unnamed
-
 if exists('+autochdir')
     " use the builtin if we have it
     set autochdir
