@@ -202,25 +202,27 @@ function! RunCurrentInSplitTerm()
     if !exists('b:my_terminal') || b:my_terminal.active == 0
         " nope... set it up
 
+        " TODO Apparently, winnrs can change (ex: when we
+        "   open git-commit). Somehow we need to handle that...
         let mainBuf = bufnr('%')
         let mainWin = winnr()
         let term = conque_term#open('bash', ['below split', 
             \ 'resize ' .  winSize])
+        let term.winnr = winnr()
         call setbufvar(mainBuf, "my_terminal", term)
-        call setbufvar(mainBuf, "my_terminal_winno", winnr())
 
         " NB Can't seem to unset the variable correctly,
         "  so we just check the active status
 
         " We're not really planning to do much real input 
-        "  in this window, so let's take over easy the 
-        "  relatively easy S-Tab to jump back to our main window
+        "  in this window, so let's take over the super-easy
+        "  Tab to quickly jump back to our main window
         exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
     else
         " yes! reuse it
         let term = b:my_terminal
 
-        exe b:my_terminal_winno . 'wincmd w'
+        exe term.winnr . 'wincmd w'
         :startinsert
         exe 'resize ' . winSize
     endif
