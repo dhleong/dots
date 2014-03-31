@@ -121,3 +121,17 @@ tmp.avi
 tmp.jpg
 tmp/
 wireshark/
+
+# a few more, though some may just get rm'd...
+.bashrc
+.dbshell
+.mongorc.js
+.profile
+.rnd
+.rvm/
+.sh_history
+.tmp.markdown
+.zlogin
+gradle/
+gradlew
+gradlew.bat

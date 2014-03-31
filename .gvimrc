@@ -7,6 +7,8 @@ if !empty(glob("~/Library/Fonts/" . _fontName)) " could check more places, but..
     let g:airline_powerline_fonts = 1
 endif
 
+" in a graphical environment, let us y&p directly with system
+set clipboard=unnamed
 
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
