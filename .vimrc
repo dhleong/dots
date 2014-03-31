@@ -18,60 +18,60 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
 
-    Bundle 'gmarik/vundle'
+    Plugin 'gmarik/vundle'
     "Add your bundles here
-    Bundle 'eregex.vim'
-    Bundle 'matchit.zip'
-    Bundle 'VisIncr'
+    Plugin 'eregex.vim'
+    Plugin 'matchit.zip'
+    Plugin 'VisIncr'
 
-    Bundle 'bling/vim-airline'
-    Bundle 'davidhalter/jedi-vim'
-    Bundle 'marijnh/tern_for_vim'
-    Bundle 'oplatek/Conque-Shell'
-    Bundle 'reinh/vim-makegreen'
-    Bundle 'rstacruz/sparkup', {'rtp': 'vim'}
-    Bundle 'scrooloose/syntastic'
-    Bundle 'Shougo/unite.vim'
-    Bundle 'Shougo/vimproc.vim'
-    Bundle 'skammer/vim-css-color'
-    Bundle 'suan/vim-instant-markdown'
-    Bundle 'terryma/vim-multiple-cursors'
-    Bundle 'tomtom/tcomment_vim'
-    Bundle 'tpope/vim-fugitive' 
-    Bundle 'tpope/vim-markdown' 
-    Bundle 'tpope/vim-repeat' 
-    Bundle 'tpope/vim-surround' 
-    Bundle 'vimwiki/vimwiki'
-    Bundle 'Valloric/MatchTagAlways'
-    Bundle 'xolox/vim-misc'
-    Bundle 'xolox/vim-session'
+    Plugin 'bling/vim-airline'
+    Plugin 'davidhalter/jedi-vim'
+    Plugin 'marijnh/tern_for_vim'
+    Plugin 'oplatek/Conque-Shell'
+    Plugin 'reinh/vim-makegreen'
+    Plugin 'rstacruz/sparkup', {'rtp': 'vim'}
+    Plugin 'scrooloose/syntastic'
+    Plugin 'Shougo/unite.vim'
+    Plugin 'Shougo/vimproc.vim'
+    Plugin 'skammer/vim-css-color'
+    Plugin 'suan/vim-instant-markdown'
+    Plugin 'terryma/vim-multiple-cursors'
+    Plugin 'tomtom/tcomment_vim'
+    Plugin 'tpope/vim-fugitive' 
+    Plugin 'tpope/vim-markdown' 
+    Plugin 'tpope/vim-repeat' 
+    Plugin 'tpope/vim-surround' 
+    Plugin 'vimwiki/vimwiki'
+    Plugin 'Valloric/MatchTagAlways'
+    Plugin 'xolox/vim-misc'
+    Plugin 'xolox/vim-session'
 
-    Bundle 'file:///Users/dhleong/code/hubr'
+    Plugin 'file:///Users/dhleong/code/hubr'
 
     " completion
     if g:useYcmCompletion == 1
-        Bundle 'Valloric/YouCompleteMe'
+        Plugin 'Valloric/YouCompleteMe'
     else
-        " Bundle 'dhleong/vim-autocomplpop'
-        Bundle 'ervandew/supertab'
+        " Plugin 'dhleong/vim-autocomplpop'
+        Plugin 'ervandew/supertab'
     endif
 
     " I would prefer to user MarcWeber's,
     "  but it seems to be broken with YCM
-    " Bundle 'MarcWeber/ultisnips'
-    Bundle 'SirVer/ultisnips'
+    " Plugin 'MarcWeber/ultisnips'
+    Plugin 'SirVer/ultisnips'
     " needed again
-    Bundle 'honza/vim-snippets' 
+    Plugin 'honza/vim-snippets' 
 
     " Syntax plugins
-    Bundle 'groenewege/vim-less'
-    Bundle 'tfnico/vim-gradle'
+    Plugin 'groenewege/vim-less'
+    Plugin 'tfnico/vim-gradle'
 
     "...All your other bundles...
     if iCanHazVundle == 0
-        echo "Installing Bundles, please ignore key map error messages"
+        echo "Installing Plugins, please ignore key map error messages"
         echo ""
-        :BundleInstall
+        :PluginInstall
 
         echo "Building vimproc"
         silent !cd ~/.vim/bundle/vimproc.vim && make
@@ -96,11 +96,11 @@ let g:useYcmCompletion = 1 " else, acp and supertab
 " Setting up Vundle - the vim plugin bundler end
 
 " A convenient function to delete a bundle and reinstall it
-function! ReinstallBundle(name)
-    BundleList
+function! ReinstallPlugin(name)
+    PluginList
     exe '/' . a:name
     norm D
-    BundleInstall
+    PluginInstall
     norm q
 endfunction
 
@@ -277,7 +277,7 @@ function! MapMake()
         nnoremap <silent> <leader>mm :w<cr> <BAR> call CompileLess()
     elseif expand('%:p') == $MYVIMRC
         " make green
-        nmap <silent> <leader>mm :BundleInstall<cr>
+        nmap <silent> <leader>mm :PluginInstall<cr>
     elseif &ft == 'javascript'
         " make green
         nmap <silent> <leader>mm :MakeGreen<cr>
@@ -704,7 +704,7 @@ nnoremap ght :GithubTake<cr>
 nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
 " re-install hubr for rapid development
-nnoremap <leader>rh :call ReinstallBundle('hubr')<cr>
+nnoremap <leader>rh :call ReinstallPlugin('hubr')<cr>
 
 "
 " Convenience for Markdown editing
