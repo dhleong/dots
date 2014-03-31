@@ -41,6 +41,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Bundle 'tpope/vim-markdown' 
     Bundle 'tpope/vim-repeat' 
     Bundle 'tpope/vim-surround' 
+    Bundle 'vimwiki/vimwiki'
     Bundle 'Valloric/MatchTagAlways'
     Bundle 'xolox/vim-misc'
     Bundle 'xolox/vim-session'
@@ -175,8 +176,6 @@ nmap <silent> <leader>sv :so $MYVIMRC<cr>
 " And the bundles dir, as well ('v'im 'b'undles)
 nmap <silent> <leader>vb :e ~/.vim/bundle/<cr>
 
-nmap <silent> <space> <enter>
-
 " Also, just source it automatically on write
 augroup VimAutoSource
     autocmd!
@@ -253,6 +252,13 @@ inoremap <C-E> <esc>A
 " It's 2x because <C-S><C-P> does Unite Search to open in vsp,
 "  so this is faster if I just want a straight split
 nnoremap <C-S><C-S> :vsp<cr>
+
+" Make better use of <space> (should it be leader?)
+nmap <silent> <space> <enter>
+
+" Make unfolding easier
+nnoremap + zA
+
 
 " Quick make 
 function! CompileLess()
