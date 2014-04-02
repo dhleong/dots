@@ -362,7 +362,7 @@ iabbr mfa Miners/minus-for-Android
 "
 " Sparkup/zen coding
 "
-let g:sparkupExecuteMapping = '<c-s>'
+let g:sparkupExecuteMapping = '<c-z>'
 
 "
 " unite configs
