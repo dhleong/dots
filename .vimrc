@@ -18,59 +18,61 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
 
-    Bundle 'gmarik/vundle'
+    Plugin 'gmarik/vundle'
     "Add your bundles here
-    Bundle 'eregex.vim'
-    Bundle 'matchit.zip'
-    Bundle 'VisIncr'
+    Plugin 'eregex.vim'
+    Plugin 'matchit.zip'
+    Plugin 'VisIncr'
 
-    Bundle 'bling/vim-airline'
-    Bundle 'davidhalter/jedi-vim'
-    Bundle 'marijnh/tern_for_vim'
-    Bundle 'oplatek/Conque-Shell'
-    Bundle 'reinh/vim-makegreen'
-    Bundle 'rstacruz/sparkup', {'rtp': 'vim'}
-    Bundle 'scrooloose/syntastic'
-    Bundle 'Shougo/unite.vim'
-    Bundle 'Shougo/vimproc.vim'
-    Bundle 'skammer/vim-css-color'
-    Bundle 'suan/vim-instant-markdown'
-    Bundle 'terryma/vim-multiple-cursors'
-    Bundle 'tomtom/tcomment_vim'
-    Bundle 'tpope/vim-fugitive' 
-    Bundle 'tpope/vim-markdown' 
-    Bundle 'tpope/vim-repeat' 
-    Bundle 'tpope/vim-surround' 
-    Bundle 'Valloric/MatchTagAlways'
-    Bundle 'xolox/vim-misc'
-    Bundle 'xolox/vim-session'
+    Plugin 'bling/vim-airline'
+    Plugin 'davidhalter/jedi-vim'
+    Plugin 'marijnh/tern_for_vim'
+    Plugin 'oplatek/Conque-Shell'
+    Plugin 'reinh/vim-makegreen'
+    Plugin 'rstacruz/sparkup', {'rtp': 'vim'}
+    Plugin 'scrooloose/syntastic'
+    Plugin 'Shougo/unite.vim'
+    Plugin 'Shougo/vimproc.vim'
+    Plugin 'skammer/vim-css-color'
+    Plugin 'suan/vim-instant-markdown'
+    Plugin 'terryma/vim-multiple-cursors'
+    Plugin 'tomtom/tcomment_vim'
+    Plugin 'tpope/vim-fugitive' 
+    Plugin 'tpope/vim-markdown' 
+    Plugin 'tpope/vim-repeat' 
+    Plugin 'tpope/vim-surround' 
+    Plugin 'vimwiki/vimwiki'
+    Plugin 'Valloric/MatchTagAlways'
+    Plugin 'xolox/vim-misc'
+    Plugin 'xolox/vim-session'
 
-    Bundle 'file:///Users/dhleong/code/hubr'
+    Plugin 'file:///Users/dhleong/code/hubr'
 
     " completion
     if g:useYcmCompletion == 1
-        Bundle 'Valloric/YouCompleteMe'
+        Plugin 'Valloric/YouCompleteMe'
     else
-        " Bundle 'dhleong/vim-autocomplpop'
-        Bundle 'ervandew/supertab'
+        " Plugin 'dhleong/vim-autocomplpop'
+        Plugin 'ervandew/supertab'
     endif
 
     " I would prefer to user MarcWeber's,
     "  but it seems to be broken with YCM
-    " Bundle 'MarcWeber/ultisnips'
-    Bundle 'SirVer/ultisnips'
+    " Plugin 'MarcWeber/ultisnips'
+    Plugin 'SirVer/ultisnips'
     " needed again
-    Bundle 'honza/vim-snippets' 
+    Plugin 'honza/vim-snippets' 
 
     " Syntax plugins
-    Bundle 'groenewege/vim-less'
-    Bundle 'tfnico/vim-gradle'
+    Plugin 'groenewege/vim-less'
+    Plugin 'tfnico/vim-gradle'
+    Plugin 'digitaltoad/vim-jade'
 
     "...All your other bundles...
     if iCanHazVundle == 0
-        echo "Installing Bundles, please ignore key map error messages"
+        echo "Installing Plugins, please ignore key map error messages"
         echo ""
-        :BundleInstall
+        :PluginInstall
 
         echo "Building vimproc"
         silent !cd ~/.vim/bundle/vimproc.vim && make
@@ -95,11 +97,11 @@ let g:useYcmCompletion = 1 " else, acp and supertab
 " Setting up Vundle - the vim plugin bundler end
 
 " A convenient function to delete a bundle and reinstall it
-function! ReinstallBundle(name)
-    BundleList
+function! ReinstallPlugin(name)
+    PluginList
     exe '/' . a:name
     norm D
-    BundleInstall
+    PluginInstall
     norm q
 endfunction
 
@@ -172,8 +174,6 @@ nmap <silent> <leader>sv :so $MYVIMRC<cr>
 
 " And the bundles dir, as well ('v'im 'b'undles)
 nmap <silent> <leader>vb :e ~/.vim/bundle/<cr>
-
-nmap <silent> <space> <enter>
 
 " Also, just source it automatically on write
 augroup VimAutoSource
@@ -254,6 +254,13 @@ inoremap <C-E> <esc>A
 "  so this is faster if I just want a straight split
 nnoremap <C-S><C-S> :vsp<cr>
 
+" Make better use of <space> (should it be leader?)
+nmap <silent> <space> <enter>
+
+" Make unfolding easier
+nnoremap + zA
+
+
 " Quick make 
 function! CompileLess()
     silent !lessc % %:t:r.css > /dev/null
@@ -271,7 +278,7 @@ function! MapMake()
         nnoremap <silent> <leader>mm :w<cr> <BAR> call CompileLess()
     elseif expand('%:p') == $MYVIMRC
         " make green
-        nmap <silent> <leader>mm :BundleInstall<cr>
+        nmap <silent> <leader>mm :PluginInstall<cr>
     elseif &ft == 'javascript'
         " make green
         nmap <silent> <leader>mm :MakeGreen<cr>
@@ -305,9 +312,7 @@ nnoremap <leader>/ :call eregex#toggle()<CR>
 " some git configs
 nnoremap <leader>gc :Gcommit -a<CR>
 nnoremap <leader>ga :Gcommit -a --amend<CR>
-
-" some git configs
-nnoremap <leader>ga :Gcommit -a --amend<CR>
+nnoremap <leader>gs :Gstatus<CR>
 
 function! WriteAndPush()
     if expand('%') == "COMMIT_EDITMSG" 
@@ -632,6 +637,36 @@ let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 
 " syntastic configs
 let g:syntastic_java_checkers = ['checkstyle']
+function! JumpToNextError()
+    if !exists("g:SyntasticLoclist")
+        return
+    endif
+
+    let loclist = g:SyntasticLoclist.current()
+    let rawlist = loclist.getRaw()
+    if !len(rawlist)
+        echo "No issues in this file"
+        return
+    endif
+
+    let thisLine = line('.')
+    let myIssue = {"found": 0}
+    for issue in rawlist
+        if issue.lnum > thisLine
+            let myIssue = issue
+            let myIssue.found = 1
+        endif
+    endfor
+
+    if myIssue.found == 0
+        let myIssue = loclist.getFirstIssue()
+    endif
+
+    echo myIssue.text
+    exe 'norm ' . myIssue.lnum . 'G<cr>'
+endfunction
+nnoremap <silent> <d-.> :call JumpToNextError()<cr>
+nmap <silent> ]c :call JumpToNextError()<cr>
 
 if g:useYcmCompletion == 1
 
@@ -698,7 +733,7 @@ nnoremap ght :GithubTake<cr>
 nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
 " re-install hubr for rapid development
-nnoremap <leader>rh :call ReinstallBundle('hubr')<cr>
+nnoremap <leader>rh :call ReinstallPlugin('hubr')<cr>
 
 "
 " Convenience for Markdown editing
