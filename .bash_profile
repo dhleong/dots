@@ -22,6 +22,7 @@ alias gits='git status'
 alias guts='git status'
 alias gitco='git commit -a'
 alias gitpp='git pull && git push'
+alias up='cd ..'
 
 alias antgo='ant debug install && sh run.sh'
 alias adbrestart='adb kill-server && adb start-server && adb devices'
