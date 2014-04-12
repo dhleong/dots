@@ -390,10 +390,10 @@ function! MapCtrlP(path)
     " the projectopen func below...
 
     let suffix =  '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
-    execute 'nnoremap <C-p> :Unite tab:no-current file_rec/async:' . a:path . suffix
-    execute 'nnoremap <C-w><C-p> :Unite tab:no-current file_rec/async:' .
+    execute 'nnoremap <C-p> :Unite file_rec/async:' . a:path . suffix
+    execute 'nnoremap <C-w><C-p> :Unite file_rec/async:' .
         \ a:path . ' -default-action=tabopen' . suffix
-    execute 'nnoremap <C-s><C-p> :Unite tab:no-current file_rec/async:' . 
+    execute 'nnoremap <C-s><C-p> :Unite file_rec/async:' . 
         \ a:path . ' -default-action=vsplit' . suffix
 endfunction
 
