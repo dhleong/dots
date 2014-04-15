@@ -2,6 +2,9 @@
 ########
 .*.sw*
 node_modules/
+build/
+.settings/
+.gradle/
 
 # Compiled source #
 ###################
