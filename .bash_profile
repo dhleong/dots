@@ -29,6 +29,8 @@ alias adbrestart='adb kill-server && adb start-server && adb devices'
 
 alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 
+alias upgradle=". ~/bin/_upgradle"
+
 test -r /sw/bin/init.sh && . /sw/bin/init.sh
 
 # make sure this is always done
