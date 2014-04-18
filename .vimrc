@@ -188,6 +188,27 @@ nmap <silent> <leader>vs :ConqueTermVSplit bash -l<cr>
 nmap <silent> <leader>hs :ConqueTermSplit bash -l<cr>
 nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
 
+"
+" Find the index of a ConqueTerm for the current
+"  tab, or 0 if none found
+"
+function! FindTermForTab()
+    let myTab = tabpagenr()
+
+    for [idx, term] in items(g:ConqueTerm_Terminals)
+        let termBufNr = bufnr(term.buffer_name)
+
+        " is this buffer in our current tab window?
+        for bufNr in tabpagebuflist()
+            if bufNr == termBufNr
+                return term.idx
+            endif
+        endfor
+    endfor
+
+    return 0
+endfunction
+
 function! RunCurrentInSplitTerm()
     let fileName = expand('%')
     let fullPath = expand('%:p:h')
