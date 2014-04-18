@@ -47,6 +47,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'xolox/vim-session'
 
     Plugin 'file:///Users/dhleong/code/hubr'
+    " Plugin 'file:///Users/dhleong/git/Conque-Shell'
 
     " completion
     if g:useYcmCompletion == 1
@@ -157,6 +158,10 @@ set vb
 
 " hide useless gui
 set guioptions=c
+
+" show horrid tabs
+set list
+set listchars=tab:>-
 
 " use comma as the map leader, because \ is too far
 let mapleader = ","
@@ -334,6 +339,7 @@ nnoremap <leader>/ :call eregex#toggle()<CR>
 nnoremap <leader>gc :Gcommit -a<CR>
 nnoremap <leader>ga :Gcommit -a --amend<CR>
 nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiff<CR>
 
 function! WriteAndPush()
     if expand('%') == "COMMIT_EDITMSG" 
@@ -755,6 +761,9 @@ nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
 " re-install hubr for rapid development
 nnoremap <leader>rh :call ReinstallPlugin('hubr')<cr>
+
+" re-install Conque-Shell for rapid development
+nnoremap <leader>rs :call ReinstallPlugin('Conque-Shell')<cr>
 
 "
 " Convenience for Markdown editing
