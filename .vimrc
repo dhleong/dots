@@ -227,6 +227,9 @@ function! RunCurrentInSplitTerm()
     if !exists('b:my_terminal') || b:my_terminal.active == 0
         " nope... set it up
 
+        " make sure it's executable
+        !chmod +x %
+
         " TODO Apparently, winnrs can change (ex: when we
         "   open git-commit). Somehow we need to handle that...
         let mainBuf = bufnr('%')
@@ -408,7 +411,13 @@ let _dirs = substitute("bin,node_modules,build,", ",", "\/\\\\|", "g")
 let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
 let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
 let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . _dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
-call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
+call unite#custom#source('file_rec/async', 'ignore_pattern', _wilds)
+call unite#custom#source('file_rec/async', 'matchers', 
+    \ ['converter_tail', 'matcher_fuzzy'])
+call unite#custom#source('file_rec/async', 'converters', 
+    \ ['converter_file_directory'])
+call unite#custom#source('file_rec/async', 'sorters', 
+    \ ['sorter_rank'])
 
 " keymaps
 function! MapCtrlP(path)
