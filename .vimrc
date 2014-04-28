@@ -409,6 +409,7 @@ let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
 let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
 let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . _dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
 call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
+call unite#custom#source("file_rec/async", "matchers", ["converter_tail", "matcher_fuzzy"])
 
 " keymaps
 function! MapCtrlP(path)
