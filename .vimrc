@@ -251,6 +251,7 @@ function! RunCurrentInSplitTerm()
         exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
 
         exe 'imap <buffer> <d-r> <up><cr>'
+        exe 'imap <buffer> <c-l> <esc><c-w><c-l>'
     else
         " yes! reuse it
         let term = b:my_terminal
