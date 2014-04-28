@@ -218,7 +218,9 @@ endfunction
 function! RunCurrentInSplitTerm()
     let fileName = expand('%')
     let fullPath = expand('%:p:h')
-    let winSize = 20
+    let winSize = 0.3
+    let winSize = winSize * winheight('$')
+    let winSize = float2nr(winSize)
 
     " make sure we're up to date
     write
@@ -228,7 +230,7 @@ function! RunCurrentInSplitTerm()
         " nope... set it up
 
         " make sure it's executable
-        !chmod +x %
+        silent !chmod +x %
 
         " TODO Apparently, winnrs can change (ex: when we
         "   open git-commit). Somehow we need to handle that...
@@ -237,6 +239,7 @@ function! RunCurrentInSplitTerm()
         let term = conque_term#open('bash', ['below split', 
             \ 'resize ' .  winSize])
         let term.winnr = winnr()
+        let term.winSize = winSize
         call setbufvar(mainBuf, "my_terminal", term)
 
         " NB Can't seem to unset the variable correctly,
@@ -246,13 +249,15 @@ function! RunCurrentInSplitTerm()
         "  in this window, so let's take over the super-easy
         "  Tab to quickly jump back to our main window
         exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
+
+        exe 'imap <buffer> <d-r> <up><cr>'
     else
         " yes! reuse it
         let term = b:my_terminal
 
         exe term.winnr . 'wincmd w'
         :startinsert
-        exe 'resize ' . winSize
+        exe 'resize ' . term.winSize
     endif
 
     " always cd, just in case
