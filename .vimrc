@@ -218,7 +218,9 @@ endfunction
 function! RunCurrentInSplitTerm()
     let fileName = expand('%')
     let fullPath = expand('%:p:h')
-    let winSize = 20
+    let winSize = 0.3
+    let winSize = winSize * winheight('$')
+    let winSize = float2nr(winSize)
 
     " make sure we're up to date
     write
@@ -227,6 +229,9 @@ function! RunCurrentInSplitTerm()
     if !exists('b:my_terminal') || b:my_terminal.active == 0
         " nope... set it up
 
+        " make sure it's executable
+        silent !chmod +x %
+
         " TODO Apparently, winnrs can change (ex: when we
         "   open git-commit). Somehow we need to handle that...
         let mainBuf = bufnr('%')
@@ -234,6 +239,7 @@ function! RunCurrentInSplitTerm()
         let term = conque_term#open('bash', ['below split', 
             \ 'resize ' .  winSize])
         let term.winnr = winnr()
+        let term.winSize = winSize
         call setbufvar(mainBuf, "my_terminal", term)
 
         " NB Can't seem to unset the variable correctly,
@@ -243,13 +249,16 @@ function! RunCurrentInSplitTerm()
         "  in this window, so let's take over the super-easy
         "  Tab to quickly jump back to our main window
         exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
+
+        exe 'imap <buffer> <d-r> <up><cr>'
+        exe 'imap <buffer> <c-l> <esc><c-w><c-l>'
     else
         " yes! reuse it
         let term = b:my_terminal
 
         exe term.winnr . 'wincmd w'
         :startinsert
-        exe 'resize ' . winSize
+        exe 'resize ' . term.winSize
     endif
 
     " always cd, just in case
@@ -408,8 +417,13 @@ let _dirs = substitute("bin,node_modules,build,", ",", "\/\\\\|", "g")
 let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
 let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
 let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . _dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
-call unite#custom#source("file_rec/async", "ignore_pattern", _wilds)
-call unite#custom#source("file_rec/async", "matchers", ["converter_tail", "matcher_fuzzy"])
+call unite#custom#source('file_rec/async', 'ignore_pattern', _wilds)
+call unite#custom#source('file_rec/async', 'matchers', 
+    \ ['converter_tail', 'matcher_fuzzy'])
+call unite#custom#source('file_rec/async', 'converters', 
+    \ ['converter_file_directory'])
+call unite#custom#source('file_rec/async', 'sorters', 
+    \ ['sorter_rank'])
 
 " keymaps
 function! MapCtrlP(path)
