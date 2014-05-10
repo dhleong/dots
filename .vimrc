@@ -811,3 +811,13 @@ endfunction
 command! Markdown call MarkdownFunc()
 
 nmap <Leader>ijf <Plug>IMAP_JumpForward
+
+"
+" Open a terminal in the current directory
+"
+function! OpenTermFunc()
+    silent exe "!osascript -e 'tell app \"Terminal\" to do script \"cd '" 
+                   \ .  expand('%:p:h') . "' && clear\"'"
+    silent !osascript -e 'tell app "Terminal" to activate'
+endfunction
+command! Term call OpenTermFunc()
