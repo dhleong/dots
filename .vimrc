@@ -48,6 +48,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'xolox/vim-session'
 
     Plugin 'file:///Users/dhleong/code/hubr'
+    Plugin 'file:///Users/dhleong/code/njast'
     " Plugin 'file:///Users/dhleong/git/Conque-Shell'
 
     " completion
@@ -105,6 +106,10 @@ function! ReinstallPlugin(name)
     norm D
     PluginInstall
     norm q
+
+    if a:name == 'njast'
+        !cd ~/.vim/bundle/njast && npm install
+    endif
 endfunction
 
 
@@ -226,8 +231,17 @@ function! RunCurrentInSplitTerm()
     write
 
     " do we already have a term?
-    if !exists('b:my_terminal') || b:my_terminal.active == 0
+    if !exists('b:my_terminal') 
+        \ || b:my_terminal.active == 0 
+        \ || winbufnr(b:my_terminal.winnr) == -1 
+        \ || b:my_terminal.bufname != bufname(winbufnr(b:my_terminal.winnr))
+            
         " nope... set it up
+
+        if exists('b:my_terminal') && b:my_terminal.active == 1
+            " somehow, it was closed unexpectedly but not cleaned up...
+            b:my_terminal.close()
+        endif
 
         " make sure it's executable
         silent !chmod +x %
@@ -240,6 +254,7 @@ function! RunCurrentInSplitTerm()
             \ 'resize ' .  winSize])
         let term.winnr = winnr()
         let term.winSize = winSize
+        let term.bufname = bufname(bufnr('%')) " seems to not match buffer_name
         call setbufvar(mainBuf, "my_terminal", term)
 
         " NB Can't seem to unset the variable correctly,
@@ -645,7 +660,7 @@ nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 let g:EclimJavascriptValidate = 0 
 
 ":source /Users/dhleong/code/vim-javadocer/javadocer.vim
-silent! source /Users/dhleong/code/njast/njast.vim
+" silent! source /Users/dhleong/code/njast/njast.vim
 
 " jedi configs
 let g:jedi#completions_enabled = 0
@@ -777,6 +792,9 @@ nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
 " re-install hubr for rapid development
 nnoremap <leader>rh :call ReinstallPlugin('hubr')<cr>
+
+" re-install njast for rapid development
+nnoremap <leader>rn :call ReinstallPlugin('njast')<cr>
 
 " re-install Conque-Shell for rapid development
 nnoremap <leader>rs :call ReinstallPlugin('Conque-Shell')<cr>
