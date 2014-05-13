@@ -251,6 +251,7 @@ function! RunCurrentInSplitTerm()
         exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
 
         exe 'imap <buffer> <d-r> <up><cr>'
+        exe 'nmap <buffer> <d-r> i<up><cr>'
         exe 'imap <buffer> <c-l> <esc><c-w><c-l>'
     else
         " yes! reuse it
@@ -780,6 +781,9 @@ nnoremap <leader>rh :call ReinstallPlugin('hubr')<cr>
 
 " re-install Conque-Shell for rapid development
 nnoremap <leader>rs :call ReinstallPlugin('Conque-Shell')<cr>
+
+" only auto-ref issues assigned to me
+let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
 
 "
 " Convenience for Markdown editing
