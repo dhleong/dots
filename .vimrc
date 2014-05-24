@@ -107,9 +107,9 @@ function! ReinstallPlugin(name)
     PluginInstall
     norm q
 
-    if a:name == 'njast'
-        !cd ~/.vim/bundle/njast && npm install
-    endif
+    " if a:name == 'njast'
+    "     !cd ~/.vim/bundle/njast && npm install
+    " endif
 endfunction
 
 
@@ -230,18 +230,23 @@ function! RunCurrentInSplitTerm()
     " make sure we're up to date
     write
 
+    let found = 0
+    let existing = {}
+    for [idx, term] in items(g:ConqueTerm_Terminals)
+        if !has_key(term, 'bufname')
+            continue
+        endif
+
+        if bufwinnr(term.bufname) == term.winnr && term.active != 0
+            let existing = term
+            let found = 1
+        endif
+    endfor
+
     " do we already have a term?
-    if !exists('b:my_terminal') 
-        \ || b:my_terminal.active == 0 
-        \ || winbufnr(b:my_terminal.winnr) == -1 
-        \ || b:my_terminal.bufname != bufname(winbufnr(b:my_terminal.winnr))
+    if !found
             
         " nope... set it up
-
-        if exists('b:my_terminal') && b:my_terminal.active == 1
-            " somehow, it was closed unexpectedly but not cleaned up...
-            b:my_terminal.close()
-        endif
 
         " make sure it's executable
         silent !chmod +x %
@@ -255,7 +260,6 @@ function! RunCurrentInSplitTerm()
         let term.winnr = winnr()
         let term.winSize = winSize
         let term.bufname = bufname(bufnr('%')) " seems to not match buffer_name
-        call setbufvar(mainBuf, "my_terminal", term)
 
         " NB Can't seem to unset the variable correctly,
         "  so we just check the active status
@@ -269,7 +273,7 @@ function! RunCurrentInSplitTerm()
         exe 'imap <buffer> <c-l> <esc><c-w><c-l>'
     else
         " yes! reuse it
-        let term = b:my_terminal
+        let term = existing
 
         exe term.winnr . 'wincmd w'
         :startinsert
