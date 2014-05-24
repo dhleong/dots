@@ -226,6 +226,7 @@ function! RunCurrentInSplitTerm()
     let winSize = 0.3
     let winSize = winSize * winheight('$')
     let winSize = float2nr(winSize)
+    let mainWin = winnr()
 
     " make sure we're up to date
     write
@@ -237,7 +238,14 @@ function! RunCurrentInSplitTerm()
             continue
         endif
 
-        if bufwinnr(term.bufname) == term.winnr && term.active != 0
+        let winnr = bufwinnr(term.bufname)
+        if winnr != -1 && term.active != 0
+            
+            " update it, if it's changed
+            if winnr != term.winnr
+                let term.winnr = winnr
+            endif
+
             let existing = term
             let found = 1
         endif
@@ -254,7 +262,6 @@ function! RunCurrentInSplitTerm()
         " TODO Apparently, winnrs can change (ex: when we
         "   open git-commit). Somehow we need to handle that...
         let mainBuf = bufnr('%')
-        let mainWin = winnr()
         let term = conque_term#open('bash', ['below split', 
             \ 'resize ' .  winSize])
         let term.winnr = winnr()
@@ -264,12 +271,8 @@ function! RunCurrentInSplitTerm()
         " NB Can't seem to unset the variable correctly,
         "  so we just check the active status
 
-        " We're not really planning to do much real input 
-        "  in this window, so let's take over the super-easy
-        "  Tab to quickly jump back to our main window
-        exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
-
         exe 'imap <buffer> <d-r> <up><cr>'
+        exe 'nmap <buffer> <d-r> i<up><cr>'
         exe 'imap <buffer> <c-l> <esc><c-w><c-l>'
     else
         " yes! reuse it
@@ -279,6 +282,12 @@ function! RunCurrentInSplitTerm()
         :startinsert
         exe 'resize ' . term.winSize
     endif
+
+    " We're not really planning to do much real input 
+    "  in this window, so let's take over the super-easy
+    "  Tab to quickly jump back to our main window
+    " Do this always, in case winnrs have changed
+    exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
 
     " always cd, just in case
     call term.writeln("cd " . fullPath)
@@ -802,6 +811,9 @@ nnoremap <leader>rn :call ReinstallPlugin('njast')<cr>
 
 " re-install Conque-Shell for rapid development
 nnoremap <leader>rs :call ReinstallPlugin('Conque-Shell')<cr>
+
+" only auto-ref issues assigned to me
+let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
 
 "
 " Convenience for Markdown editing
