@@ -44,6 +44,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'tpope/vim-vinegar' 
     Plugin 'vimwiki/vimwiki'
     Plugin 'Valloric/MatchTagAlways'
+    Plugin 'wellle/targets.vim'
     Plugin 'xolox/vim-misc'
     Plugin 'xolox/vim-session'
 
