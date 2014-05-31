@@ -817,6 +817,11 @@ nnoremap <leader>rs :call ReinstallPlugin('Conque-Shell')<cr>
 let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
 
 "
+" njast config (basically for testing)
+"
+let g:njast#port = 3000
+
+"
 " Convenience for Markdown editing
 "
 let g:markdown_tmp_file = $HOME . '/.tmp.markdown'
