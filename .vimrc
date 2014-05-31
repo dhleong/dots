@@ -372,7 +372,7 @@ cnoremap <C-A> <Home>
 
 " eregex config
 let g:eregex_default_enable = 0  " doesn't do incremental search, so no
-nnoremap <leader>/ :call eregex#toggle()<CR>
+nnoremap <leader>\ :call eregex#toggle()<CR>
 
 " some git configs
 nnoremap <leader>gc :Gcommit -a<CR>
@@ -440,13 +440,14 @@ let g:sparkupExecuteMapping = '<c-z>'
 "
 
 " we don't want results from this dirs (inserted below)
-let _dirs = substitute("bin,node_modules,build,", ",", "\/\\\\|", "g") 
+let _dirs = substitute("bin,node_modules,build,proguard,", ",", "\/\\\\|", "g") 
 
 " borrow ignore extensions from wildignore setting
 let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
 let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
 let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . _dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
 call unite#custom#source('file_rec/async', 'ignore_pattern', _wilds)
+call unite#custom#source('grep', 'ignore_pattern', _wilds)
 call unite#custom#source('file_rec/async', 'matchers', 
     \ ['converter_tail', 'matcher_fuzzy'])
 call unite#custom#source('file_rec/async', 'converters', 
@@ -467,11 +468,13 @@ function! MapCtrlP(path)
         \ a:path . ' -default-action=tabopen' . suffix
     execute 'nnoremap <C-s><C-p> :Unite file_rec/async:' . 
         \ a:path . ' -default-action=vsplit' . suffix
+
+    execute 'nnoremap <leader>/ :Unite grep:' . a:path . ':-iR -auto-preview<cr>'
 endfunction
 
 " default map for C-p (we'll remap with project directory soon)
 call MapCtrlP("")
-nnoremap <leader>/ :Unite grep:. -auto-preview<cr>
+nnoremap <leader>/ :Unite grep:.:-iR -auto-preview<cr>
 let g:unite_enable_ignore_case = 1
 
 "
