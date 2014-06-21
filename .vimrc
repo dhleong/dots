@@ -129,7 +129,8 @@ set ruler       " we may want to know where we are in the file
 set ignorecase  " ignore case in search....
 set smartcase   " but if we WANT case, use it
 
-set cursorline  " kind of nice
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
 
 set splitright  " horizontal splits should not open on the left... 
 set noea        " 'no equal always'--don't resize my splits!
