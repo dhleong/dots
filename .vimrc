@@ -27,6 +27,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'bling/vim-airline'
     Plugin 'davidhalter/jedi-vim'
     Plugin 'marijnh/tern_for_vim'
+    Plugin 'moll/vim-node'
     Plugin 'oplatek/Conque-Shell'
     Plugin 'reinh/vim-makegreen'
     Plugin 'rstacruz/sparkup', {'rtp': 'vim'}
@@ -127,6 +128,8 @@ set ruler       " we may want to know where we are in the file
 
 set ignorecase  " ignore case in search....
 set smartcase   " but if we WANT case, use it
+
+set cursorline  " kind of nice
 
 set splitright  " horizontal splits should not open on the left... 
 set noea        " 'no equal always'--don't resize my splits!
@@ -777,6 +780,11 @@ let g:tcomment_types = {
     \ 'java_block': '// %s'
     \ }
 
+"
+" targets.vim
+"
+" swap I and i so >iB works as expected
+let g:targets_aiAI = 'aIAi'
 
 "
 " Github fun
