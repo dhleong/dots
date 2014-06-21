@@ -129,9 +129,6 @@ set ruler       " we may want to know where we are in the file
 set ignorecase  " ignore case in search....
 set smartcase   " but if we WANT case, use it
 
-autocmd WinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
-
 set splitright  " horizontal splits should not open on the left... 
 set noea        " 'no equal always'--don't resize my splits!
 
@@ -142,6 +139,10 @@ else
     " use the manual method 
     autocmd BufEnter * silent! lcd %:p:h
 endif
+
+" use cursorline, but only for current window (nice)
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
 
 "colorscheme desert
 colorscheme zenburn
