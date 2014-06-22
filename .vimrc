@@ -515,6 +515,10 @@ execute 'nnoremap <silent> <leader>p :Unite ' . g:UniteProjects .
     \ ' -default-action=projectopen<cr>'
 
 
+" fancier way to search through file than /
+nnoremap <silent> \  :<C-u>Unite -buffer-name=search
+    \ line -start-insert<CR>
+
 "
 " My project path script
 "
