@@ -24,6 +24,8 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'matchit.zip'
     Plugin 'VisIncr'
 
+    " use ap's fork here instead of skammer, to add stylus support
+    Plugin 'ap/vim-css-color' 
     Plugin 'bling/vim-airline'
     Plugin 'davidhalter/jedi-vim'
     Plugin 'marijnh/tern_for_vim'
@@ -34,7 +36,6 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'scrooloose/syntastic'
     Plugin 'Shougo/unite.vim'
     Plugin 'Shougo/vimproc.vim'
-    Plugin 'skammer/vim-css-color'
     Plugin 'suan/vim-instant-markdown'
     Plugin 'terryma/vim-multiple-cursors'
     Plugin 'tomtom/tcomment_vim'
@@ -69,9 +70,10 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'honza/vim-snippets' 
 
     " Syntax plugins
+    Plugin 'digitaltoad/vim-jade'
     Plugin 'groenewege/vim-less'
     Plugin 'tfnico/vim-gradle'
-    Plugin 'digitaltoad/vim-jade'
+    Plugin 'wavded/vim-stylus'
 
     "...All your other bundles...
     if iCanHazVundle == 0
@@ -516,6 +518,7 @@ execute 'nnoremap <silent> <leader>p :Unite ' . g:UniteProjects .
 
 
 " fancier way to search through file than /
+call unite#custom#source('line', 'matchers', 'matcher_fuzzy')
 nnoremap <silent> \  :<C-u>Unite -buffer-name=search
     \ line -start-insert<CR>
 
