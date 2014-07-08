@@ -24,16 +24,18 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'matchit.zip'
     Plugin 'VisIncr'
 
+    " use ap's fork here instead of skammer, to add stylus support
+    Plugin 'ap/vim-css-color' 
     Plugin 'bling/vim-airline'
     Plugin 'davidhalter/jedi-vim'
     Plugin 'marijnh/tern_for_vim'
+    Plugin 'moll/vim-node'
     Plugin 'oplatek/Conque-Shell'
     Plugin 'reinh/vim-makegreen'
     Plugin 'rstacruz/sparkup', {'rtp': 'vim'}
     Plugin 'scrooloose/syntastic'
     Plugin 'Shougo/unite.vim'
     Plugin 'Shougo/vimproc.vim'
-    Plugin 'skammer/vim-css-color'
     Plugin 'suan/vim-instant-markdown'
     Plugin 'terryma/vim-multiple-cursors'
     Plugin 'tomtom/tcomment_vim'
@@ -68,9 +70,10 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'honza/vim-snippets' 
 
     " Syntax plugins
+    Plugin 'digitaltoad/vim-jade'
     Plugin 'groenewege/vim-less'
     Plugin 'tfnico/vim-gradle'
-    Plugin 'digitaltoad/vim-jade'
+    Plugin 'wavded/vim-stylus'
 
     "...All your other bundles...
     if iCanHazVundle == 0
@@ -138,6 +141,10 @@ else
     " use the manual method 
     autocmd BufEnter * silent! lcd %:p:h
 endif
+
+" use cursorline, but only for current window (nice)
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
 
 "colorscheme desert
 colorscheme zenburn
@@ -510,6 +517,11 @@ execute 'nnoremap <silent> <leader>p :Unite ' . g:UniteProjects .
     \ ' -default-action=projectopen<cr>'
 
 
+" fancier way to search through file than /
+call unite#custom#source('line', 'matchers', 'matcher_fuzzy')
+nnoremap <silent> \  :<C-u>Unite -buffer-name=search
+    \ line -start-insert<CR>
+
 "
 " My project path script
 "
@@ -777,6 +789,11 @@ let g:tcomment_types = {
     \ 'java_block': '// %s'
     \ }
 
+"
+" targets.vim
+"
+" swap I and i so >iB works as expected
+let g:targets_aiAI = 'aIAi'
 
 "
 " Github fun
