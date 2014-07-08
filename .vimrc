@@ -796,13 +796,25 @@ function! GithubTakeFunc()
     let cmd=":!" . g:gh_cmd . ' take ' . ticket
     exe cmd
 endfunction
-
 command! GithubTake call GithubTakeFunc()
+
+function! GithubOpenFunc()
+    let ticket=expand("<cword>")
+    let repo=hubr#repo_name()
+    let cmd=":silent !open http://github.com/" . repo . "/issues/" . ticket
+    exe cmd
+endfunction
+command! GithubOpen call GithubOpenFunc()
+
+
 " mark the issue number under the cursor as accept
 nnoremap gha :GithubAccept<cr>
 
 " 'take' the issue under the cursor (assign to 'me')
 nnoremap ght :GithubTake<cr>
+"
+" open the issue under the cursor 
+nnoremap gho :GithubOpen<cr>
 
 " awesome Unite plugin for issues
 nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
