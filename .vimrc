@@ -85,10 +85,8 @@ set nocompatible
         echo "Installing vim-instant-markdown"
         silent sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d
 
-        if g:useYcmCompletion == 1
-            echo "Installing YCM"
-            silent !cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer
-        endif
+        echo "Installing YCM"
+        silent !cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer
 
         echo "Done!"
         echo "Note that you may need to restart vim for airline fonts to work!"
@@ -562,14 +560,6 @@ endfunction
 
 function! ConfigureJava()
 
-    if g:useYcmCompletion == 0
-        " this is good for eclim, but not for now
-        "call SuperTabSetDefaultCompletionType("<c-x><c-u>")
-
-        " ...but the default is super slow
-        call SuperTabSetDefaultCompletionType("<c-x><c-n>") 
-    endif 
-
     nmap <silent> <leader>fi :JavaImportOrganize<cr>
     nmap <silent> <leader>ji :JavaImpl<cr>
     nmap <silent> <leader>pp :ProjectProblems!<cr>
@@ -616,14 +606,14 @@ if has('autocmd') && !exists('autocmds_loaded')
     " have some nice auto paths
     autocmd BufEnter * call SetPathToProject()
 
-    " Use omnifunc when available, and chain back to normal
-    if g:useYcmCompletion == 0
-        autocmd FileType * 
-            \ if &omnifunc != '' |
-            \   call SuperTabChain(&omnifunc, "<c-x><c-n>") |
-            \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
-            \ endif
-    endif
+    " " Use omnifunc when available, and chain back to normal
+    " if g:useYcmCompletion == 0
+    "     autocmd FileType * 
+    "         \ if &omnifunc != '' |
+    "         \   call SuperTabChain(&omnifunc, "<c-x><c-n>") |
+    "         \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+    "         \ endif
+    " endif
 
 endif
 
@@ -747,25 +737,24 @@ endfunction
 nnoremap <silent> <d-.> :call JumpToNextError()<cr>
 nmap <silent> ]c :call JumpToNextError()<cr>
 
-if g:useYcmCompletion == 1
+" 
+" Ycm configs
+"
+let g:ycm_filetype_blacklist = {
+    \ 'tagbar' : 1,
+    \ 'qf' : 1,
+    \ 'notes' : 1,
+    \ 'unite' : 1,
+    \ 'vimwiki' : 1,
+    \ 'pandoc' : 1,
+    \ 'conque_term' : 1,
+    \}
 
-  let g:ycm_filetype_blacklist = {
-        \ 'tagbar' : 1,
-        \ 'qf' : 1,
-        \ 'notes' : 1,
-        \ 'unite' : 1,
-        \ 'vimwiki' : 1,
-        \ 'pandoc' : 1,
-        \ 'conque_term' : 1,
-        \}
-    
-    let g:ycm_key_list_previous_completion = ['<Up>'] " NOT s-tab; we do the right thing below:
-    inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
+let g:ycm_key_list_previous_completion = ['<Up>'] " NOT s-tab; we do the right thing below:
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
 
-    " most useful for gitcommit
-    let g:ycm_collect_identifiers_from_comments_and_strings = 1
-    
-endif
+" most useful for gitcommit
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
 
 let g:UltiSnipsListSnippets="<C-M-Tab>"
 let g:UltiSnipsExpandTrigger="<C-Enter>"
