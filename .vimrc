@@ -1,8 +1,6 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
 
-let g:useYcmCompletion = 1 " else, acp and supertab
-
 " From http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
 " Setting up Vundle - the vim plugin bundler
     let iCanHazVundle=1
@@ -47,6 +45,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'tpope/vim-vinegar' 
     Plugin 'vimwiki/vimwiki'
     Plugin 'Valloric/MatchTagAlways'
+    Plugin 'Valloric/YouCompleteMe'
     Plugin 'wellle/targets.vim'
     Plugin 'xolox/vim-misc'
     Plugin 'xolox/vim-session'
@@ -54,14 +53,6 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'file:///Users/dhleong/code/hubr'
     Plugin 'file:///Users/dhleong/code/njast'
     " Plugin 'file:///Users/dhleong/git/Conque-Shell'
-
-    " completion
-    if g:useYcmCompletion == 1
-        Plugin 'Valloric/YouCompleteMe'
-    else
-        " Plugin 'dhleong/vim-autocomplpop'
-        Plugin 'ervandew/supertab'
-    endif
 
     " I would prefer to user MarcWeber's,
     "  but it seems to be broken with YCM
