@@ -38,6 +38,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     Plugin 'Shougo/vimproc.vim'
     Plugin 'suan/vim-instant-markdown'
     Plugin 'terryma/vim-multiple-cursors'
+    Plugin 'tommcdo/vim-exchange'
     Plugin 'tomtom/tcomment_vim'
     Plugin 'tpope/vim-fugitive' 
     Plugin 'tpope/vim-markdown' 
