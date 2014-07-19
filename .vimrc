@@ -72,6 +72,7 @@ let g:useYcmCompletion = 1 " else, acp and supertab
     " Syntax plugins
     Plugin 'digitaltoad/vim-jade'
     Plugin 'groenewege/vim-less'
+    Plugin 'kchmck/vim-coffee-script'
     Plugin 'tfnico/vim-gradle'
     Plugin 'wavded/vim-stylus'
 
@@ -436,6 +437,7 @@ set completeopt=menu,preview,longest
 abbr ~? ~/
 iabbr CLoses Closes
 iabbr mfa Miners/minus-for-Android
+inoremap #env #!/usr/bin/env 
 
 "
 " Sparkup/zen coding
