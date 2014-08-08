@@ -20,6 +20,7 @@ set nocompatible
     "Add your bundles here
     Plugin 'eregex.vim'
     Plugin 'matchit.zip'
+    Plugin 'paredit.vim'
     Plugin 'VisIncr'
 
     " use ap's fork here instead of skammer, to add stylus support
@@ -38,6 +39,7 @@ set nocompatible
     Plugin 'terryma/vim-multiple-cursors'
     Plugin 'tommcdo/vim-exchange'
     Plugin 'tomtom/tcomment_vim'
+    Plugin 'tpope/vim-fireplace' 
     Plugin 'tpope/vim-fugitive' 
     Plugin 'tpope/vim-markdown' 
     Plugin 'tpope/vim-repeat' 
@@ -64,6 +66,7 @@ set nocompatible
     " Syntax plugins
     Plugin 'digitaltoad/vim-jade'
     Plugin 'groenewege/vim-less'
+    Plugin 'kchmck/vim-coffee-script'
     Plugin 'tfnico/vim-gradle'
     Plugin 'wavded/vim-stylus'
 
@@ -815,7 +818,8 @@ nnoremap ght :GithubTake<cr>
 nnoremap gho :GithubOpen<cr>
 
 " awesome Unite plugin for issues
-nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
+nnoremap ghi :Unite gh_issue:state=open<cr>
+" nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
 " re-install hubr for rapid development
 nnoremap <leader>rh :call ReinstallPlugin('hubr')<cr>
