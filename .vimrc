@@ -429,6 +429,7 @@ set completeopt=menu,preview,longest
 abbr ~? ~/
 iabbr CLoses Closes
 iabbr mfa Miners/minus-for-Android
+inoremap #env #!/usr/bin/env 
 
 "
 " Sparkup/zen coding
