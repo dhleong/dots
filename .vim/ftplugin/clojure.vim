@@ -1,7 +1,7 @@
 " nmap <d-r> :Require!<cr>cqq
 
 function! DoReload()
-    silent :Require!
+    silent :Require
 endfunction
 
 augroup ClojureGroup
