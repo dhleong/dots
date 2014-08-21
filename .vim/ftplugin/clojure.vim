@@ -9,4 +9,4 @@ augroup ClojureGroup
     autocmd BufWritePost *.clj call DoReload()
 augroup END
 
-nmap <d-r> :%Eval<cr>
+nmap <buffer> <d-r> :%Eval<cr>
