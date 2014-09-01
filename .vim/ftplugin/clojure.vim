@@ -43,7 +43,11 @@ def open_repl():
     if not line:
         print "Error"
     else:
-        print "Repl started"
+        # re-open the file to auto-connect
+        # do like this to suppress the "return to continue"
+        # and make it look fancy
+        vim.command('e | redraw | echohl IncSearch | echo "Repl Started" | echohl None')
+
 
 def close_all_repl():
     for proc in clj_repl_procs:
@@ -51,13 +55,7 @@ def close_all_repl():
         proc.kill()
 EOF
 
-function! LeinReplFunc()
-    py open_repl()
-
-    " re-open to auto-connect
-    :e
-endfunction
-command! LeinRepl call LeinReplFunc()
+command! LeinRepl py open_repl()
 
 function! LeinReplClose()
     py close_all_repl()
