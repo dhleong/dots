@@ -27,6 +27,8 @@ set nocompatible
     Plugin 'ap/vim-css-color' 
     Plugin 'bling/vim-airline'
     Plugin 'davidhalter/jedi-vim'
+    Plugin 'guns/vim-clojure-static'
+    Plugin 'guns/vim-clojure-highlight'
     Plugin 'marijnh/tern_for_vim'
     Plugin 'moll/vim-node'
     Plugin 'oplatek/Conque-Shell'
@@ -53,7 +55,7 @@ set nocompatible
     Plugin 'xolox/vim-session'
 
     Plugin 'file:///Users/dhleong/code/hubr'
-    Plugin 'file:///Users/dhleong/code/njast'
+    " Plugin 'file:///Users/dhleong/code/njast'
     " Plugin 'file:///Users/dhleong/git/Conque-Shell'
 
     " I would prefer to user MarcWeber's,
@@ -171,7 +173,9 @@ set list
 set listchars=tab:>-
 
 " use comma as the map leader, because \ is too far
-let mapleader = ","
+" let mapleader = ","
+" actually, let's try space... much easier to hit
+let mapleader = " "
 
 " Let's make it easy to edit this file (mnemonic for the key sequence is
 " 'e'dit 'v'imrc)
@@ -186,6 +190,12 @@ nmap <silent> <leader>sv :so $MYVIMRC<cr>
 
 " And the bundles dir, as well ('v'im 'b'undles)
 nmap <silent> <leader>vb :e ~/.vim/bundle/<cr>
+
+" Edit the filetype file of the current file in a new tap
+nnoremap <silent> <expr> <leader>eft ":tabe " . join([$HOME, "/.vim/ftplugin/", &filetype, ".vim"], "") . "<cr>"
+
+" paredit configs
+let g:paredit_leader = ","
 
 " Also, just source it automatically on write
 augroup VimAutoSource
@@ -319,6 +329,17 @@ inoremap <C-E> <esc>A
 "  so this is faster if I just want a straight split
 nnoremap <C-S><C-S> :vsp<cr>
 
+" fast window resize
+nnoremap <leader>= <C-W>10+
+nnoremap <leader>- <C-W>10-
+
+function! WindowFocusFunc() 
+    call feedkeys("\<c-w>=", "n")
+    call feedkeys("\<c-w>15+", "n")
+    call feedkeys("\<c-w>15>", "n")
+endfunction
+nnoremap <silent> <leader>wf :call WindowFocusFunc()<cr>
+
 " Make better use of <space> (should it be leader?)
 nmap <silent> <space> <enter>
 
@@ -379,6 +400,7 @@ nnoremap <leader>gc :Gcommit -a<CR>
 nnoremap <leader>ga :Gcommit -a --amend<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
+set diffopt=filler,vertical
 
 function! WriteAndPush()
     if expand('%') == "COMMIT_EDITMSG" 
@@ -395,7 +417,6 @@ nnoremap <leader>gp :call WriteAndPush()<CR>
 let g:ip_boundary = '"\?\s*$' 
 " don't open folds when jumping over blocks
 let g:ip_skipfold = 1
-
 
 " super tab and other completion settings
 let g:SuperTabNoCompleteAfter = ['//', '\s', ',', '#']
@@ -463,12 +484,16 @@ function! MapCtrlP(path)
     " isn't set as expected when opening Unite after using
     " the projectopen func below...
 
-    let suffix =  '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
-    execute 'nnoremap <C-p> :Unite file_rec/async:' . a:path . suffix
-    execute 'nnoremap <C-w><C-p> :Unite file_rec/async:' .
-        \ a:path . ' -default-action=tabopen' . suffix
-    execute 'nnoremap <C-s><C-p> :Unite file_rec/async:' . 
-        \ a:path . ' -default-action=vsplit' . suffix
+    if &ft == "java"
+        nnoremap <buffer> <silent> <c-p> :LocateFile<cr>
+    else
+        let suffix =  '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
+        execute 'nnoremap <C-p> :Unite file_rec/async:' . a:path . suffix
+        execute 'nnoremap <C-w><C-p> :Unite file_rec/async:' .
+            \ a:path . ' -default-action=tabopen' . suffix
+        execute 'nnoremap <C-s><C-p> :Unite file_rec/async:' . 
+            \ a:path . ' -default-action=vsplit' . suffix
+    endif
 
     execute 'nnoremap <leader>/ :Unite grep:' . a:path . ':-iR -auto-preview<cr>'
 endfunction
@@ -564,12 +589,19 @@ endfunction
 
 function! ConfigureJava()
 
-    nmap <silent> <leader>fi :JavaImportOrganize<cr>
-    nmap <silent> <leader>ji :JavaImpl<cr>
-    nmap <silent> <leader>pp :ProjectProblems!<cr>
-    nmap <silent> <leader>jc :JavaCorrect<cr> 
-    nmap <silent> <leader>jf :JavaCorrect<cr> 
-    nmap <silent> <leader>jd :JavaDocPreview<cr> 
+    nmap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
+    nmap <buffer> <silent> <leader>ji :JavaImpl<cr>
+    nmap <buffer> <silent> <leader>pp :ProjectProblems!<cr>
+    nmap <buffer> <silent> <leader>jc :JavaCorrect<cr> 
+    nmap <buffer> <silent> <leader>jf :JavaCorrect<cr> 
+    nmap <buffer> <silent> <leader>jd :JavaDocSearch<cr> 
+    nmap <buffer> <silent> <leader>js :JavaSearch -x declarations -s project<cr> 
+    nmap <buffer> <silent> <leader>jr :JavaSearch -x references -s project<cr> 
+    nmap <buffer> <silent> <leader>lc :LocationListClear<cr> 
+    nmap <buffer> <silent> <leader>ll :lopen<cr> 
+    nmap <buffer> <silent> <leader>lf :LocateFile<cr> 
+    nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
+    nmap <buffer> <silent> K :JavaDocPreview<cr>
 
     " let c-n do the regular local search
     inoremap <buffer> <c-n> <c-x><c-n>
@@ -671,8 +703,11 @@ command! OpenTodoList call OpenTodoListFunc()
 nmap <leader>T :OpenTodoList<cr>
 nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 
-"let g:EclimDisabled=0
+" let g:EclimDisabled=0
 let g:EclimJavascriptValidate = 0 
+let g:EclimCompletionMethod = 'omnifunc'
+let g:EclimBuffersDefaultAction = 'edit'
+let g:EclimLocateFileDefaultAction = 'edit'
 
 ":source /Users/dhleong/code/vim-javadocer/javadocer.vim
 " silent! source /Users/dhleong/code/njast/njast.vim
@@ -696,7 +731,7 @@ let g:session_autoload = 'no'
 " airline configs
 set laststatus=2
 let g:airline_detect_whitespace = 0
-let g:airline#extensions#eclim#enabled = 0
+" let g:airline#extensions#eclim#enabled = 0
 let g:airline#extensions#default#section_truncate_width = {
   \ 'x': 88,
   \ 'y': 88,
@@ -711,6 +746,7 @@ let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 " syntastic configs
 let g:syntastic_java_checkers = ['checkstyle']
 function! JumpToNextError()
+
     if !exists("g:SyntasticLoclist")
         return
     endif

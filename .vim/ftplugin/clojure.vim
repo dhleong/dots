@@ -2,6 +2,7 @@
 
 function! DoReload()
     silent :Require
+    silent :ClojureHighlightReferences
 endfunction
 
 augroup ClojureGroup
