@@ -5,12 +5,19 @@ function! DoReload()
     silent :ClojureHighlightReferences
 endfunction
 
+function! RunBufferTests()
+    let ns = fireplace#ns() . "-test"
+    silent :Require
+    exe "RunTests " . ns
+endfunction
+
 augroup ClojureGroup
     autocmd!
     autocmd BufWritePost *.clj call DoReload()
 augroup END
 
-nmap <buffer> <d-r> :%Eval<cr>
+nnoremap <buffer> <d-r> :%Eval<cr>
+nnoremap <buffer> cpt :call RunBufferTests()<cr>
 
 "
 " Auto-start lein repl
@@ -54,6 +61,7 @@ def close_all_repl():
     for proc in clj_repl_procs:
         proc.stdin.close()
         proc.kill()
+
 EOF
 
 command! LeinRepl py open_repl()
