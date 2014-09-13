@@ -6,7 +6,10 @@ function! DoReload()
 endfunction
 
 function! RunBufferTests()
-    let ns = fireplace#ns() . "-test"
+    let ns = fireplace#ns()
+    if ns !~ '-test$'
+        let ns = ns . "-test"
+    endif
     silent :Require
     exe "RunTests " . ns
 endfunction
@@ -17,6 +20,7 @@ augroup ClojureGroup
 augroup END
 
 nnoremap <buffer> <d-r> :%Eval<cr>
+nnoremap <buffer> cpr :call RunBufferTests()<cr>
 nnoremap <buffer> cpt :call RunBufferTests()<cr>
 
 "
