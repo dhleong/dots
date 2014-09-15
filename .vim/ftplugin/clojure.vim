@@ -73,6 +73,7 @@ command! LeinRepl py open_repl()
 function! LeinReplClose()
     py close_all_repl()
 endfunction
+command! LeinReplClose call LeinReplClose()
 
 augroup LeinShutDownGroup
     autocmd VimLeavePre * call LeinReplClose()
