@@ -403,7 +403,7 @@ nnoremap <leader>gd :Gdiff<CR>
 set diffopt=filler,vertical
 
 function! WriteAndPush()
-    if expand('%') == "COMMIT_EDITMSG" 
+    if expand('%') == "COMMIT_EDITMSG" || expand('%:h') == "COMMIT_EDITMSG"
         :Gwrite
         :Git push
     else
