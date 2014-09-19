@@ -24,7 +24,7 @@ alias gitco='git commit -a'
 alias gitpp='git pull && git push'
 alias up='cd ..'
 alias thundercats='gradle'
-alias autobots='gradle'
+alias autobots='gradle --offline'
 
 alias antgo='ant debug install && sh run.sh'
 alias adbrestart='adb kill-server && adb start-server && adb devices'

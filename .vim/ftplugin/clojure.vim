@@ -22,6 +22,7 @@ augroup END
 nnoremap <buffer> <d-r> :%Eval<cr>
 nnoremap <buffer> cpr :call RunBufferTests()<cr>
 nnoremap <buffer> cpt :call RunBufferTests()<cr>
+nmap <buffer> cql cqp<up><cr>
 
 "
 " Auto-start lein repl
@@ -66,15 +67,23 @@ def close_all_repl():
         proc.stdin.close()
         proc.kill()
 
+def restart_repl():
+    vim.command('redraw | echo "Closing Repl..."')
+    close_all_repl()
+    vim.command('redraw | echo "Restaring Repl..."')
+    open_repl()
+
 EOF
 
 command! LeinRepl py open_repl()
 
-function! LeinReplClose()
+function! LeinReplCloseFunc()
     py close_all_repl()
 endfunction
-command! LeinReplClose call LeinReplClose()
+command! LeinReplClose call LeinReplCloseFunc()
+
+command! LeinReplRestart py restart_repl()
 
 augroup LeinShutDownGroup
-    autocmd VimLeavePre * call LeinReplClose()
+    autocmd VimLeavePre * call LeinReplCloseFunc()
 augroup END
