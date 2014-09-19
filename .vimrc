@@ -744,8 +744,17 @@ let g:acp_completeoptPreview = 1
 let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 
 " syntastic configs
-let g:syntastic_java_checkers = ['checkstyle']
+let g:syntastic_java_checkers = []
 function! JumpToNextError()
+
+    if &ft == "java"
+        try
+            lnext
+        catch /.*No.more.items$/
+            lfirst
+        endtry
+        return
+    endif
 
     if !exists("g:SyntasticLoclist")
         return
