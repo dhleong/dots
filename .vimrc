@@ -603,6 +603,9 @@ function! ConfigureJava()
     nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
     nmap <buffer> <silent> K :JavaDocPreview<cr>
 
+    nnoremap cpr :JUnit %<cr>
+    nnoremap cpt :JUnit %<cr>
+
     " let c-n do the regular local search
     inoremap <buffer> <c-n> <c-x><c-n>
 
