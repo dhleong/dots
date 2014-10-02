@@ -592,18 +592,20 @@ function! ConfigureJava()
     nmap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
     nmap <buffer> <silent> <leader>ji :JavaImpl<cr>
     nmap <buffer> <silent> <leader>pp :ProjectProblems!<cr>
-    nmap <buffer> <silent> <leader>jc :JavaCorrect<cr> 
-    nmap <buffer> <silent> <leader>jf :JavaCorrect<cr> 
-    nmap <buffer> <silent> <leader>jd :JavaDocSearch<cr> 
-    nmap <buffer> <silent> <leader>js :JavaSearch -x declarations -s project<cr> 
-    nmap <buffer> <silent> <leader>jr :JavaSearch -x references -s project<cr> 
-    nmap <buffer> <silent> <leader>lc :LocationListClear<cr> 
-    nmap <buffer> <silent> <leader>ll :lopen<cr> 
-    nmap <buffer> <silent> <leader>lf :LocateFile<cr> 
+    nmap <buffer> <silent> <leader>pr :ProjectRun<cr>
+    nmap <buffer> <silent> <leader>jc :JavaCorrect<cr>
+    nmap <buffer> <silent> <leader>jf :JavaCorrect<cr>
+    nmap <buffer> <silent> <leader>jd :JavaDocSearch<cr>
+    nmap <buffer> <silent> <leader>js :JavaSearch -x declarations -s project<cr>
+    nmap <buffer> <silent> <leader>jr :JavaSearch -x references -s project<cr>
+    nmap <buffer> <silent> <leader>lc :LocationListClear<cr>
+    nmap <buffer> <silent> <leader>ll :lopen<cr>
+    nmap <buffer> <silent> <leader>lf :LocateFile<cr>
     nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
     nmap <buffer> <silent> K :JavaDocPreview<cr>
+    nmap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
 
-    nnoremap cpr :JUnit %<cr>
+    nnoremap cpr :JUnit<cr>
     nnoremap cpt :JUnit %<cr>
 
     " let c-n do the regular local search
@@ -707,10 +709,12 @@ nmap <leader>T :OpenTodoList<cr>
 nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 
 " let g:EclimDisabled=0
+let g:EclimJavaImplAtCursor = 1 
 let g:EclimJavascriptValidate = 0 
 let g:EclimCompletionMethod = 'omnifunc'
 let g:EclimBuffersDefaultAction = 'edit'
 let g:EclimLocateFileDefaultAction = 'edit'
+let g:EclimHighlightSuccess = 'IncSearch'
 
 ":source /Users/dhleong/code/vim-javadocer/javadocer.vim
 " silent! source /Users/dhleong/code/njast/njast.vim
