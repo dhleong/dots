@@ -144,6 +144,9 @@ autocmd WinLeave * setlocal nocursorline
 "colorscheme desert
 colorscheme zenburn
 
+" longest submatch, but subsequent tabs keep going
+set wildmode=longest:full,full
+
 set wildignore=.svn,.git,*.o,*.a,*.class,*.pyc
 set wildignore+=*.mo,*.la,*.so,*.obj,*.swp,*.swo
 set wildignore+=*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak
@@ -592,6 +595,7 @@ function! ConfigureJava()
     nmap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
     nmap <buffer> <silent> <leader>ji :JavaImpl<cr>
     nmap <buffer> <silent> <leader>pp :ProjectProblems!<cr>
+    nmap <buffer> <silent> <leader>pr :ProjectRun<cr>
     nmap <buffer> <silent> <leader>jc :JavaCorrect<cr> 
     nmap <buffer> <silent> <leader>jf :JavaCorrect<cr> 
     nmap <buffer> <silent> <leader>jd :JavaDocSearch<cr> 
