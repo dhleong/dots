@@ -12,6 +12,11 @@ NDK=/lib/android-ndk-r7c/
 PATH=$PATH:/usr/local/mysql/bin
 PATH=$PATH:/lib/gradle/bin
 
+if [ -z "$JAVA_HOME" ]
+then
+    export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
+fi
+
 export ANDROID_HOME=/lib/android-sdk
 export PROGUARD_HOME=$ANDROID_HOME/tools/proguard
 

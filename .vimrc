@@ -144,6 +144,9 @@ autocmd WinLeave * setlocal nocursorline
 "colorscheme desert
 colorscheme zenburn
 
+" longest submatch, but subsequent tabs keep going
+set wildmode=longest:full,full
+
 set wildignore=.svn,.git,*.o,*.a,*.class,*.pyc
 set wildignore+=*.mo,*.la,*.so,*.obj,*.swp,*.swo
 set wildignore+=*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak
