@@ -1,8 +1,13 @@
 " nmap <d-r> :Require!<cr>cqq
 
 function! DoReload()
-    silent :Require
-    silent :ClojureHighlightReferences
+    try
+        silent :Require
+        silent :ClojureHighlightReferences
+    catch /Fireplace:.*REPL/
+        redraw! | echo "No REPL found"
+    endtry
+
 endfunction
 
 function! RunBufferTests()
