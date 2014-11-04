@@ -712,7 +712,8 @@ nmap <leader>T :OpenTodoList<cr>
 nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 
 " let g:EclimDisabled=0
-let g:EclimJavaImplAtCursor = 1 
+let g:EclimJavaImplAtCursor = 1 " my old one
+let g:EclimJavaImplInsertAtCursor = 1 
 let g:EclimJavascriptValidate = 0 
 let g:EclimCompletionMethod = 'omnifunc'
 let g:EclimBuffersDefaultAction = 'edit'
