@@ -54,6 +54,7 @@ set nocompatible
     Plugin 'xolox/vim-misc'
     Plugin 'xolox/vim-session'
 
+    Plugin 'file:///Users/dhleong/IdeaProjects/intellivim/', {'rtp': 'vim'}
     Plugin 'file:///Users/dhleong/code/hubr'
     " Plugin 'file:///Users/dhleong/code/njast'
     " Plugin 'file:///Users/dhleong/git/Conque-Shell'
@@ -322,6 +323,12 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" And, faster tab navigation
+nnoremap H gT
+nnoremap L gt
+nnoremap zh H
+nnoremap zl L
 
 " Navigation in insert mode, for use with multicursor
 inoremap <C-A> <esc>I
@@ -606,7 +613,7 @@ function! ConfigureJava()
     nmap <buffer> <silent> <leader>lf :LocateFile<cr>
     nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
     nmap <buffer> <silent> K :JavaDocPreview<cr>
-    nmap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
+    nmap <buffer> <silent> gd :JavaSearch -x implementor -s workspace<cr>
 
     nnoremap cpr :JUnit<cr>
     nnoremap cpt :JUnit %<cr>
