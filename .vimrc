@@ -37,6 +37,7 @@ set nocompatible
     Plugin 'scrooloose/syntastic'
     Plugin 'Shougo/unite.vim'
     Plugin 'Shougo/vimproc.vim'
+    " Plugin 'shime/vim-livedown'
     Plugin 'suan/vim-instant-markdown'
     Plugin 'terryma/vim-multiple-cursors'
     Plugin 'tommcdo/vim-exchange'
@@ -55,6 +56,7 @@ set nocompatible
     Plugin 'xolox/vim-session'
 
     Plugin 'file:///Users/dhleong/code/hubr'
+    Plugin 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
     " Plugin 'file:///Users/dhleong/code/njast'
     " Plugin 'file:///Users/dhleong/git/Conque-Shell'
 
@@ -88,7 +90,7 @@ set nocompatible
         silent !cd ~/.vim/bundle/jedi-vim && git submodule update --init
 
         echo "Installing vim-instant-markdown"
-        silent sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d
+        silent !sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d
 
         echo "Installing YCM"
         silent !cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer
@@ -206,6 +208,9 @@ augroup VimAutoSource
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
+" livedown
+let g:livedown_autorun = 1
+
 " While we're here, how about a vim shell? :)
 let g:ConqueTerm_CloseOnEnd = 1 " close the tab/split when the shell exits
 let g:ConqueTerm_StartMessages = 0 " shhh. it's fine
@@ -322,6 +327,10 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" Enable faster tab navigation
+nnoremap H gT
+nnoremap L gt
 
 " Navigation in insert mode, for use with multicursor
 inoremap <C-A> <esc>I
@@ -592,11 +601,21 @@ endfunction
 
 function! ConfigureJava()
 
-    nmap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
+    if intellivim#InProject()
+        nmap <buffer> <silent> <leader>fi :JavaOptimizeImports<cr>
+        nmap <buffer> <silent> <leader>jc :FixProblem<cr>
+        nmap <buffer> <silent> K :GetDocumentation<cr>
+        nmap <buffer> <silent> gd :GotoDeclaration<cr>
+    else
+        nmap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
+        nmap <buffer> <silent> <leader>jc :JavaCorrect<cr>
+        nmap <buffer> <silent> K :JavaDocPreview<cr>
+        nmap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
+    endif
+
     nmap <buffer> <silent> <leader>ji :JavaImpl<cr>
     nmap <buffer> <silent> <leader>pp :ProjectProblems!<cr>
     nmap <buffer> <silent> <leader>pr :ProjectRun<cr>
-    nmap <buffer> <silent> <leader>jc :JavaCorrect<cr>
     nmap <buffer> <silent> <leader>jf :JavaCorrect<cr>
     nmap <buffer> <silent> <leader>jd :JavaDocSearch<cr>
     nmap <buffer> <silent> <leader>js :JavaSearch -x declarations -s project<cr>
@@ -605,8 +624,6 @@ function! ConfigureJava()
     nmap <buffer> <silent> <leader>ll :lopen<cr>
     nmap <buffer> <silent> <leader>lf :LocateFile<cr>
     nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
-    nmap <buffer> <silent> K :JavaDocPreview<cr>
-    nmap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
 
     nnoremap cpr :JUnit<cr>
     nnoremap cpt :JUnit %<cr>
@@ -810,6 +827,10 @@ let g:ycm_filetype_blacklist = {
     \ 'conque_term' : 1,
     \}
 
+" let g:ycm_semantic_triggers = {
+"     \ 'android-xml' : [':', '="', '<', '/', '@']
+"     \}
+
 let g:ycm_key_list_previous_completion = ['<Up>'] " NOT s-tab; we do the right thing below:
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
 
@@ -880,6 +901,9 @@ nnoremap ghi :Unite gh_issue:state=open<cr>
 
 " re-install hubr for rapid development
 nnoremap <leader>rh :call ReinstallPlugin('hubr')<cr>
+
+" re-install intellivim for rapid development
+nnoremap <leader>ri :call ReinstallPlugin('intellivim')<cr>
 
 " re-install njast for rapid development
 nnoremap <leader>rn :call ReinstallPlugin('njast')<cr>
