@@ -606,11 +606,14 @@ function! ConfigureJava()
         nmap <buffer> <silent> <leader>jc :FixProblem<cr>
         nmap <buffer> <silent> K :GetDocumentation<cr>
         nmap <buffer> <silent> gd :GotoDeclaration<cr>
+        nmap <buffer> <silent> <leader>lf :Locate<cr>
+        nmap <buffer> <silent> <leader>lc :Locate class<cr>
     else
         nmap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
         nmap <buffer> <silent> <leader>jc :JavaCorrect<cr>
         nmap <buffer> <silent> K :JavaDocPreview<cr>
         nmap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
+        nmap <buffer> <silent> <leader>lf :LocateFile<cr>
     endif
 
     nmap <buffer> <silent> <leader>ji :JavaImpl<cr>
@@ -622,7 +625,6 @@ function! ConfigureJava()
     nmap <buffer> <silent> <leader>jr :JavaSearch -x references -s project<cr>
     nmap <buffer> <silent> <leader>lc :LocationListClear<cr>
     nmap <buffer> <silent> <leader>ll :lopen<cr>
-    nmap <buffer> <silent> <leader>lf :LocateFile<cr>
     nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
 
     nnoremap cpr :JUnit<cr>

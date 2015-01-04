@@ -11,6 +11,8 @@ function! DoReload()
 endfunction
 
 function! RunBufferTests()
+    w
+    redraw!
     let ns = fireplace#ns()
     if ns !~ '-test$'
         let ns = ns . "-test"
