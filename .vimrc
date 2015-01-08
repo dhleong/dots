@@ -328,9 +328,11 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Enable faster tab navigation
+" And, faster tab navigation
 nnoremap H gT
 nnoremap L gt
+nnoremap zh H
+nnoremap zl L
 
 " Navigation in insert mode, for use with multicursor
 inoremap <C-A> <esc>I
@@ -599,6 +601,9 @@ function! SetPathToProject()
     call MapCtrlP("")
 endfunction
 
+" let's always provide this, so we can use it in new tabs, etc.
+nnoremap <silent> <leader>lf :LocateFile<cr>
+
 function! ConfigureJava()
 
     if intellivim#InProject()
@@ -626,6 +631,8 @@ function! ConfigureJava()
     nmap <buffer> <silent> <leader>lc :LocationListClear<cr>
     nmap <buffer> <silent> <leader>ll :lopen<cr>
     nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
+    nmap <buffer> <silent> K :JavaDocPreview<cr>
+    nmap <buffer> <silent> gd :JavaSearch -x implementor -s workspace<cr>
 
     nnoremap cpr :JUnit<cr>
     nnoremap cpt :JUnit %<cr>
@@ -647,6 +654,30 @@ function! ConfigurePython()
 
     " the one above doesn't cooperate with vim-jedi for some reason
     inoremap <buffer> <expr><S-Tab> pumvisible()? "\<up>\<C-n>\<C-p>" : "\<c-d>"
+
+endfunction
+
+function! ConfigureAndroidProject()
+    if !exists(":PingEclim")
+        return
+    endif
+
+    let project = eclim#project#util#GetCurrentProjectName()
+    if empty(project)
+        return
+    endif
+
+    let natures = eclim#project#util#GetProjectNatureAliases(project)
+    if -1 == index(natures, "android")
+        return
+    endif
+
+    " OKAY! We're an android project
+    let root = eclim#project#util#GetProjectRoot(project)
+    let root = escape(root, ' ')
+    exe 'nnoremap <buffer> <leader>or :edit ' . root . '/res<cr>'
+    exe 'nnoremap <buffer> <leader>ov :edit ' . root . '/res/values<cr>'
+    exe 'nnoremap <buffer> <leader>ol :edit ' . root . '/res/layout<cr>'
 
 endfunction
 
@@ -678,6 +709,8 @@ if has('autocmd') && !exists('autocmds_loaded')
     "         \ endif
     " endif
 
+    autocmd FileType java call ConfigureAndroidProject()
+    autocmd FileType android-xml call ConfigureAndroidProject()
 endif
 
 function! FixLineEndingsFunc()
@@ -900,6 +933,9 @@ nnoremap gho :GithubOpen<cr>
 " awesome Unite plugin for issues
 nnoremap ghi :Unite gh_issue:state=open<cr>
 " nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
+
+" re-install intellivim for rapid development
+nnoremap <leader>ri :call ReinstallPlugin('intellivim')<cr>
 
 " re-install hubr for rapid development
 nnoremap <leader>rh :call ReinstallPlugin('hubr')<cr>
