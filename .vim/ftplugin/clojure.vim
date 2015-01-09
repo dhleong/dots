@@ -11,12 +11,15 @@ function! DoReload()
 endfunction
 
 function! RunBufferTests()
+    w
+    redraw!
     let ns = fireplace#ns()
     if ns !~ '-test$'
         let ns = ns . "-test"
     endif
     silent :Require
     exe "RunTests " . ns
+
 endfunction
 
 augroup ClojureGroup
@@ -28,6 +31,8 @@ nnoremap <buffer> <d-r> :%Eval<cr>
 nnoremap <buffer> cpr :call RunBufferTests()<cr>
 nnoremap <buffer> cpt :call RunBufferTests()<cr>
 nmap <buffer> cql cqp<up><cr>
+
+nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), ".clj$", "_test.clj", "")<cr>
 
 "
 " Auto-start lein repl
