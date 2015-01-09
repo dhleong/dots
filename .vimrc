@@ -660,6 +660,8 @@ function! ConfigureAndroidProject()
     let root = escape(root, ' ')
     exe 'nnoremap <buffer> <leader>or :edit ' . root . '/res<cr>'
     exe 'nnoremap <buffer> <leader>ov :edit ' . root . '/res/values<cr>'
+    exe 'nnoremap <buffer> <leader>od :edit ' . root . '/res/values/dimens.xml<cr>'
+    exe 'nnoremap <buffer> <leader>os :edit ' . root . '/res/values/strings.xml<cr>'
     exe 'nnoremap <buffer> <leader>ol :edit ' . root . '/res/layout<cr>'
 
 endfunction
@@ -692,8 +694,10 @@ if has('autocmd') && !exists('autocmds_loaded')
     "         \ endif
     " endif
 
-    autocmd FileType java call ConfigureAndroidProject()
-    autocmd FileType android-xml call ConfigureAndroidProject()
+    augroup AndroidShortcuts
+        autocmd BufEnter *.java call ConfigureAndroidProject()
+        autocmd BufEnter *.xml call ConfigureAndroidProject()
+    augroup END
 endif
 
 function! FixLineEndingsFunc()
