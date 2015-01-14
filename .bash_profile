@@ -34,6 +34,7 @@ alias autobots='./gradlew --offline'
 
 alias antgo='ant debug install && sh run.sh'
 alias adbrestart='adb kill-server && adb start-server && adb devices'
+alias sloccount=cloc
 
 alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 
