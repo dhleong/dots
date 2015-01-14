@@ -86,6 +86,7 @@ def restart_repl():
 EOF
 
 command! LeinRepl py open_repl()
+command! ConnectRepl :Connect nrepl://localhost:7888
 
 function! LeinReplCloseFunc()
     py close_all_repl()
