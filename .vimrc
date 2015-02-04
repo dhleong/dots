@@ -56,7 +56,7 @@ set nocompatible
     Plugin 'xolox/vim-session'
 
     Plugin 'file:///Users/dhleong/code/hubr'
-    Plugin 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
+    " Plugin 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
     " Plugin 'file:///Users/dhleong/code/njast'
     " Plugin 'file:///Users/dhleong/git/Conque-Shell'
 
@@ -606,7 +606,7 @@ nnoremap <silent> <leader>lf :LocateFile<cr>
 
 function! ConfigureJava()
 
-    if intellivim#InProject()
+    if exists("*intellivim#InProject") && intellivim#InProject()
         nmap <buffer> <silent> <leader>fi :JavaOptimizeImports<cr>
         nmap <buffer> <silent> <leader>jc :FixProblem<cr>
         nmap <buffer> <silent> K :GetDocumentation<cr>
@@ -675,10 +675,12 @@ function! ConfigureAndroidProject()
     " OKAY! We're an android project
     let root = eclim#project#util#GetProjectRoot(project)
     let root = escape(root, ' ')
+    exe 'nnoremap <buffer> <leader>om :edit ' . root . '/AndroidManifest.xml<cr>'
     exe 'nnoremap <buffer> <leader>or :edit ' . root . '/res<cr>'
     exe 'nnoremap <buffer> <leader>ov :edit ' . root . '/res/values<cr>'
     exe 'nnoremap <buffer> <leader>od :edit ' . root . '/res/values/dimens.xml<cr>'
     exe 'nnoremap <buffer> <leader>os :edit ' . root . '/res/values/strings.xml<cr>'
+    exe 'nnoremap <buffer> <leader>ot :edit ' . root . '/res/values/styles.xml<cr>'
     exe 'nnoremap <buffer> <leader>ol :edit ' . root . '/res/layout<cr>'
 
 endfunction
