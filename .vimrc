@@ -1,112 +1,84 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
 
-" From http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
-" Setting up Vundle - the vim plugin bundler
-    let iCanHazVundle=1
-    let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-    if !filereadable(vundle_readme)
-        echo "Installing Vundle.."
-        echo ""
-        silent !mkdir -p ~/.vim/bundle
-        silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-        let iCanHazVundle=0
+" vim-plug
+    if empty(glob('~/.vim/autoload/plug.vim'))
+      silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      autocmd VimEnter * PlugInstall
     endif
 
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
+    call plug#begin('~/.vim/bundle')
 
-    Plugin 'gmarik/vundle'
     "Add your bundles here
-    Plugin 'eregex.vim'
-    Plugin 'matchit.zip'
-    Plugin 'paredit.vim'
-    Plugin 'VisIncr'
+    Plug 'eregex.vim'
+    Plug 'matchit.zip'
+    Plug 'paredit.vim', {'for': 'clojure'}
+    Plug 'VisIncr'
 
     " use ap's fork here instead of skammer, to add stylus support
-    Plugin 'ap/vim-css-color' 
-    Plugin 'bling/vim-airline'
-    Plugin 'davidhalter/jedi-vim'
-    Plugin 'guns/vim-clojure-static'
-    Plugin 'guns/vim-clojure-highlight'
-    Plugin 'marijnh/tern_for_vim'
-    Plugin 'moll/vim-node'
-    Plugin 'oplatek/Conque-Shell'
-    Plugin 'reinh/vim-makegreen'
-    Plugin 'rstacruz/sparkup', {'rtp': 'vim'}
-    Plugin 'scrooloose/syntastic'
-    Plugin 'Shougo/unite.vim'
-    Plugin 'Shougo/vimproc.vim'
-    " Plugin 'shime/vim-livedown'
-    Plugin 'suan/vim-instant-markdown'
-    Plugin 'terryma/vim-multiple-cursors'
-    Plugin 'tommcdo/vim-exchange'
-    Plugin 'tomtom/tcomment_vim'
-    Plugin 'tpope/vim-fireplace' 
-    Plugin 'tpope/vim-fugitive' 
-    Plugin 'tpope/vim-markdown' 
-    Plugin 'tpope/vim-repeat' 
-    Plugin 'tpope/vim-surround' 
-    Plugin 'tpope/vim-vinegar' 
-    Plugin 'vimwiki/vimwiki'
-    Plugin 'Valloric/MatchTagAlways'
-    Plugin 'Valloric/YouCompleteMe'
-    Plugin 'wellle/targets.vim'
-    Plugin 'xolox/vim-misc'
-    Plugin 'xolox/vim-session'
+    Plug 'ap/vim-css-color', {'for': 'css'}
+    Plug 'bling/vim-airline'
+    Plug 'davidhalter/jedi-vim', {'for': 'python', 'do': 'git submodule update --init'}
+    Plug 'guns/vim-clojure-static', {'for': 'clojure'}
+    Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
+    Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
+    Plug 'moll/vim-node', {'for': 'javascript'}
+    Plug 'oplatek/Conque-Shell'
+    " Plug 'reinh/vim-makegreen'
+    Plug 'rstacruz/sparkup', {'rtp': 'vim', 'for': 'html'}
+    Plug 'scrooloose/syntastic'
+    Plug 'Shougo/unite.vim'
+    Plug 'Shougo/vimproc.vim', {'do': 'make'}
+    " Plug 'shime/vim-livedown'
+    Plug 'suan/vim-instant-markdown', {'on': 'Markdown', 
+        \ 'do': 'sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d'}
+    Plug 'terryma/vim-multiple-cursors'
+    Plug 'tommcdo/vim-exchange'
+    Plug 'tomtom/tcomment_vim'
+    Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+    Plug 'tpope/vim-fugitive' 
+    Plug 'tpope/vim-markdown' 
+    Plug 'tpope/vim-repeat' 
+    Plug 'tpope/vim-surround' 
+    Plug 'tpope/vim-vinegar' 
+    " Plug 'vimwiki/vimwiki'
+    Plug 'Valloric/MatchTagAlways'
+    Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}
+    Plug 'wellle/targets.vim'
+    Plug 'xolox/vim-misc'
+    Plug 'xolox/vim-session'
 
-    Plugin 'file:///Users/dhleong/code/hubr'
-    " Plugin 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
-    " Plugin 'file:///Users/dhleong/code/njast'
-    " Plugin 'file:///Users/dhleong/git/Conque-Shell'
+    Plug 'file:///Users/dhleong/code/hubr'
+    " Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
+    " Plug 'file:///Users/dhleong/code/njast'
+    " Plug 'file:///Users/dhleong/git/Conque-Shell'
 
     " I would prefer to user MarcWeber's,
     "  but it seems to be broken with YCM
-    " Plugin 'MarcWeber/ultisnips'
-    Plugin 'SirVer/ultisnips'
+    " Plug 'MarcWeber/ultisnips'
+    Plug 'SirVer/ultisnips'
     " needed again
-    Plugin 'honza/vim-snippets' 
+    Plug 'honza/vim-snippets' 
 
     " Syntax plugins
-    Plugin 'digitaltoad/vim-jade'
-    Plugin 'groenewege/vim-less'
-    Plugin 'kchmck/vim-coffee-script'
-    Plugin 'tfnico/vim-gradle'
-    Plugin 'wavded/vim-stylus'
+    Plug 'digitaltoad/vim-jade'
+    Plug 'groenewege/vim-less'
+    Plug 'kchmck/vim-coffee-script'
+    Plug 'tfnico/vim-gradle'
+    Plug 'wavded/vim-stylus'
 
-    "...All your other bundles...
-    if iCanHazVundle == 0
-        echo "Installing Plugins, please ignore key map error messages"
-        echo ""
-        :PluginInstall
-
-        echo "Building vimproc"
-        silent !cd ~/.vim/bundle/vimproc.vim && make
-
-        echo "Installing Tern"
-        silent !cd ~/.vim/bundle/tern_for_vim && npm install
-
-        echo "Installing jedi"
-        silent !cd ~/.vim/bundle/jedi-vim && git submodule update --init
-
-        echo "Installing vim-instant-markdown"
-        silent !sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d
-
-        echo "Installing YCM"
-        silent !cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer
-
-        echo "Done!"
-        echo "Note that you may need to restart vim for airline fonts to work!"
-    endif
-" Setting up Vundle - the vim plugin bundler end
+    call plug#end()
+" Setting up vim-plug end
 
 " A convenient function to delete a bundle and reinstall it
 function! ReinstallPlugin(name)
-    PluginList
-    exe '/' . a:name
-    norm D
-    PluginInstall
-    norm q
+    " PluginList
+    " exe '/' . a:name
+    " norm D
+    " PluginInstall
+    " norm q
+    exe "PlugUpdate " . a:name
 
     " if a:name == 'njast'
     "     !cd ~/.vim/bundle/njast && npm install
