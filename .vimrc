@@ -22,6 +22,7 @@ set nocompatible
     Plug 'davidhalter/jedi-vim', {'for': 'python', 'do': 'git submodule update --init'}
     Plug 'guns/vim-clojure-static', {'for': 'clojure'}
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
+    Plug 'junegunn/vim-peekaboo'
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
     Plug 'moll/vim-node', {'for': 'javascript'}
     Plug 'oplatek/Conque-Shell'
@@ -771,7 +772,7 @@ let g:session_autoload = 'no'
 
 " airline configs
 set laststatus=2
-let g:airline_detect_whitespace = 0
+let g:airline#extensions#whitespace#enabled = 0
 " let g:airline#extensions#eclim#enabled = 0
 let g:airline#extensions#default#section_truncate_width = {
   \ 'x': 88,
