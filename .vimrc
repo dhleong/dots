@@ -24,7 +24,8 @@ set nocompatible
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
     Plug 'moll/vim-node', {'for': 'javascript'}
-    Plug 'oplatek/Conque-Shell'
+    Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
+        \ 'ConqueTermSplit', 'ConqueTermVSplit']}
     " Plug 'reinh/vim-makegreen'
     Plug 'rstacruz/sparkup', {'rtp': 'vim', 'for': 'html'}
     Plug 'scrooloose/syntastic'
@@ -43,7 +44,7 @@ set nocompatible
     Plug 'tpope/vim-surround' 
     Plug 'tpope/vim-vinegar' 
     " Plug 'vimwiki/vimwiki'
-    Plug 'Valloric/MatchTagAlways'
+    Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
     Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}
     Plug 'wellle/targets.vim'
     Plug 'xolox/vim-misc'
