@@ -15,7 +15,10 @@ PATH=$PATH:/lib/gradle/bin
 if [ -z "$JAVA_HOME" ]
 then
     # export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
-    export JAVA_HOME=$(/usr/libexec/java_home)
+    # export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+    export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
+    export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
+    export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
 fi
 
 export ANDROID_HOME=/lib/android-sdk

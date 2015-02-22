@@ -32,7 +32,7 @@ set nocompatible
     Plug 'Shougo/unite.vim'
     Plug 'Shougo/vimproc.vim', {'do': 'make'}
     " Plug 'shime/vim-livedown'
-    Plug 'suan/vim-instant-markdown', {'on': 'Markdown', 
+    Plug 'suan/vim-instant-markdown', {'for': 'markdown',
         \ 'do': 'sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d'}
     Plug 'terryma/vim-multiple-cursors'
     Plug 'tommcdo/vim-exchange'
