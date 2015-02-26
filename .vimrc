@@ -402,7 +402,7 @@ nnoremap <leader>gp :call WriteAndPush()<CR>
 
 
 " Tweaking {} motion behavior
-let g:ip_boundary = '[" *]\+\s*$' 
+let g:ip_boundary = '[" *]*\s*$' 
 " don't open folds when jumping over blocks
 let g:ip_skipfold = 1
 
