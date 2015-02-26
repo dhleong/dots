@@ -948,6 +948,11 @@ function! MarkdownFunc()
 endfunction
 command! Markdown call MarkdownFunc()
 
+" also
+let g:markdown_fenced_languages = ['coffee', 'css', 'java', 'javascript',
+    \ 'js=javascript', 'json=javascript', 'clojure', 'sass', 'xml', 'html']
+
+
 nmap <Leader>ijf <Plug>IMAP_JumpForward
 
 "
