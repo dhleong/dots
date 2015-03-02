@@ -173,6 +173,10 @@ nmap <silent> <leader>vb :e ~/.vim/bundle/<cr>
 " Edit the filetype file of the current file in a new tap
 nnoremap <silent> <expr> <leader>eft ":tabe " . join([$HOME, "/.vim/ftplugin/", &filetype, ".vim"], "") . "<cr>"
 
+" tabclose
+nmap <silent> <leader>tc :tabclose<cr>
+
+
 " paredit configs
 let g:paredit_leader = ","
 
@@ -388,6 +392,7 @@ nnoremap <leader>gc :Gcommit -a<CR>
 nnoremap <leader>ga :Gcommit -a --amend<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gb :Gblame<CR>
 set diffopt=filler,vertical
 
 function! WriteAndPush()
