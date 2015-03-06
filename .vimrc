@@ -42,6 +42,7 @@ set nocompatible
     Plug 'tpope/vim-fugitive' 
     Plug 'tpope/vim-markdown' 
     Plug 'tpope/vim-repeat' 
+    Plug 'tpope/vim-scriptease', {'for': 'vim'}
     Plug 'tpope/vim-surround' 
     Plug 'tpope/vim-vinegar' 
     " Plug 'vimwiki/vimwiki'
