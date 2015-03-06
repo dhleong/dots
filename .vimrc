@@ -23,6 +23,8 @@ set nocompatible
     Plug 'guns/vim-clojure-static', {'for': 'clojure'}
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
     Plug 'junegunn/vim-peekaboo'
+    Plug 'junegunn/vim-pseudocl'
+    Plug 'junegunn/vim-oblique'
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
     Plug 'moll/vim-node', {'for': 'javascript'}
     Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
@@ -970,3 +972,12 @@ function! OpenTermFunc()
     silent !osascript -e 'tell app "Terminal" to activate'
 endfunction
 command! Term call OpenTermFunc()
+
+" oblique configs; be fuzzy by default
+nmap z/ <Plug>(Oblique-/)
+nmap z? <Plug>(Oblique-?)
+nmap / <Plug>(Oblique-F/)
+nmap ? <Plug>(Oblique-F?)
+" the oblique versions of these don't seem to work...
+unmap *
+unmap #
