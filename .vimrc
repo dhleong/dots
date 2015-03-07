@@ -978,6 +978,11 @@ nmap z/ <Plug>(Oblique-/)
 nmap z? <Plug>(Oblique-?)
 nmap / <Plug>(Oblique-F/)
 nmap ? <Plug>(Oblique-F?)
-" the oblique versions of these don't seem to work...
-unmap *
-unmap #
+" the oblique versions of these don't actually move
+"  the cursor for some backward-ass reason.
+"  map them to somewhere out of the way so the real
+"  motions aren't clobbered
+nmap <c-*> <Plug>(Oblique-*)
+nmap <c-#> <Plug>(Oblique-#)
+nmap <m-*> <Plug>(Oblique-g*)
+nmap <m-#> <Plug>(Oblique-g#)
