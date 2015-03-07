@@ -83,7 +83,8 @@ function! ReinstallPlugin(name)
     " norm D
     " PluginInstall
     " norm q
-    exe "PlugUpdate " . a:name
+    exe '!rm -rf ~/.vim/bundle/' . a:name . '/'
+    exe "PlugUpdate! " . a:name
 
     " if a:name == 'njast'
     "     !cd ~/.vim/bundle/njast && npm install
@@ -589,23 +590,29 @@ nnoremap <silent> <leader>lf :LocateFile<cr>
 function! ConfigureJava()
 
     if exists("*intellivim#InProject") && intellivim#InProject()
-        nmap <buffer> <silent> <leader>fi :JavaOptimizeImports<cr>
-        nmap <buffer> <silent> <leader>jc :FixProblem<cr>
-        nmap <buffer> <silent> K :GetDocumentation<cr>
-        nmap <buffer> <silent> gd :GotoDeclaration<cr>
-        nmap <buffer> <silent> <leader>lf :Locate<cr>
-        nmap <buffer> <silent> <leader>lc :Locate class<cr>
+        nnoremap <buffer> <silent> <leader>fi :JavaOptimizeImports<cr>
+        nnoremap <buffer> <silent> <leader>jc :FixProblem<cr>
+        nnoremap <buffer> <silent> K :GetDocumentation<cr>
+        nnoremap <buffer> <silent> gd :GotoDeclaration<cr>
+        nnoremap <buffer> <silent> <leader>lf :Locate<cr>
+        nnoremap <buffer> <silent> <leader>lc :Locate class<cr>
+
+        nnoremap <buffer> <silent> <leader>pr :Run<cr>
+        nnoremap cpr :RunTest<cr>
     else
-        nmap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
-        nmap <buffer> <silent> <leader>jc :JavaCorrect<cr>
-        nmap <buffer> <silent> K :JavaDocPreview<cr>
-        nmap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
-        nmap <buffer> <silent> <leader>lf :LocateFile<cr>
+        nnoremap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
+        nnoremap <buffer> <silent> <leader>jc :JavaCorrect<cr>
+        nnoremap <buffer> <silent> K :JavaDocPreview<cr>
+        nnoremap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
+        nnoremap <buffer> <silent> <leader>lf :LocateFile<cr>
+
+        nnoremap <buffer> <silent> <leader>pr :ProjectRun<cr>
+        nnoremap cpr :JUnit<cr>
+        nnoremap cpt :JUnit %<cr>
     endif
 
     nmap <buffer> <silent> <leader>ji :JavaImpl<cr>
     nmap <buffer> <silent> <leader>pp :ProjectProblems!<cr>
-    nmap <buffer> <silent> <leader>pr :ProjectRun<cr>
     nmap <buffer> <silent> <leader>jf :JavaCorrect<cr>
     nmap <buffer> <silent> <leader>jd :JavaDocSearch<cr>
     nmap <buffer> <silent> <leader>js :JavaSearch -x declarations -s project<cr>
@@ -615,9 +622,6 @@ function! ConfigureJava()
     nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
     nmap <buffer> <silent> K :JavaDocPreview<cr>
     nmap <buffer> <silent> gd :JavaSearch -x implementor -s workspace<cr>
-
-    nnoremap cpr :JUnit<cr>
-    nnoremap cpt :JUnit %<cr>
 
     " let c-n do the regular local search
     inoremap <buffer> <c-n> <c-x><c-n>
@@ -922,14 +926,11 @@ nnoremap gho :GithubOpen<cr>
 nnoremap ghi :Unite gh_issue:state=open<cr>
 " nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
-" re-install intellivim for rapid development
-nnoremap <leader>ri :call ReinstallPlugin('intellivim')<cr>
-
 " re-install hubr for rapid development
 nnoremap <leader>rh :call ReinstallPlugin('hubr')<cr>
 
 " re-install intellivim for rapid development
-nnoremap <leader>ri :call ReinstallPlugin('intellivim')<cr>
+nnoremap <leader>ri :call ReinstallPlugin('IntelliVim')<cr>
 
 " re-install njast for rapid development
 nnoremap <leader>rn :call ReinstallPlugin('njast')<cr>
