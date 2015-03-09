@@ -25,6 +25,7 @@ set nocompatible
     Plug 'junegunn/vim-peekaboo'
     Plug 'junegunn/vim-pseudocl'
     Plug 'junegunn/vim-oblique'
+    Plug 'justinmk/vim-sneak'
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
     Plug 'moll/vim-node', {'for': 'javascript'}
     Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
@@ -661,6 +662,7 @@ function! ConfigureAndroidProject()
     " OKAY! We're an android project
     let root = eclim#project#util#GetProjectRoot(project)
     let root = escape(root, ' ')
+    exe 'nnoremap <buffer> <leader>ob :edit ' . root . '/build.gradle<cr>'
     exe 'nnoremap <buffer> <leader>om :edit ' . root . '/AndroidManifest.xml<cr>'
     exe 'nnoremap <buffer> <leader>or :edit ' . root . '/res<cr>'
     exe 'nnoremap <buffer> <leader>ov :edit ' . root . '/res/values<cr>'
@@ -987,3 +989,6 @@ nmap <c-*> <Plug>(Oblique-*)
 nmap <c-#> <Plug>(Oblique-#)
 nmap <m-*> <Plug>(Oblique-g*)
 nmap <m-#> <Plug>(Oblique-g#)
+
+" sneak configs
+let g:sneak#streak = 1
