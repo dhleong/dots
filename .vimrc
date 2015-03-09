@@ -223,6 +223,9 @@ function! FindTermForTab()
 endfunction
 
 function! RunCurrentInSplitTerm()
+
+    call plug#load("Conque-Shell")
+
     let fileName = expand('%')
     let fullPath = expand('%:p:h')
     let winSize = 0.3
@@ -235,23 +238,25 @@ function! RunCurrentInSplitTerm()
 
     let found = 0
     let existing = {}
-    for [idx, term] in items(g:ConqueTerm_Terminals)
-        if !has_key(term, 'bufname')
-            continue
-        endif
-
-        let winnr = bufwinnr(term.bufname)
-        if winnr != -1 && term.active != 0
-            
-            " update it, if it's changed
-            if winnr != term.winnr
-                let term.winnr = winnr
+    if exists("g:ConqueTerm_Terminals")
+        for [idx, term] in items(g:ConqueTerm_Terminals)
+            if !has_key(term, 'bufname')
+                continue
             endif
 
-            let existing = term
-            let found = 1
-        endif
-    endfor
+            let winnr = bufwinnr(term.bufname)
+            if winnr != -1 && term.active != 0
+                
+                " update it, if it's changed
+                if winnr != term.winnr
+                    let term.winnr = winnr
+                endif
+
+                let existing = term
+                let found = 1
+            endif
+        endfor
+    endif
 
     " do we already have a term?
     if !found
