@@ -144,7 +144,8 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/git/',
     \'/Users/dhleong/Documents/workspace/',
     \'/Users/dhleong/code/appengine/',
-    \'/Users/dhleong/code/'
+    \'/Users/dhleong/code/',
+    \'/Users/dhleong/IdeaProjects/'
 \]
 
 " visual bell
