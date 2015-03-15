@@ -24,7 +24,8 @@ set nocompatible
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
     Plug 'junegunn/vim-peekaboo'
     Plug 'junegunn/vim-pseudocl'
-    Plug 'junegunn/vim-oblique'
+    Plug 'junegunn/vim-oblique', {'on': ['<Plug>(Oblique-/)', '<Plug>(Oblique-?)',
+                \ '<Plug>(Oblique-F/)', '<Plug>(Oblique-F?)']}
     Plug 'justinmk/vim-sneak'
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
     Plug 'moll/vim-node', {'for': 'javascript'}
@@ -43,7 +44,7 @@ set nocompatible
     Plug 'tomtom/tcomment_vim'
     Plug 'tpope/vim-fireplace', {'for': 'clojure'}
     Plug 'tpope/vim-fugitive' 
-    Plug 'tpope/vim-markdown' 
+    Plug 'tpope/vim-markdown', {'for': 'markdown'}
     Plug 'tpope/vim-repeat' 
     Plug 'tpope/vim-scriptease', {'for': 'vim'}
     Plug 'tpope/vim-surround' 
@@ -56,7 +57,7 @@ set nocompatible
     Plug 'xolox/vim-session'
 
     Plug 'file:///Users/dhleong/code/hubr'
-    " Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
+    Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
     " Plug 'file:///Users/dhleong/code/njast'
     " Plug 'file:///Users/dhleong/git/Conque-Shell'
 
@@ -603,7 +604,7 @@ function! ConfigureJava()
         nnoremap <buffer> <silent> <leader>lf :Locate<cr>
         nnoremap <buffer> <silent> <leader>lc :Locate class<cr>
 
-        nnoremap <buffer> <silent> <leader>pr :Run<cr>
+        nnoremap <buffer> <silent> <leader>pr :RunProject<cr>
         nnoremap cpr :RunTest<cr>
     else
         nnoremap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
