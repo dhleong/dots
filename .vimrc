@@ -801,6 +801,16 @@ let g:airline#extensions#default#section_truncate_width = {
   \ 'z': 45,
   \ }
 
+" only use powerline fonts if we have it. This was moved
+"  from .gvimrc because it apparently no longer runs
+"  before airline does its config step, so was ignored
+let _fontName='Inconsolata+for+Powerline.otf'
+if has('gui_running') && !empty(glob("~/Library/Fonts/" . _fontName))
+    " could check more places, but....
+    let g:airline_powerline_fonts = 1
+endif
+
+
 " autocomplpop configs
 let g:acp_completeoptPreview = 1
 " fix unshift when popup isn't open
