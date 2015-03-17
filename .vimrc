@@ -61,12 +61,13 @@ set nocompatible
     " Plug 'file:///Users/dhleong/code/njast'
     " Plug 'file:///Users/dhleong/git/Conque-Shell'
 
-    " I would prefer to user MarcWeber's,
-    "  but it seems to be broken with YCM
-    " Plug 'MarcWeber/ultisnips'
-    Plug 'SirVer/ultisnips'
-    " needed again
-    Plug 'honza/vim-snippets' 
+    " I like ultisnips, but I just don't use it...
+    " " I would prefer to user MarcWeber's,
+    " "  but it seems to be broken with YCM
+    " " Plug 'MarcWeber/ultisnips'
+    " Plug 'SirVer/ultisnips'
+    " " needed again
+    " Plug 'honza/vim-snippets' 
 
     " Syntax plugins
     Plug 'digitaltoad/vim-jade'
