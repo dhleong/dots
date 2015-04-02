@@ -961,6 +961,9 @@ nnoremap <leader>rn :call ReinstallPlugin('njast')<cr>
 " re-install Conque-Shell for rapid development
 nnoremap <leader>rs :call ReinstallPlugin('Conque-Shell')<cr>
 
+" re-install veryhint for rapid development
+nnoremap <leader>rv :call ReinstallPlugin('vim-veryhint')<cr>
+
 " only auto-ref issues assigned to me
 let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
 
