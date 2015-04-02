@@ -43,8 +43,6 @@ alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 
 alias upgradle=". ~/bin/_upgradle"
 
-test -r /sw/bin/init.sh && . /sw/bin/init.sh
-
 # make sure this is always done
 set complete='enhance' 
 
@@ -59,9 +57,9 @@ set -o vi
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
-# enable bash_completion
-if [ -f /opt/local/etc/bash_completion ]; then
-    . /opt/local/etc/bash_completion
+# enable bash_completion (brew install bash-completion)
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+    . `brew --prefix`/etc/bash_completion
 fi
 
 # git completion; use the following to add the file:

@@ -20,6 +20,7 @@ set nocompatible
     Plug 'ap/vim-css-color', {'for': 'css'}
     Plug 'bling/vim-airline'
     Plug 'davidhalter/jedi-vim', {'for': 'python', 'do': 'git submodule update --init'}
+    Plug 'dhleong/vim-veryhint', {'for': 'java'}
     Plug 'guns/vim-clojure-static', {'for': 'clojure'}
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
     Plug 'junegunn/vim-peekaboo'
@@ -956,6 +957,9 @@ nnoremap <leader>rn :call ReinstallPlugin('njast')<cr>
 
 " re-install Conque-Shell for rapid development
 nnoremap <leader>rs :call ReinstallPlugin('Conque-Shell')<cr>
+
+" re-install veryhint for rapid development
+nnoremap <leader>rv :call ReinstallPlugin('vim-veryhint')<cr>
 
 " only auto-ref issues assigned to me
 let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
