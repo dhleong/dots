@@ -20,6 +20,7 @@ set nocompatible
     Plug 'ap/vim-css-color', {'for': 'css'}
     Plug 'bling/vim-airline'
     Plug 'davidhalter/jedi-vim', {'for': 'python', 'do': 'git submodule update --init'}
+    Plug 'dhleong/vim-veryhint', {'for': 'java'}
     Plug 'guns/vim-clojure-static', {'for': 'clojure'}
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
     Plug 'junegunn/vim-peekaboo'
@@ -57,7 +58,7 @@ set nocompatible
     Plug 'xolox/vim-session'
 
     Plug 'file:///Users/dhleong/code/hubr'
-    Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
+    " Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
     " Plug 'file:///Users/dhleong/code/njast'
     " Plug 'file:///Users/dhleong/git/Conque-Shell'
 
@@ -111,6 +112,8 @@ set smartcase   " but if we WANT case, use it
 
 set splitright  " horizontal splits should not open on the left... 
 set noea        " 'no equal always'--don't resize my splits!
+
+set updatetime=900
 
 if exists('+autochdir')
     " use the builtin if we have it
@@ -607,7 +610,7 @@ function! ConfigureJava()
         nnoremap <buffer> <silent> <leader>lc :Locate class<cr>
 
         nnoremap <buffer> <silent> <leader>pr :RunProject<cr>
-        nnoremap cpr :RunTest<cr>
+        nnoremap <buffer> cpr :RunTest<cr>
     else
         nnoremap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
         nnoremap <buffer> <silent> <leader>jc :JavaCorrect<cr>
@@ -616,8 +619,8 @@ function! ConfigureJava()
         nnoremap <buffer> <silent> <leader>lf :LocateFile<cr>
 
         nnoremap <buffer> <silent> <leader>pr :ProjectRun<cr>
-        nnoremap cpr :JUnit<cr>
-        nnoremap cpt :JUnit %<cr>
+        nnoremap <buffer> cpr :JUnit<cr>
+        nnoremap <buffer> cpt :JUnit %<cr>
     endif
 
     nmap <buffer> <silent> <leader>ji :JavaImpl<cr>
