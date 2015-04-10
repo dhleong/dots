@@ -32,10 +32,11 @@ set nocompatible
     Plug 'moll/vim-node', {'for': 'javascript'}
     Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
         \ 'ConqueTermSplit', 'ConqueTermVSplit']}
+    Plug 'osyo-manga/vim-over'
     " Plug 'reinh/vim-makegreen'
     Plug 'rstacruz/sparkup', {'rtp': 'vim', 'for': 'html'}
     Plug 'scrooloose/syntastic'
-    Plug 'Shougo/unite.vim'
+    Plug 'Shougo/unite.vim', {'on': 'Unite'}
     Plug 'Shougo/vimproc.vim', {'do': 'make'}
     " Plug 'shime/vim-livedown'
     Plug 'suan/vim-instant-markdown', {'for': 'markdown',

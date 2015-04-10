@@ -24,6 +24,7 @@ fi
 export ANDROID_HOME=/lib/android-sdk
 export PROGUARD_HOME=$ANDROID_HOME/tools/proguard
 
+alias aj='ag --java'
 alias airportcycle='networksetup -setairportpower airport off; networksetup -setairportpower airport on'
 alias l='ls -al'
 alias seriestracker='(cd ~/SeriesTracker-v6/; java -jar seriestracker.jar)'
