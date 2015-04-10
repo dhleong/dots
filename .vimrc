@@ -36,7 +36,7 @@ set nocompatible
     " Plug 'reinh/vim-makegreen'
     Plug 'rstacruz/sparkup', {'rtp': 'vim', 'for': 'html'}
     Plug 'scrooloose/syntastic'
-    Plug 'Shougo/unite.vim', {'on': 'Unite'}
+    Plug 'Shougo/unite.vim'
     Plug 'Shougo/vimproc.vim', {'do': 'make'}
     " Plug 'shime/vim-livedown'
     Plug 'suan/vim-instant-markdown', {'for': 'markdown',
