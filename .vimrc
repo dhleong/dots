@@ -840,6 +840,7 @@ function! JumpToNextError()
     endif
 
     let loclist = g:SyntasticLoclist.current()
+    call loclist.sort()
     let rawlist = loclist.getRaw()
     if !len(rawlist)
         echo "No issues in this file"
@@ -852,11 +853,12 @@ function! JumpToNextError()
         if issue.lnum > thisLine
             let myIssue = issue
             let myIssue.found = 1
+            break
         endif
     endfor
 
     if myIssue.found == 0
-        let myIssue = loclist.getFirstIssue()
+        let myIssue = rawlist[0]
     endif
 
     echo myIssue.text
