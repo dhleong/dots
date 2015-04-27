@@ -17,7 +17,8 @@ set nocompatible
     Plug 'VisIncr'
 
     " use ap's fork here instead of skammer, to add stylus support
-    Plug 'ap/vim-css-color', {'for': 'css'}
+    " NB: css-color breaks if loaded on-demand
+    Plug 'ap/vim-css-color'
     Plug 'bling/vim-airline'
     Plug 'davidhalter/jedi-vim', {'for': 'python', 'do': 'git submodule update --init'}
     Plug 'dhleong/vim-veryhint', {'for': 'java'}
@@ -49,6 +50,7 @@ set nocompatible
     Plug 'tpope/vim-markdown', {'for': 'markdown'}
     Plug 'tpope/vim-repeat' 
     Plug 'tpope/vim-scriptease', {'for': 'vim'}
+    Plug 'tpope/vim-sleuth', {'for': 'javascript'}
     Plug 'tpope/vim-surround' 
     Plug 'tpope/vim-vinegar' 
     " Plug 'vimwiki/vimwiki'
@@ -281,6 +283,9 @@ function! RunCurrentInSplitTerm()
         let term.winnr = winnr()
         let term.winSize = winSize
         let term.bufname = bufname(bufnr('%')) " seems to not match buffer_name
+        let b:mainBuf = mainBuf
+        let b:fullPath = fullPath
+        let b:fileName = fileName
 
         " NB Can't seem to unset the variable correctly,
         "  so we just check the active status
@@ -302,6 +307,8 @@ function! RunCurrentInSplitTerm()
     "  Tab to quickly jump back to our main window
     " Do this always, in case winnrs have changed
     exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
+
+    exe 'inoremap <buffer> <c-b> <esc><c-b>'
 
     " always cd, just in case
     call term.writeln("cd " . fullPath)

@@ -1,8 +1,17 @@
 set ignorecase
 set smartcase
 
+" plugins
+set surround
+
 nnoremap H gT
 nnoremap L gt
+
+" Enable faster splits navigation
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-L> <C-W>l
+nnoremap <C-H> <C-W>h
 
 nnoremap gpr :action ChooseRunConfiguration<cr>
 nnoremap <space>pb :action Compile<cr>
@@ -13,3 +22,6 @@ nnoremap <space>js :action FindUsages<cr>
 nnoremap <space>si :action StepInto<cr>
 nnoremap <space>so :action StepOut<cr>
 nnoremap <space>sn :action StepOver<cr>
+
+nnoremap <space>gc :action ChangesView.Commit<cr>
+nnoremap <space>gp :action Vcs.Push<cr>
