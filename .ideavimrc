@@ -18,6 +18,7 @@ nnoremap <space>pb :action Compile<cr>
 nnoremap <space>pr :action Run<cr>
 nnoremap <space>jc :action ShowIntentionActions<cr>
 nnoremap <space>js :action FindUsages<cr>
+nnoremap <space>jn :action NewClass<cr>
 
 nnoremap <space>si :action StepInto<cr>
 nnoremap <space>so :action StepOut<cr>
