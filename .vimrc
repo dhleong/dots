@@ -61,7 +61,7 @@ set nocompatible
     Plug 'xolox/vim-session'
 
     Plug 'file:///Users/dhleong/code/hubr'
-    " Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
+    Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
     " Plug 'file:///Users/dhleong/code/njast'
     " Plug 'file:///Users/dhleong/git/Conque-Shell'
 
@@ -640,8 +640,6 @@ function! ConfigureJava()
     nmap <buffer> <silent> <leader>lc :LocationListClear<cr>
     nmap <buffer> <silent> <leader>ll :lopen<cr>
     nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
-    nmap <buffer> <silent> K :JavaDocPreview<cr>
-    nmap <buffer> <silent> gd :JavaSearch -x implementor -s workspace<cr>
 
     " let c-n do the regular local search
     inoremap <buffer> <c-n> <c-x><c-n>

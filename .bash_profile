@@ -50,14 +50,6 @@ set complete='enhance'
 # vim input mode! Crazy!
 set -o vi 
 
-##
-# Your previous /Users/dhleong/.bash_profile file was backed up as /Users/dhleong/.bash_profile.macports-saved_2011-06-27_at_18:30:37
-##
-
-# MacPorts Installer addition on 2011-06-27_at_18:30:37: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
-
 # enable bash_completion (brew install bash-completion)
 if [ -f `brew --prefix`/etc/bash_completion ]; then
     . `brew --prefix`/etc/bash_completion
