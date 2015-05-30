@@ -32,4 +32,4 @@ compiler nodeunit
 let g:makegreen_stay_on_file = 1
 
 nnoremap <buffer> cpr :call RunLastTermCommand()<cr>
-nnoremap K :TernDoc<CR>
+nnoremap <buffer> K :TernDoc<CR>
