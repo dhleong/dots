@@ -35,3 +35,4 @@ nnoremap <buffer> cpr :call RunLastTermCommand()<cr>
 nnoremap <buffer> K :TernDoc<CR>
 
 nnoremap <buffer> gpd :!grunt deploy<cr>
+nnoremap <buffer> gpi :!grunt lambda_invoke<cr>
