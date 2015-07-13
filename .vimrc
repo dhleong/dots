@@ -13,7 +13,6 @@ set nocompatible
     "Add your bundles here
     Plug 'eregex.vim'
     Plug 'matchit.zip'
-    Plug 'paredit.vim', {'for': 'clojure'}
     Plug 'VisIncr'
 
     " use ap's fork here instead of skammer, to add stylus support
@@ -24,6 +23,7 @@ set nocompatible
     Plug 'dhleong/vim-veryhint', {'for': 'java'}
     Plug 'guns/vim-clojure-static', {'for': 'clojure'}
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
+    Plug 'guns/vim-sexp', {'for': 'clojure'}
     Plug 'junegunn/vim-peekaboo'
     Plug 'junegunn/vim-pseudocl'
     Plug 'junegunn/vim-oblique', {'on': ['<Plug>(Oblique-/)', '<Plug>(Oblique-?)',
@@ -50,6 +50,7 @@ set nocompatible
     Plug 'tpope/vim-markdown', {'for': 'markdown'}
     Plug 'tpope/vim-repeat' 
     Plug 'tpope/vim-scriptease', {'for': 'vim'}
+    Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
     " Plug 'tpope/vim-sleuth', {'for': 'javascript'}
     Plug 'tpope/vim-surround' 
     Plug 'tpope/vim-vinegar' 
