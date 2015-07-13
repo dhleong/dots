@@ -50,7 +50,7 @@ set nocompatible
     Plug 'tpope/vim-markdown', {'for': 'markdown'}
     Plug 'tpope/vim-repeat' 
     Plug 'tpope/vim-scriptease', {'for': 'vim'}
-    Plug 'tpope/vim-sleuth', {'for': 'javascript'}
+    " Plug 'tpope/vim-sleuth', {'for': 'javascript'}
     Plug 'tpope/vim-surround' 
     Plug 'tpope/vim-vinegar' 
     " Plug 'vimwiki/vimwiki'
@@ -828,6 +828,7 @@ let g:acp_completeoptPreview = 1
 let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 
 " syntastic configs
+let g:syntastic_javascript_jshint_exec = '~/.npm-packages/bin/jshint'
 let g:syntastic_java_checkers = []
 function! JumpToNextError()
 

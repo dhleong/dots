@@ -33,3 +33,5 @@ let g:makegreen_stay_on_file = 1
 
 nnoremap <buffer> cpr :call RunLastTermCommand()<cr>
 nnoremap <buffer> K :TernDoc<CR>
+
+nnoremap <buffer> gpd :!grunt deploy<cr>

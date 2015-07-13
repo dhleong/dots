@@ -12,6 +12,16 @@ NDK=/lib/android-ndk-r7c/
 PATH=$PATH:/usr/local/mysql/bin
 PATH=$PATH:/lib/gradle/bin
 
+pip() {
+    if [ "$1" = "install" -o "$1" = "bundle" ]; then
+        cmd="$1"
+        shift
+        /usr/local/bin/pip $cmd --user $@
+    else
+        /usr/local/bin/pip $@
+    fi
+}
+
 if [ -z "$JAVA_HOME" ]
 then
     # export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
@@ -96,4 +106,10 @@ cdf() {
    file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
+if [ -n "$(which aws_completer)" ]; then
+    complete -C aws_completer aws
+fi
+
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+source ~/.bashrc
