@@ -25,9 +25,6 @@ endfunction
 augroup ClojureGroup
     autocmd!
     autocmd BufWritePost *.clj call DoReload()
-
-    " lein repl (restart), for when you update dependencies
-    autocmd BufEnter project.clj nnoremap <buffer> glr :py restart_repl()<cr>
 augroup END
 
 nnoremap <buffer> <d-r> :%Eval<cr>
@@ -37,6 +34,17 @@ nmap <buffer> cql cqp<up><cr>
 
 nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), ".clj$", "_test.clj", "")<cr>
 nnoremap <buffer> <leader>op :exe 'find project.clj'<cr>
+
+"
+" lein repl commands! 
+"
+
+" (re)start
+nnoremap <buffer> glr :py restart_repl()<cr>
+" stop
+nnoremap <buffer> gls :call LeinReplCloseFunc()<cr>
+" connect (ala :ConnectRepl)
+nnoremap <buffer> glc :Connect nrepl://localhost:7888<cr>
 
 "
 " Auto-start lein repl
