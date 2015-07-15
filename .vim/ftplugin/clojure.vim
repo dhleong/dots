@@ -53,6 +53,7 @@ nmap <buffer> ]<C-D>     <Plug>FireplaceDjump
 nmap <buffer> <C-W><C-D> <Plug>FireplaceDsplit
 nmap <buffer> <C-W>d     <Plug>FireplaceDsplit
 nmap <buffer> <C-W>gd    <Plug>FireplaceDtabjump
+nmap <buffer> gd    <Plug>FireplaceDjump
 
 cmap <buffer> <C-R><C-F> <Plug><cfile>
 cmap <buffer> <C-R><C-P> <Plug><cpath>
