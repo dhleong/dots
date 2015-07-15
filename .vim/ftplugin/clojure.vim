@@ -5,7 +5,9 @@ function! DoReload()
         silent :Require
         silent :ClojureHighlightReferences
     catch /Fireplace:.*REPL/
-        redraw! | echo "No REPL found"
+        redraw! | echohl Error | echo "No REPL found" | echohl None
+    catch /nREPL/
+        redraw! | echohl Error | echo "No REPL found" | echohl None
     endtry
 
 endfunction
