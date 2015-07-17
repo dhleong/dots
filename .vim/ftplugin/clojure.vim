@@ -32,6 +32,11 @@ nnoremap <buffer> <d-r> :%Eval<cr>
 nnoremap <buffer> cpr :call RunBufferTests()<cr>
 nnoremap <buffer> cpt :call RunBufferTests()<cr>
 nmap <buffer> cql cqp<up><cr>
+" ie: 'up'; just open last input but don't execute
+exe 'nmap <buffer> cqu cqp<up>' &cedit | norm 0
+
+" paste AFTER the current form, on the same level
+nnoremap <buffer> gp %a<cr><esc>p%
 
 nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), ".clj$", "_test.clj", "")<cr>
 nnoremap <buffer> <leader>op :exe 'find project.clj'<cr>
