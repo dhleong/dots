@@ -5,7 +5,9 @@ function! DoReload()
         silent :Require
         silent :ClojureHighlightReferences
     catch /Fireplace:.*REPL/
-        redraw! | echo "No REPL found"
+        redraw! | echohl Error | echo "No REPL found" | echohl None
+    catch /nREPL/
+        redraw! | echohl Error | echo "No REPL found" | echohl None
     endtry
 
 endfunction
@@ -58,6 +60,7 @@ nmap <buffer> ]<C-D>     <Plug>FireplaceDjump
 nmap <buffer> <C-W><C-D> <Plug>FireplaceDsplit
 nmap <buffer> <C-W>d     <Plug>FireplaceDsplit
 nmap <buffer> <C-W>gd    <Plug>FireplaceDtabjump
+nmap <buffer> gd    <Plug>FireplaceDjump
 
 cmap <buffer> <C-R><C-F> <Plug><cfile>
 cmap <buffer> <C-R><C-P> <Plug><cpath>
