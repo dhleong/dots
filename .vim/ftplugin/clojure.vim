@@ -38,7 +38,8 @@ nmap <buffer> cql cqp<up><cr>
 exe 'nmap <buffer> cqu cqp<up>' &cedit | norm 0
 
 " paste AFTER the current form, on the same level
-nnoremap <buffer> gp %a<cr><esc>p%
+" we use gpp instead of gp to prevent confusion with gpr
+nnoremap <buffer> gpp %a<cr><esc>p%
 
 nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), ".clj$", "_test.clj", "")<cr>
 nnoremap <buffer> <leader>op :exe 'find project.clj'<cr>
