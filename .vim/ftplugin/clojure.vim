@@ -56,6 +56,11 @@ nmap <buffer> cqp <Plug>FireplacePrompt
 exe 'nmap <buffer> cqc <Plug>FireplacePrompt' . &cedit . 'i'
 map! <buffer> <C-R>( <Plug>FireplaceRecall
 
+nmap <buffer> cm <Plug>FireplaceMacroExpand
+nmap <buffer> cmm <Plug>FireplaceCountMacroExpand
+nmap <buffer> c1m <Plug>Fireplace1MacroExpand
+nmap <buffer> c1mm <Plug>FireplaceCount1MacroExpand
+
 nmap <buffer> [<C-D>     <Plug>FireplaceDjump
 nmap <buffer> ]<C-D>     <Plug>FireplaceDjump
 nmap <buffer> <C-W><C-D> <Plug>FireplaceDsplit
