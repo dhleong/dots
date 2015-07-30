@@ -814,7 +814,9 @@ let g:airline#extensions#default#section_truncate_width = {
 "  from .gvimrc because it apparently no longer runs
 "  before airline does its config step, so was ignored
 let _fontName='Inconsolata+for+Powerline.otf'
-if has('gui_running') && !empty(glob("~/Library/Fonts/" . _fontName))
+if has('gui_running') 
+        \ && (!empty(glob("~/Library/Fonts/" . _fontName))
+            \ || !empty(glob("~/Library/Fonts/" . substitute(_fontName, '+', ' ', 'g'))))
     " could check more places, but....
     let g:airline_powerline_fonts = 1
 endif
