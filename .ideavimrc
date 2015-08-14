@@ -16,7 +16,7 @@ nnoremap <C-L> <C-W>l
 nnoremap <C-H> <C-W>h
 
 nnoremap gpr :action ChooseRunConfiguration<cr>
-nnoremap <space>pb :action Compile<cr>
+nnoremap <space>pb :action CompileDirty<cr>
 nnoremap <space>pr :action Run<cr>
 nnoremap <space>jc :action ShowIntentionActions<cr>
 nnoremap <space>js :action FindUsages<cr>
