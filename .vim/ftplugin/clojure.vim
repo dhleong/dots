@@ -29,6 +29,10 @@ augroup ClojureGroup
     autocmd BufWritePost *.clj call DoReload()
 augroup END
 
+" options
+" continue comments with 'enter'
+setlocal formatoptions+=r
+
 " add some custom fireplace maps...
 nnoremap <buffer> <d-r> :%Eval<cr>
 nnoremap <buffer> cpr :call RunBufferTests()<cr>
