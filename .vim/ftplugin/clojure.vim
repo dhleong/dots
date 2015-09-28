@@ -24,6 +24,20 @@ function! RunBufferTests()
 
 endfunction
 
+function! GuessRoot()
+    return fnamemodify(exists('b:java_root') ? b:java_root : fnamemodify(expand('%'), ':p:s?.*\zs[\/]src[\/].*??'), ':~')
+endfunction
+
+function! GuessPort()
+    let path = GuessRoot() . "/.nrepl-port"
+    if filereadable(expand(path))
+        return system("cat " . path)
+    else
+        echo path
+        return "7888"
+    endif
+endfunction
+
 augroup ClojureGroup
     autocmd!
     autocmd BufWritePost *.clj call DoReload()
@@ -160,7 +174,7 @@ def restart_repl():
 EOF
 
 command! LeinRepl py open_repl()
-command! ConnectRepl :Connect nrepl://localhost:7888
+command! ConnectRepl :exe "Connect nrepl://localhost:" . GuessPort()
 
 function! LeinReplCloseFunc()
     py close_all_repl()
