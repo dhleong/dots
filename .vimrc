@@ -24,7 +24,7 @@ set nocompatible
     Plug 'guns/vim-clojure-static', {'for': 'clojure'}
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
     Plug 'guns/vim-sexp', {'for': 'clojure'}
-    Plug 'junegunn/vim-peekaboo'
+    " Plug 'junegunn/vim-peekaboo'
     Plug 'junegunn/vim-pseudocl'
     Plug 'junegunn/vim-oblique', {'on': ['<Plug>(Oblique-/)', '<Plug>(Oblique-?)',
                 \ '<Plug>(Oblique-F/)', '<Plug>(Oblique-F?)']}
