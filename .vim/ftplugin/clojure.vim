@@ -120,7 +120,7 @@ nnoremap <buffer> glr :py restart_repl()<cr>
 " stop
 nnoremap <buffer> gls :call LeinReplCloseFunc()<cr>
 " connect (ala :ConnectRepl)
-nnoremap <buffer> glc :Connect nrepl://localhost:7888<cr>
+nnoremap <buffer> glc :ConnectRepl<cr>
 
 "
 " Auto-start lein repl
