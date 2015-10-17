@@ -1,0 +1,6 @@
+#set/scene-file "~/VRC/Support/ZNY.sct2"
+#set/alias-file "~/VRC/Support/ZNY_ALIAS.txt"
+#set/atis ["$radioname()" "Serving LGA" "Feedback at www.nyartcc.org/feedback"]
+
+#alias ".taxi runway $1, taxi via $2"
+#alias ".taxip taxi to parking via $1"
