@@ -4,3 +4,6 @@
 
 #alias ".taxi runway $1, taxi via $2"
 #alias ".taxip taxi to parking via $1"
+
+#map/normal/zg (set-zoom 220)
+#map/normal/zt (set-zoom 4000)
