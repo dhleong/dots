@@ -24,11 +24,13 @@ set nocompatible
     Plug 'guns/vim-clojure-static', {'for': 'clojure'}
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
     Plug 'guns/vim-sexp', {'for': 'clojure'}
+    Plug 'Julian/vim-textobj-variable-segment'
     " Plug 'junegunn/vim-peekaboo'
     Plug 'junegunn/vim-pseudocl'
     Plug 'junegunn/vim-oblique', {'on': ['<Plug>(Oblique-/)', '<Plug>(Oblique-?)',
                 \ '<Plug>(Oblique-F/)', '<Plug>(Oblique-F?)']}
     Plug 'justinmk/vim-sneak'
+    Plug 'kana/vim-textobj-user'
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
     Plug 'moll/vim-node', {'for': 'javascript'}
     Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
