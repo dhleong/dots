@@ -26,8 +26,8 @@ if [ -z "$JAVA_HOME" ]
 then
     # export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
     # export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
-    export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
-    export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
+    # export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
+    # export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
     export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
 fi
 
@@ -42,6 +42,7 @@ alias gits='git status'
 alias guts='git status'
 alias gitco='git commit -a'
 alias gitpp='git pull && git push'
+alias gradle='./gradlew'
 alias up='cd ..'
 alias thundercats='./gradlew'
 alias autobots='./gradlew --offline'

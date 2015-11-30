@@ -19,6 +19,7 @@ nnoremap gpr :action ChooseRunConfiguration<cr>
 nnoremap <space>pb :action CompileDirty<cr>
 nnoremap <space>pr :action Run<cr>
 nnoremap <space>jc :action ShowIntentionActions<cr>
+nnoremap <space>jr :action RenameElement<cr>
 nnoremap <space>js :action FindUsages<cr>
 nnoremap <space>jn :action NewClass<cr>
 
