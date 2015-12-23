@@ -51,6 +51,7 @@ set nocompatible
     Plug 'tpope/vim-fugitive' 
     Plug 'tpope/vim-markdown', {'for': 'markdown'}
     Plug 'tpope/vim-repeat' 
+    Plug 'tpope/vim-repeat' 
     Plug 'tpope/vim-scriptease', {'for': 'vim'}
     Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
     " Plug 'tpope/vim-sleuth', {'for': 'javascript'}
@@ -64,9 +65,11 @@ set nocompatible
     Plug 'xolox/vim-session'
 
     Plug 'file:///Users/dhleong/code/hubr'
-    Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
+    Plug 'file:///Users/dhleong/git/hubr'
+    " Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
     " Plug 'file:///Users/dhleong/code/njast'
     " Plug 'file:///Users/dhleong/git/Conque-Shell'
+    Plug '~/git/lily'
 
     " I like ultisnips, but I just don't use it...
     " " I would prefer to user MarcWeber's,
@@ -467,7 +470,11 @@ set completeopt=menu,preview,longest
 abbr ~? ~/
 iabbr CLoses Closes
 iabbr mfa Miners/minus-for-Android
-inoremap #env #!/usr/bin/env 
+
+if &ft != 'gitcommit'
+    inoremap <buffer> #env #!/usr/bin/env 
+endif
+
 
 "
 " Sparkup/zen coding
@@ -924,17 +931,15 @@ let g:targets_aiAI = 'aIAi'
 let g:gh_cmd = "/Users/dhleong/code/hubr/gh-cmd"
 function! GithubAcceptFunc()
     let ticket=expand("<cword>")
-    echo "Accepting Github ticket #" . ticket . "..."
-    let cmd=":!" . g:gh_cmd . ' accept ' . ticket
-    exe cmd
+    call hubr#tag(ticket, 'accepted')
+    echo "Accepted Github ticket #" . ticket
 endfunction
 command! GithubAccept call GithubAcceptFunc()
 
 function! GithubTakeFunc()
     let ticket=expand("<cword>")
-    echo "Taking Github ticket #" . ticket . "..."
-    let cmd=":!" . g:gh_cmd . ' take ' . ticket
-    exe cmd
+    call hubr#assign(ticket, hubr#me_login())
+    echo "Took Github ticket #" . ticket
 endfunction
 command! GithubTake call GithubTakeFunc()
 
