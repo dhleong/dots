@@ -65,7 +65,7 @@ set nocompatible
     Plug 'xolox/vim-session'
 
     Plug 'file:///Users/dhleong/code/hubr'
-    Plug 'file:///Users/dhleong/git/hubr'
+    Plug '~/git/hubr'
     " Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
     " Plug 'file:///Users/dhleong/code/njast'
     " Plug 'file:///Users/dhleong/git/Conque-Shell'
@@ -475,7 +475,6 @@ if &ft != 'gitcommit'
     inoremap <buffer> #env #!/usr/bin/env 
 endif
 
-
 "
 " Sparkup/zen coding
 "
@@ -559,6 +558,9 @@ execute 'nnoremap <silent> <leader>p :Unite ' . g:UniteProjects .
     \ ' -start-insert -sync -unique -hide-source-names ' .
     \ ' -default-action=projectopen<cr>'
 
+execute 'nnoremap <silent> <leader>y :Unite ' . g:UniteProjects .
+    \ ' -start-insert -sync -unique -hide-source-names ' .
+    \ ' -default-action=lily<cr>'
 
 " fancier way to search through file than /
 call unite#custom#source('line', 'matchers', 'matcher_fuzzy')
