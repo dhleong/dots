@@ -29,6 +29,7 @@ set nocompatible
     Plug 'junegunn/vim-pseudocl'
     Plug 'junegunn/vim-oblique', {'on': ['<Plug>(Oblique-/)', '<Plug>(Oblique-?)',
                 \ '<Plug>(Oblique-F/)', '<Plug>(Oblique-F?)']}
+    Plug 'junegunn/vader.vim', {'for': 'vader'}
     Plug 'justinmk/vim-sneak'
     Plug 'kana/vim-textobj-user'
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
@@ -549,11 +550,9 @@ unlet my_projectopen
 
 " use \p to open a list of project dirs, from which we can rec/async a file
 " It's disappointingly slow to open, but... oh well
-let g:UniteProjects = ''
-for path in g:ProjectParentPaths
-    let g:UniteProjects = g:UniteProjects . ' directory:' . path
-endfor
+let g:UniteProjects = join(map(copy(g:ProjectParentPaths), "'directory:' . v:val"))
 call unite#custom#source('directory', 'matchers', 'matcher_fuzzy')
+call unite#custom#source('directory', 'sorters', 'sorter_selecta')
 execute 'nnoremap <silent> <leader>p :Unite ' . g:UniteProjects .
     \ ' -start-insert -sync -unique -hide-source-names ' .
     \ ' -default-action=projectopen<cr>'
