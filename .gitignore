@@ -12,6 +12,12 @@ Music/
 Pictures/
 Public/
 
+#########
+# Dropbox
+#########
+
+Dropbox*
+
 ###################################
 # Other files at office (:read !ls)
 ###################################
@@ -32,6 +38,7 @@ squared-avatar.jpg
 test.bmp
 test.data
 untitled folder
+creds
 
 ####################################
 # Dot files/dirs (:read !git status)
@@ -135,3 +142,6 @@ wireshark/
 gradle/
 gradlew
 gradlew.bat
+
+# okay just anything:
+.*
