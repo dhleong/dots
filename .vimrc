@@ -1057,7 +1057,7 @@ function! GetUnicodePairs()
         " go ahead and copy it to the clipboard
         let @* = pairs
     else
-        let pairs = 'No surrogate pairs: ' . hex
+        let pairs = '(none)'
     endif
 
     " clear old output and echo new
