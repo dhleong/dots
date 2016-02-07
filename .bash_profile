@@ -7,7 +7,8 @@ PATH=$PATH:/lib/android-sdk/platform-tools
 PATH=$PATH:/lib/android-sdk/tools
 PATH=$PATH:/usr/local/git/bin
 PATH=~/bin:$PATH
-NDK=/lib/android-ndk-r7c/
+NDK=/lib/android-ndk/
+PATH=$PATH:$NDK
 
 PATH=$PATH:/usr/local/mysql/bin
 PATH=$PATH:/lib/gradle/bin
@@ -33,6 +34,8 @@ fi
 
 export ANDROID_HOME=/lib/android-sdk
 export PROGUARD_HOME=$ANDROID_HOME/tools/proguard
+export GOPATH=$HOME/code/go
+export GOBIN=$GOPATH/bin
 
 alias aj='ag --java'
 alias airportcycle='networksetup -setairportpower airport off; networksetup -setairportpower airport on'

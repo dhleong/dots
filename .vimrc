@@ -21,6 +21,7 @@ set nocompatible
     Plug 'bling/vim-airline'
     Plug 'davidhalter/jedi-vim', {'for': 'python', 'do': 'git submodule update --init'}
     Plug 'dhleong/vim-veryhint', {'for': 'java'}
+    Plug 'fatih/vim-go'
     Plug 'guns/vim-clojure-static', {'for': 'clojure'}
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
     Plug 'guns/vim-sexp', {'for': 'clojure'}
@@ -52,7 +53,6 @@ set nocompatible
     Plug 'tpope/vim-fugitive' 
     Plug 'tpope/vim-markdown', {'for': 'markdown'}
     Plug 'tpope/vim-repeat' 
-    Plug 'tpope/vim-repeat' 
     Plug 'tpope/vim-scriptease', {'for': 'vim'}
     Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
     " Plug 'tpope/vim-sleuth', {'for': 'javascript'}
@@ -67,18 +67,15 @@ set nocompatible
 
     Plug 'file:///Users/dhleong/code/hubr'
     Plug '~/git/hubr'
-    " Plug 'file:///Users/dhleong/IdeaProjects/IntelliVim', {'rtp': 'vim'}
+    Plug '~/git/intellivim', {'rtp': 'vim'}
     " Plug 'file:///Users/dhleong/code/njast'
     " Plug 'file:///Users/dhleong/git/Conque-Shell'
     Plug '~/git/lily'
 
-    " I like ultisnips, but I just don't use it...
-    " " I would prefer to user MarcWeber's,
-    " "  but it seems to be broken with YCM
-    " " Plug 'MarcWeber/ultisnips'
-    " Plug 'SirVer/ultisnips'
-    " " needed again
-    " Plug 'honza/vim-snippets' 
+    " I would prefer to user MarcWeber's,
+    "  but it seems to be broken with YCM
+    " Plug 'MarcWeber/ultisnips'
+    Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' 
 
     " Syntax plugins
     Plug 'digitaltoad/vim-jade'
@@ -158,6 +155,7 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/git/',
     \'/Users/dhleong/Documents/workspace/',
     \'/Users/dhleong/code/appengine/',
+    \'/Users/dhleong/code/go',
     \'/Users/dhleong/code/',
     \'/Users/dhleong/IdeaProjects/'
 \]
@@ -168,9 +166,11 @@ set vb
 " hide useless gui
 set guioptions=c
 
-" show horrid tabs
-set list
-set listchars=tab:>-
+if expand("%")[-3:] != '.go'
+    " show horrid tabs
+    setlocal list
+    setlocal listchars=tab:>-
+endif
 
 " use comma as the map leader, because \ is too far
 " let mapleader = ","
@@ -435,6 +435,17 @@ function! WriteAndPush()
 endfunction
 nnoremap <leader>gp :call WriteAndPush()<CR>
 
+function! PushNewUpstream()
+    let start = "ref: refs/heads/"
+    let branch = fugitive#repo().head_ref()
+    if branch[:len(start)-1] != start
+        echo "Unexpected: " . branch[:len(start)]
+        return
+    endif
+    let branch = branch[len(start):]
+    echo system('git --no-pager push -u origin ' . branch)
+endfunction
+nnoremap <leader>gu :call PushNewUpstream()<CR>
 
 " Tweaking {} motion behavior
 let g:ip_boundary = '[" *]*\s*$' 
@@ -511,7 +522,7 @@ function! MapCtrlP(path)
     " the projectopen func below...
 
     if &ft == "java"
-        nnoremap <buffer> <silent> <c-p> :LocateFile<cr>
+        nnoremap <buffer> <silent> <c-p> :Locate<cr>
     else
         let suffix =  '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
         execute 'nnoremap <C-p> :Unite file_rec/async:' . a:path . suffix
@@ -522,6 +533,9 @@ function! MapCtrlP(path)
     endif
 
     execute 'nnoremap <leader>/ :Unite grep:' . a:path . ':-iR -auto-preview<cr>'
+    " NB: this would have to be an <expr> mapping
+    " execute 'nnoremap <leader>? :Unite grep:' . a:path . ':-iR:'
+    "             \ . expand('<cword>') . ' -auto-preview<cr>'
 endfunction
 
 " default map for C-p (we'll remap with project directory soon)
@@ -626,28 +640,29 @@ function! ConfigureJava()
         nnoremap <buffer> <silent> gd :GotoDeclaration<cr>
         nnoremap <buffer> <silent> <leader>lf :Locate<cr>
         nnoremap <buffer> <silent> <leader>lc :Locate class<cr>
+        nnoremap <buffer> <silent> <leader>ji :Implement<cr>
 
         nnoremap <buffer> <silent> <leader>pr :RunProject<cr>
         nnoremap <buffer> cpr :RunTest<cr>
     else
         nnoremap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
         nnoremap <buffer> <silent> <leader>jc :JavaCorrect<cr>
+        nnoremap <buffer> <silent> <leader>ji :JavaImpl<cr>
         nnoremap <buffer> <silent> K :JavaDocPreview<cr>
         nnoremap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
         nnoremap <buffer> <silent> <leader>lf :LocateFile<cr>
+        nnoremap <buffer> <silent> <leader>lc :LocationListClear<cr>
 
         nnoremap <buffer> <silent> <leader>pr :ProjectRun<cr>
         nnoremap <buffer> cpr :JUnit<cr>
         nnoremap <buffer> cpt :JUnit %<cr>
     endif
 
-    nmap <buffer> <silent> <leader>ji :JavaImpl<cr>
     nmap <buffer> <silent> <leader>pp :ProjectProblems!<cr>
     nmap <buffer> <silent> <leader>jf :JavaCorrect<cr>
     nmap <buffer> <silent> <leader>jd :JavaDocSearch<cr>
     nmap <buffer> <silent> <leader>js :JavaSearch -x declarations -s project<cr>
     nmap <buffer> <silent> <leader>jr :JavaSearch -x references -s project<cr>
-    nmap <buffer> <silent> <leader>lc :LocationListClear<cr>
     nmap <buffer> <silent> <leader>ll :lopen<cr>
     nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
 

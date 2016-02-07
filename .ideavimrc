@@ -15,6 +15,8 @@ nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
 nnoremap <C-H> <C-W>h
 
+nnoremap <tab> >>
+
 nnoremap gpr :action ChooseRunConfiguration<cr>
 nnoremap <space>pb :action CompileDirty<cr>
 nnoremap <space>pr :action Run<cr>
