@@ -28,8 +28,8 @@ set nocompatible
     Plug 'Julian/vim-textobj-variable-segment'
     " Plug 'junegunn/vim-peekaboo'
     Plug 'junegunn/vim-pseudocl'
-    Plug 'junegunn/vim-oblique', {'on': ['<Plug>(Oblique-/)', '<Plug>(Oblique-?)',
-                \ '<Plug>(Oblique-F/)', '<Plug>(Oblique-F?)']}
+    " Plug 'junegunn/vim-oblique', {'on': ['<Plug>(Oblique-/)', '<Plug>(Oblique-?)',
+    "             \ '<Plug>(Oblique-F/)', '<Plug>(Oblique-F?)']}
     Plug 'junegunn/vader.vim', {'for': 'vader'}
     Plug 'justinmk/vim-sneak'
     Plug 'kana/vim-textobj-user'
@@ -1034,19 +1034,19 @@ function! OpenTermFunc()
 endfunction
 command! Term call OpenTermFunc()
 
-" oblique configs; be fuzzy by default
-nmap z/ <Plug>(Oblique-/)
-nmap z? <Plug>(Oblique-?)
-nmap / <Plug>(Oblique-F/)
-nmap ? <Plug>(Oblique-F?)
-" the oblique versions of these don't actually move
-"  the cursor for some backward-ass reason.
-"  map them to somewhere out of the way so the real
-"  motions aren't clobbered
-nmap <c-*> <Plug>(Oblique-*)
-nmap <c-#> <Plug>(Oblique-#)
-nmap <m-*> <Plug>(Oblique-g*)
-nmap <m-#> <Plug>(Oblique-g#)
+" " oblique configs; be fuzzy by default
+" nmap z/ <Plug>(Oblique-/)
+" nmap z? <Plug>(Oblique-?)
+" nmap / <Plug>(Oblique-F/)
+" nmap ? <Plug>(Oblique-F?)
+" " the oblique versions of these don't actually move
+" "  the cursor for some backward-ass reason.
+" "  map them to somewhere out of the way so the real
+" "  motions aren't clobbered
+" nmap <c-*> <Plug>(Oblique-*)
+" nmap <c-#> <Plug>(Oblique-#)
+" nmap <m-*> <Plug>(Oblique-g*)
+" nmap <m-#> <Plug>(Oblique-g#)
 
 " sneak configs
 let g:sneak#streak = 1
