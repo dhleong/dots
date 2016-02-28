@@ -19,6 +19,7 @@ set nocompatible
     " NB: css-color breaks if loaded on-demand
     Plug 'ap/vim-css-color'
     Plug 'bling/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
     Plug 'davidhalter/jedi-vim', {'for': 'python', 'do': 'git submodule update --init'}
     Plug 'dhleong/vim-veryhint', {'for': 'java'}
     Plug 'fatih/vim-go'
@@ -297,9 +298,9 @@ function! RunCurrentInSplitTerm()
         " NB Can't seem to unset the variable correctly,
         "  so we just check the active status
 
-        exe 'imap <buffer> <d-r> <up><cr>'
-        exe 'nmap <buffer> <d-r> i<up><cr>'
-        exe 'imap <buffer> <c-l> <esc><c-w><c-l>'
+        exe 'inoremap <buffer> <d-r> <up><cr>'
+        exe 'nnoremap <buffer> <d-r> i<up><cr>'
+        exe 'inoremap <buffer> <c-l> <esc><c-w><c-l>'
     else
         " yes! reuse it
         let term = existing
@@ -360,8 +361,8 @@ function! WindowFocusFunc()
 endfunction
 nnoremap <silent> <leader>wf :call WindowFocusFunc()<cr>
 
-" Make better use of <space> (should it be leader?)
-nmap <silent> <space> <enter>
+" " Make better use of <space> (should it be leader?)
+" nmap <silent> <space> <enter>
 
 " Make unfolding easier
 nnoremap + zA
@@ -419,7 +420,7 @@ nnoremap <leader>\ :call eregex#toggle()<CR>
 nnoremap <leader>gc :Gcommit -a<CR>
 nnoremap <leader>ga :Gcommit -a --amend<CR>
 nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gd :Gdiff<CR><c-w>=
 nnoremap <leader>gb :Gblame<CR>
 set diffopt=filler,vertical
 
@@ -485,9 +486,9 @@ abbr ~? ~/
 iabbr CLoses Closes
 iabbr mfa Miners/minus-for-Android
 
-if &ft != 'gitcommit'
-    inoremap <buffer> #env #!/usr/bin/env 
-endif
+" if &ft != 'gitcommit'
+"     inoremap <buffer> #env #!/usr/bin/env 
+" endif
 
 "
 " Sparkup/zen coding
@@ -521,7 +522,7 @@ function! MapCtrlP(path)
     " isn't set as expected when opening Unite after using
     " the projectopen func below...
 
-    if &ft == "java"
+    if &ft == "java" && intellivim#IsRunning()
         nnoremap <buffer> <silent> <c-p> :Locate<cr>
     else
         let suffix =  '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
@@ -723,8 +724,6 @@ if has('autocmd') && !exists('autocmds_loaded')
     "autocmd BufWrite *.java silent! JavaImportOrganize " import missing on save
     
     autocmd BufEnter *.py call ConfigurePython()
-
-    autocmd BufEnter * if &ft == '' | let b:SuperTabDisabled = 1 | else | let b:SuperTabDisabled = 0 | endif
 
     " let K call vim 'help' when in a vim file
     autocmd FileType vim nnoremap <buffer> K :exe 'help ' .expand('<cword>')<cr>

@@ -142,6 +142,7 @@ wireshark/
 gradle/
 gradlew
 gradlew.bat
+IdeaProjects
 
 # okay just anything:
 .*
