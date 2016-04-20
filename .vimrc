@@ -500,7 +500,7 @@ let g:sparkupExecuteMapping = '<c-z>'
 "
 
 " we don't want results from this dirs (inserted below)
-let _dirs = substitute("bin,node_modules,build,proguard,", ",", "\/\\\\|", "g") 
+let _dirs = substitute("bin,node_modules,build,proguard,app/js/p,", ",", "\/\\\\|", "g") 
 
 " borrow ignore extensions from wildignore setting
 let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded

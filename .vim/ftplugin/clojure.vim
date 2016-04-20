@@ -173,8 +173,18 @@ def restart_repl():
 
 EOF
 
+function! LeinReplConnectFunc()
+    exe "Connect nrepl://localhost:" . GuessPort()
+    " if "cljs" == expand("%:e")
+    "     " call fireplace#platform().connection.eval("(figwheel-sidecar.repl-api/cljs-repl)")
+    "     " exe "Piggieback (do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/cljs-repl))"
+    "     exe "Piggieback 9001"
+    "     echo "Connected via Piggieback"
+    " endif
+endfunction
+
 command! LeinRepl py open_repl()
-command! ConnectRepl :exe "Connect nrepl://localhost:" . GuessPort()
+command! ConnectRepl call LeinReplConnectFunc()
 
 function! LeinReplCloseFunc()
     py close_all_repl()
