@@ -43,6 +43,30 @@ augroup ClojureGroup
     autocmd BufWritePost *.clj call DoReload()
 augroup END
 
+" if guard to protect against E127
+if !exists("*CreateTestFile")
+    function! CreateTestFile()
+        let path = expand('%:p')
+        let path = substitute(path, ".clj$", "_test.clj", "")
+        let path = substitute(path, "/src/", "/test/", "")
+
+        let namespace = fireplace#ns()
+
+        exe "edit " . path
+        if !filereadable(path)
+            " was definitely new
+            let buffer = ["(ns " . namespace . "-test",
+                        \ "  (:require [clojure.test :refer :all]",
+                        \ "            [" . namespace . " :refer :all]))",
+                        \ "",
+                        \ "(deftest a-test",
+                        \ "  (testing \"FIXME new test\"",
+                        \ "    (is (= 0 1))))"]
+            call append(0, buffer)
+        endif
+    endfunction
+endif
+
 " options
 " continue comments with 'enter'
 setlocal formatoptions+=r
@@ -62,6 +86,8 @@ nnoremap <buffer> gpp %a<cr><esc>p%
 " 'go stack open'
 nnoremap <buffer> gso :lopen<cr>
 
+" 'new test'
+nnoremap <buffer> <leader>nt :call CreateTestFile()<cr>
 nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), ".clj$", "_test.clj", "")<cr>
 nnoremap <buffer> <leader>op :exe 'find project.clj'<cr>
 
