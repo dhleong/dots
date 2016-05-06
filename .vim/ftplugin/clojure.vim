@@ -54,6 +54,10 @@ if !exists("*CreateTestFile")
 
         exe "edit " . path
         if !filereadable(path)
+            if !isdirectory(expand("%:p:h"))
+                call mkdir(expand("%:p:h"), "p")
+            endif
+
             " was definitely new
             let buffer = ["(ns " . namespace . "-test",
                         \ "  (:require [clojure.test :refer :all]",
@@ -64,6 +68,40 @@ if !exists("*CreateTestFile")
                         \ "    (is (= 0 1))))"]
             call append(0, buffer)
         endif
+
+    endfunction
+endif
+
+" if guard to protect against E127
+if !exists("*CreateNamespaceFile")
+    function! CreateNamespaceFile(method)
+        let method = a:method
+        let newNs = input("New NS: ")
+        if newNs == ""
+            echo "Canceled"
+            return
+        endif
+
+        let lastNs = substitute(expand('%:p:t'), ".clj", "", "")
+        let path = expand('%:p:h') . "/" . newNs . ".clj"
+
+        let namespace = fireplace#ns()
+        let namespace = substitute(namespace, lastNs, newNs, "")
+
+        exe method . " " . path
+        if !filereadable(path)
+            if !isdirectory(expand("%:p:h"))
+                call mkdir(expand("%:p:h"), "p")
+            endif
+
+            " was definitely new
+            let buffer = ["(ns ^{:author \"Daniel Leong\"",
+                        \ "      :doc \"" . newNs . "\"}", 
+                        \ "  " . namespace . ")",
+                        \ ""]
+            call append(0, buffer)
+        endif
+
     endfunction
 endif
 
@@ -88,6 +126,8 @@ nnoremap <buffer> gso :lopen<cr>
 
 " 'new test'
 nnoremap <buffer> <leader>nt :call CreateTestFile()<cr>
+" 'new file'
+nnoremap <buffer> <leader>nf :call CreateNamespaceFile("tabe")<cr>
 nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), ".clj$", "_test.clj", "")<cr>
 nnoremap <buffer> <leader>op :exe 'find project.clj'<cr>
 
