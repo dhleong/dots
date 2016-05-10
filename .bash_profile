@@ -36,6 +36,7 @@ export ANDROID_HOME=/lib/android-sdk
 export PROGUARD_HOME=$ANDROID_HOME/tools/proguard
 export GOPATH=$HOME/code/go
 export GOBIN=$GOPATH/bin
+export LEIN_JAVA_CMD=/usr/local/bin/drip
 
 alias aj='ag --java'
 alias airportcycle='networksetup -setairportpower airport off; networksetup -setairportpower airport on'

@@ -46,8 +46,9 @@ augroup END
 " if guard to protect against E127
 if !exists("*CreateTestFile")
     function! CreateTestFile()
+        let type = expand('%:e')
         let path = expand('%:p')
-        let path = substitute(path, ".clj$", "_test.clj", "")
+        let path = substitute(path, "." . type . "$", "_test." . type, "")
         let path = substitute(path, "/src/", "/test/", "")
 
         let namespace = fireplace#ns()
@@ -82,8 +83,9 @@ if !exists("*CreateNamespaceFile")
             return
         endif
 
-        let lastNs = substitute(expand('%:p:t'), ".clj", "", "")
-        let path = expand('%:p:h') . "/" . newNs . ".clj"
+        let type = expand('%:e')
+        let lastNs = substitute(expand('%:p:t'), "." . type, "", "")
+        let path = expand('%:p:h') . "/" . newNs . "." . type
 
         let namespace = fireplace#ns()
         let namespace = substitute(namespace, lastNs, newNs, "")
@@ -241,11 +243,18 @@ EOF
 
 function! LeinReplConnectFunc()
     exe "Connect nrepl://localhost:" . GuessPort()
-    " if "cljs" == expand("%:e")
-    "     " call fireplace#platform().connection.eval("(figwheel-sidecar.repl-api/cljs-repl)")
-    "     " exe "Piggieback (do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/cljs-repl))"
-    "     exe "Piggieback 9001"
-    "     echo "Connected via Piggieback"
+    if "cljs" == expand("%:e")
+        exe "Piggieback (do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/cljs-repl))"
+    endif
+    "     let response = fireplace#platform().connection.eval("(require 'piggieback)")
+    "     echo response
+    "     if empty(get(response, 'ex'))
+    " "     exe "Piggieback 9001"
+        "     echo "Connected via Piggieback"
+        " else
+    "         echo "Error: " response.ex
+    "         echo response.ex
+    "     endif
     " endif
 endfunction
 
