@@ -50,7 +50,8 @@ set nocompatible
     Plug 'terryma/vim-multiple-cursors'
     Plug 'tommcdo/vim-exchange'
     Plug 'tomtom/tcomment_vim'
-    Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+    " Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+    Plug '~/git/vim-fireplace', {'for': 'clojure'}
     Plug 'tpope/vim-fugitive' 
     Plug 'tpope/vim-markdown', {'for': 'markdown'}
     Plug 'tpope/vim-repeat' 
@@ -82,6 +83,7 @@ set nocompatible
     Plug 'digitaltoad/vim-jade'
     Plug 'groenewege/vim-less'
     Plug 'kchmck/vim-coffee-script'
+    Plug 'keith/swift.vim'
     Plug 'tfnico/vim-gradle'
     Plug 'wavded/vim-stylus'
 

@@ -127,6 +127,7 @@ synergy.conf
 tmp.avi
 tmp.jpg
 tmp/
+unity/
 wireshark/
 
 # a few more, though some may just get rm'd...

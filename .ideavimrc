@@ -6,6 +6,7 @@ set clipboard=unnamed
 " plugins
 set surround
 set commentary
+set repeat
 
 nnoremap H gT
 nnoremap L gt

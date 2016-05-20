@@ -19,8 +19,13 @@ function! RunBufferTests()
     if ns !~ '-test$'
         let ns = ns . "-test"
     endif
-    silent :Require
-    exe "RunTests " . ns
+
+    if expand('%:e') == 'cljs'
+        :Eval (run-tests)
+    else
+        silent :Require
+        exe "RunTests " . ns
+    endif
 
 endfunction
 
@@ -130,7 +135,8 @@ nnoremap <buffer> gso :lopen<cr>
 nnoremap <buffer> <leader>nt :call CreateTestFile()<cr>
 " 'new file'
 nnoremap <buffer> <leader>nf :call CreateNamespaceFile("tabe")<cr>
-nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), ".clj$", "_test.clj", "")<cr>
+nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), 
+            \ "." . expand('%:e') . "$", "_test." . expand('%:e'), "")<cr>
 nnoremap <buffer> <leader>op :exe 'find project.clj'<cr>
 
 " ... disable default fireplace maps
@@ -243,9 +249,9 @@ EOF
 
 function! LeinReplConnectFunc()
     exe "Connect nrepl://localhost:" . GuessPort()
-    if "cljs" == expand("%:e")
-        exe "Piggieback (do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/cljs-repl))"
-    endif
+    " if "cljs" == expand("%:e")
+    "     exe "Piggieback (do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/cljs-repl))"
+    " endif
     "     let response = fireplace#platform().connection.eval("(require 'piggieback)")
     "     echo response
     "     if empty(get(response, 'ex'))
