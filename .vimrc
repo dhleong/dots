@@ -501,15 +501,23 @@ let g:sparkupExecuteMapping = '<c-z>'
 " unite configs
 "
 
-" we don't want results from this dirs (inserted below)
-let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,", ",", "\/\\\\|", "g") 
+" we don't want results from these dirs (inserted below)
+" let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,app/components", ",", "\/\\\\|", "g") 
+let _dirs = map([
+            \ "bin", "node_modules", "build", "proguard", "out/cljs",
+            \ "app/js/p", "app/components"
+            \ ], 'v:val . "\/**"')
+let b:dirs = _dirs
 
 " borrow ignore extensions from wildignore setting
 let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
 let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
-let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . _dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
+" let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . _dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
+let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|\.\%(' . _wilds . '\)$' " borrowed from default
 call unite#custom#source('file_rec/async', 'ignore_pattern', _wilds)
+call unite#custom#source('file_rec/async', 'ignore_globs', _dirs)
 call unite#custom#source('grep', 'ignore_pattern', _wilds)
+call unite#custom#source('grep', 'ignore_globs', _dirs)
 call unite#custom#source('file_rec/async', 'matchers', 
     \ ['converter_tail', 'matcher_fuzzy'])
 call unite#custom#source('file_rec/async', 'converters', 

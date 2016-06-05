@@ -38,6 +38,8 @@ export GOPATH=$HOME/code/go
 export GOBIN=$GOPATH/bin
 export LEIN_JAVA_CMD=/usr/local/bin/drip
 
+export HOMEBREW_GITHUB_API_TOKEN=08cec7f5967f472ededdb39dc031898a648b6155
+
 alias aj='ag --java'
 alias airportcycle='networksetup -setairportpower airport off; networksetup -setairportpower airport on'
 alias l='ls -al'
@@ -50,6 +52,7 @@ alias gradle='./gradlew'
 alias up='cd ..'
 alias thundercats='./gradlew'
 alias autobots='./gradlew --offline'
+alias rollout='~/git/autobots/rollout'
 
 alias antgo='ant debug install && sh run.sh'
 alias adbrestart='adb kill-server && adb start-server && adb devices'
