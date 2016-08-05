@@ -20,10 +20,10 @@ function! RunBufferTests()
         let ns = ns . "-test"
     endif
 
+    silent :Require
     if expand('%:e') == 'cljs'
         :Eval (run-tests)
     else
-        silent :Require
         exe "RunTests " . ns
     endif
 
@@ -107,6 +107,7 @@ if !exists("*CreateNamespaceFile")
                         \ "  " . namespace . ")",
                         \ ""]
             call append(0, buffer)
+            call cursor(2, 12) " prepare to update the :doc
         endif
 
     endfunction
@@ -138,6 +139,7 @@ nnoremap <buffer> <leader>nf :call CreateNamespaceFile("tabe")<cr>
 nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), 
             \ "." . expand('%:e') . "$", "_test." . expand('%:e'), "")<cr>
 nnoremap <buffer> <leader>op :exe 'find project.clj'<cr>
+nnoremap <buffer> <leader>top :tabe \| exe 'find project.clj'<cr>
 
 " ... disable default fireplace maps
 let g:fireplace_no_maps = 1

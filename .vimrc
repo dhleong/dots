@@ -87,6 +87,10 @@ set nocompatible
     Plug 'tfnico/vim-gradle'
     Plug 'wavded/vim-stylus'
 
+    " jsx depends on panglass/vim-javascript:
+    Plug 'mxw/vim-jsx'
+    Plug 'pangloss/vim-javascript'
+
     call plug#end()
 " Setting up vim-plug end
 
@@ -372,14 +376,18 @@ nnoremap + zA
 
 " Quick make 
 function! CompileLess()
-    silent !lessc % %:t:r.css > /dev/null
+    if expand('%:p:h:t') == 'less'
+        silent !lessc % ../resources/public/css/%:t:r.css > /dev/null
+    else
+        silent !lessc % %:t:r.css > /dev/null
+    endif
 
-    " quickly open, write, and close the file.
-    " this helps trick Tincr into reloading
-    " the updated css file more reliably
-    silent new %:t:r.css
-    silent w
-    silent q
+    " " quickly open, write, and close the file.
+    " " this helps trick Tincr into reloading
+    " " the updated css file more reliably
+    " silent new %:t:r.css
+    " silent w
+    " silent q
 endfunction
 function! MapMake()
     if &ft == 'less'
@@ -504,7 +512,7 @@ let g:sparkupExecuteMapping = '<c-z>'
 " we don't want results from these dirs (inserted below)
 " let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,app/components", ",", "\/\\\\|", "g") 
 let _dirs = map([
-            \ "bin", "node_modules", "build", "proguard", "out/cljs",
+            \ "bin", "node_modules", "build", "proguard", "out",
             \ "app/js/p", "app/components"
             \ ], 'v:val . "\/**"')
 let b:dirs = _dirs
@@ -525,6 +533,15 @@ call unite#custom#source('file_rec/async', 'converters',
 call unite#custom#source('file_rec/async', 'sorters', 
     \ ['sorter_rank'])
 
+function! GrepWord(path)
+    let path = a:path
+    if path == ''
+        let path = '.'
+    endif
+    exe 'Unite grep:' . path . ':-iR:' .
+                \ expand('<cword>') . ' -auto-preview'
+endfunction
+
 " keymaps
 function! MapCtrlP(path)
     " craziness to ensure pwd is always set correctly
@@ -543,10 +560,9 @@ function! MapCtrlP(path)
             \ a:path . ' -default-action=vsplit' . suffix
     endif
 
-    execute 'nnoremap <leader>/ :Unite grep:' . a:path . ':-iR -auto-preview<cr>'
+    execute 'nnoremap <silent> <leader>/ :Unite grep:' . a:path . ':-iR -auto-preview<cr>'
     " NB: this would have to be an <expr> mapping
-    " execute 'nnoremap <leader>? :Unite grep:' . a:path . ':-iR:'
-    "             \ . expand('<cword>') . ' -auto-preview<cr>'
+    execute 'nnoremap <silent> <leader>* :call GrepWord("' . a:path . '")<cr>'
 endfunction
 
 " default map for C-p (we'll remap with project directory soon)
@@ -561,7 +577,7 @@ let my_projectopen = {
 \ 'is_selectable' : 0,
 \ }
 function! my_projectopen.func(candidates)
-    let pathDir = a:candidates.word . '/'
+    let pathDir = a:candidates.action__path . '/'
 
     " set path, etc.
     exe 'set path=' . pathDir . '**'
