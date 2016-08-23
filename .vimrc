@@ -202,8 +202,17 @@ nmap <silent> <leader>vb :e ~/.vim/bundle/<cr>
 nnoremap <silent> <expr> <leader>eft ":tabe " . join([$HOME, "/.vim/ftplugin/", &filetype, ".vim"], "") . "<cr>"
 
 " tabclose
-nmap <silent> <leader>tc :tabclose<cr>
+nnoremap <silent> <leader>tc :tabclose<cr>
 
+" find a build.gradle
+function! FindGradle() 
+    try
+        find! ./build.gradle
+    catch
+        find build.gradle
+    endtry
+endfunction
+nnoremap <silent> <leader>og :call FindGradle()<cr>
 
 " paredit configs
 let g:paredit_leader = ","
