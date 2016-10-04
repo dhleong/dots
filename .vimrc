@@ -36,6 +36,7 @@ set nocompatible
     Plug 'kana/vim-textobj-user'
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
     Plug 'moll/vim-node', {'for': 'javascript'}
+    " Plug 'OmniSharp/omnisharp-vim', {'for': 'cs', 'do': 'git submodule update --init --recursive && cd server && xbuild'}
     Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
         \ 'ConqueTermSplit', 'ConqueTermVSplit']}
     Plug 'osyo-manga/vim-over'
@@ -62,7 +63,7 @@ set nocompatible
     Plug 'tpope/vim-vinegar' 
     " Plug 'vimwiki/vimwiki'
     Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
-    Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}
+    Plug 'Valloric/YouCompleteMe', {'do': './install.sh --omnisharp-completer'}
     Plug 'wellle/targets.vim'
     Plug 'xolox/vim-misc'
     Plug 'xolox/vim-session'
@@ -889,15 +890,21 @@ let g:acp_completeoptPreview = 1
 let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 
 " syntastic configs
+let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 let g:syntastic_javascript_jshint_exec = '~/.npm-packages/bin/jshint'
 let g:syntastic_java_checkers = []
 function! JumpToNextError()
 
-    if &ft == "java"
+    if &ft == "java" || &ft == "cs"
         try
             lnext
         catch /.*No.more.items$/
             lfirst
+        catch /.*No.Errors$/
+            echohl WarningMsg
+            echo "No errors :)"
+            echohl None
+        catch /.*No.location.list$/
         endtry
         return
     endif
@@ -956,6 +963,8 @@ inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
 
 " most useful for gitcommit
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
+
+let g:ycm_always_populate_location_list = 1
 
 let g:UltiSnipsListSnippets="<C-M-Tab>"
 let g:UltiSnipsExpandTrigger="<C-Enter>"
