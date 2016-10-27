@@ -64,6 +64,7 @@ set nocompatible
     " Plug 'vimwiki/vimwiki'
     Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
     Plug 'Valloric/YouCompleteMe', {'do': './install.sh --omnisharp-completer'}
+    " Plug '~/git/YouCompleteMe', {'do': './install.sh --omnisharp-completer'}
     Plug 'wellle/targets.vim'
     Plug 'xolox/vim-misc'
     Plug 'xolox/vim-session'
@@ -163,9 +164,10 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/git/',
     \'/Users/dhleong/Documents/workspace/',
     \'/Users/dhleong/code/appengine/',
-    \'/Users/dhleong/code/go',
+    \'/Users/dhleong/code/go/',
     \'/Users/dhleong/code/',
-    \'/Users/dhleong/IdeaProjects/'
+    \'/Users/dhleong/IdeaProjects/',
+    \'/Users/dhleong/unity/'
 \]
 
 " visual bell
@@ -953,6 +955,12 @@ let g:ycm_filetype_blacklist = {
     \ 'pandoc' : 1,
     \ 'conque_term' : 1,
     \}
+
+let g:ycm_filter_diagnostics = {
+    \   'cs': { 
+    \     'regex': ["prefix '_'"]
+    \   }
+    \ }
 
 " let g:ycm_semantic_triggers = {
 "     \ 'android-xml' : [':', '="', '<', '/', '@']
