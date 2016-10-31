@@ -152,7 +152,7 @@ set wildmode=longest:full,full
 set wildignore=.svn,.git,*.o,*.a,*.class,*.pyc
 set wildignore+=*.mo,*.la,*.so,*.obj,*.swp,*.swo
 set wildignore+=*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak
-set wildignore+=*.beam,*~,*.info
+set wildignore+=*.beam,*~,*.info,*.meta
 
 " array of paths pointing to parent directories
 "   of project directories; IE: each path here
@@ -958,7 +958,11 @@ let g:ycm_filetype_blacklist = {
 
 let g:ycm_filter_diagnostics = {
     \   'cs': { 
-    \     'regex': ["prefix '_'"]
+    \     'regex': [
+    \       "prefix '_'",
+    \       "Parameter can be IComparable",
+    \       "Xml comment",
+    \     ]
     \   }
     \ }
 
