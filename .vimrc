@@ -14,6 +14,7 @@ set nocompatible
     Plug 'eregex.vim'
     Plug 'matchit.zip'
     Plug 'VisIncr'
+    Plug 'zenburn'
 
     " use ap's fork here instead of skammer, to add stylus support
     " NB: css-color breaks if loaded on-demand
@@ -32,6 +33,7 @@ set nocompatible
     " Plug 'junegunn/vim-oblique', {'on': ['<Plug>(Oblique-/)', '<Plug>(Oblique-?)',
     "             \ '<Plug>(Oblique-F/)', '<Plug>(Oblique-F?)']}
     Plug 'junegunn/vader.vim', {'for': 'vader'}
+    Plug 'justinmk/vim-ipmotion'
     Plug 'justinmk/vim-sneak'
     Plug 'kana/vim-textobj-user'
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
@@ -75,11 +77,11 @@ set nocompatible
     " Plug 'file:///Users/dhleong/code/njast'
     " Plug 'file:///Users/dhleong/git/Conque-Shell'
     Plug '~/git/lily'
-
+    
     " I would prefer to user MarcWeber's,
     "  but it seems to be broken with YCM
     " Plug 'MarcWeber/ultisnips'
-    Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' 
+    Plug 'SirVer/ultisnips' | Plug '~/git/vim-cs-snippets' | Plug 'honza/vim-snippets'
 
     " Syntax plugins
     Plug 'digitaltoad/vim-jade'
@@ -801,17 +803,6 @@ function! DocToJson()
 endfunction
 command! JSON call DocToJson()
 
-" For converting XML stuff into style;
-" Select some lines, then run :'<,'>norm @x
-function! XmlToStyleFunc()
-    let @x = 'I<item name="f=xa>f"c$</item>j'
-endfunction
-
-command! XmlToStyle call XmlToStyleFunc()
-
-" automatically fill the x macro reg
-:XmlToStyle
-
 " 
 " Quick todo list using grep and quickfix
 "
@@ -959,8 +950,11 @@ let g:ycm_filetype_blacklist = {
 let g:ycm_filter_diagnostics = {
     \   'cs': { 
     \     'regex': [
+    \       "Convert to 'return' statement",
     \       "prefix '_'",
-    \       "Parameter can be IComparable",
+    \       "Parameter can be ",
+    \       "Redundant argument name specification",
+    \       "Use 'var' keyword",
     \       "Xml comment",
     \     ]
     \   }
