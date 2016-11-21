@@ -21,6 +21,7 @@ nnoremap <buffer> <c-w>gd :call <SID>GotoInNewTab()<cr>
 nnoremap <buffer> gd :YcmCompleter GoTo<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
 nnoremap <buffer> <a-cr> :YcmCompleter FixIt<cr>
+nnoremap <buffer> <leader>ji :OmniSharpFixUsings<cr>
 
 nnoremap <buffer> <silent> <leader>pr :call <SID>RunProject()<cr>
 
