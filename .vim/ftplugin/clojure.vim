@@ -30,7 +30,7 @@ function! RunBufferTests()
 endfunction
 
 function! GuessRoot()
-    return fnamemodify(exists('b:java_root') ? b:java_root : fnamemodify(expand('%'), ':p:s?.*\zs[\/]src[\/].*??'), ':~')
+    return fnamemodify(exists('b:java_root') ? b:java_root : fnamemodify(expand('%'), ':p:s?.*\zs[\/]\(src\|test\)[\/].*??'), ':~')
 endfunction
 
 function! GuessPort()
@@ -64,11 +64,22 @@ if !exists("*CreateTestFile")
                 call mkdir(expand("%:p:h"), "p")
             endif
 
+
+            let import = []
+            if type == 'cljs'
+                let import = ["  (:require [cljs.test :refer-macros [deftest testing is run-tests]]",
+                            \ "            [cljs.nodejs :as node]",
+                            \ "            [" . namespace . " :refer []]"]
+            else
+
+                let import = ["  (:require [clojure.test :refer :all]",
+                            \ "            [" . namespace . " :refer :all]))"]
+            endif
+
             " was definitely new
-            let buffer = ["(ns " . namespace . "-test",
-                        \ "  (:require [clojure.test :refer :all]",
-                        \ "            [" . namespace . " :refer :all]))",
-                        \ "",
+            let buffer = ["(ns " . namespace . "-test"] +
+                        \ import +
+                        \["",
                         \ "(deftest a-test",
                         \ "  (testing \"FIXME new test\"",
                         \ "    (is (= 0 1))))"]
@@ -136,6 +147,8 @@ nnoremap <buffer> gso :lopen<cr>
 nnoremap <buffer> <leader>nt :call CreateTestFile()<cr>
 " 'new file'
 nnoremap <buffer> <leader>nf :call CreateNamespaceFile("tabe")<cr>
+" 'split new file'
+nnoremap <buffer> <leader>snf :call CreateNamespaceFile("vsplit")<cr>
 nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), 
             \ "." . expand('%:e') . "$", "_test." . expand('%:e'), "")<cr>
 nnoremap <buffer> <leader>op :exe 'find project.clj'<cr>
@@ -252,7 +265,7 @@ EOF
 function! LeinReplConnectFunc()
     exe "Connect nrepl://localhost:" . GuessPort()
     if "cljs" == expand("%:e")
-        exe "Piggieback (do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/cljs-repl))"
+        exe "Piggieback (figwheel-sidecar.repl-api/repl-env)"
     endif
     "     let response = fireplace#platform().connection.eval("(require 'piggieback)")
     "     echo response

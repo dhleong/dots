@@ -90,6 +90,7 @@ set nocompatible
     Plug 'keith/swift.vim'
     Plug 'tfnico/vim-gradle'
     Plug 'wavded/vim-stylus'
+    Plug '~/git/vim-interspace'
 
     " jsx depends on panglass/vim-javascript:
     Plug 'mxw/vim-jsx'
@@ -883,12 +884,17 @@ let g:acp_completeoptPreview = 1
 let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 
 " syntastic configs
-let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
+" let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
+let g:syntastic_cs_checkers = []
 let g:syntastic_javascript_jshint_exec = '~/.npm-packages/bin/jshint'
 let g:syntastic_java_checkers = []
 function! JumpToNextError()
 
     if &ft == "java" || &ft == "cs"
+        " make sure diagnostics are up-to-date
+        :YcmForceCompileAndDiagnostics 
+        redraw!
+
         try
             lnext
         catch /.*No.more.items$/

@@ -17,11 +17,31 @@ function! s:RunProject()
     echo "Project playing!"
 endfunction
 
+function! s:OpenProblems()
+    let winnr = winnr()
+    :YcmDiags
+
+    if !len(getloclist(winnr))
+        :q
+        echo ""
+        redraw!
+        echohl WarningMsg
+        echo "No problems! :)"
+        echohl None
+        return
+    endif
+
+    " automatically close the diags window when leaving it
+    autocmd WinLeave <buffer> :q
+endfunction
+
 nnoremap <buffer> <c-w>gd :call <SID>GotoInNewTab()<cr>
 nnoremap <buffer> gd :YcmCompleter GoTo<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
-nnoremap <buffer> <a-cr> :YcmCompleter FixIt<cr>
+nnoremap <buffer> <a-cr> :YcmCompleter FixIt<cr>:cclose<cr>
 nnoremap <buffer> <leader>ji :OmniSharpFixUsings<cr>
+nnoremap <buffer> <leader>jr :OmniSharpRename<cr>
+nnoremap <buffer> <leader>op :call <SID>OpenProblems()<cr>
 
 nnoremap <buffer> <silent> <leader>pr :call <SID>RunProject()<cr>
 
