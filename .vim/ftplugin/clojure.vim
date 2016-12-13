@@ -69,7 +69,7 @@ if !exists("*CreateTestFile")
             if type == 'cljs'
                 let import = ["  (:require [cljs.test :refer-macros [deftest testing is run-tests]]",
                             \ "            [cljs.nodejs :as node]",
-                            \ "            [" . namespace . " :refer []]"]
+                            \ "            [" . namespace . " :refer []]))"]
             else
 
                 let import = ["  (:require [clojure.test :refer :all]",
