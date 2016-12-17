@@ -77,6 +77,7 @@ set nocompatible
     " Plug 'file:///Users/dhleong/code/njast'
     " Plug 'file:///Users/dhleong/git/Conque-Shell'
     Plug '~/git/lily'
+    Plug '~/git/vim-latte'
     
     " I would prefer to user MarcWeber's,
     "  but it seems to be broken with YCM
@@ -528,7 +529,7 @@ let g:sparkupExecuteMapping = '<c-z>'
 " let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,app/components", ",", "\/\\\\|", "g") 
 let _dirs = map([
             \ "bin", "node_modules", "build", "proguard", "out",
-            \ "app/js/p", "app/components"
+            \ "app/js/p", "app/components", "target"
             \ ], 'v:val . "\/**"')
 let b:dirs = _dirs
 

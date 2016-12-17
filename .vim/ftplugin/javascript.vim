@@ -36,3 +36,11 @@ nnoremap <buffer> K :TernDoc<CR>
 
 nnoremap <buffer> gpd :!grunt deploy<cr>
 nnoremap <buffer> gpi :!grunt lambda_invoke<cr>
+
+if expand('%') =~# '-test.js$'
+    augroup RunLatte
+        autocmd!
+        autocmd BufWritePost <buffer> :call latte#Run()
+    augroup END
+endif
+
