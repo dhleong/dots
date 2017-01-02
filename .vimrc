@@ -15,6 +15,7 @@ set nocompatible
     Plug 'matchit.zip'
     Plug 'VisIncr'
     Plug 'zenburn'
+    Plug 'ShaderHighLight'
 
     " use ap's fork here instead of skammer, to add stylus support
     " NB: css-color breaks if loaded on-demand
@@ -43,6 +44,7 @@ set nocompatible
         \ 'ConqueTermSplit', 'ConqueTermVSplit']}
     Plug 'osyo-manga/vim-over'
     " Plug 'reinh/vim-makegreen'
+    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
     Plug 'rstacruz/sparkup', {'rtp': 'vim', 'for': 'html'}
     Plug 'scrooloose/syntastic'
     Plug 'Shougo/unite.vim'
@@ -65,7 +67,7 @@ set nocompatible
     Plug 'tpope/vim-vinegar' 
     " Plug 'vimwiki/vimwiki'
     Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
-    Plug 'Valloric/YouCompleteMe', {'do': './install.sh --omnisharp-completer'}
+    Plug 'Valloric/YouCompleteMe', {'do': './install.sh --clang-completer --omnisharp-completer'}
     " Plug '~/git/YouCompleteMe', {'do': './install.sh --omnisharp-completer'}
     Plug 'wellle/targets.vim'
     Plug 'xolox/vim-misc'
@@ -529,7 +531,7 @@ let g:sparkupExecuteMapping = '<c-z>'
 " let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,app/components", ",", "\/\\\\|", "g") 
 let _dirs = map([
             \ "bin", "node_modules", "build", "proguard", "out",
-            \ "app/js/p", "app/components", "target"
+            \ "app/js/p", "app/components", "target", "builds",
             \ ], 'v:val . "\/**"')
 let b:dirs = _dirs
 
@@ -548,6 +550,11 @@ call unite#custom#source('file_rec/async', 'converters',
     \ ['converter_file_directory'])
 call unite#custom#source('file_rec/async', 'sorters', 
     \ ['sorter_rank'])
+
+" use ag for rec/async
+let g:unite_source_rec_async_command =
+            \ ['ag', '--follow', '--nocolor', '--nogroup',
+            \  '--hidden', '-g', '']
 
 function! GrepWord(path)
     let path = a:path
@@ -964,8 +971,15 @@ let g:ycm_filter_diagnostics = {
     \       "Use 'var' keyword",
     \       "Xml comment",
     \     ]
+    \   },
+    \   'cpp': {
+    \     'regex': [
+    \       "enumeration in a nested name specifier",
+    \     ]
     \   }
     \ }
+
+let g:ycm_extra_conf_globlist = ["~/git/juuce/*"]
 
 " let g:ycm_semantic_triggers = {
 "     \ 'android-xml' : [':', '="', '<', '/', '@']

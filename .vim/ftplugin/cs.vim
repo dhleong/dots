@@ -2,6 +2,10 @@
 " let g:ycm_enable_diagnostic_signs = 0
 " let g:ycm_show_diagnostics_ui = 0
 
+"
+" Function defs
+"
+
 if !exists('*<sid>GotoInNewTab')
     function! s:GotoInNewTab() 
         let c = getpos('.')
@@ -35,8 +39,42 @@ function! s:OpenProblems()
     autocmd WinLeave <buffer> :q
 endfunction
 
+function! MyGetCSIndent(lnum) abort
+
+    let this_line = getline(a:lnum)
+    let previous_line = getline(a:lnum - 1)
+
+    " Hit the start of the file, use zero indent.
+    if a:lnum == 0
+        return 0
+    endif
+
+    if previous_line =~? '^\s*\[[A-Za-z]' && previous_line =~? '\]$'
+        " If previous_line is an attribute line:
+        let ind = indent(a:lnum - 1)
+        return ind
+    elseif previous_line =~# '=>\s*$' && this_line =~# "{"
+        return cindent(a:lnum - 1)
+    else
+        return cindent(a:lnum)
+    endif
+
+endfunction
+
+"
+" Settings
+"
+
+setlocal indentexpr=MyGetCSIndent(v:lnum)
+let b:did_indent = 1
+
+"
+" Mappings
+"
 nnoremap <buffer> <c-w>gd :call <SID>GotoInNewTab()<cr>
 nnoremap <buffer> gd :YcmCompleter GoTo<cr>
+" 'goto initial definition'
+nnoremap <buffer> gid :YcmCompleter GoToDefinition<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
 nnoremap <buffer> <a-cr> :YcmCompleter FixIt<cr>:cclose<cr>
 nnoremap <buffer> <leader>ji :OmniSharpFixUsings<cr>
@@ -45,6 +83,9 @@ nnoremap <buffer> <leader>op :call <SID>OpenProblems()<cr>
 
 nnoremap <buffer> <silent> <leader>pr :call <SID>RunProject()<cr>
 
+"
+" augroup
+"
 augroup omnisharp_commands
     autocmd!
 

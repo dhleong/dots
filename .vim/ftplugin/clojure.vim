@@ -101,7 +101,8 @@ if !exists("*CreateNamespaceFile")
 
         let type = expand('%:e')
         let lastNs = substitute(expand('%:p:t'), "." . type, "", "")
-        let path = expand('%:p:h') . "/" . newNs . "." . type
+        let newNsPath = substitute(newNs, '-', '_', '')
+        let path = expand('%:p:h') . "/" . newNsPath . "." . type
 
         let namespace = fireplace#ns()
         let namespace = substitute(namespace, lastNs, newNs, "")

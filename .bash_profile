@@ -12,6 +12,7 @@ PATH=$PATH:$NDK
 
 PATH=$PATH:/usr/local/mysql/bin
 PATH=$PATH:/lib/gradle/bin
+PATH=$PATH:~/code/depot_tools
 
 pip() {
     if [ "$1" = "install" -o "$1" = "bundle" ]; then
