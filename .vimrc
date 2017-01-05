@@ -896,6 +896,7 @@ let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
 let g:syntastic_cs_checkers = []
 let g:syntastic_javascript_jshint_exec = '~/.npm-packages/bin/jshint'
 let g:syntastic_java_checkers = []
+let g:syntastic_python_checkers = ['flake8']
 function! JumpToNextError()
 
     if &ft == "java" || &ft == "cs"
