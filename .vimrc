@@ -899,7 +899,7 @@ let g:syntastic_java_checkers = []
 let g:syntastic_python_checkers = ['flake8']
 function! JumpToNextError()
 
-    if &ft == "java" || &ft == "cs"
+    if &ft == "java" || &ft == "cs" || &ft == "cpp"
         " make sure diagnostics are up-to-date
         :YcmForceCompileAndDiagnostics 
         redraw!
@@ -993,6 +993,8 @@ inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 
 let g:ycm_always_populate_location_list = 1
+
+" let g:ycm_max_diagnostics_to_display = 50
 
 let g:UltiSnipsListSnippets="<C-M-Tab>"
 let g:UltiSnipsExpandTrigger="<C-Enter>"
