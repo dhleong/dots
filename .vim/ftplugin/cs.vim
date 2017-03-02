@@ -15,9 +15,9 @@ if !exists('*<sid>GotoInNewTab')
     endfunction
 endif
 
+let s:path = expand("<sfile>:p:h")
 function! s:RunProject()
-    silent !osascript -e 'activate application "Unity"'
-    silent !osascript -e 'tell application "System Events" to keystroke "p" using command down'
+    silent exe 'silent !osascript ' . s:path . '/cs-run-project.applescript'
     echo "Project playing!"
 endfunction
 
@@ -86,11 +86,11 @@ nnoremap <buffer> <silent> <leader>pr :call <SID>RunProject()<cr>
 "
 " augroup
 "
-augroup omnisharp_commands
-    autocmd!
-
-    "show type information automatically when the cursor stops moving
-    autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
-augroup END
+" augroup omnisharp_commands
+"     autocmd!
+"
+"     "show type information automatically when the cursor stops moving
+"     autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+" augroup END
 
 " nnoremap <buffer> <leader>jr "0yiwq:iYcmCompleter RefactorRename <esc>"0p

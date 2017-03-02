@@ -2,7 +2,13 @@
 
 function! DoReload()
     try
-        silent :Require
+        silent :Require!
+        " norm! mz
+        " norm! gg
+        " norm cpG
+        " norm! `z
+        " norm cpip
+        " norm! `z
         silent :ClojureHighlightReferences
     catch /Fireplace:.*REPL/
         redraw! | echohl Error | echo "No REPL found" | echohl None

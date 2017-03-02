@@ -44,6 +44,7 @@ set nocompatible
         \ 'ConqueTermSplit', 'ConqueTermVSplit']}
     Plug 'osyo-manga/vim-over'
     " Plug 'reinh/vim-makegreen'
+    Plug 'rizzatti/dash.vim'
     Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
     Plug 'rstacruz/sparkup', {'rtp': 'vim', 'for': 'html'}
     Plug 'scrooloose/syntastic'
@@ -75,12 +76,12 @@ set nocompatible
 
     Plug 'file:///Users/dhleong/code/hubr'
     Plug '~/git/hubr'
-    Plug '~/git/intellivim', {'rtp': 'vim'}
+    " Plug '~/git/intellivim', {'rtp': 'vim'}
     " Plug 'file:///Users/dhleong/code/njast'
     " Plug 'file:///Users/dhleong/git/Conque-Shell'
     Plug '~/git/lily'
     Plug '~/git/vim-latte'
-    
+
     " I would prefer to user MarcWeber's,
     "  but it seems to be broken with YCM
     " Plug 'MarcWeber/ultisnips'
@@ -182,11 +183,9 @@ set vb
 " hide useless gui
 set guioptions=c
 
-if expand("%")[-3:] != '.go'
-    " show horrid tabs
-    setlocal list
-    setlocal listchars=tab:>-
-endif
+" show horrid tabs
+set list
+set listchars=tab:»·,trail:·
 
 " use comma as the map leader, because \ is too far
 " let mapleader = ","
@@ -368,6 +367,10 @@ nnoremap zl L
 " Navigation in insert mode, for use with multicursor
 inoremap <C-A> <esc>I
 inoremap <C-E> <esc>A
+
+" dash
+nnoremap <leader>K :Dash<cr>
+" nnoremap <C-S-k> :Dash " overrides <c-k> for some reason
 
 " Ctrl-S 2x to open a vertical split (I use these a lot)
 " It's 2x because <C-S><C-P> does Unite Search to open in vsp,
@@ -572,7 +575,7 @@ function! MapCtrlP(path)
     " isn't set as expected when opening Unite after using
     " the projectopen func below...
 
-    if &ft == "java" && intellivim#IsRunning()
+    if &ft == "java" && exists("*intellivim#InProject") && intellivim#IsRunning()
         nnoremap <buffer> <silent> <c-p> :Locate<cr>
     else
         let suffix =  '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
@@ -816,7 +819,7 @@ command! JSON call DocToJson()
 " Quick todo list using grep and quickfix
 "
 function! SetTitleAndClearAutoCmd()
-    setl statusline="Quick Todo List" 
+    setl statusline="Quick Todo List"
     au! BufWinEnter quickfix
 endfunction
 
