@@ -231,6 +231,21 @@ augroup VimAutoSource
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
+" Clean up trailing whitespace
+function! TryCleanWhitespace()
+
+    " minus 1 to be zero-indexed;
+    " minus another because we're in insert mode
+    let col = col('.') - 2
+    let line = getline('.')[:col]
+    let whitespace = len(matchstr(line, '\s*$'))
+    echom line . ' -> ' . whitespace
+    let prefix = repeat("\<BS>", whitespace)
+
+    return prefix . "\<Enter>"
+endfunction
+inoremap <expr> <Enter> TryCleanWhitespace()
+
 " livedown
 let g:livedown_autorun = 1
 
@@ -370,7 +385,12 @@ inoremap <C-E> <esc>A
 
 " dash
 nnoremap <leader>K :Dash<cr>
+nnoremap gK :Dash!<cr>
 " nnoremap <C-S-k> :Dash " overrides <c-k> for some reason
+let g:dash_map = {
+    \ 'javascript': 'electron'
+    \ }
+
 
 " Ctrl-S 2x to open a vertical split (I use these a lot)
 " It's 2x because <C-S><C-P> does Unite Search to open in vsp,

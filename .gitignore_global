@@ -48,3 +48,7 @@ build/
 ehthumbs.db
 Icon?
 Thumbs.db
+
+# amplify shader editor
+AmplifyShaderEditor
+AmplifyShaderEditor.meta
