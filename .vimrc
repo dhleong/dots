@@ -1,6 +1,8 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
 
+let g:ale_emit_conflict_warnings = 0
+
 " vim-plug
     if empty(glob('~/.vim/autoload/plug.vim'))
       silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -11,11 +13,12 @@ set nocompatible
     call plug#begin('~/.vim/bundle')
 
     "Add your bundles here
-    Plug 'eregex.vim'
-    Plug 'matchit.zip'
-    Plug 'VisIncr'
-    Plug 'zenburn'
-    Plug 'ShaderHighLight'
+    " FIXME: find proper homes for these:
+    Plug 'vim-scripts/eregex.vim'
+    Plug 'vim-scripts/matchit.zip'
+    Plug 'vim-scripts/VisIncr'
+    Plug 'vim-scripts/zenburn'
+    Plug 'vim-scripts/ShaderHighLight'
 
     " use ap's fork here instead of skammer, to add stylus support
     " NB: css-color breaks if loaded on-demand
@@ -56,21 +59,24 @@ set nocompatible
     Plug 'terryma/vim-multiple-cursors'
     Plug 'tommcdo/vim-exchange'
     Plug 'tomtom/tcomment_vim'
-    " Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-    Plug '~/git/vim-fireplace', {'for': 'clojure'}
-    Plug 'tpope/vim-fugitive' 
+    Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+    " Plug '~/git/vim-fireplace', {'for': 'clojure'}
+    Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-markdown', {'for': 'markdown'}
-    Plug 'tpope/vim-repeat' 
+    Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-scriptease', {'for': 'vim'}
     Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
-    " Plug 'tpope/vim-sleuth', {'for': 'javascript'}
-    Plug 'tpope/vim-surround' 
-    Plug 'tpope/vim-vinegar' 
+    " Plug 'tpope/vim-sleuth'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-vinegar'
     " Plug 'vimwiki/vimwiki'
     Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
-    Plug 'Valloric/YouCompleteMe', {'do': './install.sh --clang-completer --omnisharp-completer'}
-    " Plug '~/git/YouCompleteMe', {'do': './install.sh --omnisharp-completer'}
+    if !(has('nvim') || exists('g:neojet#version'))
+        Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --omnisharp-completer --tern-completer'}
+        " Plug '~/git/YouCompleteMe', {'do': './install.py --omnisharp-completer'}
+    endif
     Plug 'wellle/targets.vim'
+    Plug 'w0rp/ale', {'for': 'javascript'}
     Plug 'xolox/vim-misc'
     Plug 'xolox/vim-session'
 
@@ -91,6 +97,8 @@ set nocompatible
     Plug 'digitaltoad/vim-jade'
     Plug 'groenewege/vim-less'
     Plug 'kchmck/vim-coffee-script'
+    Plug 'LokiChaos/vim-tintin'
+    Plug 'udalov/kotlin-vim'
     Plug 'keith/swift.vim'
     Plug 'tfnico/vim-gradle'
     Plug 'wavded/vim-stylus'
@@ -209,6 +217,12 @@ nmap <silent> <leader>vb :e ~/.vim/bundle/<cr>
 " Edit the filetype file of the current file in a new tap
 nnoremap <silent> <expr> <leader>eft ":tabe " . join([$HOME, "/.vim/ftplugin/", &filetype, ".vim"], "") . "<cr>"
 
+" Open the bash profile
+nnoremap <silent> <leader>eb :e ~/.bash_profile<cr>
+nnoremap <silent> <leader>teb :tabe ~/.bash_profile<cr>
+nnoremap <silent> <leader>ep :e ~/.bash_profile<cr>
+nnoremap <silent> <leader>tep :tabe ~/.bash_profile<cr>
+
 " tabclose
 nnoremap <silent> <leader>tc :tabclose<cr>
 
@@ -239,8 +253,12 @@ function! TryCleanWhitespace()
     let col = col('.') - 2
     let line = getline('.')[:col]
     let whitespace = len(matchstr(line, '\s*$'))
-    echom line . ' -> ' . whitespace
-    let prefix = repeat("\<BS>", whitespace)
+    " echom line . ' -> ' . whitespace
+    if len(line) == whitespace
+        let prefix = ''
+    else
+        let prefix = repeat("\<BS>", whitespace)
+    endif
 
     return prefix . "\<Enter>"
 endfunction
@@ -553,7 +571,7 @@ let g:sparkupExecuteMapping = '<c-z>'
 " we don't want results from these dirs (inserted below)
 " let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,app/components", ",", "\/\\\\|", "g") 
 let _dirs = map([
-            \ "bin", "node_modules", "build", "proguard", "out",
+            \ "node_modules", "build", "proguard", "out",
             \ "app/js/p", "app/components", "target", "builds",
             \ ], 'v:val . "\/**"')
 let b:dirs = _dirs
@@ -909,17 +927,39 @@ if has('gui_running')
 endif
 
 
-" autocomplpop configs
-let g:acp_completeoptPreview = 1
-" fix unshift when popup isn't open
-let g:acp_previousItemMapping = ['<S-Tab>', '\<lt>c-d>']
+" ale configs
+let g:ale_linters = {
+    \   'javascript': ['eslint'],
+    \}
 
 " syntastic configs
 " let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 let g:syntastic_cs_checkers = []
+let g:syntastic_javascript_checkers = []
+let g:syntastic_javascript_eslint_exec = '~/.npm-packages/bin/eslint'
 let g:syntastic_javascript_jshint_exec = '~/.npm-packages/bin/jshint'
 let g:syntastic_java_checkers = []
 let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_quiet_messages = {
+    \ "regex": [
+        \ 'proprietary.*async',
+        \ 'proprietary.*onload',
+        \ 'proprietary.*onreadystatechange',
+    \ ]}
+
+function! FallbackJumpToNextError()
+    try
+        lnext
+    catch /.*No.more.items$/
+        lfirst
+    catch /.*No.Errors$/
+        echohl WarningMsg
+        echo "No errors :)"
+        echohl None
+    catch /.*No.location.list$/
+    endtry
+endfunction
+
 function! JumpToNextError()
 
     if &ft == "java" || &ft == "cs" || &ft == "cpp"
@@ -927,16 +967,7 @@ function! JumpToNextError()
         :YcmForceCompileAndDiagnostics 
         redraw!
 
-        try
-            lnext
-        catch /.*No.more.items$/
-            lfirst
-        catch /.*No.Errors$/
-            echohl WarningMsg
-            echo "No errors :)"
-            echohl None
-        catch /.*No.location.list$/
-        endtry
+        call FallbackJumpToNextError()
         return
     endif
 
@@ -948,7 +979,7 @@ function! JumpToNextError()
     call loclist.sort()
     let rawlist = loclist.getRaw()
     if !len(rawlist)
-        echo "No issues in this file"
+        call FallbackJumpToNextError()
         return
     endif
 

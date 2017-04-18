@@ -83,6 +83,15 @@ nnoremap <buffer> <leader>op :call <SID>OpenProblems()<cr>
 
 nnoremap <buffer> <silent> <leader>pr :call <SID>RunProject()<cr>
 
+" Let the matchit plugin know what items can be matched.
+if exists("loaded_matchit")
+    let b:match_ignorecase = 0
+    let b:match_words = &matchpairs . ',' .
+                \'^#region::^#endregion'
+    " let b:match_skip = 'string\|character'
+    let b:match_skip = 's:comment\|string\|regex\|character'
+endif
+
 "
 " augroup
 "

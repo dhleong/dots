@@ -37,6 +37,9 @@ nnoremap <buffer> K :TernDoc<CR>
 nnoremap <buffer> gpd :!grunt deploy<cr>
 nnoremap <buffer> gpi :!grunt lambda_invoke<cr>
 
+nnoremap <buffer> <leader>op :exe 'find package.json'<cr>
+nnoremap <buffer> <leader>top :tabe \| exe 'find package.json'<cr>
+
 if expand('%') =~# '-test.js$'
     augroup RunLatte
         autocmd!

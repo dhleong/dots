@@ -2,7 +2,7 @@
 
 function! DoReload()
     try
-        silent :Require!
+        silent :Require
         " norm! mz
         " norm! gg
         " norm cpG
@@ -131,6 +131,72 @@ if !exists("*CreateNamespaceFile")
     endfunction
 endif
 
+" imported from fireplace
+function! s:opfunc(type) abort
+  let sel_save = &selection
+  let cb_save = &clipboard
+  let reg_save = @@
+  try
+    set selection=inclusive clipboard-=unnamed clipboard-=unnamedplus
+    if type(a:type) == type(0)
+      let open = '[[{(]'
+      let close = '[]})]'
+      if getline('.')[col('.')-1] =~# close
+        let [line1, col1] = searchpairpos(open, '', close, 'bn', g:fireplace#skip)
+        let [line2, col2] = [line('.'), col('.')]
+      else
+        let [line1, col1] = searchpairpos(open, '', close, 'bcn', g:fireplace#skip)
+        let [line2, col2] = searchpairpos(open, '', close, 'n', g:fireplace#skip)
+      endif
+      while col1 > 1 && getline(line1)[col1-2] =~# '[#''`~@]'
+        let col1 -= 1
+      endwhile
+      call setpos("'[", [0, line1, col1, 0])
+      call setpos("']", [0, line2, col2, 0])
+      silent exe "normal! `[v`]y"
+    elseif a:type =~# '^.$'
+      silent exe "normal! `<" . a:type . "`>y"
+    elseif a:type ==# 'line'
+      silent exe "normal! '[V']y"
+    elseif a:type ==# 'block'
+      silent exe "normal! `[\<C-V>`]y"
+    elseif a:type ==# 'outer'
+      call searchpair('(','',')', 'Wbcr', g:fireplace#skip)
+      silent exe "normal! vaby"
+    else
+      silent exe "normal! `[v`]y"
+    endif
+    redraw
+    if fireplace#client().user_ns() ==# 'user'
+      return repeat("\n", line("'<")-1) . repeat(" ", col("'<")-1) . @@
+    else
+      return @@
+    endif
+  finally
+    let @@ = reg_save
+    let &selection = sel_save
+    let &clipboard = cb_save
+  endtry
+endfunction
+
+function! s:pprintop(type) abort
+    let todo = s:opfunc(a:type)
+    let ns = 'clojure'
+    if "cljs" == expand("%:e")
+        let ns = 'cljs'
+    endif
+    call fireplace#eval('(' . ns . '.pprint/pprint ' . todo . ')')
+endfunction
+
+function! s:pprint_recall() abort
+    let ns = 'clojure'
+    if "cljs" == expand("%:e")
+        let ns = 'cljs'
+    endif
+    call fireplace#eval('(' . ns . '.pprint/pp)')
+endfunction
+
+
 " options
 " continue comments with 'enter'
 setlocal formatoptions+=r
@@ -163,6 +229,11 @@ nnoremap <buffer> <leader>top :tabe \| exe 'find project.clj'<cr>
 
 " ... disable default fireplace maps
 let g:fireplace_no_maps = 1
+
+" ... add some custom ones
+nmap <buffer> cnp :<C-U>set opfunc=<SID>pprintop<CR>g@
+nmap <buffer> cnpr :<C-U>call <SID>pprint_recall()<CR>
+nmap <buffer> cnpp :<C-U>call <SID>pprintop(v:count)<CR>
 
 " ... and restore the original ones we use (there're a lot)
 nmap <buffer> cp <Plug>FireplacePrint
@@ -299,3 +370,11 @@ command! LeinReplRestart py restart_repl()
 augroup LeinShutDownGroup
     autocmd VimLeavePre * call LeinReplCloseFunc()
 augroup END
+
+"
+" vim-clojure-static configs
+"
+
+let g:clojure_align_multiline_strings = 1
+let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let', '^go-loop']
+

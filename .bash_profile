@@ -34,6 +34,7 @@ then
 fi
 
 export ANDROID_HOME=/lib/android-sdk
+export ANDROID_NDK=$NDK
 export PROGUARD_HOME=$ANDROID_HOME/tools/proguard
 export GOPATH=$HOME/code/go
 export GOBIN=$GOPATH/bin
