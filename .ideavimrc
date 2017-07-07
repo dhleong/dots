@@ -33,3 +33,5 @@ nnoremap <space>sn :action StepOver<cr>
 
 nnoremap <space>gc :action ChangesView.Commit<cr>
 nnoremap <space>gp :action Vcs.Push<cr>
+
+nnoremap <space>nf :action Kotlin.NewFile<cr>
