@@ -31,7 +31,7 @@ let g:ale_emit_conflict_warnings = 0
     Plug 'guns/vim-clojure-static', {'for': 'clojure'}
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
     Plug 'guns/vim-sexp', {'for': 'clojure'}
-    Plug 'haya14busa/vim-textobj-function-syntax'
+    Plug 'haya14busa/vim-textobj-function-syntax' | Plug 'kana/vim-textobj-function'
     Plug 'Julian/vim-textobj-variable-segment'
     " Plug 'junegunn/vim-peekaboo'
     Plug 'junegunn/vim-pseudocl'
@@ -41,7 +41,6 @@ let g:ale_emit_conflict_warnings = 0
     Plug 'justinmk/vim-ipmotion'
     Plug 'justinmk/vim-sneak'
     Plug 'kana/vim-textobj-user'
-    Plug 'kana/vim-textobj-function'
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
     Plug 'moll/vim-node', {'for': 'javascript'}
     Plug 'OmniSharp/omnisharp-vim', {'for': 'cs', 'do': 'git submodule update --init --recursive && cd server && xbuild'}
@@ -111,8 +110,7 @@ let g:ale_emit_conflict_warnings = 0
     Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
 
     " jsx depends on panglass/vim-javascript:
-    Plug 'mxw/vim-jsx'
-    Plug 'pangloss/vim-javascript'
+    Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript'
 
     call plug#end()
 " Setting up vim-plug end
