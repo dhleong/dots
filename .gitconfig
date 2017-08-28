@@ -1,18 +1,18 @@
 [user]
-	name = Daniel Leong
-	email = me@dhleong.net
+    name = Daniel Leong
+    email = me@dhleong.net
 [gui]
-	recentrepo = /Users/dhleong/git/eclipse-cdt
+    recentrepo = /Users/dhleong/git/eclipse-cdt
 [core]
-	excludesfile = /Users/dhleong/.gitignore_global
-	editor = /Applications/MacVim.app/Contents/MacOS/Vim
+    excludesfile = /Users/dhleong/.gitignore_global
+    editor = /Applications/MacVim.app/Contents/MacOS/Vim
 [alias]
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     co = checkout
 [color]
-	ui = auto
+    ui = auto
 [push]
-	default = simple
+    default = simple
 [merge]
     tool = unityyamlmerge
 

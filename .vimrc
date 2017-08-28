@@ -31,6 +31,7 @@ let g:ale_emit_conflict_warnings = 0
     Plug 'guns/vim-clojure-static', {'for': 'clojure'}
     Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
     Plug 'guns/vim-sexp', {'for': 'clojure'}
+    Plug 'haya14busa/vim-textobj-function-syntax'
     Plug 'Julian/vim-textobj-variable-segment'
     " Plug 'junegunn/vim-peekaboo'
     Plug 'junegunn/vim-pseudocl'
@@ -40,13 +41,13 @@ let g:ale_emit_conflict_warnings = 0
     Plug 'justinmk/vim-ipmotion'
     Plug 'justinmk/vim-sneak'
     Plug 'kana/vim-textobj-user'
+    Plug 'kana/vim-textobj-function'
     Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
     Plug 'moll/vim-node', {'for': 'javascript'}
     Plug 'OmniSharp/omnisharp-vim', {'for': 'cs', 'do': 'git submodule update --init --recursive && cd server && xbuild'}
     Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
         \ 'ConqueTermSplit', 'ConqueTermVSplit']}
     Plug 'osyo-manga/vim-over'
-    " Plug 'reinh/vim-makegreen'
     Plug 'rizzatti/dash.vim'
     Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
     Plug 'rstacruz/sparkup', {'rtp': 'vim', 'for': 'html'}
@@ -80,7 +81,7 @@ let g:ale_emit_conflict_warnings = 0
     Plug 'xolox/vim-misc'
     Plug 'xolox/vim-session'
 
-    Plug 'file:///Users/dhleong/code/hubr'
+    " Plug 'file:///Users/dhleong/code/hubr'
     Plug '~/git/hubr'
     " Plug '~/git/intellivim', {'rtp': 'vim'}
     " Plug 'file:///Users/dhleong/code/njast'
@@ -103,6 +104,11 @@ let g:ale_emit_conflict_warnings = 0
     Plug 'tfnico/vim-gradle'
     Plug 'wavded/vim-stylus'
     Plug '~/git/vim-interspace'
+    Plug '~/git/vim-jsgf'
+
+    " typescript
+    Plug 'leafgarland/typescript-vim'
+    Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
 
     " jsx depends on panglass/vim-javascript:
     Plug 'mxw/vim-jsx'
@@ -267,36 +273,17 @@ inoremap <expr> <Enter> TryCleanWhitespace()
 " livedown
 let g:livedown_autorun = 1
 
-" While we're here, how about a vim shell? :)
-let g:ConqueTerm_CloseOnEnd = 1 " close the tab/split when the shell exits
-let g:ConqueTerm_StartMessages = 0 " shhh. it's fine
-nmap <silent> <leader>vs :ConqueTermVSplit bash -l<cr>
-nmap <silent> <leader>hs :ConqueTermSplit bash -l<cr>
-nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
-
-"
-" Find the index of a ConqueTerm for the current
-"  tab, or 0 if none found
-"
-function! FindTermForTab()
-    let myTab = tabpagenr()
-
-    for [idx, term] in items(g:ConqueTerm_Terminals)
-        let termBufNr = bufnr(term.buffer_name)
-
-        " is this buffer in our current tab window?
-        for bufNr in tabpagebuflist()
-            if bufNr == termBufNr
-                return term.idx
-            endif
-        endfor
-    endfor
-
-    return 0
-endfunction
+" TODO replace with :term
+" " While we're here, how about a vim shell? :)
+" let g:ConqueTerm_CloseOnEnd = 1 " close the tab/split when the shell exits
+" let g:ConqueTerm_StartMessages = 0 " shhh. it's fine
+" nmap <silent> <leader>vs :ConqueTermVSplit bash -l<cr>
+" nmap <silent> <leader>hs :ConqueTermSplit bash -l<cr>
+" nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
 
 function! RunCurrentInSplitTerm()
 
+    " TODO can we replace this with :terminal ?
     call plug#load("Conque-Shell")
 
     let fileName = expand('%')
@@ -319,7 +306,6 @@ function! RunCurrentInSplitTerm()
 
             let winnr = bufwinnr(term.bufname)
             if winnr != -1 && term.active != 0
-                
                 " update it, if it's changed
                 if winnr != term.winnr
                     let term.winnr = winnr
@@ -333,7 +319,6 @@ function! RunCurrentInSplitTerm()
 
     " do we already have a term?
     if !found
-            
         " nope... set it up
 
         " make sure it's executable
@@ -406,7 +391,8 @@ nnoremap <leader>K :Dash<cr>
 nnoremap gK :Dash!<cr>
 " nnoremap <C-S-k> :Dash " overrides <c-k> for some reason
 let g:dash_map = {
-    \ 'javascript': 'electron'
+    \ 'javascript': 'electron',
+    \ 'typescript': ['typescript', 'javascript']
     \ }
 
 
@@ -1017,9 +1003,11 @@ let g:ycm_filetype_blacklist = {
     \}
 
 let g:ycm_filter_diagnostics = {
-    \   'cs': { 
+    \   'cs': {
     \     'regex': [
     \       "Convert to 'return' statement",
+    \       "Convert to '&=' expresssion",
+    \       "Convert to '&=' expression",
     \       "prefix '_'",
     \       "Parameter can be ",
     \       "Redundant argument name specification",
@@ -1127,6 +1115,24 @@ nnoremap <leader>rv :call ReinstallPlugin('vim-veryhint')<cr>
 
 " only auto-ref issues assigned to me
 let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
+
+"
+" :term stuff
+"
+let &shell = '/bin/bash -l'
+function! WatchAndRunFunc()
+    try
+        let progs = { 'javascript': 'node',
+                    \ 'python': 'python'
+                    \ }
+        let prog = progs[&ft]
+        let file = expand('%')
+        execute 'terminal when-changed -1sv ' . file . ' ' . prog . ' ' . file
+    catch
+        echo "No program known for " . &ft
+    endtry
+endfunction
+command! WatchAndRun call WatchAndRunFunc()
 
 "
 " njast config (basically for testing)

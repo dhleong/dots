@@ -20,6 +20,7 @@ nnoremap <C-H> <C-W>h
 nnoremap <tab> >>
 
 nnoremap gpr :action ChooseRunConfiguration<cr>
+" nnoremap gpr :action RunTargetAction<cr>
 nnoremap <space>pb :action CompileDirty<cr>
 nnoremap <space>pr :action Run<cr>
 nnoremap <space>jc :action ShowIntentionActions<cr>
