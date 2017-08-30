@@ -216,16 +216,16 @@ nmap <silent> <expr> <leader>tev ":tabe " . resolve($MYVIMRC) . "<cr>"
 nmap <silent> <expr> <leader>sv ":so " . resolve($MYVIMRC) . "<cr>"
 
 " And the bundles dir, as well ('v'im 'b'undles)
-nmap <silent> <expr> <leader>vb ":e " . resolve(~/.vim/bundle/) . "<cr>"
+nmap <silent> <expr> <leader>vb ":e " . resolve("~/.vim/bundle/") . "<cr>"
 
 " Edit the filetype file of the current file in a new tap
 nnoremap <silent> <expr> <leader>eft ":tabe " . resolve(join([$HOME, "/.vim/ftplugin/", &filetype, ".vim"], "")) . "<cr>"
 
 " Open the bash profile
-nnoremap <silent> <expr> <leader>eb ":e " . resolve(~/.bash_profile) . "<cr>"
-nnoremap <silent> <expr> <leader>teb ":tabe " . resolve(~/.bash_profile) . "<cr>"
-nnoremap <silent> <expr> <leader>ep ":e " . resolve(~/.bash_profile) . "<cr>"
-nnoremap <silent> <expr> <leader>tep ":tabe " . resolve(~/.bash_profile) . "<cr>"
+nnoremap <silent> <expr> <leader>eb ":e " . resolve("~/.bash_profile") . "<cr>"
+nnoremap <silent> <expr> <leader>teb ":tabe " . resolve("~/.bash_profile") . "<cr>"
+nnoremap <silent> <expr> <leader>ep ":e " . resolve("~/.bash_profile") . "<cr>"
+nnoremap <silent> <expr> <leader>tep ":tabe " . resolve("~/.bash_profile") . "<cr>"
 
 " tabclose
 nnoremap <silent> <leader>tc :tabclose<cr>
