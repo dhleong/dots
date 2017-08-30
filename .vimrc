@@ -204,16 +204,14 @@ set listchars=tab:»·,trail:·
 " actually, let's try space... much easier to hit
 let mapleader = " "
 
+let $_MYVIMRC = resolve($MYVIMRC)
+
 " Let's make it easy to edit this file (mnemonic for the key sequence is
 " 'e'dit 'v'imrc)
-nmap <silent> <expr> <leader>ev ":e " . resolve($MYVIMRC) . "<cr>"
+nmap <silent> <leader>ev :e $_MYVIMRC<cr>
 
 " And, in a new tab
-nmap <silent> <expr> <leader>tev ":tabe " . resolve($MYVIMRC) . "<cr>"
-
-" And to source this file as well (mnemonic for the key sequence is
-" 's'ource 'v'imrc)
-nmap <silent> <expr> <leader>sv ":so " . resolve($MYVIMRC) . "<cr>"
+nmap <silent> <leader>tev :tabe $_MYVIMRC<cr>
 
 " And the bundles dir, as well ('v'im 'b'undles)
 nmap <silent> <expr> <leader>vb ":e " . resolve("~/.vim/bundle/") . "<cr>"
@@ -246,7 +244,7 @@ let g:paredit_leader = ","
 " Also, just source it automatically on write
 augroup VimAutoSource
     autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+    autocmd BufWritePost .vimrc source %
 augroup END
 
 " Clean up trailing whitespace
