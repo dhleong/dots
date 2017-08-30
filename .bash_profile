@@ -13,6 +13,7 @@ PATH=$PATH:$NDK
 PATH=$PATH:/usr/local/mysql/bin
 PATH=$PATH:/lib/gradle/bin
 PATH=$PATH:~/code/depot_tools
+PATH=$PATH:~/.dotfiles/bin
 
 pip() {
     if [ "$1" = "install" -o "$1" = "bundle" ]; then
@@ -44,6 +45,7 @@ export HOMEBREW_GITHUB_API_TOKEN=08cec7f5967f472ededdb39dc031898a648b6155
 
 alias aj='ag --java'
 alias airportcycle='networksetup -setairportpower airport off; networksetup -setairportpower airport on'
+alias dots='cd ~/.dotfiles/profile'
 alias l='ls -al'
 alias seriestracker='(cd ~/SeriesTracker-v6/; java -jar seriestracker.jar)'
 alias gits='git status'

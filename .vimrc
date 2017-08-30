@@ -76,7 +76,7 @@ let g:ale_emit_conflict_warnings = 0
         " Plug '~/git/YouCompleteMe', {'do': './install.py --omnisharp-completer'}
     endif
     Plug 'wellle/targets.vim'
-    Plug 'w0rp/ale', {'for': 'javascript'}
+    Plug 'w0rp/ale', {'for': ['javascript', 'typescript']}
     Plug 'xolox/vim-misc'
     Plug 'xolox/vim-session'
 
@@ -206,26 +206,26 @@ let mapleader = " "
 
 " Let's make it easy to edit this file (mnemonic for the key sequence is
 " 'e'dit 'v'imrc)
-nmap <silent> <leader>ev :e $MYVIMRC<cr>
+nmap <silent> <expr> <leader>ev ":e " . resolve($MYVIMRC) . "<cr>"
 
 " And, in a new tab
-nmap <silent> <leader>tev :tabe $MYVIMRC<cr>
+nmap <silent> <expr> <leader>tev ":tabe " . resolve($MYVIMRC) . "<cr>"
 
 " And to source this file as well (mnemonic for the key sequence is
 " 's'ource 'v'imrc)
-nmap <silent> <leader>sv :so $MYVIMRC<cr>
+nmap <silent> <expr> <leader>sv ":so " . resolve($MYVIMRC) . "<cr>"
 
 " And the bundles dir, as well ('v'im 'b'undles)
-nmap <silent> <leader>vb :e ~/.vim/bundle/<cr>
+nmap <silent> <expr> <leader>vb ":e " . resolve(~/.vim/bundle/) . "<cr>"
 
 " Edit the filetype file of the current file in a new tap
-nnoremap <silent> <expr> <leader>eft ":tabe " . join([$HOME, "/.vim/ftplugin/", &filetype, ".vim"], "") . "<cr>"
+nnoremap <silent> <expr> <leader>eft ":tabe " . resolve(join([$HOME, "/.vim/ftplugin/", &filetype, ".vim"], "")) . "<cr>"
 
 " Open the bash profile
-nnoremap <silent> <leader>eb :e ~/.bash_profile<cr>
-nnoremap <silent> <leader>teb :tabe ~/.bash_profile<cr>
-nnoremap <silent> <leader>ep :e ~/.bash_profile<cr>
-nnoremap <silent> <leader>tep :tabe ~/.bash_profile<cr>
+nnoremap <silent> <expr> <leader>eb ":e " . resolve(~/.bash_profile) . "<cr>"
+nnoremap <silent> <expr> <leader>teb ":tabe " . resolve(~/.bash_profile) . "<cr>"
+nnoremap <silent> <expr> <leader>ep ":e " . resolve(~/.bash_profile) . "<cr>"
+nnoremap <silent> <expr> <leader>tep ":tabe " . resolve(~/.bash_profile) . "<cr>"
 
 " tabclose
 nnoremap <silent> <leader>tc :tabclose<cr>
@@ -914,6 +914,7 @@ endif
 " ale configs
 let g:ale_linters = {
     \   'javascript': ['eslint'],
+    \   'typescript': ['tslint'],
     \}
 
 " syntastic configs
