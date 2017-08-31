@@ -1,4 +1,9 @@
 
+" ======= Settings =========================================
+
+setlocal foldmethod=marker
+
+
 " ======= Mappings =========================================
 
 function! GotoPluginHomepage()
@@ -31,4 +36,5 @@ augroup VimAutoSource
     autocmd!
     autocmd BufWritePost .vimrc source %
     autocmd BufWritePost */.vim/init/*.vim source %
+    autocmd BufWinEnter <buffer> normal zM
 augroup END

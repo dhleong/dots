@@ -9,7 +9,7 @@ endfunction
 command! -nargs=1 Source :call SourceInitFileFunc(<args>)
 " }}}
 
-" source the plug defs
+" source the plug defs and settings
 Source 'plugins.vim'
 
 " ======= Global settings ==================================
@@ -33,9 +33,6 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/unity/'
 \]
 
-" paredit configs
-let g:paredit_leader = ","
-
 " Clean up trailing whitespace
 function! TryCleanWhitespace()
 
@@ -54,9 +51,6 @@ function! TryCleanWhitespace()
     return prefix . "\<Enter>"
 endfunction
 inoremap <expr> <Enter> TryCleanWhitespace()
-
-" livedown
-let g:livedown_autorun = 1
 
 " TODO replace with :term
 " " While we're here, how about a vim shell? :)
@@ -161,10 +155,6 @@ let g:dash_map = {
     \ 'javascript': 'electron',
     \ 'typescript': ['typescript', 'javascript']
     \ }
-
-" eregex config
-let g:eregex_default_enable = 0  " doesn't do incremental search, so no
-nnoremap <leader>\ :call eregex#toggle()<CR>
 
 " some git configs
 nnoremap <leader>gc :Gcommit -a<CR>
@@ -425,15 +415,6 @@ command! OpenTodoList call OpenTodoListFunc()
 nmap <leader>T :OpenTodoList<cr>
 nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 
-" jedi configs
-let g:jedi#completions_enabled = 0
-let g:jedi#squelch_py_warning = 1
-let g:jedi#popup_select_first = 1
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_definitions_command = "gd"
-let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#use_splits_not_buffers = "right"
-
 " tern configs
 let g:tern_show_signature_in_pum = 1
 
@@ -462,27 +443,6 @@ if has('gui_running')
     let g:airline_powerline_fonts = 1
 endif
 
-
-" ale configs
-let g:ale_linters = {
-    \   'javascript': ['eslint'],
-    \   'typescript': ['tslint'],
-    \}
-
-" syntastic configs
-" let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
-let g:syntastic_cs_checkers = []
-let g:syntastic_javascript_checkers = []
-let g:syntastic_javascript_eslint_exec = '~/.npm-packages/bin/eslint'
-let g:syntastic_javascript_jshint_exec = '~/.npm-packages/bin/jshint'
-let g:syntastic_java_checkers = []
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_quiet_messages = {
-    \ "regex": [
-        \ 'proprietary.*async',
-        \ 'proprietary.*onload',
-        \ 'proprietary.*onreadystatechange',
-    \ ]}
 
 function! FallbackJumpToNextError()
     try
@@ -540,60 +500,6 @@ endfunction
 nnoremap <silent> <d-.> :call JumpToNextError()<cr>
 nmap <silent> ]c :call JumpToNextError()<cr>
 
-" 
-" Ycm configs
-"
-let g:ycm_filetype_blacklist = {
-    \ 'tagbar' : 1,
-    \ 'qf' : 1,
-    \ 'notes' : 1,
-    \ 'unite' : 1,
-    \ 'vimwiki' : 1,
-    \ 'pandoc' : 1,
-    \ 'conque_term' : 1,
-    \}
-
-let g:ycm_filter_diagnostics = {
-    \   'cs': {
-    \     'regex': [
-    \       "Convert to 'return' statement",
-    \       "Convert to '&=' expresssion",
-    \       "Convert to '&=' expression",
-    \       "prefix '_'",
-    \       "Parameter can be ",
-    \       "Redundant argument name specification",
-    \       "Use 'var' keyword",
-    \       "Xml comment",
-    \     ]
-    \   },
-    \   'cpp': {
-    \     'regex': [
-    \       "enumeration in a nested name specifier",
-    \     ]
-    \   }
-    \ }
-
-let g:ycm_extra_conf_globlist = ["~/git/juuce/*"]
-
-" let g:ycm_semantic_triggers = {
-"     \ 'android-xml' : [':', '="', '<', '/', '@']
-"     \}
-
-let g:ycm_key_list_previous_completion = ['<Up>'] " NOT s-tab; we do the right thing below:
-inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
-
-" most useful for gitcommit
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-
-let g:ycm_always_populate_location_list = 1
-
-" let g:ycm_max_diagnostics_to_display = 50
-
-let g:UltiSnipsListSnippets="<C-M-Tab>"
-let g:UltiSnipsExpandTrigger="<C-Enter>"
-let g:UltiSnipsJumpForwardTrigger="<C-J>"
-let g:UltiSnipsJumpBackwardTrigger="<C-K>"
-
 "
 " Commenting configs
 "
@@ -602,12 +508,6 @@ let g:tcomment_types = {
     \ 'java_inline': '/* %s */',
     \ 'java_block': '// %s'
     \ }
-
-"
-" targets.vim
-"
-" swap I and i so >iB works as expected
-let g:targets_aiAI = 'aIAi'
 
 "
 " Github fun
