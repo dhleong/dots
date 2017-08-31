@@ -12,47 +12,10 @@ command! -nargs=1 Source :call SourceInitFileFunc(<args>)
 " source the plug defs
 Source 'plugins.vim'
 
-set autoindent
-set copyindent    " copy the previous indentation on autoindenting
-set showcmd
-set incsearch
-syntax enable
-filetype plugin on
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set ruler       " we may want to know where we are in the file
+" ======= Global settings ==================================
 
-set ignorecase  " ignore case in search....
-set smartcase   " but if we WANT case, use it
-
-set splitright  " horizontal splits should not open on the left... 
-set noea        " 'no equal always'--don't resize my splits!
-
-set updatetime=900
-
-if exists('+autochdir')
-    " use the builtin if we have it
-    set autochdir
-else
-    " use the manual method 
-    autocmd BufEnter * silent! lcd %:p:h
-endif
-
-" use cursorline, but only for current window (nice)
-autocmd WinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
-
-"colorscheme desert
-colorscheme zenburn
-
-" longest submatch, but subsequent tabs keep going
-set wildmode=longest:full,full
-
-set wildignore=.svn,.git,*.o,*.a,*.class,*.pyc
-set wildignore+=*.mo,*.la,*.so,*.obj,*.swp,*.swo
-set wildignore+=*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak
-set wildignore+=*.beam,*~,*.info,*.meta
+Source 'settings.vim'
+Source 'mappings.vim'
 
 " array of paths pointing to parent directories
 "   of project directories; IE: each path here
@@ -70,64 +33,8 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/unity/'
 \]
 
-" visual bell
-set vb
-
-" hide useless gui
-set guioptions=c
-
-" show horrid tabs
-set list
-set listchars=tab:»·,trail:·
-
-" use comma as the map leader, because \ is too far
-" let mapleader = ","
-" actually, let's try space... much easier to hit
-let mapleader = " "
-
-let $_MYVIMRC = resolve($MYVIMRC)
-
-" Let's make it easy to edit this file (mnemonic for the key sequence is
-" 'e'dit 'v'imrc)
-nmap <silent> <leader>ev :e $_MYVIMRC<cr>
-
-" And, in a new tab
-nmap <silent> <leader>tev :tabe $_MYVIMRC<cr>
-
-" And the bundles dir, as well ('v'im 'b'undles)
-nmap <silent> <expr> <leader>vb ":e " . resolve("~/.vim/bundle/") . "<cr>"
-
-" Edit the filetype file of the current file in a new tap
-nnoremap <silent> <expr> <leader>eft ":tabe " . resolve(join([$HOME, "/.vim/ftplugin/", &filetype, ".vim"], "")) . "<cr>"
-
-" Open the bash profile
-nnoremap <silent> <expr> <leader>eb ":e " . resolve("~/.bash_profile") . "<cr>"
-nnoremap <silent> <expr> <leader>teb ":tabe " . resolve("~/.bash_profile") . "<cr>"
-nnoremap <silent> <expr> <leader>ep ":e " . resolve("~/.bash_profile") . "<cr>"
-nnoremap <silent> <expr> <leader>tep ":tabe " . resolve("~/.bash_profile") . "<cr>"
-
-" tabclose
-nnoremap <silent> <leader>tc :tabclose<cr>
-
-" find a build.gradle
-function! FindGradle() 
-    try
-        find! ./build.gradle
-    catch
-        find build.gradle
-    endtry
-endfunction
-nnoremap <silent> <leader>og :call FindGradle()<cr>
-
 " paredit configs
 let g:paredit_leader = ","
-
-" Also, just source it automatically on write
-augroup VimAutoSource
-    autocmd!
-    " autocmd BufWritePost .vimrc source %
-    autocmd BufWritePost $_MYVIMRC source $_MYVIMRC
-augroup END
 
 " Clean up trailing whitespace
 function! TryCleanWhitespace()
@@ -245,24 +152,6 @@ endfunction
 nmap <silent> <leader>rs :call RunCurrentInSplitTerm()<cr>
 nmap <silent> <d-r> :call RunCurrentInSplitTerm()<cr>
 
-" convenient new tab
-nnoremap <C-W><C-W> :tabe<cr>
-
-" Enable faster splits navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" And, faster tab navigation
-nnoremap H gT
-nnoremap L gt
-nnoremap zh H
-nnoremap zl L
-
-" Navigation in insert mode, for use with multicursor
-inoremap <C-A> <esc>I
-inoremap <C-E> <esc>A
 
 " dash
 nnoremap <leader>K :Dash<cr>
@@ -272,78 +161,6 @@ let g:dash_map = {
     \ 'javascript': 'electron',
     \ 'typescript': ['typescript', 'javascript']
     \ }
-
-
-" Ctrl-S 2x to open a vertical split (I use these a lot)
-" It's 2x because <C-S><C-P> does Unite Search to open in vsp,
-"  so this is faster if I just want a straight split
-nnoremap <C-S><C-S> :vsp<cr>
-
-" fast window resize
-nnoremap <leader>= <C-W>10+
-nnoremap <leader>- <C-W>10-
-
-function! WindowFocusFunc() 
-    call feedkeys("\<c-w>=", "n")
-    call feedkeys("\<c-w>15+", "n")
-    call feedkeys("\<c-w>15>", "n")
-endfunction
-nnoremap <silent> <leader>wf :call WindowFocusFunc()<cr>
-
-" " Make better use of <space> (should it be leader?)
-" nmap <silent> <space> <enter>
-
-" Make unfolding easier
-nnoremap + zA
-
-
-" Quick make 
-function! CompileLess()
-    if expand('%:p:h:t') == 'less'
-        silent !lessc % ../resources/public/css/%:t:r.css > /dev/null
-    else
-        silent !lessc % %:t:r.css > /dev/null
-    endif
-
-    " " quickly open, write, and close the file.
-    " " this helps trick Tincr into reloading
-    " " the updated css file more reliably
-    " silent new %:t:r.css
-    " silent w
-    " silent q
-endfunction
-function! MapMake()
-    if &ft == 'less'
-        " the make shortcut should just compile lesscss
-        nnoremap <silent> <leader>mm :w<cr> <BAR> call CompileLess()
-    elseif expand('%:p') == $MYVIMRC
-        " make green
-        nmap <silent> <leader>mm :PluginInstall<cr>
-    elseif &ft == 'javascript'
-        " make green
-        nmap <silent> <leader>mm :MakeGreen<cr>
-    else
-        " otherwise, just make
-        nmap <silent> <leader>mm :make<cr>
-    endif 
-endfunction
-augroup MakeMapper
-    autocmd!
-    autocmd BufEnter * call MapMake()
-augroup END
-
-" Quick make clean
-nmap <silent> <leader>mc :make clean<cr>
-
-" Quick make and run
-nmap <silent> <leader>mr :make run<cr>
-
-" ctrl+tab between tabs
-nmap <silent> <C-Tab> :tabn<cr>
-nmap <silent> <C-S-Tab> :tabp<cr>
-
-" ctrl+a to get to front of line in commandline mode
-cnoremap <C-A> <Home>
 
 " eregex config
 let g:eregex_default_enable = 0  " doesn't do incremental search, so no
@@ -382,33 +199,10 @@ endfunction
 nnoremap <leader>gu :call PushNewUpstream()<CR>
 
 " Tweaking {} motion behavior
-let g:ip_boundary = '[" *]*\s*$' 
+let g:ip_boundary = '[" *]*\s*$'
 " don't open folds when jumping over blocks
 let g:ip_skipfold = 1
 
-" super tab and other completion settings
-let g:SuperTabNoCompleteAfter = ['//', '\s', ',', '#']
-let g:SuperTabNoCompleteBefore = ['\w']
-let g:SuperTabLongestEnhanced = 1
-let g:SuperTabLongestHighlight = 1
-let g:SuperTabMappingBackward = '<s-c-space>' " don't override our custom guy!
-
-" use shift-tab in normal mode, or insert mode with no popup, to unindent
-" crazy redundancy required because just <C-p> goes forward, for some
-" reason (although the c-n c-p thing works as expected. weird)
-inoremap <expr><S-Tab> pumvisible()? "\<down>\<C-n>\<C-p>" : "\<c-d>"
-nnoremap <S-Tab> <<_
-nnoremap <Tab> >>_
-
-" If we have suggestions open, we want some keys
-" to accept the suggestion *and* add their key, 
-" for more fluid typing
-let acceptSuggestionKeys = ['<Space>', '.', ',', ':', ';', '(', ')', '[', ']']
-for key in acceptSuggestionKeys
-    exe 'imap <expr>' . key . ' pumvisible() ? "\<C-y>' . key . '" : "' . key . '"'
-endfor
-
-set completeopt=menu,preview,longest
 
 "
 " some abbreviations/typo fixes
@@ -418,10 +212,6 @@ set completeopt=menu,preview,longest
 abbr ~? ~/
 iabbr CLoses Closes
 iabbr mfa Miners/minus-for-Android
-
-" if &ft != 'gitcommit'
-"     inoremap <buffer> #env #!/usr/bin/env 
-" endif
 
 "
 " Sparkup/zen coding
@@ -576,130 +366,24 @@ function! SetPathToProject()
         exe 'set path='.g:DefaultPath
     else
         " vim default path
-        exe 'set path=.,/usr/include,,'
+        set path=.,/usr/include,,
+    endif
+
+    " the vimrc has a special path to access the init files
+    if expand("%") == ".vimrc"
+        let inits = resolve(expand("~/.vim/init"))
+        exec "set path=" . inits . "/**," . &path
     endif
 
     " reset ctrl-p to default
     call MapCtrlP("")
 endfunction
 
-" let's always provide this, so we can use it in new tabs, etc.
-nnoremap <silent> <leader>lf :LocateFile<cr>
-
-function! ConfigureJava()
-
-    if exists("*intellivim#InProject") && intellivim#InProject()
-        nnoremap <buffer> <silent> <leader>fi :JavaOptimizeImports<cr>
-        nnoremap <buffer> <silent> <leader>jc :FixProblem<cr>
-        nnoremap <buffer> <silent> K :GetDocumentation<cr>
-        nnoremap <buffer> <silent> gd :GotoDeclaration<cr>
-        nnoremap <buffer> <silent> <leader>lf :Locate<cr>
-        nnoremap <buffer> <silent> <leader>lc :Locate class<cr>
-        nnoremap <buffer> <silent> <leader>ji :Implement<cr>
-
-        nnoremap <buffer> <silent> <leader>pr :RunProject<cr>
-        nnoremap <buffer> cpr :RunTest<cr>
-    else
-        nnoremap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
-        nnoremap <buffer> <silent> <leader>jc :JavaCorrect<cr>
-        nnoremap <buffer> <silent> <leader>ji :JavaImpl<cr>
-        nnoremap <buffer> <silent> K :JavaDocPreview<cr>
-        nnoremap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
-        nnoremap <buffer> <silent> <leader>lf :LocateFile<cr>
-        nnoremap <buffer> <silent> <leader>lc :LocationListClear<cr>
-
-        nnoremap <buffer> <silent> <leader>pr :ProjectRun<cr>
-        nnoremap <buffer> cpr :JUnit<cr>
-        nnoremap <buffer> cpt :JUnit %<cr>
-    endif
-
-    nmap <buffer> <silent> <leader>pp :ProjectProblems!<cr>
-    nmap <buffer> <silent> <leader>jf :JavaCorrect<cr>
-    nmap <buffer> <silent> <leader>jd :JavaDocSearch<cr>
-    nmap <buffer> <silent> <leader>js :JavaSearch -x declarations -s project<cr>
-    nmap <buffer> <silent> <leader>jr :JavaSearch -x references -s project<cr>
-    nmap <buffer> <silent> <leader>ll :lopen<cr>
-    nmap <buffer> <silent> <m-1> :JavaCorrect<cr>
-
-    " let c-n do the regular local search
-    inoremap <buffer> <c-n> <c-x><c-n>
-
-    " the one above doesn't cooperate here, either...
-    inoremap <buffer> <expr><S-Tab> pumvisible()? "\<up>\<C-n>\<C-p>" : "\<c-d>"
-endfunction
-
-function! ConfigurePython()
-    nmap <silent> <F19> :!python %<cr>
-    "let <buffer> g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-    "call SuperTabSetDefaultCompletionType("<c-x><c-o>")
-
-    " let c-n do the regular local search
-    inoremap <buffer> <c-n> <c-x><c-n>
-
-    " the one above doesn't cooperate with vim-jedi for some reason
-    inoremap <buffer> <expr><S-Tab> pumvisible()? "\<up>\<C-n>\<C-p>" : "\<c-d>"
-
-endfunction
-
-function! ConfigureAndroidProject()
-    if !exists(":PingEclim")
-        return
-    endif
-
-    let project = eclim#project#util#GetCurrentProjectName()
-    if empty(project)
-        return
-    endif
-
-    let natures = eclim#project#util#GetProjectNatureAliases(project)
-    if -1 == index(natures, "android")
-        return
-    endif
-
-    " OKAY! We're an android project
-    let root = eclim#project#util#GetProjectRoot(project)
-    let root = escape(root, ' ')
-    exe 'nnoremap <buffer> <leader>ob :edit ' . root . '/build.gradle<cr>'
-    exe 'nnoremap <buffer> <leader>om :edit ' . root . '/AndroidManifest.xml<cr>'
-    exe 'nnoremap <buffer> <leader>or :edit ' . root . '/res<cr>'
-    exe 'nnoremap <buffer> <leader>ov :edit ' . root . '/res/values<cr>'
-    exe 'nnoremap <buffer> <leader>od :edit ' . root . '/res/values/dimens.xml<cr>'
-    exe 'nnoremap <buffer> <leader>os :edit ' . root . '/res/values/strings.xml<cr>'
-    exe 'nnoremap <buffer> <leader>ot :edit ' . root . '/res/values/styles.xml<cr>'
-    exe 'nnoremap <buffer> <leader>ol :edit ' . root . '/res/layout<cr>'
-
-endfunction
-
 if has('autocmd') && !exists('autocmds_loaded')
     let autocmds_loaded = 1
 
-    " some java stuff
-    autocmd BufEnter *.java call ConfigureJava()
-    "autocmd BufWrite *.java silent! JavaImportOrganize " import missing on save
-    
-    autocmd BufEnter *.py call ConfigurePython()
-
-    " let K call vim 'help' when in a vim file
-    autocmd FileType vim nnoremap <buffer> K :exe 'help ' .expand('<cword>')<cr>
-
-    autocmd BufWritePost *.less call CompileLess()
-
     " have some nice auto paths
     autocmd BufEnter * call SetPathToProject()
-
-    " " Use omnifunc when available, and chain back to normal
-    " if g:useYcmCompletion == 0
-    "     autocmd FileType * 
-    "         \ if &omnifunc != '' |
-    "         \   call SuperTabChain(&omnifunc, "<c-x><c-n>") |
-    "         \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
-    "         \ endif
-    " endif
-
-    augroup AndroidShortcuts
-        autocmd BufEnter *.java call ConfigureAndroidProject()
-        autocmd BufEnter *.xml call ConfigureAndroidProject()
-    augroup END
 endif
 
 function! FixLineEndingsFunc()
@@ -740,18 +424,6 @@ command! OpenTodoList call OpenTodoListFunc()
 
 nmap <leader>T :OpenTodoList<cr>
 nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
-
-" let g:EclimDisabled=0
-let g:EclimJavaImplAtCursor = 1 " my old one
-let g:EclimJavaImplInsertAtCursor = 1 
-let g:EclimJavascriptValidate = 0 
-let g:EclimCompletionMethod = 'omnifunc'
-let g:EclimBuffersDefaultAction = 'edit'
-let g:EclimLocateFileDefaultAction = 'edit'
-let g:EclimHighlightSuccess = 'IncSearch'
-
-":source /Users/dhleong/code/vim-javadocer/javadocer.vim
-" silent! source /Users/dhleong/code/njast/njast.vim
 
 " jedi configs
 let g:jedi#completions_enabled = 0
@@ -977,21 +649,6 @@ nnoremap gho :GithubOpen<cr>
 nnoremap ghi :Unite gh_issue:state=open<cr>
 " nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
-" re-install hubr for rapid development
-nnoremap <leader>rh :call ReinstallPlugin('hubr')<cr>
-
-" re-install intellivim for rapid development
-nnoremap <leader>ri :call ReinstallPlugin('IntelliVim')<cr>
-
-" re-install njast for rapid development
-nnoremap <leader>rn :call ReinstallPlugin('njast')<cr>
-
-" re-install Conque-Shell for rapid development
-nnoremap <leader>rs :call ReinstallPlugin('Conque-Shell')<cr>
-
-" re-install veryhint for rapid development
-nnoremap <leader>rv :call ReinstallPlugin('vim-veryhint')<cr>
-
 " only auto-ref issues assigned to me
 let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
 
@@ -1013,22 +670,6 @@ function! WatchAndRunFunc()
 endfunction
 command! WatchAndRun call WatchAndRunFunc()
 
-"
-" njast config (basically for testing)
-"
-let g:njast#port = 3000
-
-"
-" Convenience for Markdown editing
-"
-let g:markdown_tmp_file = $HOME . '/.tmp.markdown'
-function! MarkdownFunc()
-    silent exe "!rm " . g:markdown_tmp_file
-    silent exe "edit " . g:markdown_tmp_file
-    echo "Editing new Markdown file"
-endfunction
-command! Markdown call MarkdownFunc()
-
 " also
 let g:markdown_fenced_languages = ['coffee', 'css', 'java', 'javascript',
     \ 'js=javascript', 'json=javascript', 'clojure', 'sass', 'xml', 'html']
@@ -1046,50 +687,6 @@ function! OpenTermFunc()
 endfunction
 command! Term call OpenTermFunc()
 
-" " oblique configs; be fuzzy by default
-" nmap z/ <Plug>(Oblique-/)
-" nmap z? <Plug>(Oblique-?)
-" nmap / <Plug>(Oblique-F/)
-" nmap ? <Plug>(Oblique-F?)
-" " the oblique versions of these don't actually move
-" "  the cursor for some backward-ass reason.
-" "  map them to somewhere out of the way so the real
-" "  motions aren't clobbered
-" nmap <c-*> <Plug>(Oblique-*)
-" nmap <c-#> <Plug>(Oblique-#)
-" nmap <m-*> <Plug>(Oblique-g*)
-" nmap <m-#> <Plug>(Oblique-g#)
-
 " sneak configs
 let g:sneak#streak = 1
 
-" get unicode pairs
-function! GetUnicodePairs()
-    " copy the output of the ascii command
-    redir => raw
-        ascii
-    redir END
-
-    " strip out the hex part and parse to int
-    let match = matchlist(raw, 'Hex \(.*\),')
-    let hex = match[1]
-    let s = str2nr(hex, 16)
-
-    " source: http://www.russellcottrell.com/greek/utilities/surrogatepaircalculator.htm
-    if (s >= 0x10000 && s <= 0x10FFFF)
-        let hi = float2nr(floor((s - 0x10000) / 0x400) + 0xD800)
-        let lo = float2nr(((s - 0x10000) % 0x400) + 0xDC00)
-        let pairs = printf('\u%x\u%x', hi, lo)
-
-        " go ahead and copy it to the clipboard
-        let @* = pairs
-    else
-        let pairs = '(none)'
-    endif
-
-    " clear old output and echo new
-    redraw! 
-    echo raw[1:] . ', Pairs ' . pairs
-endfunction
-
-nnoremap ga :call GetUnicodePairs()<cr>

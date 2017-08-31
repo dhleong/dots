@@ -1,4 +1,6 @@
 
+" ======= Mappings =========================================
+
 function! GotoPluginHomepage()
     redraw!
     let line = getline('.')
@@ -15,5 +17,18 @@ function! GotoPluginHomepage()
 endfunction
 
 " goto plugin home/open
-nnoremap gph :call GotoPluginHomepage()<cr>
-nnoremap gpo :call GotoPluginHomepage()<cr>
+nnoremap <buffer> gph :call GotoPluginHomepage()<cr>
+nnoremap <buffer> gpo :call GotoPluginHomepage()<cr>
+
+" let K call vim 'help' when in a vim file
+nnoremap <buffer> K :exe 'help ' .expand('<cword>')<cr>
+
+
+" ======= Autocmds =========================================
+
+" Source automatically on write
+augroup VimAutoSource
+    autocmd!
+    autocmd BufWritePost .vimrc source %
+    autocmd BufWritePost */.vim/init/*.vim source %
+augroup END
