@@ -74,15 +74,6 @@ Plug '~/git/vim-jsgf'
 
 " ======= Text completion ==================================
 
-"" Ultisnips
-""
-Plug 'SirVer/ultisnips' | Plug '~/git/vim-cs-snippets' | Plug 'honza/vim-snippets'
-
-let g:UltiSnipsListSnippets="<C-M-Tab>"
-let g:UltiSnipsExpandTrigger="<C-Enter>"
-let g:UltiSnipsJumpForwardTrigger="<C-J>"
-let g:UltiSnipsJumpBackwardTrigger="<C-K>"
-
 
 "" YouCompleteMe
 ""
@@ -135,6 +126,18 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_always_populate_location_list = 1
 
 " let g:ycm_max_diagnostics_to_display = 50
+
+
+"" Ultisnips
+""
+" NOTE: this MUST be AFTER YouCompleteMe for... some reason.
+" If before, we get an ABRT signal :|
+Plug 'SirVer/ultisnips' | Plug '~/git/vim-cs-snippets' | Plug 'honza/vim-snippets'
+
+let g:UltiSnipsListSnippets="<C-M-Tab>"
+let g:UltiSnipsExpandTrigger="<C-Enter>"
+let g:UltiSnipsJumpForwardTrigger="<C-J>"
+let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 
 
 " ======= Text objects =====================================
