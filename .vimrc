@@ -12,14 +12,16 @@ command! -nargs=1 Source :call SourceInitFileFunc(<args>)
 " source the plug defs and settings
 Source 'plugins.vim'
 
-" ======= Global settings ==================================
-
+" now, source settings, maps, etc.
 Source 'abbr.vim'
 Source 'settings.vim'
+Source 'commands.vim'
 Source 'mappings.vim'
 
 Source 'github.vim'
 Source 'loclist.vim'
+
+" disorganized stuff:
 
 " array of paths pointing to parent directories
 "   of project directories; IE: each path here
@@ -293,54 +295,8 @@ function! SetPathToProject()
     call MapCtrlP("")
 endfunction
 
-if has('autocmd') && !exists('autocmds_loaded')
-    let autocmds_loaded = 1
-
+augroup PathToProjectCmds
     " have some nice auto paths
+    autocmd!
     autocmd BufEnter * call SetPathToProject()
-endif
-
-function! FixLineEndingsFunc()
-    update	 " Save any changes.
-    e ++ff=dos	 " Edit file again, using dos file format 
-    setlocal ff=unix	" This buffer will use LF-only line endings 
-    w
-endfunction
-
-command! FixLineEndings call FixLineEndingsFunc()
-
-function! DocToJson()
-    :%!python -mjson.tool
-    set ft=javascript
-endfunction
-command! JSON call DocToJson()
-
-
-"
-" :term stuff
-"
-let &shell = '/bin/bash -l'
-function! WatchAndRunFunc()
-    try
-        let progs = { 'javascript': 'node',
-                    \ 'python': 'python'
-                    \ }
-        let prog = progs[&ft]
-        let file = expand('%')
-        execute 'terminal when-changed -1sv ' . file . ' ' . prog . ' ' . file
-    catch
-        echo "No program known for " . &ft
-    endtry
-endfunction
-command! WatchAndRun call WatchAndRunFunc()
-
-"
-" Open a terminal in the current directory
-"
-function! OpenTermFunc()
-    silent exe "!osascript -e 'tell app \"Terminal\" to do script \"cd '" 
-                   \ .  expand('%:p:h') . "' && clear\"'"
-    silent !osascript -e 'tell app "Terminal" to activate'
-endfunction
-command! Term call OpenTermFunc()
-
+augroup END
