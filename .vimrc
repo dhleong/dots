@@ -316,11 +316,6 @@ endfunction
 command! JSON call DocToJson()
 
 
-" session configs
-let g:session_autosave = 'yes'
-let g:session_autoload = 'no'
-
-
 "
 " :term stuff
 "

@@ -274,6 +274,8 @@ let g:targets_aiAI = 'aIAi'
 " ======= Language-specific ================================
 "
 
+Plug '~/git/vim-latte'
+
 " ======= Clojure ==========================================
 
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
@@ -308,6 +310,13 @@ let g:tern_show_signature_in_pum = 1
 Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript'
 
 
+" ======= Markdown =========================================
+
+Plug 'suan/vim-instant-markdown', {'for': 'markdown',
+            \ 'do': 'sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d'}
+Plug 'tpope/vim-markdown', {'for': 'markdown'}
+
+
 " ======= Python ===========================================
 
 "" Jedi
@@ -328,24 +337,37 @@ let g:jedi#use_splits_not_buffers = "right"
 Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
 
 
-" ======= UNCATEGORIZED ====================================
-" TODO: categorize all these:
+" ======= Vim ==============================================
 
+Plug 'tpope/vim-scriptease', {'for': 'vim'}
 Plug 'junegunn/vader.vim', {'for': 'vader'}
+
+
+" ======= Utility ==========================================
+"
+
+" ooold shell plugin that I'd like to replace with :terminal stuff
 Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
             \ 'ConqueTermSplit', 'ConqueTermVSplit']}
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimproc.vim', {'do': 'make'}
-Plug 'suan/vim-instant-markdown', {'for': 'markdown',
-            \ 'do': 'sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d'}
-Plug 'tpope/vim-markdown', {'for': 'markdown'}
-Plug 'tpope/vim-scriptease', {'for': 'vim'}
-" Plug 'tpope/vim-sleuth'
-Plug 'tpope/vim-vinegar'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
 
-Plug '~/git/vim-latte'
+" UI/searching plugin. This one is basically abandonware at this point
+" Its replacement, denite, is supposed to be better, but it requires python3
+" and my MacVim doesn't seem to want to do it...
+Plug 'Shougo/unite.vim'
+
+" async stuff required by a lot of plugins
+Plug 'Shougo/vimproc.vim', {'do': 'make'}
+
+" simple session handling
+Plug 'xolox/vim-session' | Plug 'xolox/vim-misc'
+
+" session configs
+let g:session_autosave = 'yes'
+let g:session_autoload = 'no'
+
+
+" simple, lightweight file system navigation
+Plug 'tpope/vim-vinegar'
 
 
 " Footer {{{
