@@ -188,12 +188,6 @@ function! PushNewUpstream()
 endfunction
 nnoremap <leader>gu :call PushNewUpstream()<CR>
 
-" Tweaking {} motion behavior
-let g:ip_boundary = '[" *]*\s*$'
-" don't open folds when jumping over blocks
-let g:ip_skipfold = 1
-
-
 "
 " some abbreviations/typo fixes
 "
@@ -415,33 +409,9 @@ command! OpenTodoList call OpenTodoListFunc()
 nmap <leader>T :OpenTodoList<cr>
 nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 
-" tern configs
-let g:tern_show_signature_in_pum = 1
-
 " session configs
 let g:session_autosave = 'yes'
 let g:session_autoload = 'no'
-
-" airline configs
-set laststatus=2
-let g:airline#extensions#whitespace#enabled = 0
-" let g:airline#extensions#eclim#enabled = 0
-let g:airline#extensions#default#section_truncate_width = {
-  \ 'x': 88,
-  \ 'y': 88,
-  \ 'z': 45,
-  \ }
-
-" only use powerline fonts if we have it. This was moved
-"  from .gvimrc because it apparently no longer runs
-"  before airline does its config step, so was ignored
-let _fontName='Inconsolata+for+Powerline.otf'
-if has('gui_running') 
-        \ && (!empty(glob("~/Library/Fonts/" . _fontName))
-            \ || !empty(glob("~/Library/Fonts/" . substitute(_fontName, '+', ' ', 'g'))))
-    " could check more places, but....
-    let g:airline_powerline_fonts = 1
-endif
 
 
 function! FallbackJumpToNextError()
@@ -501,15 +471,6 @@ nnoremap <silent> <d-.> :call JumpToNextError()<cr>
 nmap <silent> ]c :call JumpToNextError()<cr>
 
 "
-" Commenting configs
-"
-let g:tcomment_types = {
-    \ 'java': '// %s',
-    \ 'java_inline': '/* %s */',
-    \ 'java_block': '// %s'
-    \ }
-
-"
 " Github fun
 "
 let g:gh_cmd = "/Users/dhleong/code/hubr/gh-cmd"
@@ -549,9 +510,6 @@ nnoremap gho :GithubOpen<cr>
 nnoremap ghi :Unite gh_issue:state=open<cr>
 " nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
-" only auto-ref issues assigned to me
-let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
-
 "
 " :term stuff
 "
@@ -570,13 +528,6 @@ function! WatchAndRunFunc()
 endfunction
 command! WatchAndRun call WatchAndRunFunc()
 
-" also
-let g:markdown_fenced_languages = ['coffee', 'css', 'java', 'javascript',
-    \ 'js=javascript', 'json=javascript', 'clojure', 'sass', 'xml', 'html']
-
-
-nmap <Leader>ijf <Plug>IMAP_JumpForward
-
 "
 " Open a terminal in the current directory
 "
@@ -586,7 +537,4 @@ function! OpenTermFunc()
     silent !osascript -e 'tell app "Terminal" to activate'
 endfunction
 command! Term call OpenTermFunc()
-
-" sneak configs
-let g:sneak#streak = 1
 

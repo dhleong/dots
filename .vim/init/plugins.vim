@@ -1,6 +1,8 @@
-" ======= Configs ==========================================
+" ======= Configs ========================================== {{{
 
 let g:ale_emit_conflict_warnings = 0
+
+" }}}
 
 
 " Plug auto-install and setup {{{
@@ -16,12 +18,50 @@ call plug#begin('~/.vim/bundle')
 " ======= Plugin defs and settings =========================
 "
 
-" ======= Color schemes ====================================
+" ======= Color-schemes and visual plugins ================= {{{
 
 Plug 'vim-scripts/zenburn'
 
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
-" ======= Linting ==========================================
+" airline configs {{{
+set laststatus=2
+let g:airline#extensions#whitespace#enabled = 0
+" let g:airline#extensions#eclim#enabled = 0
+let g:airline#extensions#default#section_truncate_width = {
+  \ 'x': 88,
+  \ 'y': 88,
+  \ 'z': 45,
+  \ }
+
+" only use powerline fonts if we have it. This was moved
+"  from .gvimrc because it apparently no longer runs
+"  before airline does its config step, so was ignored
+let _fontName='Inconsolata+for+Powerline.otf'
+if has('gui_running') 
+        \ && (!empty(glob("~/Library/Fonts/" . _fontName))
+            \ || !empty(glob("~/Library/Fonts/" . substitute(_fontName, '+', ' ', 'g'))))
+    " could check more places, but....
+    let g:airline_powerline_fonts = 1
+endif
+" }}}
+" }}}
+
+
+" ======= Git/Github-related =============================== {{{
+
+Plug 'tpope/vim-fugitive'
+
+Plug '~/git/hubr'
+Plug '~/git/lily'
+
+" only auto-ref issues assigned to me
+let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
+" }}}
+
+
+" ======= Linting ========================================== {{{
 
 "" ALE
 ""
@@ -37,6 +77,7 @@ let g:ale_linters = {
 ""
 Plug 'scrooloose/syntastic'
 
+" Syntastic config {{{
 " let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 let g:syntastic_cs_checkers = []
 let g:syntastic_javascript_checkers = []
@@ -50,9 +91,11 @@ let g:syntastic_quiet_messages = {
         \ 'proprietary.*onload',
         \ 'proprietary.*onreadystatechange',
     \ ]}
+" }}}
+" }}}
 
 
-" ======= Syntax plugins ===================================
+" ======= Syntax plugins =================================== {{{
 
 " use ap's fork here instead of skammer, to add stylus support
 " NB: css-color breaks if loaded on-demand
@@ -70,9 +113,10 @@ Plug 'leafgarland/typescript-vim'
 Plug 'vim-scripts/ShaderHighLight'
 Plug '~/git/vim-interspace'
 Plug '~/git/vim-jsgf'
+" }}}
 
 
-" ======= Text completion ==================================
+" ======= Text completion ================================== {{{
 
 
 "" YouCompleteMe
@@ -85,6 +129,7 @@ if !(has('nvim') || exists('g:neojet#version'))
     Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 endif
 
+" YCM Config {{{
 let g:ycm_filetype_blacklist = {
     \ 'tagbar' : 1,
     \ 'qf' : 1,
@@ -126,6 +171,7 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_always_populate_location_list = 1
 
 " let g:ycm_max_diagnostics_to_display = 50
+" }}}
 
 
 "" Ultisnips
@@ -140,7 +186,56 @@ let g:UltiSnipsJumpForwardTrigger="<C-J>"
 let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 
 
-" ======= Text objects =====================================
+" Plug 'dhleong/vim-veryhint', {'for': 'java'}
+" }}}
+
+
+" ======= Text manipulation ================================ {{{
+
+" visual-mode number incrementing
+Plug 'vim-scripts/VisIncr'
+
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+
+"" tcomment: motion-based commenting
+""
+Plug 'tomtom/tcomment_vim'
+
+let g:tcomment_types = {
+    \ 'java': '// %s',
+    \ 'java_inline': '/* %s */',
+    \ 'java_block': '// %s'
+    \ }
+" }}}
+
+
+" ======= Text navigation ================================== {{{
+
+"" ipmotion
+""
+Plug 'justinmk/vim-ipmotion'
+
+" Tweaking {} motion behavior
+let g:ip_boundary = '[" *]*\s*$'
+" don't open folds when jumping over blocks
+let g:ip_skipfold = 1
+
+"" Sneak
+Plug 'justinmk/vim-sneak'
+
+let g:sneak#streak = 1
+
+
+Plug 'vim-scripts/matchit.zip'
+Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
+
+" }}}
+
+
+" ======= Text objects ===================================== {{{
 
 " needed for custom textobjs:
 Plug 'kana/vim-textobj-user'
@@ -156,6 +251,8 @@ Plug 'wellle/targets.vim'
 " swap I and i so >iB works as expected
 let g:targets_aiAI = 'aIAi'
 
+" }}}
+
 
 " ======= Language-specific ================================
 "
@@ -169,6 +266,29 @@ Plug 'guns/vim-clojure-static', {'for': 'clojure'}
 Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
 Plug 'guns/vim-sexp', {'for': 'clojure'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
+
+
+" ======= C# ===============================================
+
+Plug 'OmniSharp/omnisharp-vim', {'for': 'cs', 'do': 'git submodule update --init --recursive && cd server && xbuild'}
+
+
+" ======= Go ===============================================
+
+Plug 'fatih/vim-go'
+
+
+" ======= Javascript/Node ==================================
+
+Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
+Plug 'moll/vim-node', {'for': 'javascript'}
+
+" tern configs
+let g:tern_show_signature_in_pum = 1
+
+
+" jsx depends on panglass/vim-javascript:
+Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript'
 
 
 " ======= Python ===========================================
@@ -194,51 +314,23 @@ Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
 " ======= UNCATEGORIZED ====================================
 " TODO: categorize all these:
 
-Plug 'vim-scripts/matchit.zip'
-Plug 'vim-scripts/VisIncr'
-
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'dhleong/vim-veryhint', {'for': 'java'}
-Plug 'fatih/vim-go'
 Plug 'junegunn/vader.vim', {'for': 'vader'}
-Plug 'justinmk/vim-ipmotion'
-Plug 'justinmk/vim-sneak'
-Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
-Plug 'moll/vim-node', {'for': 'javascript'}
-Plug 'OmniSharp/omnisharp-vim', {'for': 'cs', 'do': 'git submodule update --init --recursive && cd server && xbuild'}
 Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
             \ 'ConqueTermSplit', 'ConqueTermVSplit']}
-Plug 'osyo-manga/vim-over'
 Plug 'rizzatti/dash.vim'
 Plug 'rstacruz/sparkup', {'rtp': 'vim', 'for': 'html'}
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 Plug 'suan/vim-instant-markdown', {'for': 'markdown',
             \ 'do': 'sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d'}
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tommcdo/vim-exchange'
-Plug 'tomtom/tcomment_vim'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown', {'for': 'markdown'}
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-scriptease', {'for': 'vim'}
 " Plug 'tpope/vim-sleuth'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
-" Plug 'vimwiki/vimwiki'
-Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 
-Plug '~/git/hubr'
-" Plug '~/git/intellivim', {'rtp': 'vim'}
-Plug '~/git/lily'
 Plug '~/git/vim-latte'
-
-
-" jsx depends on panglass/vim-javascript:
-Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript'
 
 
 " Footer {{{
