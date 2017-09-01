@@ -149,3 +149,25 @@ function! GetUnicodePairs()
 endfunction
 
 nnoremap ga :call GetUnicodePairs()<cr>
+
+
+" ======= Prevent trailing whitespace ======================
+
+" Clean up trailing whitespace
+function! TryCleanWhitespace()
+
+    " minus 1 to be zero-indexed;
+    " minus another because we're in insert mode
+    let col = col('.') - 2
+    let line = getline('.')[:col]
+    let whitespace = len(matchstr(line, '\s*$'))
+    " echom line . ' -> ' . whitespace
+    if len(line) == whitespace
+        let prefix = ''
+    else
+        let prefix = repeat("\<BS>", whitespace)
+    endif
+
+    return prefix . "\<Enter>"
+endfunction
+inoremap <expr> <Enter> TryCleanWhitespace()

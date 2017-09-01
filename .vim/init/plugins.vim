@@ -318,7 +318,6 @@ Plug 'junegunn/vader.vim', {'for': 'vader'}
 Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
             \ 'ConqueTermSplit', 'ConqueTermVSplit']}
 Plug 'rizzatti/dash.vim'
-Plug 'rstacruz/sparkup', {'rtp': 'vim', 'for': 'html'}
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 Plug 'suan/vim-instant-markdown', {'for': 'markdown',

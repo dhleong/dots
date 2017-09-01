@@ -14,9 +14,12 @@ Source 'plugins.vim'
 
 " ======= Global settings ==================================
 
+Source 'abbr.vim'
 Source 'settings.vim'
 Source 'mappings.vim'
+
 Source 'github.vim'
+Source 'loclist.vim'
 
 " array of paths pointing to parent directories
 "   of project directories; IE: each path here
@@ -33,25 +36,6 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/IdeaProjects/',
     \'/Users/dhleong/unity/'
 \]
-
-" Clean up trailing whitespace
-function! TryCleanWhitespace()
-
-    " minus 1 to be zero-indexed;
-    " minus another because we're in insert mode
-    let col = col('.') - 2
-    let line = getline('.')[:col]
-    let whitespace = len(matchstr(line, '\s*$'))
-    " echom line . ' -> ' . whitespace
-    if len(line) == whitespace
-        let prefix = ''
-    else
-        let prefix = repeat("\<BS>", whitespace)
-    endif
-
-    return prefix . "\<Enter>"
-endfunction
-inoremap <expr> <Enter> TryCleanWhitespace()
 
 " TODO replace with :term
 " " While we're here, how about a vim shell? :)
@@ -156,20 +140,6 @@ let g:dash_map = {
     \ 'javascript': 'electron',
     \ 'typescript': ['typescript', 'javascript']
     \ }
-
-"
-" some abbreviations/typo fixes
-"
-
-" I do this ALL the time
-abbr ~? ~/
-iabbr CLoses Closes
-iabbr mfa Miners/minus-for-Android
-
-"
-" Sparkup/zen coding
-"
-let g:sparkupExecuteMapping = '<c-z>'
 
 "
 " unite configs
@@ -354,90 +324,10 @@ function! DocToJson()
 endfunction
 command! JSON call DocToJson()
 
-" 
-" Quick todo list using grep and quickfix
-"
-function! SetTitleAndClearAutoCmd()
-    setl statusline="Quick Todo List"
-    au! BufWinEnter quickfix
-endfunction
-
-function! OpenTodoListFunc()
-    " we just use the tasklist var for tokens
-    if !exists('g:tlTokenList')
-        let g:tlTokenList = ["FIXME", "TODO", "XXX", "STOPSHIP"]
-    endif
-
-    autocmd BufWinEnter quickfix call SetTitleAndClearAutoCmd()
-    cgetexpr system("grep -IERn '" . join(g:tlTokenList, '\|') . "' " . g:ProjectGrepPath)
-    copen
-endfunction
-
-command! OpenTodoList call OpenTodoListFunc()
-
-nmap <leader>T :OpenTodoList<cr>
-nmap <leader>tq :sign unplace *<cr> :LocationListClear<cr>
 
 " session configs
 let g:session_autosave = 'yes'
 let g:session_autoload = 'no'
-
-
-function! FallbackJumpToNextError()
-    try
-        lnext
-    catch /.*No.more.items$/
-        lfirst
-    catch /.*No.Errors$/
-        echohl WarningMsg
-        echo "No errors :)"
-        echohl None
-    catch /.*No.location.list$/
-    endtry
-endfunction
-
-function! JumpToNextError()
-
-    if &ft == "java" || &ft == "cs" || &ft == "cpp"
-        " make sure diagnostics are up-to-date
-        :YcmForceCompileAndDiagnostics 
-        redraw!
-
-        call FallbackJumpToNextError()
-        return
-    endif
-
-    if !exists("g:SyntasticLoclist")
-        return
-    endif
-
-    let loclist = g:SyntasticLoclist.current()
-    call loclist.sort()
-    let rawlist = loclist.getRaw()
-    if !len(rawlist)
-        call FallbackJumpToNextError()
-        return
-    endif
-
-    let thisLine = line('.')
-    let myIssue = {"found": 0}
-    for issue in rawlist
-        if issue.lnum > thisLine
-            let myIssue = issue
-            let myIssue.found = 1
-            break
-        endif
-    endfor
-
-    if myIssue.found == 0
-        let myIssue = rawlist[0]
-    endif
-
-    echo myIssue.text
-    exe 'norm ' . myIssue.lnum . 'G<cr>'
-endfunction
-nnoremap <silent> <d-.> :call JumpToNextError()<cr>
-nmap <silent> ]c :call JumpToNextError()<cr>
 
 
 "
