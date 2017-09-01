@@ -23,6 +23,7 @@ endif
 
 nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
+nnoremap <buffer> <leader>jr :YcmCompleter RefactorRename 
 
 nnoremap <buffer> <leader>op :exe 'find package.json'<cr>
 nnoremap <buffer> <leader>top :tabe \| exe 'find package.json'<cr>

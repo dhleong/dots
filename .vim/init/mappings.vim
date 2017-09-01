@@ -7,19 +7,18 @@ let $_MYVIMRC = resolve($MYVIMRC)
 " ======= Completion-related ===============================
 
 " use shift-tab in normal mode, or insert mode with no popup, to unindent
-" crazy redundancy required because just <C-p> goes forward, for some
-" reason (although the c-n c-p thing works as expected. weird)
-inoremap <expr><S-Tab> pumvisible()? "\<down>\<C-n>\<C-p>" : "\<c-d>"
+inoremap <expr><S-Tab> pumvisible()? "\<C-p>" : "\<c-d>"
 nnoremap <S-Tab> <<_
 nnoremap <Tab> >>_
 
-" If we have suggestions open, we want some keys
-" to accept the suggestion *and* add their key, 
-" for more fluid typing
-let acceptSuggestionKeys = ['<Space>', '.', ',', ':', ';', '(', ')', '[', ']']
-for key in acceptSuggestionKeys
-    exe 'imap <expr>' . key . ' pumvisible() ? "\<C-y>' . key . '" : "' . key . '"'
-endfor
+" This is cool but we don't auto-select the first suggestion right now:
+" " If we have suggestions open, we want some keys
+" " to accept the suggestion *and* add their key, 
+" " for more fluid typing
+" let acceptSuggestionKeys = ['<Space>', '.', ',', ':', ';', '(', ')', '[', ']']
+" for key in acceptSuggestionKeys
+"     exe 'imap <expr>' . key . ' pumvisible() ? "\<C-y>' . key . '" : "' . key . '"'
+" endfor
 
 
 " ======= Insert/Command-mode navigation ===================
