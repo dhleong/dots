@@ -190,6 +190,23 @@ let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 " }}}
 
 
+" ======= Text Documentation =============================== {{{
+
+Plug 'rizzatti/dash.vim'
+
+" Generally we can rely on language-specific stuff, but every now and
+" then it's nice to be able to quickly pop into Dash
+nnoremap <leader>K :Dash<cr>
+nnoremap gK :Dash!<cr>
+" nnoremap <C-S-k> :Dash " overrides <c-k> for some reason
+let g:dash_map = {
+    \ 'javascript': 'electron',
+    \ 'typescript': ['typescript', 'javascript']
+    \ }
+
+" }}}
+
+
 " ======= Text manipulation ================================ {{{
 
 " visual-mode number incrementing
@@ -317,7 +334,6 @@ Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
 Plug 'junegunn/vader.vim', {'for': 'vader'}
 Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
             \ 'ConqueTermSplit', 'ConqueTermVSplit']}
-Plug 'rizzatti/dash.vim'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 Plug 'suan/vim-instant-markdown', {'for': 'markdown',

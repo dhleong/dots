@@ -132,15 +132,6 @@ nmap <silent> <leader>rs :call RunCurrentInSplitTerm()<cr>
 nmap <silent> <d-r> :call RunCurrentInSplitTerm()<cr>
 
 
-" dash
-nnoremap <leader>K :Dash<cr>
-nnoremap gK :Dash!<cr>
-" nnoremap <C-S-k> :Dash " overrides <c-k> for some reason
-let g:dash_map = {
-    \ 'javascript': 'electron',
-    \ 'typescript': ['typescript', 'javascript']
-    \ }
-
 "
 " unite configs
 "
