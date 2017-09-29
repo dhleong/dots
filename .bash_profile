@@ -46,6 +46,7 @@ export HOMEBREW_GITHUB_API_TOKEN=08cec7f5967f472ededdb39dc031898a648b6155
 alias aj='ag --java'
 alias airportcycle='networksetup -setairportpower airport off; networksetup -setairportpower airport on'
 alias dots='cd ~/.dotfiles/profile'
+alias dynamodb='cd ~/dynamodb; java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar'
 alias l='ls -al'
 alias seriestracker='(cd ~/SeriesTracker-v6/; java -jar seriestracker.jar)'
 alias gits='git status'
@@ -89,7 +90,6 @@ fi
 # config for fzf (ag will ignore the right files)
 export FZF_DEFAULT_COMMAND='ag -l -g ""'
 export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
-. ~/.bashrc
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)
@@ -127,5 +127,5 @@ fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-source ~/.bashrc
 eval $(/usr/libexec/path_helper -s)
+source ~/.bashrc
