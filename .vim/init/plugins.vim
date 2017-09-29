@@ -314,6 +314,10 @@ Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript'
 
 Plug 'suan/vim-instant-markdown', {'for': 'markdown',
             \ 'do': 'sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d'}
+
+let g:instant_markdown_slow = 1
+
+
 Plug 'tpope/vim-markdown', {'for': 'markdown'}
 
 
