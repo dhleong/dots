@@ -310,6 +310,15 @@ let g:tern_show_signature_in_pum = 1
 Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript'
 
 
+" ======= LaTeX ============================================
+
+" Plug 'vim-latex/vim-latex'
+" NOTE: Haven't actually used latex in a long time, and this plugin
+"  includes some /plugin scripts which I haven't wanted or needed...
+"  But this looks like the plugin I was using, so I'll leave the
+"  reference in here for future reference.
+
+
 " ======= Markdown =========================================
 
 Plug 'suan/vim-instant-markdown', {'for': 'markdown',
