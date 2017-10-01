@@ -25,6 +25,34 @@ pip() {
     fi
 }
 
+upgradle() {
+    # Simple command to cd to the parent directory containing the
+    #  "nearest" build.gradle
+
+    start=$(pwd)
+
+    while true
+    do
+        # always go up first
+        cd ..
+
+        # is there a build.gradle?
+        if $(ls build.gradle > /dev/null 2> /dev/null)
+        then
+            # let me know where I am
+            pwd
+            break
+        fi
+
+        if [ $(pwd) = $HOME ]
+        then
+            cd $start
+            echo "Couldn't find a build.gradle file above this directory"
+            break
+        fi
+    done
+}
+
 if [ -z "$JAVA_HOME" ]
 then
     # export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
@@ -68,10 +96,8 @@ alias sloccount=cloc
 
 alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 
-alias upgradle=". ~/bin/_upgradle"
-
 # make sure this is always done
-set complete='enhance' 
+set complete='enhance'
 
 # vim input mode! Crazy!
 set -o vi 
