@@ -9,6 +9,11 @@ endfunction
 command! -nargs=1 Source :call SourceInitFileFunc(<args>)
 " }}}
 
+" space as mapleader is the most comfortable and easiest
+" to hit for me. We set it here so plugin-specific mappings
+" will use it as expected
+let mapleader = " "
+
 " source the plug defs and settings
 Source 'plugins.vim'
 

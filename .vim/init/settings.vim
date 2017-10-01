@@ -27,7 +27,7 @@ set smartcase       " but if we WANT case, use it
 colorscheme zenburn
 
 " adjust splits behaviour
-set splitright      " horizontal splits should not open on the left... 
+set splitright      " horizontal splits should not open on the left...
 set noea            " 'no equal always'--don't resize my splits!
 
 " show horrid tabs
@@ -58,7 +58,3 @@ else
     " use the manual method 
     autocmd BufEnter * silent! lcd %:p:h
 endif
-
-" space as mapleader is the most comfortable and easiest
-" to hit for me.
-let mapleader = " "
