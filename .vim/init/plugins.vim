@@ -265,9 +265,6 @@ Plug 'Julian/vim-textobj-variable-segment'
 ""
 Plug 'wellle/targets.vim'
 
-" swap I and i so >iB works as expected
-let g:targets_aiAI = 'aIAi'
-
 " }}}
 
 
