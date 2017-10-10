@@ -6,15 +6,6 @@
 " Function defs
 "
 
-if !exists('*<sid>GotoInNewTab')
-    function! s:GotoInNewTab() 
-        let c = getpos('.')
-        tabe %
-        call cursor(c[1], c[2])
-        :YcmCompleter GoTo
-    endfunction
-endif
-
 let s:path = expand("<sfile>:p:h")
 function! s:RunProject()
     silent exe 'silent !osascript ' . s:path . '/cs-run-project.applescript'
@@ -71,7 +62,7 @@ let b:did_indent = 1
 "
 " Mappings
 "
-nnoremap <buffer> <c-w>gd :call <SID>GotoInNewTab()<cr>
+nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab()<cr>
 nnoremap <buffer> gd :YcmCompleter GoTo<cr>
 " 'goto initial definition'
 nnoremap <buffer> gid :YcmCompleter GoToDefinition<cr>
