@@ -7,8 +7,8 @@
 "
 
 let s:path = expand("<sfile>:p:h")
-function! s:RunProject()
-    silent exe 'silent !osascript ' . s:path . '/cs-run-project.applescript'
+function! s:RunProject(mode)
+    silent exe 'silent !osascript ' . s:path . '/cs-' . a:mode . '-project.applescript'
     echo "Project playing!"
 endfunction
 
@@ -72,7 +72,8 @@ nnoremap <buffer> <leader>ji :OmniSharpFixUsings<cr>
 nnoremap <buffer> <leader>jr :OmniSharpRename<cr>
 nnoremap <buffer> <leader>op :call <SID>OpenProblems()<cr>
 
-nnoremap <buffer> <silent> <leader>pr :call <SID>RunProject()<cr>
+nnoremap <buffer> <silent> <leader>pb :call <SID>RunProject('build')<cr>
+nnoremap <buffer> <silent> <leader>pr :call <SID>RunProject('run')<cr>
 
 " Let the matchit plugin know what items can be matched.
 if exists("loaded_matchit")
