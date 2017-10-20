@@ -49,6 +49,15 @@ autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
 
 
+" ======= Wildignore and other filtering ===================
+
+set wildignore=.svn,.git,*.o,*.a,*.class,*.pyc
+set wildignore+=*.mo,*.la,*.so,*.obj,*.swp,*.swo
+set wildignore+=*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak
+set wildignore+=*.beam,*~,*.info
+set wildignore+=*.asset,*.meta
+
+
 " ======= Misc =============================================
 
 if exists('+autochdir')
