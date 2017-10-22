@@ -38,24 +38,29 @@ nnoremap <leader>gu :call PushNewUpstream()<CR>
 "
 let g:gh_cmd = "/Users/dhleong/code/hubr/gh-cmd"
 function! GithubAcceptFunc()
-    let ticket=expand("<cword>")
+    let ticket = expand("<cword>")
     call hubr#tag(ticket, 'accepted')
     echo "Accepted Github ticket #" . ticket
 endfunction
 command! GithubAccept call GithubAcceptFunc()
 
 function! GithubTakeFunc()
-    let ticket=expand("<cword>")
+    let ticket = expand("<cword>")
     call hubr#assign(ticket, hubr#me_login())
     echo "Took Github ticket #" . ticket
 endfunction
 command! GithubTake call GithubTakeFunc()
 
 function! GithubOpenFunc()
-    let ticket=expand("<cword>")
-    let repo=hubr#repo_name()
-    let cmd=":silent !open http://github.com/" . repo . "/issues/" . ticket
-    exe cmd
+    " first, are we on a Plug line?
+    if dhleong#OpenPlugRepo()
+        " we opened a Plug repo
+        return
+    endif
+
+    let ticket = expand("<cword>")
+    let repo = hubr#repo_name()
+    exe ":silent !open https://github.com/" . repo . "/issues/" . ticket
 endfunction
 command! GithubOpen call GithubOpenFunc()
 
