@@ -71,7 +71,7 @@ nnoremap gha :GithubAccept<cr>
 " 'take' the issue under the cursor (assign to 'me')
 nnoremap ght :GithubTake<cr>
 "
-" open the issue under the cursor 
+" open the issue under the cursor
 nnoremap gho :GithubOpen<cr>
 
 " awesome Unite plugin for issues
