@@ -6,8 +6,34 @@
 " Function defs
 "
 
+function! s:FindProjectRoot()
+    let cwd = expand("%:p:h")
+    let home = expand("~")
+    while cwd != "/" && cwd != home
+        let dir = cwd . "/ProjectSettings"
+        let glob = glob(dir, 1)
+        if glob != ''
+            return cwd
+        endif
+
+        let cwd = fnamemodify(cwd, ':h')
+    endwhile
+
+    return ""
+endfunction
+
 let s:path = expand("<sfile>:p:h")
 function! s:RunProject(mode)
+    if !system("pgrep Unity")
+        " can we start the project directly?
+        let projectRoot = <SID>FindProjectRoot()
+        if projectRoot != ''
+            echo "Starting Unity..."
+            call system("/Applications/Unity/Unity.app/Contents/MacOS/Unity -projectPath " . projectRoot . " &")
+            return
+        endif
+    endif
+
     silent exe 'silent !osascript ' . s:path . '/cs-' . a:mode . '-project.applescript'
     echo "Project playing!"
 endfunction
