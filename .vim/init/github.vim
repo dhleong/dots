@@ -64,6 +64,22 @@ function! GithubOpenFunc()
 endfunction
 command! GithubOpen call GithubOpenFunc()
 
+function! GithubOpenPR()
+    let branch = fugitive#head()
+    if branch == "master"
+        echo "Don't create a PR from master..."
+        return
+    endif
+
+    let repo = hubr#repo_name()
+    if type(repo) == type(0)
+        echo "No Github repo known"
+        return
+    endif
+
+    exe ":silent !open https://github.com/" . repo . "/compare/" . branch . "?expand=1"
+    echo "Opening PR request for " . branch . "..."
+endfunction
 
 " mark the issue number under the cursor as accept
 nnoremap gha :GithubAccept<cr>
@@ -77,3 +93,6 @@ nnoremap gho :GithubOpen<cr>
 " awesome Unite plugin for issues
 nnoremap ghi :Unite gh_issue:state=open<cr>
 " nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
+
+" open a window for creating a pull request from the current branch
+nnoremap <silent> gpr :call GithubOpenPR()<cr>
