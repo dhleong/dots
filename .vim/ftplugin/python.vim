@@ -1,4 +1,6 @@
 
+" let g:ycm_python_binary_path = '/Users/dhleong/tensorflow/bin/python3'
+
 nmap <silent> <F19> :!python %<cr>
 
 " let c-n do the regular local search

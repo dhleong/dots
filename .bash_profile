@@ -13,6 +13,7 @@ PATH=$PATH:$NDK
 PATH=$PATH:/usr/local/mysql/bin
 PATH=$PATH:/lib/gradle/bin
 PATH=$PATH:~/code/depot_tools
+PATH=$PATH:~/code/flutter/bin
 PATH=$PATH:~/.dotfiles/bin
 
 pip() {
@@ -89,6 +90,7 @@ alias www='python -m SimpleHTTPServer'
 alias thundercats='./gradlew'
 alias autobots='./gradlew --offline'
 alias rollout='~/git/autobots/rollout'
+alias tensorflow='source ~/tensorflow/bin/activate'
 
 alias antgo='ant debug install && sh run.sh'
 alias adbrestart='adb kill-server && adb start-server && adb devices'
