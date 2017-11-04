@@ -25,6 +25,7 @@ Source 'mappings.vim'
 
 Source 'github.vim'
 Source 'loclist.vim'
+Source 'terminal.vim'
 
 " disorganized stuff:
 
@@ -43,101 +44,6 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/IdeaProjects/',
     \'/Users/dhleong/unity/'
 \]
-
-" TODO replace with :term
-" " While we're here, how about a vim shell? :)
-" let g:ConqueTerm_CloseOnEnd = 1 " close the tab/split when the shell exits
-" let g:ConqueTerm_StartMessages = 0 " shhh. it's fine
-" nmap <silent> <leader>vs :ConqueTermVSplit bash -l<cr>
-" nmap <silent> <leader>hs :ConqueTermSplit bash -l<cr>
-" nmap <silent> <leader>tvs :ConqueTermTab bash -l<cr>
-
-function! RunCurrentInSplitTerm()
-
-    " TODO can we replace this with :terminal ?
-    call plug#load("Conque-Shell")
-
-    let fileName = expand('%')
-    let fullPath = expand('%:p:h')
-    let winSize = 0.3
-    let winSize = winSize * winheight('$')
-    let winSize = float2nr(winSize)
-    let mainWin = winnr()
-
-    " make sure we're up to date
-    write
-
-    let found = 0
-    let existing = {}
-    if exists("g:ConqueTerm_Terminals")
-        for [idx, term] in items(g:ConqueTerm_Terminals)
-            if !has_key(term, 'bufname')
-                continue
-            endif
-
-            let winnr = bufwinnr(term.bufname)
-            if winnr != -1 && term.active != 0
-                " update it, if it's changed
-                if winnr != term.winnr
-                    let term.winnr = winnr
-                endif
-
-                let existing = term
-                let found = 1
-            endif
-        endfor
-    endif
-
-    " do we already have a term?
-    if !found
-        " nope... set it up
-
-        " make sure it's executable
-        silent !chmod +x %
-
-        " TODO Apparently, winnrs can change (ex: when we
-        "   open git-commit). Somehow we need to handle that...
-        let mainBuf = bufnr('%')
-        let term = conque_term#open('bash', ['below split', 
-            \ 'resize ' .  winSize])
-        let term.winnr = winnr()
-        let term.winSize = winSize
-        let term.bufname = bufname(bufnr('%')) " seems to not match buffer_name
-        let b:mainBuf = mainBuf
-        let b:fullPath = fullPath
-        let b:fileName = fileName
-
-        " NB Can't seem to unset the variable correctly,
-        "  so we just check the active status
-
-        exe 'inoremap <buffer> <d-r> <up><cr>'
-        exe 'nnoremap <buffer> <d-r> i<up><cr>'
-        exe 'inoremap <buffer> <c-l> <esc><c-w><c-l>'
-    else
-        " yes! reuse it
-        let term = existing
-
-        exe term.winnr . 'wincmd w'
-        :startinsert
-        exe 'resize ' . term.winSize
-    endif
-
-    " We're not really planning to do much real input 
-    "  in this window, so let's take over the super-easy
-    "  Tab to quickly jump back to our main window
-    " Do this always, in case winnrs have changed
-    exe 'inoremap <buffer> <Tab> <esc>:' . mainWin . 'wincmd w<cr>'
-
-    exe 'inoremap <buffer> <c-b> <esc><c-b>'
-
-    " always cd, just in case
-    call term.writeln("cd " . fullPath)
-    call term.writeln("clear")
-    call term.writeln("./" . fileName)
-endfunction
-nmap <silent> <leader>rs :call RunCurrentInSplitTerm()<cr>
-nmap <silent> <d-r> :call RunCurrentInSplitTerm()<cr>
-
 
 "
 " unite configs

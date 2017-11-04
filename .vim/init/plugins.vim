@@ -137,7 +137,6 @@ let g:ycm_filetype_blacklist = {
     \ 'unite' : 1,
     \ 'vimwiki' : 1,
     \ 'pandoc' : 1,
-    \ 'conque_term' : 1,
     \}
 
 let g:ycm_filter_diagnostics = {
@@ -355,10 +354,6 @@ Plug 'junegunn/vader.vim', {'for': 'vader'}
 
 " ======= Utility ==========================================
 "
-
-" ooold shell plugin that I'd like to replace with :terminal stuff
-Plug 'oplatek/Conque-Shell', {'on': ['RunCurrentInSplitTerm', 'ConqueTermTab',
-            \ 'ConqueTermSplit', 'ConqueTermVSplit']}
 
 " UI/searching plugin. This one is basically abandonware at this point
 " Its replacement, denite, is supposed to be better, but it requires python3
