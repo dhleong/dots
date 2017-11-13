@@ -51,6 +51,7 @@ nmap <silent> <leader>tev :tabe $_MYVIMRC<cr>
 
 " And the bundles dir, as well ('v'im 'b'undles)
 nmap <silent> <expr> <leader>vb ":e " . resolve("~/.vim/bundle/") . "<cr>"
+nmap <silent> <expr> <leader>vp ":e " . resolve("~/.vim/init/plugins.vim") . "<cr>"
 
 " Edit the filetype file of the current file in a new tap
 nnoremap <silent> <expr> <leader>eft ":tabe " . resolve(join([$HOME, "/.vim/ftplugin/", &filetype, ".vim"], "")) . "<cr>"
