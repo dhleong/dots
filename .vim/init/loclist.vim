@@ -1,6 +1,12 @@
 
 " ======= Better loclist/error navigation ==================
 
+" all types that should fallback to standard loclist navigation
+" and which rely on YCM's diagnostics instead of ALE
+let s:YcmJumpingTypes = [
+    \ 'java', 'cs', 'cpp',
+    \ ]
+
 function! FallbackJumpToNextError()
     try
         lnext
@@ -15,8 +21,7 @@ function! FallbackJumpToNextError()
 endfunction
 
 function! JumpToNextError()
-
-    if &ft == "java" || &ft == "cs" || &ft == "cpp"
+    if index(s:YcmJumpingTypes, &ft) != -1
         " make sure diagnostics are up-to-date
         :YcmForceCompileAndDiagnostics 
         redraw!
@@ -25,35 +30,21 @@ function! JumpToNextError()
         return
     endif
 
-    if !exists("g:SyntasticLoclist")
-        return
-    endif
+    " imported from the source of ALENext so we
+    "  can add some helpful messages
+    let l:nearest = ale#loclist_jumping#FindNearest('after', 1)
+    if !empty(l:nearest)
+        call cursor(l:nearest)
 
-    let loclist = g:SyntasticLoclist.current()
-    call loclist.sort()
-    let rawlist = loclist.getRaw()
-    if !len(rawlist)
-        call FallbackJumpToNextError()
-        return
-    endif
-
-    let thisLine = line('.')
-    let myIssue = {"found": 0}
-    for issue in rawlist
-        if issue.lnum > thisLine
-            let myIssue = issue
-            let myIssue.found = 1
-            break
+        if l:nearest[0] == line('.')
+            echo "This is the only error!"
         endif
-    endfor
-
-    if myIssue.found == 0
-        let myIssue = rawlist[0]
+    else
+        echohl WarningMsg
+        echo "No errors :)"
+        echohl None
     endif
-
-    echo myIssue.text
-    exe 'norm ' . myIssue.lnum . 'G<cr>'
 endfunction
-nnoremap <silent> <d-.> :call JumpToNextError()<cr>
-nmap <silent> ]c :call JumpToNextError()<cr>
+
+nnoremap <silent> ]c :call JumpToNextError()<cr>
 

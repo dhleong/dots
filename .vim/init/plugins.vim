@@ -65,34 +65,34 @@ let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
 
 "" ALE
 ""
-Plug 'w0rp/ale', {'for': ['javascript', 'typescript']}
+Plug 'w0rp/ale'
 
 let g:ale_linters = {
     \   'javascript': ['eslint'],
     \   'typescript': ['tslint'],
     \}
 
-"" Syntastic
-"" TODO: probably, remove in favor of ALE
-""
-Plug 'scrooloose/syntastic'
+" "" Syntastic
+" "" TODO: probably, remove in favor of ALE
+" ""
+" Plug 'scrooloose/syntastic'
 
-" Syntastic config {{{
-" let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
-let g:syntastic_cs_checkers = []
-let g:syntastic_javascript_checkers = []
-let g:syntastic_javascript_eslint_exec = '~/.npm-packages/bin/eslint'
-let g:syntastic_javascript_jshint_exec = '~/.npm-packages/bin/jshint'
-let g:syntastic_java_checkers = []
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_quiet_messages = {
-    \ "regex": [
-        \ 'proprietary.*async',
-        \ 'proprietary.*onload',
-        \ 'proprietary.*onreadystatechange',
-    \ ]}
-" }}}
-" }}}
+" " Syntastic config {{{
+" " let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
+" let g:syntastic_cs_checkers = []
+" let g:syntastic_javascript_checkers = []
+" let g:syntastic_javascript_eslint_exec = '~/.npm-packages/bin/eslint'
+" let g:syntastic_javascript_jshint_exec = '~/.npm-packages/bin/jshint'
+" let g:syntastic_java_checkers = []
+" let g:syntastic_python_checkers = ['flake8']
+" let g:syntastic_quiet_messages = {
+"     \ "regex": [
+"         \ 'proprietary.*async',
+"         \ 'proprietary.*onload',
+"         \ 'proprietary.*onreadystatechange',
+"     \ ]}
+" " }}}
+" " }}}
 
 
 " ======= Syntax plugins =================================== {{{
