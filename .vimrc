@@ -3,8 +3,8 @@ set nocompatible
 
 " `Source` command def {{{
 function! SourceInitFileFunc(path)
-    let path = resolve(expand('~/.vim/init/' . a:path))
-    exec "source " . path
+    let l:path = resolve(expand('~/.vim/init/' . a:path))
+    exec 'source ' . l:path
 endfunction
 command! -nargs=1 Source :call SourceInitFileFunc(<args>)
 " }}}
@@ -51,26 +51,26 @@ let g:ProjectParentPaths = [
 
 " we don't want results from these dirs (inserted below)
 " let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,app/components", ",", "\/\\\\|", "g") 
-let _dirs = map([
-            \ "node_modules", "build", "proguard", "out",
-            \ "app/js/p", "app/components", "target", "builds",
-            \ ], 'v:val . "\/**"')
-let b:dirs = _dirs
+let s:_dirs = map([
+            \ 'node_modules', 'build', 'proguard', 'out',
+            \ 'app/js/p', 'app/components', 'target', 'builds',
+            \ ], "v:val . '\/**'")
+let b:dirs = s:_dirs
 
 " borrow ignore extensions from wildignore setting
-let _wilds = substitute(&wildignore, "[~.*]", "", "g") " remove unneeded
-let _wilds = substitute(_wilds, ",", "\\\\|", "g") " replace , with \|
-" let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . _dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
-let _wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|\.\%(' . _wilds . '\)$' " borrowed from default
-call unite#custom#source('file_rec/async', 'ignore_pattern', _wilds)
-call unite#custom#source('file_rec/async', 'ignore_globs', _dirs)
-call unite#custom#source('grep', 'ignore_pattern', _wilds)
-call unite#custom#source('grep', 'ignore_globs', _dirs)
-call unite#custom#source('file_rec/async', 'matchers', 
+let s:_wilds = substitute(&wildignore, '[~.*]', '', 'g') " remove unneeded
+let s:_wilds = substitute(s:_wilds, ',', '\\\\|', 'g') " replace , with \|
+" let s:_wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . s:_dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
+let s:_wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|\.\%(' . s:_wilds . '\)$' " borrowed from default
+call unite#custom#source('file_rec/async', 'ignore_pattern', s:_wilds)
+call unite#custom#source('file_rec/async', 'ignore_globs', s:_dirs)
+call unite#custom#source('grep', 'ignore_pattern', s:_wilds)
+call unite#custom#source('grep', 'ignore_globs', s:_dirs)
+call unite#custom#source('file_rec/async', 'matchers',
     \ ['converter_tail', 'matcher_fuzzy'])
-call unite#custom#source('file_rec/async', 'converters', 
+call unite#custom#source('file_rec/async', 'converters',
     \ ['converter_file_directory'])
-call unite#custom#source('file_rec/async', 'sorters', 
+call unite#custom#source('file_rec/async', 'sorters',
     \ ['sorter_rank'])
 
 " use ag for rec/async
@@ -79,11 +79,11 @@ let g:unite_source_rec_async_command =
             \  '--hidden', '-g', '']
 
 function! GrepWord(path)
-    let path = a:path
-    if path == ''
-        let path = '.'
+    let l:path = a:path
+    if l:path == ''
+        let l:path = '.'
     endif
-    exe 'Unite grep:' . path . ':-iR:' .
+    exe 'Unite grep:' . l:path . ':-iR:' .
                 \ expand('<cword>') . ' -auto-preview'
 endfunction
 

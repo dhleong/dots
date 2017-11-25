@@ -44,9 +44,12 @@ set vb              " visual bell
 
 set updatetime=900
 
-" use cursorline, but only for current window
-autocmd WinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
+augroup CurrentWindowCursorLine
+    " use cursorline, but only for current window
+    autocmd!
+    autocmd WinEnter * setlocal cursorline
+    autocmd WinLeave * setlocal nocursorline
+augroup END
 
 
 " ======= Wildignore and other filtering ===================
@@ -60,10 +63,22 @@ set wildignore+=*.asset,*.meta
 
 " ======= Misc =============================================
 
-if exists('+autochdir')
-    " use the builtin if we have it
-    set autochdir
-else
-    " use the manual method 
+" if exists('+autochdir')
+"     " use the builtin if we have it
+"     set autochdir
+" else
+"     " use the manual method
+"     autocmd BufEnter * silent! lcd %:p:h
+" endif
+
+" for some reason, the autochdir option causes wacky behavior
+"  with netrw, with this repro:
+"   - open a file
+"   - :vsp
+"   - go up a dir via - and vinegar until you can open another dir
+"   - when you open another subdir, netrw will fill the whole tabpage,
+"       and the original buffer's contents will be overwritten
+augroup AutoChdir
+    autocmd!
     autocmd BufEnter * silent! lcd %:p:h
-endif
+augroup END

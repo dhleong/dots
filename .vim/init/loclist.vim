@@ -4,7 +4,7 @@
 " all types that should fallback to standard loclist navigation
 " and which rely on YCM's diagnostics instead of ALE
 let s:YcmJumpingTypes = [
-    \ 'java', 'cs', 'cpp',
+    \ 'cs', 'cpp',
     \ ]
 
 function! FallbackJumpToNextError()
