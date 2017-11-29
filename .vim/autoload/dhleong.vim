@@ -2,38 +2,44 @@
 "
 
 function! dhleong#GotoInNewTab(...)
-    let method = "GoTo"
+    let l:method = 'GoTo'
     if a:0
-        let method = a:1
+        let l:method = a:1
     endif
 
-    let c = getpos('.')
+    if a:0 > 1
+        let l:cmd = a:2
+    else
+        let l:cmd = ':YcmCompleter ' . l:method
+    endif
+
+    let l:c = getpos('.')
     tabe %
-    call cursor(c[1], c[2])
-    exe ':YcmCompleter ' . method
+    call cursor(l:c[1], l:c[2])
+    exe l:cmd
 endfunction
 
 function! dhleong#OpenPlugRepo()
-    let regex = 'Plug ''\(.\{-\}\)'''
-    let line = getline('.')
-    let column = col('.')
-    let start = 0
+    let l:regex = 'Plug ''\(.\{-\}\)'''
+    let l:line = getline('.')
+    let l:column = col('.')
+    let l:start = 0
     while 1
-        let matchIdx = match(line, regex, start)
-        if matchIdx == -1
+        let l:matchIdx = match(l:line, l:regex, l:start)
+        if l:matchIdx == -1
             return 0
         endif
 
-        let matches = matchlist(line, regex, matchIdx)
-        if !len(matches)
+        let l:matches = matchlist(l:line, l:regex, l:matchIdx)
+        if !len(l:matches)
             break
         endif
 
-        let start = start + matchIdx + len(matches[0])
-        if column <= start
-            let repo = matches[1]
-            echo "Opening " . repo . "..."
-            exe "silent !open https://github.com/" . repo
+        let l:start = l:start + l:matchIdx + len(l:matches[0])
+        if l:column <= l:start
+            let l:repo = l:matches[1]
+            echo 'Opening ' . l:repo . '...'
+            exe 'silent !open https://github.com/' . l:repo
             return 1
         endif
     endwhile

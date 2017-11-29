@@ -102,17 +102,23 @@ alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 set complete='enhance'
 
 # vim input mode! Crazy!
-set -o vi 
+set -o vi
 
 # enable bash_completion (brew install bash-completion)
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
 fi
 
 # git completion; use the following to add the file:
 # curl https://raw.github.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
+fi
+
+# gcloud init
+if [ -f ~/code/google-cloud-sdk/path.bash.inc ]; then
+    . ~/code/google-cloud-sdk/path.bash.inc
+    . ~/code/google-cloud-sdk/completion.bash.inc
 fi
 
 # config for fzf (ag will ignore the right files)
