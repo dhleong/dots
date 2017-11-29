@@ -37,4 +37,6 @@ augroup VimAutoSource
     autocmd BufWritePost .vimrc source %
     autocmd BufWritePost */.vim/init/*.vim source %
     autocmd BufWinEnter <buffer> normal zM
+    autocmd BufWinEnter .vimrc let b:ale_enabled = 0
+    autocmd BufWinEnter */.vim/**.vim let b:ale_enabled = 0
 augroup END
