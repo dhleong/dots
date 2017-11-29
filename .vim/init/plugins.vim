@@ -68,6 +68,7 @@ let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
 Plug 'w0rp/ale'
 
 let g:ale_linters = {
+    \   'go': ['go build', 'gofmt', 'golint', 'go vet'],
     \   'java': [],
     \   'javascript': ['eslint'],
     \   'typescript': ['tslint'],

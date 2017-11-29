@@ -16,6 +16,10 @@ PATH=$PATH:~/code/depot_tools
 PATH=$PATH:~/code/flutter/bin
 PATH=$PATH:~/.dotfiles/bin
 
+export GOPATH=$HOME/code/go
+export GOBIN=$GOPATH/bin
+PATH=$PATH:$GOBIN
+
 pip() {
     if [ "$1" = "install" -o "$1" = "bundle" ]; then
         cmd="$1"
@@ -66,8 +70,7 @@ fi
 export ANDROID_HOME=/lib/android-sdk
 export ANDROID_NDK=$NDK
 export PROGUARD_HOME=$ANDROID_HOME/tools/proguard
-export GOPATH=$HOME/code/go
-export GOBIN=$GOPATH/bin
+
 # export LEIN_JAVA_CMD=/usr/local/bin/drip
 
 export HOMEBREW_GITHUB_API_TOKEN=08cec7f5967f472ededdb39dc031898a648b6155
