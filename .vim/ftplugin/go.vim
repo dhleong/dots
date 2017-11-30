@@ -4,3 +4,5 @@ setlocal listchars=tab:\ \ ,trail:·
 
 nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab('', ':GoDef')<cr>
 nnoremap <buffer> <leader>pb :GoBuild<cr>
+
+nnoremap <buffer> <leader>ji :GoImports<cr>
