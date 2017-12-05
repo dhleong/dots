@@ -7,7 +7,7 @@ let s:YcmJumpingTypes = [
     \ 'cs', 'cpp',
     \ ]
 
-function! FallbackJumpToNextError()
+function! s:FallbackJumpToNextError()
     try
         lnext
     catch /.*No.more.items$/
@@ -20,13 +20,13 @@ function! FallbackJumpToNextError()
     endtry
 endfunction
 
-function! JumpToNextError()
+function! s:JumpToNextError()
     if index(s:YcmJumpingTypes, &ft) != -1
         " make sure diagnostics are up-to-date
-        :YcmForceCompileAndDiagnostics 
+        :YcmForceCompileAndDiagnostics
         redraw!
 
-        call FallbackJumpToNextError()
+        call s:FallbackJumpToNextError()
         return
     endif
 
@@ -39,6 +39,8 @@ function! JumpToNextError()
         if l:nearest[0] == line('.')
             echo "This is the only error!"
         endif
+    elseif len(getloclist(0)) > 0
+        call s:FallbackJumpToNextError()
     else
         echohl WarningMsg
         echo "No errors :)"
@@ -46,5 +48,5 @@ function! JumpToNextError()
     endif
 endfunction
 
-nnoremap <silent> ]c :call JumpToNextError()<cr>
+nnoremap <silent> ]c :call <SID>JumpToNextError()<cr>
 
