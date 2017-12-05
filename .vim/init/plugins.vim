@@ -69,6 +69,7 @@ Plug 'w0rp/ale'
 
 let g:ale_linters = {
     \   'go': ['go build', 'gofmt', 'golint', 'go vet'],
+    \   'html': ['htmlhint'],
     \   'java': [],
     \   'javascript': ['eslint'],
     \   'typescript': ['tslint'],
@@ -79,29 +80,10 @@ let g:ale_fixers = {
   \   'typescript': ['tslint'],
   \}
 
+" mappings:
 nnoremap <a-cr> :ALEFix<cr>
 
-" "" Syntastic
-" "" TODO: probably, remove in favor of ALE
-" ""
-" Plug 'scrooloose/syntastic'
-
-" " Syntastic config {{{
-" " let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
-" let g:syntastic_cs_checkers = []
-" let g:syntastic_javascript_checkers = []
-" let g:syntastic_javascript_eslint_exec = '~/.npm-packages/bin/eslint'
-" let g:syntastic_javascript_jshint_exec = '~/.npm-packages/bin/jshint'
-" let g:syntastic_java_checkers = []
-" let g:syntastic_python_checkers = ['flake8']
-" let g:syntastic_quiet_messages = {
-"     \ "regex": [
-"         \ 'proprietary.*async',
-"         \ 'proprietary.*onload',
-"         \ 'proprietary.*onreadystatechange',
-"     \ ]}
-" " }}}
-" " }}}
+" }}}
 
 
 " ======= Syntax plugins =================================== {{{
