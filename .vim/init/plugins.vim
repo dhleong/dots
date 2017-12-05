@@ -74,6 +74,13 @@ let g:ale_linters = {
     \   'typescript': ['tslint'],
     \}
 
+let g:ale_fixers = {
+  \   'javascript': ['eslint'],
+  \   'typescript': ['tslint'],
+  \}
+
+nnoremap <a-cr> :ALEFix<cr>
+
 " "" Syntastic
 " "" TODO: probably, remove in favor of ALE
 " ""
@@ -112,6 +119,7 @@ Plug 'keith/swift.vim'
 Plug 'tfnico/vim-gradle'
 Plug 'wavded/vim-stylus'
 Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
 Plug 'vim-scripts/ShaderHighLight'
 Plug '~/git/vim-interspace'
 Plug '~/git/vim-jsgf'

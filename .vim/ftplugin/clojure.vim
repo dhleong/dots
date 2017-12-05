@@ -36,17 +36,36 @@ function! RunBufferTests()
 endfunction
 
 function! GuessRoot()
+    if expand('%:t') == 'project.clj'
+        return expand('%:p:h')
+    endif
     return fnamemodify(exists('b:java_root') ? b:java_root : fnamemodify(expand('%'), ':p:s?.*\zs[\/]\(src\|test\)[\/].*??'), ':~')
 endfunction
 
 function! GuessPort()
-    let path = GuessRoot() . "/.nrepl-port"
-    if filereadable(expand(path))
-        return system("cat " . path)
-    else
-        echo path
-        return "7888"
+    let l:root = GuessRoot()
+    let l:path = l:root . "/.nrepl-port"
+    if filereadable(expand(l:path))
+        return system("cat " . l:path)
     endif
+
+    if expand('%:e') == 'cljs'
+        " for clojurescript sources, we might be trying to connect
+        "  to a figwheel port
+        let l:path = l:root . "/project.clj"
+        if filereadable(expand(l:path))
+            let l:raw = system("cat " . l:path . " | ag :nrepl-port")
+            if len(l:raw)
+                let l:match = matchlist(l:raw, '.*:nrepl-port \([0-9]*\)')
+                if len(l:match) > 1
+                    return l:match[1]
+                endif
+            endif
+        endif
+    endif
+
+    " last ditch
+    return "7888"
 endfunction
 
 augroup ClojureGroup
@@ -340,8 +359,9 @@ def restart_repl():
 
 EOF
 
-function! LeinReplConnectFunc()
-    exe "Connect nrepl://localhost:" . GuessPort()
+function! LeinReplConnectFunc(...)
+    let l:port = a:0 ? a:1 : GuessPort()
+    exe "Connect nrepl://localhost:" . l:port
     if "cljs" == expand("%:e")
         exe "Piggieback (figwheel-sidecar.repl-api/repl-env)"
     endif
@@ -358,7 +378,7 @@ function! LeinReplConnectFunc()
 endfunction
 
 command! LeinRepl py open_repl()
-command! ConnectRepl call LeinReplConnectFunc()
+command! -nargs=? ConnectRepl call LeinReplConnectFunc(<args>)
 
 function! LeinReplCloseFunc()
     py close_all_repl()

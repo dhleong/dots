@@ -9,6 +9,8 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR><c-w>=
 nnoremap <leader>gb :Gblame<CR>
 
+nnoremap <leader>gk :term git push heroku<cr>
+
 function! WriteAndPush()
     if expand('%') == "COMMIT_EDITMSG" || expand('%:h') == "COMMIT_EDITMSG"
         :Gwrite

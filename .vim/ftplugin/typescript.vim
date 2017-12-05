@@ -32,7 +32,7 @@ nnoremap <buffer> <leader>top :tabe \| exe 'find package.json'<cr>
 " 'new test'
 nnoremap <buffer> <leader>nt :call CreateTypescriptTestFile()<cr>
 " 'open test'
-nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), 
+nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'),
             \ "." . expand('%:e') . "$", "-test." . expand('%:e'), "")<cr>
 
 if expand('%') =~# '-test.ts$'
@@ -42,4 +42,7 @@ if expand('%') =~# '-test.ts$'
     augroup END
 endif
 
-
+if expand('%:e') ==# 'tsx'
+    " two-space tabs in tsx files, since we're embedding html
+    setlocal tabstop=2 shiftwidth=2
+endif
