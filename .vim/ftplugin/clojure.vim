@@ -56,7 +56,7 @@ function! GuessPort()
         if filereadable(expand(l:path))
             let l:raw = system("cat " . l:path . " | ag :nrepl-port")
             if len(l:raw)
-                let l:match = matchlist(l:raw, '.*:nrepl-port \([0-9]*\)')
+                let l:match = matchlist(l:raw, '.\{-}:nrepl-port \([0-9]\+\)')
                 if len(l:match) > 1
                     return l:match[1]
                 endif
@@ -70,7 +70,7 @@ endfunction
 
 augroup ClojureGroup
     autocmd!
-    autocmd BufWritePost *.clj call DoReload()
+    autocmd BufWritePost *.clj,*.cljc call DoReload()
 augroup END
 
 " if guard to protect against E127
