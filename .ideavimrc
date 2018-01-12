@@ -19,6 +19,9 @@ nnoremap <C-H> <C-W>h
 
 nnoremap <tab> >>
 
+" from the Dash plugin
+nnoremap <space>K :action SmartSearchAction<cr>
+
 nnoremap gid :action GotoImplementation<cr>
 nnoremap gpr :action ChooseRunConfiguration<cr>
 
