@@ -76,9 +76,16 @@ let g:ale_linters = {
     \}
 
 let g:ale_fixers = {
-  \   'javascript': ['eslint'],
-  \   'typescript': ['tslint'],
-  \}
+    \   'javascript': ['eslint'],
+    \   'typescript': ['tslint'],
+    \}
+
+let g:ale_pattern_options = {
+    \   '-test\.js$': {
+    \       'ale_set_loclist': 0,
+    \       'ale_enabled': 0,
+    \   },
+    \}
 
 " mappings:
 nnoremap <a-cr> :ALEFix<cr>
@@ -103,6 +110,7 @@ Plug 'wavded/vim-stylus'
 Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
 Plug 'vim-scripts/ShaderHighLight'
+Plug 'zchee/vim-flatbuffers'
 Plug '~/git/vim-interspace'
 Plug '~/git/vim-jsgf'
 " }}}
@@ -332,6 +340,9 @@ let g:jedi#goto_definitions_command = "gd"
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_splits_not_buffers = "right"
 
+"" Indenting
+
+Plug 'Vimjas/vim-python-pep8-indent'
 
 " ======= Typescript =======================================
 
