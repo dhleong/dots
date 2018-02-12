@@ -60,7 +60,8 @@ nnoremap <silent> <expr> <leader>eft ":tabe " . resolve(join([$HOME, "/.vim/ftpl
 nnoremap <silent> <expr> <leader>eb ":e " . resolve("~/.bash_profile") . "<cr>"
 nnoremap <silent> <expr> <leader>teb ":tabe " . resolve("~/.bash_profile") . "<cr>"
 nnoremap <silent> <expr> <leader>ep ":e " . resolve("~/.bash_profile") . "<cr>"
-nnoremap <silent> <expr> <leader>tep ":tabe " . resolve("~/.bash_profile") . "<cr>"
+nnoremap <silent> <expr> <leader>tez ":tabe " . resolve("~/.zshrc") . "<cr>"
+nnoremap <silent> <expr> <leader>ez ":e " . resolve("~/.zshrc") . "<cr>"
 
 
 " ======= Tab/Window manipulation ==========================

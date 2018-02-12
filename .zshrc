@@ -1,5 +1,28 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$PATH:/lib/android-sdk
+export PATH=$PATH:/lib/android-sdk/platform-tools
+export PATH=$PATH:/lib/android-sdk/tools
+export PATH=$PATH:/usr/local/git/bin
+export PATH=~/bin:$PATH
+export NDK=/lib/android-ndk
+export PATH=$PATH:$NDK
+
+export PATH=$PATH:/usr/local/mysql/bin
+export PATH=$PATH:/lib/gradle/bin
+export PATH=$PATH:~/code/depot_tools
+export PATH=$PATH:~/code/flutter/bin
+export PATH=$PATH:~/.dotfiles/bin
+
+export GOPATH=$HOME/code/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN
+
+export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export NPM_PACKAGES=${HOME}/.npm-packages
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="$NPM_PACKAGES/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/dhleong/.oh-my-zsh
@@ -53,18 +76,18 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-#
-# aliases
-#
+
+# ======= Aliases ==========================================
+
 alias dots='cd ~/.dotfiles/profile'
 alias gitco='git commit -a'
 alias gits='git status'
 alias guts='git status'
 alias gradle='./gradlew'
 
-#
-# vim stuff
-#
+
+# ======= Vim config =======================================
+
 bindkey -v
 
 # faster <esc> key
@@ -89,15 +112,13 @@ for m in visual viopp; do
     done
 done
 
-#
-# extra mappings
-#
+
+# ======= Extra mappings ===================================
 
 # ctrl-r starts searching history backward
 bindkey '^r' history-incremental-search-backward
 
-#
-# extra plugins
-#
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
 
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey -M vicmd V edit-command-line
