@@ -113,6 +113,14 @@ for m in visual viopp; do
 done
 
 
+# ======= Custom widgets ===================================
+
+_up-directory() {
+    cd ..
+    zle reset-prompt
+}
+zle -N _up-directory
+
 # ======= Extra mappings ===================================
 
 # ctrl-r starts searching history backward
@@ -120,5 +128,8 @@ bindkey '^r' history-incremental-search-backward
 
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
+
+# vinegar-like up directory
+bindkey -M vicmd '\-' _up-directory
 
 bindkey -M vicmd V edit-command-line
