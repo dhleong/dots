@@ -61,6 +61,14 @@ set wildignore+=*.beam,*~,*.info
 set wildignore+=*.asset,*.meta
 
 
+" ======= Improve syntax performance on huge files =========
+
+augroup DisableSyntaxSyncOnLargeFiles
+    autocmd!
+    autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syn sync clear | endif
+augroup END
+
+
 " ======= Misc =============================================
 
 " if exists('+autochdir')
