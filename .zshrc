@@ -66,6 +66,7 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+
 # ======= Settings =========================================
 
 PROJECT_DIRS=(
@@ -147,6 +148,12 @@ _fzf-find-project-dir() {
 }
 zle -N _fzf-find-project-dir
 
+_git-push() {
+    BUFFER="git push"
+    zle accept-line
+}
+zle -N _git-push
+
 # ======= Extra mappings ===================================
 
 # ctrl-r starts searching history backward
@@ -160,5 +167,7 @@ bindkey '^p' _fzf-find-project-dir
 
 # vinegar-like up directory
 bindkey -M vicmd '\-' _up-directory
+
+bindkey -M vicmd 'gp' _git-push
 
 bindkey -M vicmd V edit-command-line
