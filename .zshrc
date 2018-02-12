@@ -66,15 +66,13 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# ======= Settings =========================================
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+PROJECT_DIRS=(
+    ~/git
+    ~/code
+    ~/code/go/src/github.com/interspace
+)
 
 
 # ======= Aliases ==========================================
@@ -121,6 +119,34 @@ _up-directory() {
 }
 zle -N _up-directory
 
+_fzf-find-file() {
+    setopt localoptions pipefail 2> /dev/null
+
+    file=$(fzf)
+    if [ -n "$file" ]
+    then
+        mvim $file
+    fi
+}
+zle -N _fzf-find-file
+
+_fzf-find-project-dir() {
+    setopt localoptions pipefail 2> /dev/null
+
+    # list subdirs from all project dirs
+    wild_dirs=( "${PROJECT_DIRS[@]/%/\/*}" )
+    cmd="ls -d $wild_dirs | ag -v :"
+    file=$(eval $cmd | fzf)
+    if [ -n "$file" ]
+    then
+        # Not really sure why we can't just `cd` here...
+        BUFFER="cd $file"
+        zle accept-line
+    fi
+    zle reset-prompt
+}
+zle -N _fzf-find-project-dir
+
 # ======= Extra mappings ===================================
 
 # ctrl-r starts searching history backward
@@ -128,6 +154,9 @@ bindkey '^r' history-incremental-search-backward
 
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
+
+bindkey '^f' _fzf-find-file
+bindkey '^p' _fzf-find-project-dir
 
 # vinegar-like up directory
 bindkey -M vicmd '\-' _up-directory

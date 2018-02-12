@@ -37,12 +37,9 @@ Source 'terminal.vim'
 "   the trailing backslash
 let g:ProjectParentPaths = [
     \'/Users/dhleong/git/',
-    \'/Users/dhleong/Documents/workspace/',
     \'/Users/dhleong/code/appengine/',
     \'/Users/dhleong/code/go/src/github.com/interspace/',
     \'/Users/dhleong/code/',
-    \'/Users/dhleong/IdeaProjects/',
-    \'/Users/dhleong/unity/'
 \]
 
 "
