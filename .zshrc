@@ -61,7 +61,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
+  # git
   gradle
 )
 
@@ -76,6 +76,8 @@ PROJECT_DIRS=(
     ~/code/go/src/github.com/interspace
 )
 
+# AUTO_PARAM_SLASH="true"
+setopt AUTO_PARAM_SLASH
 
 # ======= Aliases ==========================================
 
@@ -149,6 +151,21 @@ _fzf-find-project-dir() {
 }
 zle -N _fzf-find-project-dir
 
+_git-fzf-branch() {
+    setopt localoptions pipefail 2> /dev/null
+
+    # list subdirs from all project dirs
+    cmd='git branch | ag -v -Q \*'
+    branch=$(eval $cmd | fzf)
+    if [ -n "$branch" ]
+    then
+        BUFFER="git co $branch"
+        zle accept-line
+    fi
+    zle reset-prompt
+}
+zle -N _git-fzf-branch
+
 _git-push() {
     BUFFER="git push"
     zle accept-line
@@ -169,6 +186,8 @@ bindkey '^p' _fzf-find-project-dir
 # vinegar-like up directory
 bindkey -M vicmd '\-' _up-directory
 
+# git mappings
+bindkey -M vicmd 'gb' _git-fzf-branch
 bindkey -M vicmd 'gp' _git-push
 
 bindkey -M vicmd V edit-command-line

@@ -52,3 +52,7 @@ Thumbs.db
 # amplify shader editor
 AmplifyShaderEditor
 AmplifyShaderEditor.meta
+
+# gradle task name cache for zsh plugin
+.gradletasknamecache
+
