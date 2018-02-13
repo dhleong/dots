@@ -56,6 +56,12 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# load zsh-completions from homebrew
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+# git-completion.zsh:
+fpath=(~/.zsh $fpath)
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -83,6 +89,7 @@ setopt AUTO_PARAM_SLASH
 
 alias dots='cd ~/.dotfiles/profile'
 alias gitco='git commit -a'
+alias gituum='git branch -vv | ag gone | awk '"'"'{print $1}'"'"' | xargs git branch -D'
 alias gits='git status'
 alias guts='git status'
 alias gradle='./gradlew'
