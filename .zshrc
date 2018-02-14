@@ -24,6 +24,10 @@ export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$NPM_PACKAGES/bin:$PATH"
 
+# google cloud
+source $HOME/code/google-cloud-sdk/path.zsh.inc
+source $HOME/code/google-cloud-sdk/completion.zsh.inc
+
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/dhleong/.oh-my-zsh
 
@@ -173,11 +177,29 @@ _git-fzf-branch() {
 }
 zle -N _git-fzf-branch
 
+_git-commit() {
+    BUFFER="gitco"
+    zle accept-line
+}
+zle -N _git-commit
+
+_git-diff() {
+    BUFFER="git diff"
+    zle accept-line
+}
+zle -N _git-diff
+
 _git-push() {
     BUFFER="git push"
     zle accept-line
 }
 zle -N _git-push
+
+_git-status() {
+    BUFFER="gits"
+    zle accept-line
+}
+zle -N _git-status
 
 # ======= Extra mappings ===================================
 
@@ -195,6 +217,9 @@ bindkey -M vicmd '\-' _up-directory
 
 # git mappings
 bindkey -M vicmd 'gb' _git-fzf-branch
+bindkey -M vicmd 'gc' _git-commit
+bindkey -M vicmd 'gd' _git-diff
 bindkey -M vicmd 'gp' _git-push
+bindkey -M vicmd 'gs' _git-status
 
 bindkey -M vicmd V edit-command-line
