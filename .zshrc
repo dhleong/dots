@@ -137,7 +137,12 @@ zle -N _up-directory
 _fzf-find-file() {
     setopt localoptions pipefail 2> /dev/null
 
-    file=$(fzf)
+    cmd='
+    (git ls-tree -r --name-only HEAD ||
+       find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
+       sed s/^..//) |
+       ag -v vendor/ 2> /dev/null'
+    file=$(eval $cmd | fzf)
     if [ -n "$file" ]
     then
         mvim $file
