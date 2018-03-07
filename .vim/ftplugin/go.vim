@@ -10,3 +10,4 @@ nnoremap <buffer> <leader>pb :GoBuild<cr>
 
 nnoremap <buffer> <leader>ji :GoImports<cr>
 nnoremap <buffer> <leader>jr :GoRename<cr>
+nnoremap <buffer> <leader>js :GoReferrers<cr>

@@ -96,6 +96,7 @@ alias gitco='git commit -a'
 alias gituum='git branch -vv | ag gone | awk '"'"'{print $1}'"'"' | xargs git branch -D'
 alias gits='git status'
 alias guts='git status'
+alias gpp='git pull --prune'
 alias gradle='./gradlew'
 
 
