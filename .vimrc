@@ -139,14 +139,15 @@ let my_projectbrowse = {
 function! my_projectbrowse.func(candidates)
     let pathDir = resolve(a:candidates.action__path) . '/'
 
+    execute ':Explore ' . pathDir
+    execute 'set path=' . pathDir . '**'
+    execute 'lcd `=pathDir`'
+
     " set path, etc.
-    exe 'set path=' . pathDir . '**'
     let g:ProjectPath = pathDir
     let g:ProjectGrepPath = g:ProjectPath . '*'
     call MapCtrlP(pathDir)
 
-    execute ':e ' . pathDir
-    execute 'lcd `=pathDir`'
 endfunction
 call unite#custom#action('directory', 'projectbrowse', my_projectbrowse)
 unlet my_projectbrowse
