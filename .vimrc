@@ -70,10 +70,11 @@ call unite#custom#source('file_rec/async', 'converters',
 call unite#custom#source('file_rec/async', 'sorters',
     \ ['sorter_rank'])
 
-" use ag for rec/async
-let g:unite_source_rec_async_command =
-            \ ['ag', '--follow', '--nocolor', '--nogroup',
-            \  '--hidden', '-g', '']
+" " use ag for rec/async
+" let g:unite_source_rec_async_command =
+"             \ ['ag', '--follow', '--nocolor', '--nogroup',
+"             \  '--hidden', '-g', '']
+let g:unite_source_rec_async_command = [$HOME . '/.dotfiles/profile/bin/list-repo-files']
 
 function! GrepWord(path)
     let l:path = a:path
@@ -123,34 +124,15 @@ function! my_projectopen.func(candidates)
 
     " set path, etc.
     exe 'set path=' . pathDir . '**'
+    execute 'lcd `=pathDir`'
     let g:ProjectPath = pathDir
     let g:ProjectGrepPath = g:ProjectPath . '*'
     call MapCtrlP(pathDir)
 
     execute 'Unite file_rec/async:' . pathDir . ' -start-insert'
-    execute 'lcd `=pathDir`' 
 endfunction
 call unite#custom#action('directory', 'projectopen', my_projectopen)
 unlet my_projectopen
-
-let my_projectbrowse = {
-\ 'is_selectable' : 0,
-\ }
-function! my_projectbrowse.func(candidates)
-    let pathDir = resolve(a:candidates.action__path) . '/'
-
-    execute ':Explore ' . pathDir
-    execute 'set path=' . pathDir . '**'
-    execute 'lcd `=pathDir`'
-
-    " set path, etc.
-    let g:ProjectPath = pathDir
-    let g:ProjectGrepPath = g:ProjectPath . '*'
-    call MapCtrlP(pathDir)
-
-endfunction
-call unite#custom#action('directory', 'projectbrowse', my_projectbrowse)
-unlet my_projectbrowse
 
 " use \p to open a list of project dirs, from which we can rec/async a file
 " It's disappointingly slow to open, but... oh well
@@ -160,9 +142,6 @@ call unite#custom#source('directory', 'sorters', 'sorter_selecta')
 execute 'nnoremap <silent> <leader>p :Unite ' . g:UniteProjects .
     \ ' -start-insert -sync -unique -hide-source-names ' .
     \ ' -default-action=projectopen<cr>'
-execute 'nnoremap <silent> <leader>P :Unite ' . g:UniteProjects .
-    \ ' -start-insert -sync -unique -hide-source-names ' .
-    \ ' -default-action=projectbrowse<cr>'
 
 execute 'nnoremap <silent> <leader>y :Unite ' . g:UniteProjects .
     \ ' -start-insert -sync -unique -hide-source-names ' .
