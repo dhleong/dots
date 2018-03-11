@@ -72,6 +72,7 @@ let g:ale_linters = {
     \   'html': ['htmlhint'],
     \   'java': [],
     \   'javascript': ['eslint'],
+    \   'python': ['pylint'],
     \   'typescript': ['tslint'],
     \}
 
