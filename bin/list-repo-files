@@ -8,7 +8,7 @@ fi
 
 (
     (cd $path && git ls-tree -r --name-only HEAD |\
-        awk "{print '$path' \\$0}") \
+        while read -r line; do echo "$path/$line"; done) \
         || find $path -path "*/\.*" -prune -o -type f -print -o -type l -print
 ) \
     | ag -v vendor/
