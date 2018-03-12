@@ -58,7 +58,7 @@ let b:dirs = s:_dirs
 let s:_wilds = substitute(&wildignore, '[~.*]', '', 'g') " remove unneeded
 let s:_wilds = substitute(s:_wilds, ',', '\\\\|', 'g') " replace , with \|
 " let s:_wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . s:_dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
-let s:_wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|\.\%(' . s:_wilds . '\)$' " borrowed from default
+let s:_wilds = '\%(^\|/\)\.\.\?$\|/\.\%([a-zA-Z_0-9]*\)/\|\.\%(' . s:_wilds . '\)$' " borrowed from default
 call unite#custom#source('file_rec/async', 'ignore_pattern', s:_wilds)
 call unite#custom#source('file_rec/async', 'ignore_globs', s:_dirs)
 call unite#custom#source('grep', 'ignore_pattern', s:_wilds)
@@ -130,6 +130,7 @@ function! my_projectopen.func(candidates)
     call MapCtrlP(pathDir)
 
     execute 'Unite file_rec/async:' . pathDir . ' -start-insert'
+    execute 'lcd `=pathDir`'
 endfunction
 call unite#custom#action('directory', 'projectopen', my_projectopen)
 unlet my_projectopen

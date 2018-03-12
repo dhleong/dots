@@ -7,7 +7,8 @@ then
 fi
 
 (
-    (cd $path && git ls-tree -r --name-only HEAD) \
-        || find $path -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//
+    (cd $path && git ls-tree -r --name-only HEAD |\
+        awk "{print '$path' \\$0}") \
+        || find $path -path "*/\.*" -prune -o -type f -print -o -type l -print
 ) \
     | ag -v vendor/
