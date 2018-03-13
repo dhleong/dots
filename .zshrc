@@ -195,6 +195,12 @@ _git-diff() {
 }
 zle -N _git-diff
 
+_git-pull-prune() {
+    BUFFER="git pull --prune && gituum"
+    zle accept-line
+}
+zle -N _git-pull-prune
+
 _git-push() {
     BUFFER="git push"
     zle accept-line
@@ -225,6 +231,7 @@ bindkey -M vicmd '\-' _up-directory
 bindkey -M vicmd 'gb' _git-fzf-branch
 bindkey -M vicmd 'gc' _git-commit
 bindkey -M vicmd 'gd' _git-diff
+bindkey -M vicmd 'gl' _git-pull-prune
 bindkey -M vicmd 'gp' _git-push
 bindkey -M vicmd 'gs' _git-status
 
