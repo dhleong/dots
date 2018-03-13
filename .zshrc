@@ -155,7 +155,7 @@ _fzf-find-project-dir() {
     setopt localoptions pipefail 2> /dev/null
 
     # list subdirs from all project dirs
-    wild_dirs=( "${PROJECT_DIRS[@]/%/\/*}" )
+    wild_dirs=( "${PROJECT_DIRS[@]/%/\/*/}" )
     cmd="ls -d $wild_dirs | ag -v :"
     file=$(eval $cmd | fzf)
     if [ -n "$file" ]
