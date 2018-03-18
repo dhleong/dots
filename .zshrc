@@ -145,7 +145,15 @@ _git-fzf-branch() {
 
     # list subdirs from all project dirs
     cmd='git branch | ag -v -Q \*'
-    branch=$(eval $cmd | fzf)
+    branches=$(eval $cmd)
+    if [ -z "$branches" ]
+    then
+        echo "\nYou're on the only branch"
+        zle reset-prompt
+        return
+    fi
+
+    branch=$(echo $branches | fzf)
     if [ -n "$branch" ]
     then
         BUFFER="git co $branch"
