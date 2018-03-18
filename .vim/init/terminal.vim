@@ -1,3 +1,10 @@
+
+" ======= Settings =========================================
+
+" use zsh, not bash
+set shell=/usr/local/bin/zsh
+
+
 " ======= Run current file in a split :term ================
 
 function! s:RunCurrentInSplitTerm()
