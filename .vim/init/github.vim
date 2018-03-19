@@ -79,7 +79,7 @@ function! GithubOpenPR()
         return
     endif
 
-    exe ":silent !open https://github.com/" . repo . "/compare/" . branch . "?expand=1"
+    exe ":silent !open 'https://github.com/" . repo . "/compare/" . branch . "?expand=1'"
     echo "Opening PR request for " . branch . "..."
 endfunction
 
