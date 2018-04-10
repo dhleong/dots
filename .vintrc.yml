@@ -1,0 +1,5 @@
+
+policies:
+    ProhibitImplicitScopeVariable:
+        # this is super annoying, and nobody does it
+        enabled: false
