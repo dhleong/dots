@@ -44,6 +44,7 @@ function! s:RunCurrentInSplitTerm()
         exe 'tnoremap <buffer> <d-r> <up><cr>'
         exe 'tnoremap <buffer> <c-l> <esc><c-w><c-l>'
         exe 'nnoremap <buffer> <c-d> i<c-d>'
+        exe 'nnoremap <buffer> <d-r> i<up><cr>'
     else
         " yes! reuse it
         exe termWinNr . 'wincmd w'
