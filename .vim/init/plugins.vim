@@ -295,6 +295,10 @@ Plug 'OmniSharp/omnisharp-vim', {'for': 'cs', 'do': 'git submodule update --init
 Plug 'fatih/vim-go'
 
 
+" ======= HTTP/Rest ========================================
+
+Plug 'baverman/vial-http' | Plug 'baverman/vial'
+
 " ======= Javascript/Node ==================================
 
 Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
