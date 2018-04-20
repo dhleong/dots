@@ -213,7 +213,6 @@ let g:dash_map = {
 " visual-mode number incrementing
 Plug 'vim-scripts/VisIncr'
 
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
