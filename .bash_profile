@@ -1,4 +1,9 @@
-export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
+macvimPath=/Applications/MacVim.app/Contents/MacOS/Vim
+if [ -f $macvimPath ]
+then
+    export EDITOR="$macvimPath"
+    alias vim="$macvimPath"
+fi
 export CLICOLOR=1
 #export LSCOLORS=ExFxCxDxBxegedabagacad
 export LSCOLORS=GxFxCxDxBxegedabagaced
@@ -98,8 +103,6 @@ alias tensorflow='source ~/tensorflow/bin/activate'
 alias antgo='ant debug install && sh run.sh'
 alias adbrestart='adb kill-server && adb start-server && adb devices'
 alias sloccount=cloc
-
-alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 
 # make sure this is always done
 set complete='enhance'
