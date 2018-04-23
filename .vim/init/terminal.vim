@@ -2,7 +2,9 @@
 " ======= Settings =========================================
 
 " use zsh, not bash
-set shell=/usr/local/bin/zsh
+if filereadable("/usr/local/bin/zsh")
+    set shell=/usr/local/bin/zsh
+endif
 
 
 " ======= Run current file in a split :term ================
