@@ -371,12 +371,18 @@ Plug 'Shougo/unite.vim'
 " async stuff required by a lot of plugins
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 
-" simple session handling
-Plug 'xolox/vim-session' | Plug 'xolox/vim-misc'
+" lazy way to only use sessions on mac
+" (seems to cause problems on windows bash)
+if isdirectory("/Applications/MacVim.app")
 
-" session configs
-let g:session_autosave = 'yes'
-let g:session_autoload = 'no'
+    " simple session handling
+    Plug 'xolox/vim-session' | Plug 'xolox/vim-misc'
+
+    " session configs
+    let g:session_autosave = 'yes'
+    let g:session_autoload = 'no'
+
+endif
 
 
 " simple, lightweight file system navigation

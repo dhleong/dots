@@ -27,5 +27,5 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="$NPM_PACKAGES/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/dhleong/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 

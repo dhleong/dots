@@ -1,7 +1,9 @@
 
 # google cloud
-source $HOME/code/google-cloud-sdk/path.zsh.inc
-source $HOME/code/google-cloud-sdk/completion.zsh.inc
+if [ -d $HOME/code/google-cloud-sdk/ ]; then
+    source $HOME/code/google-cloud-sdk/path.zsh.inc
+    source $HOME/code/google-cloud-sdk/completion.zsh.inc
+fi
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -47,8 +49,9 @@ plugins=(
   gradle
 )
 
-source $ZSH/oh-my-zsh.sh
+# NOTE: See .zshenv for zsh path config
 
+source $ZSH/oh-my-zsh.sh
 
 # ======= Settings =========================================
 

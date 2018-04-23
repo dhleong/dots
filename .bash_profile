@@ -27,6 +27,12 @@ export GOPATH=$HOME/code/go
 export GOBIN=$GOPATH/bin
 PATH=$PATH:$GOBIN
 
+# on windows bash:
+if ! [ -f $macvimPath ]; then
+    PATH=$PATH:/usr/lib/go-1.10/bin
+    PATH=$PATH:~/.fzf/bin
+fi
+
 pip() {
     if [ "$1" = "install" -o "$1" = "bundle" ]; then
         cmd="$1"
