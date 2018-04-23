@@ -3,6 +3,8 @@ if [ -f $macvimPath ]
 then
     export EDITOR="$macvimPath"
     alias vim="$macvimPath"
+else
+    export EDITOR=vim
 fi
 export CLICOLOR=1
 #export LSCOLORS=ExFxCxDxBxegedabagacad

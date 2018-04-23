@@ -5,7 +5,6 @@
     recentrepo = /Users/dhleong/git/eclipse-cdt
 [core]
     excludesfile = /Users/dhleong/.gitignore_global
-    editor = /Applications/MacVim.app/Contents/MacOS/Vim
 [alias]
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     co = checkout
