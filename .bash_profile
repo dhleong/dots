@@ -63,13 +63,14 @@ upgradle() {
     done
 }
 
-if [ -z "$JAVA_HOME" ]
-then
-    # export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
-    # export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
-    # export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
-    export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
-    export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
+if [ -z "$JAVA_HOME" ]; then
+    if [ -f /usr/libexec/java_home ]; then
+        # export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
+        # export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+        # export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
+        export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
+        export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
+    fi
 fi
 
 export ANDROID_HOME=/lib/android-sdk
@@ -110,9 +111,11 @@ set complete='enhance'
 # vim input mode! Crazy!
 set -o vi
 
-# enable bash_completion (brew install bash-completion)
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+if [ -x "$(command -v brew)" ]; then
+    # enable bash_completion (brew install bash-completion)
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+        . $(brew --prefix)/etc/bash_completion
+    fi
 fi
 
 # git completion; use the following to add the file:
@@ -167,5 +170,7 @@ fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-eval $(/usr/libexec/path_helper -s)
+if [ -f /usr/libexec/path_helper ]; then
+    eval $(/usr/libexec/path_helper -s)
+fi
 source ~/.bashrc
