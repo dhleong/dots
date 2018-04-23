@@ -121,7 +121,12 @@ _fzf-find-file() {
     file=$(eval $cmd | fzf)
     if [ -n "$file" ]
     then
-        mvim $file
+        if [ -d /Applications/MacVim.app ]; then
+            mvim $file
+        else
+            BUFFER="$EDITOR $file"
+            zle accept-line
+        fi
     fi
 }
 zle -N _fzf-find-file
