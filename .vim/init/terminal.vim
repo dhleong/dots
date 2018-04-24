@@ -4,6 +4,8 @@
 " use zsh, not bash
 if filereadable("/usr/local/bin/zsh")
     set shell=/usr/local/bin/zsh
+elseif filereadable("/usr/bin/zsh")
+    set shell=/usr/bin/zsh
 endif
 
 
