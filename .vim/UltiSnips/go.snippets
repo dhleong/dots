@@ -1,0 +1,26 @@
+
+global !p
+
+def pascalToCamel(text):
+	"""Convert PascalCaseText to camelCaseText"""
+	if len(t[1]) == 0:
+		return ""
+	else:
+		first = t[1][0].lower()
+		rest = t[1][1:]
+		return first + rest
+
+endglobal
+
+snippet json "JSON field" b
+${1:FieldName} ${2:type} \`json:"`!p
+snip.rv = pascalToCamel(t[1])
+`"\`
+endsnippet
+
+snippet xml "XML field" b
+${1:FieldName} ${2:type} \`xml:"`!p
+snip.rv = pascalToCamel(t[1])
+`"\`
+endsnippet
+
