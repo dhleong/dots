@@ -19,9 +19,14 @@ endif
 
 " ======= Run current file in a split :term ================
 
-let s:filetypeRunCommands = {
-    \ 'go': 'go run',
-    \ }
+let s:filetypeRunCommands = {}
+func! s:filetypeRunCommands.go(fileName)
+    if stridx(a:fileName, "_test.go") != -1
+        return 'go test .'
+    else
+        return 'go run ./' . a:fileName
+    endif
+endfunc
 
 function! s:RunCurrentInSplitTerm()
 
@@ -76,12 +81,18 @@ function! s:RunCurrentInSplitTerm()
     exe 'tnoremap <buffer> <Tab> <c-w>N:' . mainWin . 'wincmd w<cr>'
     exe 'nnoremap <buffer> <Tab> :' . mainWin . 'wincmd w<cr>'
 
-    let cmd = get(s:filetypeRunCommands, fileType, '')
+    let CmdValue = get(s:filetypeRunCommands, fileType, '')
+    let cmd = ""
+    if type(CmdValue) == v:t_func
+        let cmd = s:filetypeRunCommands[fileType](fileName)
+    else
+        let cmd = cmd . " ./" . fileName
+    endif
 
     " always cd, just in case
     call term_sendkeys(termBufNr, "cd " . fullPath . "\<cr>")
     call term_sendkeys(termBufNr, "clear\<cr>")
-    call term_sendkeys(termBufNr, cmd . " ./" . fileName . "\<cr>")
+    call term_sendkeys(termBufNr, cmd . "\<cr>")
 endfunction
 nnoremap <silent> <leader>rs :call <SID>RunCurrentInSplitTerm()<cr>
 nnoremap <silent> <d-r> :call <SID>RunCurrentInSplitTerm()<cr>
