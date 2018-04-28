@@ -19,8 +19,13 @@ endif
 
 " ======= Run current file in a split :term ================
 
+let s:filetypeRunCommands = {
+    \ 'go': 'go run',
+    \ }
+
 function! s:RunCurrentInSplitTerm()
 
+    let fileType = &filetype
     let fileName = expand('%')
     let fullPath = expand('%:p:h')
     let winSize = 0.3
@@ -71,10 +76,12 @@ function! s:RunCurrentInSplitTerm()
     exe 'tnoremap <buffer> <Tab> <c-w>N:' . mainWin . 'wincmd w<cr>'
     exe 'nnoremap <buffer> <Tab> :' . mainWin . 'wincmd w<cr>'
 
+    let cmd = get(s:filetypeRunCommands, fileType, '')
+
     " always cd, just in case
     call term_sendkeys(termBufNr, "cd " . fullPath . "\<cr>")
     call term_sendkeys(termBufNr, "clear\<cr>")
-    call term_sendkeys(termBufNr, "./" . fileName . "\<cr>")
+    call term_sendkeys(termBufNr, cmd . " ./" . fileName . "\<cr>")
 endfunction
 nnoremap <silent> <leader>rs :call <SID>RunCurrentInSplitTerm()<cr>
 nnoremap <silent> <d-r> :call <SID>RunCurrentInSplitTerm()<cr>
