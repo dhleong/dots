@@ -59,6 +59,7 @@ PROJECT_DIRS=(
     ~/git
     ~/code
     ~/code/go/src/github.com/interspace
+    ~/code/go/src/github.com/dhleong
 )
 
 # AUTO_PARAM_SLASH="true"

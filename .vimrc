@@ -39,6 +39,7 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/git/',
     \'/Users/dhleong/code/appengine/',
     \'/Users/dhleong/code/go/src/github.com/interspace/',
+    \'/Users/dhleong/code/go/src/github.com/dhleong/',
     \'/Users/dhleong/code/',
 \]
 
