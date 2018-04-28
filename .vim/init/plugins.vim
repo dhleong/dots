@@ -294,9 +294,11 @@ Plug 'OmniSharp/omnisharp-vim', {'for': 'cs', 'do': 'git submodule update --init
 Plug 'fatih/vim-go'
 
 
-" ======= HTTP/Rest ========================================
+" ======= HTTP/Rest/Websockets =============================
 
 Plug 'baverman/vial-http' | Plug 'baverman/vial'
+Plug '~/git/vim-wildwildws'
+
 
 " ======= Javascript/Node ==================================
 
