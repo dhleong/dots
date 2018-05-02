@@ -35,7 +35,16 @@ set list
 set listchars=tab:»·,trail:·
 
 " nice autocomplete UI
-set completeopt=menu,preview,longest
+if !get(g:, 'dhleong_set_completeopt', 0)
+    " NOTE: only attempt to set this once. YCM will change these
+    " at some point, and for some wacky reason if we change them
+    " back (for example, when sourcing ~/.vimrc to change things)
+    " it causes input to go CRAZY--typing anything not in a comment
+    " causes it to disappear after the second character. Wild.
+    let g:dhleong_set_completeopt = 1
+
+    set completeopt=menu,preview,longest
+endif
 
 set guioptions=c    " hide useless gui
 set ruler           " we may want to know where we are in the file
