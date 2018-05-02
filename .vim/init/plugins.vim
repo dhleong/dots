@@ -365,13 +365,8 @@ Plug 'junegunn/vader.vim', {'for': 'vader'}
 " ======= Utility ==========================================
 "
 
-" UI/searching plugin. This one is basically abandonware at this point
-" Its replacement, denite, is supposed to be better, but it requires python3
-" and my MacVim doesn't seem to want to do it...
-Plug 'Shougo/unite.vim'
-
-" async stuff required by a lot of plugins
-Plug 'Shougo/vimproc.vim', {'do': 'make'}
+" fzf all the things
+Plug '/usr/local/opt/fzf'
 
 " lazy way to only use sessions on mac
 " (seems to cause problems on windows bash)

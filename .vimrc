@@ -43,50 +43,6 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/code/',
 \]
 
-"
-" unite configs
-"
-
-" we don't want results from these dirs (inserted below)
-" let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,app/components", ",", "\/\\\\|", "g") 
-let s:_dirs = map([
-            \ 'node_modules', 'build', 'proguard', 'out',
-            \ 'app/js/p', 'app/components', 'target', 'builds',
-            \ ], "v:val . '\/**'")
-let b:dirs = s:_dirs
-
-" borrow ignore extensions from wildignore setting
-let s:_wilds = substitute(&wildignore, '[~.*]', '', 'g') " remove unneeded
-let s:_wilds = substitute(s:_wilds, ',', '\\\\|', 'g') " replace , with \|
-" let s:_wilds = '\%(^\|/\)\.\.\?$\|\.\%([a-zA-Z_0-9]*\)/\|' . s:_dirs . '\~$\|\.\%(' . _wilds . '\)$' " borrowed from default
-let s:_wilds = '\%(^\|/\)\.\.\?$\|/\.\%([a-zA-Z_0-9]*\)/\|\.\%(' . s:_wilds . '\)$' " borrowed from default
-call unite#custom#source('file_rec/async', 'ignore_pattern', s:_wilds)
-call unite#custom#source('file_rec/async', 'ignore_globs', s:_dirs)
-call unite#custom#source('grep', 'ignore_pattern', s:_wilds)
-call unite#custom#source('grep', 'ignore_globs', s:_dirs)
-call unite#custom#source('file_rec/async', 'matchers',
-    \ ['converter_tail', 'matcher_fuzzy'])
-call unite#custom#source('file_rec/async', 'converters',
-    \ ['converter_file_directory'])
-call unite#custom#source('file_rec/async', 'sorters',
-    \ ['sorter_rank'])
-
-" " use ag for rec/async
-" let g:unite_source_rec_async_command =
-"             \ ['ag', '--follow', '--nocolor', '--nogroup',
-"             \  '--hidden', '-g', '']
-let g:unite_source_rec_async_command = [$HOME . '/.dotfiles/profile/bin/list-repo-files']
-
-function! GrepWord(path)
-    let l:path = a:path
-    if l:path == ''
-        let l:path = '.'
-    endif
-    exe 'Unite grep:' . l:path . ':-iR:' .
-                \ expand('<cword>') . ' -auto-preview'
-endfunction
-
-" keymaps
 function! MapCtrlP(path)
     " craziness to ensure pwd is always set correctly
     " when creating the Unite buffer; for some reason it
@@ -96,70 +52,21 @@ function! MapCtrlP(path)
     if &ft == "java" && exists("*intellivim#InProject") && intellivim#IsRunning()
         nnoremap <buffer> <silent> <c-p> :Locate<cr>
     else
-        let suffix =  '<cr>:silent! lcd ' . a:path . '<cr>:startinsert<cr>'
-        execute 'nnoremap <C-p> :Unite file_rec/async:' . a:path . suffix
-        execute 'nnoremap <C-w><C-p> :Unite file_rec/async:' .
-            \ a:path . ' -default-action=tabopen' . suffix
-        execute 'nnoremap <C-s><C-p> :Unite file_rec/async:' . 
-            \ a:path . ' -default-action=vsplit' . suffix
+        execute 'nnoremap <silent> <buffer> <c-p> :call ' .
+                    \ 'dhleong#nav#InProject("' a:path .'", "e")<cr>'
+        execute 'nnoremap <silent> <buffer> <c-w><c-p> :call ' .
+                    \ 'dhleong#nav#InProject("' a:path .'", "tabe")<cr>'
+        execute 'nnoremap <silent> <buffer> <c-s><c-p> :call ' .
+                    \ 'dhleong#nav#InProject("' a:path .'", "vsplit")<cr>'
     endif
 
-    execute 'nnoremap <silent> <leader>/ :Unite grep:' . a:path . ':-iR -auto-preview<cr>'
-    " NB: this would have to be an <expr> mapping
-    execute 'nnoremap <silent> <leader>* :call GrepWord("' . a:path . '")<cr>'
+    " " NB: this would have to be an <expr> mapping
+    " execute 'nnoremap <silent> <leader>* :call GrepWord("' . a:path . '")<cr>'
 endfunction
-
-" default map for C-p (we'll remap with project directory soon)
-call MapCtrlP("")
-nnoremap <leader>/ :Unite grep:.:-iR -auto-preview<cr>
-let g:unite_enable_ignore_case = 1
-
-"
-" new projectopen action to cooperate with SetPathToProject thingy
-"
-let my_projectopen = {
-\ 'is_selectable' : 0,
-\ }
-function! my_projectopen.func(candidates)
-    let pathDir = resolve(a:candidates.action__path) . '/'
-
-    " set path, etc.
-    exe 'set path=' . pathDir . '**'
-    execute 'lcd `=pathDir`'
-    let g:ProjectPath = pathDir
-    let g:ProjectGrepPath = g:ProjectPath . '*'
-    call MapCtrlP(pathDir)
-
-    execute 'Unite file_rec/async:' . pathDir . ' -start-insert'
-    execute 'lcd `=pathDir`'
-endfunction
-call unite#custom#action('directory', 'projectopen', my_projectopen)
-unlet my_projectopen
-
-" use \p to open a list of project dirs, from which we can rec/async a file
-" It's disappointingly slow to open, but... oh well
-let g:UniteProjects = join(map(copy(g:ProjectParentPaths), "'directory:' . v:val"))
-call unite#custom#source('directory', 'matchers', 'matcher_fuzzy')
-call unite#custom#source('directory', 'sorters', 'sorter_selecta')
-execute 'nnoremap <silent> <leader>p :Unite ' . g:UniteProjects .
-    \ ' -start-insert -sync -unique -hide-source-names ' .
-    \ ' -default-action=projectopen<cr>'
-
-execute 'nnoremap <silent> <leader>y :Unite ' . g:UniteProjects .
-    \ ' -start-insert -sync -unique -hide-source-names ' .
-    \ ' -default-action=lily<cr>'
-
-" fancier way to search through file than /
-call unite#custom#source('line', 'matchers', 'matcher_fuzzy')
-nnoremap <silent> \  :<C-u>Unite -buffer-name=search
-    \ line -start-insert<CR>
 
 "
 " My project path script
 "
-let g:ProjectPath = "./"
-let g:ProjectGrepPath = "*"
-
 " function to automatically set the appropriate path :)
 function! SetPathToProject()
     let this_file = expand("%:p:h") . '/' . expand("%:t")
@@ -181,9 +88,7 @@ function! SetPathToProject()
 
             " set it
             exe 'set path=' . pathDir . '**'
-            let g:ProjectPath = pathDir
-            let g:ProjectGrepPath = g:ProjectPath . '*'
-            call MapCtrlP(g:ProjectPath)
+            call MapCtrlP(pathDir)
             return
         endif
     endfor

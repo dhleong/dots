@@ -106,6 +106,21 @@ endfunction
 nnoremap <silent> <leader>wf :call WindowFocusFunc()<cr>
 
 
+" ======= File navigation ==================================
+
+nnoremap <silent> <leader>p :call dhleong#nav#Projects()<cr>
+
+" Note: I don't really use this anymore, but could be nice to restore...
+" execute 'nnoremap <silent> <leader>y :Unite ' . g:UniteProjects .
+"     \ ' -start-insert -sync -unique -hide-source-names ' .
+"     \ ' -default-action=lily<cr>'
+
+" " fancier way to search through file than /
+" call unite#custom#source('line', 'matchers', 'matcher_fuzzy')
+" nnoremap <silent> \  :<C-u>Unite -buffer-name=search
+"     \ line -start-insert<CR>
+
+
 " ======= Misc =============================================
 
 " Make folding/unfolding easier
