@@ -29,3 +29,5 @@ export PATH="$NPM_PACKAGES/bin:$PATH"
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+export ANDROID_HOME=/lib/android-sdk
+export ANDROID_NDK=$NDK
