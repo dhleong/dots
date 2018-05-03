@@ -21,6 +21,12 @@ func! s:OpenProject(dir)
 
     call dhleong#nav#InProject(pathDir, 'e')
     execute 'lcd `=pathDir`'
+
+    " NOTE: fzf vim plugin has a startinsert call at the end of its exec_term
+    " routine that seems to get delayed and run around... now, probably thanks
+    " to us calling fzf#run from within the "sink" callback. So we counteract
+    " it with this stopinsert to avoid being unnecessarily in insert mode.
+    stopinsert
 endfunc
 
 func! dhleong#nav#InProject(projectRoot, sink)
