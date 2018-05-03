@@ -1,6 +1,8 @@
 " Lazy-loaded functions for navigating between files
 "
 
+let s:fzf_options = '--color=dark'
+
 " " we don't want results from these dirs (inserted below)
 " " let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,app/components", ",", "\/\\\\|", "g") 
 " let s:_dirs = map([
@@ -27,6 +29,7 @@ func! dhleong#nav#InProject(projectRoot, sink)
     "  haven't been added to the repo yet.
     call fzf#run({
         \ 'dir': a:projectRoot,
+        \ 'options': s:fzf_options,
         \ 'source': 'list-repo-files',
         \ 'sink': a:sink,
         \ 'window': 'aboveleft 15new',
@@ -41,6 +44,7 @@ func! dhleong#nav#Projects()
         endif
     endfor
     call fzf#run({
+        \ 'options': s:fzf_options,
         \ 'source': cmd,
         \ 'sink': function('s:OpenProject'),
         \ })
