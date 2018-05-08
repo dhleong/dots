@@ -26,3 +26,11 @@ nnoremap <buffer> <leader>js :GoReferrers<cr>
 nnoremap <buffer> <leader>si :call <SID>switchToSourceFolder('%')<cr>
 nnoremap <buffer> <leader>sv :call <SID>switchToSourceFolder('service')<cr>
 nnoremap <buffer> <leader>sp :call <SID>switchToSourceFolder('api')<cr>
+
+if expand('%') =~# '_test.go$'
+    augroup RunLatte
+        autocmd!
+        autocmd BufWritePost <buffer> :call latte#Run()
+    augroup END
+endif
+
