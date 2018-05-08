@@ -30,6 +30,10 @@ inoremap <C-E> <esc>A
 " ctrl+a to get to front of line in commandline mode
 cnoremap <C-A> <Home>
 
+" ctrl+f to edit the current command/prompt in the command-line window
+" this is the default mapping, but I'm putting it here as a reminder
+" because it's awesome—makes renaming things in netrw way better!
+set cedit=\<C-F>
 
 " ======= Make =============================================
 
