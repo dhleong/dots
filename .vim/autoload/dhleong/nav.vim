@@ -29,6 +29,14 @@ func! s:OpenProject(dir)
     stopinsert
 endfunc
 
+func! dhleong#nav#FindGradle()
+    try
+        find! ./build.gradle
+    catch
+        find build.gradle
+    endtry
+endfunc
+
 func! dhleong#nav#InProject(projectRoot, sink)
     " TODO: it might be nice to update list-repo-files to not necessarily rely
     "  on git ls-tree. It's certainly fast, but it does miss out on files that

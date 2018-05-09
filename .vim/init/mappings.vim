@@ -112,12 +112,12 @@ nnoremap <leader>= <C-W>10+
 nnoremap <leader>- <C-W>10-
 
 " bring one window in a tab page into 'focus'
-function! WindowFocusFunc()
+function! s:windowFocusFunc()
     call feedkeys("\<c-w>=", "n")
     call feedkeys("\<c-w>15+", "n")
     call feedkeys("\<c-w>15>", "n")
 endfunction
-nnoremap <silent> <leader>wf :call WindowFocusFunc()<cr>
+nnoremap <silent> <leader>wf :call <SID>windowFocusFunc()<cr>
 
 
 " ======= File navigation ==================================
@@ -141,51 +141,16 @@ nnoremap <silent> <leader>p :call dhleong#nav#Projects()<cr>
 nnoremap + zA
 
 " find a build.gradle
-function! FindGradle()
-    try
-        find! ./build.gradle
-    catch
-        find build.gradle
-    endtry
-endfunction
-nnoremap <silent> <leader>og :call FindGradle()<cr>
+nnoremap <silent> <leader>og :call dhleong#nav#FindGradle()<cr>
 
-" get unicode pairs
-function! GetUnicodePairs()
-    " copy the output of the ascii command
-    redir => raw
-        ascii
-    redir END
-
-    " strip out the hex part and parse to int
-    let match = matchlist(raw, 'Hex \(.*\),')
-    let hex = match[1]
-    let s = str2nr(hex, 16)
-
-    " source: http://www.russellcottrell.com/greek/utilities/surrogatepaircalculator.htm
-    if (s >= 0x10000 && s <= 0x10FFFF)
-        let hi = float2nr(floor((s - 0x10000) / 0x400) + 0xD800)
-        let lo = float2nr(((s - 0x10000) % 0x400) + 0xDC00)
-        let pairs = printf('\u%x\u%x', hi, lo)
-
-        " go ahead and copy it to the clipboard
-        let @* = pairs
-    else
-        let pairs = '(none)'
-    endif
-
-    " clear old output and echo new
-    redraw!
-    echo raw[1:] . ', Pairs ' . pairs
-endfunction
-
-nnoremap ga :call GetUnicodePairs()<cr>
+" print unicode pairs
+nnoremap ga :call dhleong#text#GetUnicodePairs()<cr>
 
 
 " ======= Prevent trailing whitespace ======================
 
 " Clean up trailing whitespace
-function! TryCleanWhitespace()
+function! s:tryCleanWhitespace()
 
     " minus 1 to be zero-indexed;
     " minus another because we're in insert mode
@@ -201,4 +166,4 @@ function! TryCleanWhitespace()
 
     return prefix . "\<Enter>"
 endfunction
-inoremap <expr> <Enter> TryCleanWhitespace()
+inoremap <expr> <Enter> <SID>tryCleanWhitespace()
