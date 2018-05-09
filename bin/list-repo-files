@@ -6,9 +6,33 @@ then
     path=$1
 fi
 
+function files_from_git() {
+    cd $path
+
+    filesRelative=$(git ls-tree -r --name-only HEAD 2> /dev/null)
+    if [ -z "$filesRelative" ]; then
+        # not a git repo
+        return 1
+    fi
+
+    echo "$filesRelative" | while read -r line; do
+        echo "$path/$line"
+    done
+
+    # also find untracked (but not ignored) files
+    untrackedRelative=$(git ls-files --others --exclude-standard)
+    echo "$untrackedRelative" | while read -r line; do
+        echo "$path/$line"
+    done
+}
+
+function find_files() {
+    # fallback if it's not a git repo
+    find $path -path "*/\.*" -prune -o -type f -print -o -type l -print
+}
+
 (
-    (cd $path && git ls-tree -r --name-only HEAD |\
-        while read -r line; do echo "$path/$line"; done) \
-        || find $path -path "*/\.*" -prune -o -type f -print -o -type l -print
+    files_from_git \
+        || find_files
 ) \
     | ag -v vendor/
