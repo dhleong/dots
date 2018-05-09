@@ -35,6 +35,16 @@ cnoremap <C-A> <Home>
 " because it's awesome—makes renaming things in netrw way better!
 set cedit=\<C-F>
 
+
+" ======= Terminal mode maps ===============================
+
+" map alt+backspace to send <c-w> (see :help ctrl-w_.)
+" this lets us use the reglar key chord for 'delete back word'
+" in insert mode in any fzf-based search UI (it theoretically
+" has this mapping already but it doesn't seem to work in OSX)
+tnoremap <m-bs> <c-w>.
+
+
 " ======= Make =============================================
 
 " Quick make clean
