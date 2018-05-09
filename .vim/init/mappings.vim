@@ -67,7 +67,7 @@ nmap <silent> <leader>tev :tabe $_MYVIMRC<cr>
 nmap <silent> <expr> <leader>vb ":e " . resolve("~/.vim/bundle/") . "<cr>"
 nmap <silent> <expr> <leader>vp ":e " . resolve("~/.vim/init/plugins.vim") . "<cr>"
 
-" Edit the filetype file of the current file in a new tap
+" Edit the filetype file of the current file in a new tab
 nnoremap <silent> <expr> <leader>eft ":tabe " . resolve(join([$HOME, "/.vim/ftplugin/", &filetype, ".vim"], "")) . "<cr>"
 
 " Open the bash profile
