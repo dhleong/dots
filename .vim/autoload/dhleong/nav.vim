@@ -38,9 +38,6 @@ func! dhleong#nav#FindGradle()
 endfunc
 
 func! dhleong#nav#InProject(projectRoot, sink)
-    " TODO: it might be nice to update list-repo-files to not necessarily rely
-    "  on git ls-tree. It's certainly fast, but it does miss out on files that
-    "  haven't been added to the repo yet.
     call fzf#run({
         \ 'dir': a:projectRoot,
         \ 'options': s:fzf_options,
