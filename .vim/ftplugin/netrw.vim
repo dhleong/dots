@@ -49,3 +49,8 @@ nnoremap <buffer> <leader>om :call netrw#openOtherSourceDir("main")<cr>
 nnoremap <buffer> <leader>ot :call netrw#openOtherSourceDir("test")<cr>
 nnoremap <buffer> <leader>oo :call netrw#swapSourceDir()<cr>
 nnoremap <buffer> <leader>os :call netrw#swapSourceDir()<cr>
+
+" I never use these, but I do occasionally hit them accidentally and it
+" is SUPER annoying trying to figure out what I hit
+nnoremap <buffer> a <NOP>
+nnoremap <buffer> r <NOP>
