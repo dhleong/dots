@@ -58,6 +58,9 @@ function! MapCtrlP(path)
                     \ 'dhleong#nav#InProject("' a:path .'", "tabe")<cr>'
         execute 'nnoremap <silent> <buffer> <c-s><c-p> :call ' .
                     \ 'dhleong#nav#InProject("' a:path .'", "vsplit")<cr>'
+
+        exe 'nnoremap <silent> <buffer> \ :call ' .
+                    \ 'dhleong#nav#ByText("' a:path . '", "e")<cr>'
     endif
 
     " " NB: this would have to be an <expr> mapping

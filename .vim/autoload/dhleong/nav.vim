@@ -1,7 +1,7 @@
 " Lazy-loaded functions for navigating between files
 "
 
-let s:fzf_options = '--color=dark'
+let s:fzf_options = '--color=dark --no-clear'
 
 " " we don't want results from these dirs (inserted below)
 " " let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,app/components", ",", "\/\\\\|", "g") 
@@ -29,12 +29,35 @@ func! s:OpenProject(dir)
     stopinsert
 endfunc
 
+func! s:OpenByText(sink, line)
+    let parts = split(a:line, ':')
+    if len(parts) < 2
+        echo "Unexpected input: " . a:line
+    endif
+
+    let [ file, line; _ ] = parts
+    exec a:sink . ' ' . file
+    exe 'norm! ' . line . 'G'
+    norm! zz
+endfunc
+
 func! dhleong#nav#FindGradle()
     try
         find! ./build.gradle
     catch
         find build.gradle
     endtry
+endfunc
+
+func! dhleong#nav#ByText(projectRoot, sink)
+    let opts = s:fzf_options . ' --with-nth=3 --delimiter=:'
+    call fzf#run({
+        \ 'dir': a:projectRoot,
+        \ 'options': opts,
+        \ 'source': 'ag --nobreak --noheading .',
+        \ 'sink': function('s:OpenByText', [a:sink]),
+        \ 'window': 'aboveleft 15new',
+        \ })
 endfunc
 
 func! dhleong#nav#InProject(projectRoot, sink)
