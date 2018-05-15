@@ -54,7 +54,7 @@ func! dhleong#nav#ByText(projectRoot, sink)
     call fzf#run({
         \ 'dir': a:projectRoot,
         \ 'options': opts,
-        \ 'source': 'ag --nobreak --noheading .',
+        \ 'source': 'ag --nobreak --noheading --ignore vendor .',
         \ 'sink': function('s:OpenByText', [a:sink]),
         \ 'window': 'aboveleft 15new',
         \ })
