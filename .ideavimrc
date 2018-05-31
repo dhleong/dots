@@ -31,6 +31,7 @@ nnoremap gps :action Android.SyncProject<cr>
 
 " 'go java refactor'
 nnoremap gjr :action Refactorings.QuickListPopupAction<cr>
+vnoremap gjr :action Refactorings.QuickListPopupAction<cr>
 
 nnoremap <space>ir :action Android.HotswapChanges<cr>
 nnoremap <space>pb :action CompileDirty<cr>
