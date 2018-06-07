@@ -21,11 +21,11 @@ function! s:FallbackJumpToNextError()
 endfunction
 
 function! s:JumpToNextError()
-    if index(s:YcmJumpingTypes, &ft) != -1
-        " make sure diagnostics are up-to-date
-        :YcmForceCompileAndDiagnostics
-        redraw!
+    " make sure diagnostics are up-to-date
+    :YcmForceCompileAndDiagnostics
+    redraw!
 
+    if index(s:YcmJumpingTypes, &ft) != -1
         call s:FallbackJumpToNextError()
         return
     endif
