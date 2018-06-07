@@ -157,7 +157,6 @@ function! s:tryCleanWhitespace()
     let col = col('.') - 2
     let line = getline('.')[:col]
     let whitespace = len(matchstr(line, '\s*$'))
-    " echom line . ' -> ' . whitespace
     if len(line) == whitespace
         let prefix = ''
     else
@@ -167,3 +166,8 @@ function! s:tryCleanWhitespace()
     return prefix . "\<Enter>"
 endfunction
 inoremap <expr> <Enter> <SID>tryCleanWhitespace()
+
+" ======= Smart text manipulation ==========================
+
+nnoremap <a-cr> :call dhleong#fix#Fix()<cr>
+

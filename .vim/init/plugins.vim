@@ -89,9 +89,6 @@ let g:ale_pattern_options = {
     \   },
     \}
 
-" mappings:
-nnoremap <a-cr> :ALEFix<cr>
-
 " }}}
 
 
@@ -373,7 +370,7 @@ Plug '/usr/local/opt/fzf'
 if isdirectory("/Applications/MacVim.app")
 
     " simple session handling
-    Plug 'xolox/vim-session' | Plug 'xolox/vim-misc'
+    " Plug 'xolox/vim-session' | Plug 'xolox/vim-misc'
 
     " session configs
     let g:session_autosave = 'yes'
