@@ -14,7 +14,7 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/.dotfiles/',
 \]
 
-function! s:MapCtrlP(path)
+function! dhleong#projects#MapCtrlP(path)
     " craziness to ensure pwd is always set correctly
     " when creating the Unite buffer; for some reason it
     " isn't set as expected when opening Unite after using
@@ -63,7 +63,7 @@ function! dhleong#projects#SetPathToProject()
 
             " set it
             exe 'set path=' . pathDir . '**'
-            call s:MapCtrlP(pathDir)
+            call dhleong#projects#MapCtrlP(pathDir)
 
             if expand("%") == ".vimrc"
                 let inits = resolve(expand("~/.vim/init"))
@@ -82,5 +82,5 @@ function! dhleong#projects#SetPathToProject()
     endif
 
     " reset ctrl-p to default
-    call s:MapCtrlP("")
+    call dhleong#projects#MapCtrlP("")
 endfunction

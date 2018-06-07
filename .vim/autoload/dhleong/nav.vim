@@ -17,7 +17,7 @@ func! s:OpenProject(dir)
     " set path, etc.
     exe 'set path=' . pathDir . '**'
     execute 'lcd `=pathDir`'
-    call MapCtrlP(pathDir)
+    call dhleong#projects#MapCtrlP(pathDir)
 
     call dhleong#nav#InProject(pathDir, 'e')
     execute 'lcd `=pathDir`'
