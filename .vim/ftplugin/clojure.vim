@@ -18,7 +18,32 @@ function! DoReload()
 
 endfunction
 
-function! RunBufferTests()
+function! s:RunCljsTests(ns)
+    let ns = a:ns
+    let testExpr = "(cljs.test/run-tests '" . ns . ")"
+    let expr = "(do " .
+                \ "(cljs.core/require '" . ns . " :reload)" .
+                \ testExpr . ")"
+    let resp = fireplace#client().eval(
+        \ expr,
+        \ {'ns': ns},
+        \ )
+
+    if has_key(resp, 'out')
+        if stridx(resp.out, 'FAIL') == -1 && stridx(resp.out, 'ERROR') == -1 
+            " TODO can we put this into the qflist?
+            echo testExpr
+        else
+            echo resp.out
+        endif
+        return
+    endif
+
+    " something terrible happened
+    echo resp
+endfunction
+
+function! s:RunBufferTests()
     w
     redraw!
     let ns = fireplace#ns()
@@ -28,7 +53,7 @@ function! RunBufferTests()
 
     silent :Require
     if expand('%:e') == 'cljs'
-        :Eval (run-tests)
+        call s:RunCljsTests(ns)
     else
         exe "RunTests " . ns
     endif
@@ -92,7 +117,7 @@ if !exists("*CreateTestFile")
 
             let import = []
             if type == 'cljs'
-                let import = ["  (:require [cljs.test :refer-macros [deftest testing is run-tests]]",
+                let import = ["  (:require [cljs.test :refer-macros [deftest testing is]]",
                             \ "            [cljs.nodejs :as node]",
                             \ "            [" . namespace . " :refer []]))"]
             else
@@ -125,8 +150,9 @@ if !exists("*CreateNamespaceFile")
         endif
 
         let type = expand('%:e')
-        let lastNs = substitute(expand('%:p:t'), "." . type, "", "")
-        let newNsPath = substitute(newNs, '-', '_', '')
+        let lastNs = substitute(expand('%:p:t'), '.' . type, '', 'g')
+        let newNsPath = substitute(newNs, '-', '_', 'g')
+        let newNsPath = substitute(newNsPath, '\.', '/', 'g')
         let path = expand('%:p:h') . "/" . newNsPath . "." . type
 
         let namespace = fireplace#ns()
@@ -222,8 +248,8 @@ setlocal formatoptions+=r
 
 " add some custom fireplace maps...
 nnoremap <buffer> <d-r> :%Eval<cr>
-nnoremap <buffer> cpr :call RunBufferTests()<cr>
-nnoremap <buffer> cpt :call RunBufferTests()<cr>
+nnoremap <buffer> cpr :call <SID>RunBufferTests()<cr>
+nnoremap <buffer> cpt :call <SID>RunBufferTests()<cr>
 nmap <buffer> cql cqp<up><cr>
 " ie: 'up'; just open last input but don't execute
 exe 'nmap <buffer> cqu cqp<up>' &cedit | norm 0
