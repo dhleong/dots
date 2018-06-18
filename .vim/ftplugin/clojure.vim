@@ -1,6 +1,6 @@
 " nmap <d-r> :Require!<cr>cqq
 
-function! DoReload()
+function! s:DoReload()
     try
         silent :Require
         " norm! mz
@@ -30,7 +30,7 @@ function! s:RunCljsTests(ns)
         \ )
 
     if has_key(resp, 'out')
-        if stridx(resp.out, 'FAIL') == -1 && stridx(resp.out, 'ERROR') == -1 
+        if stridx(resp.out, 'FAIL') == -1 && stridx(resp.out, 'ERROR') == -1
             " TODO can we put this into the qflist?
             echo testExpr
         else
@@ -95,7 +95,7 @@ endfunction
 
 augroup ClojureGroup
     autocmd!
-    autocmd BufWritePost *.clj,*.cljc call DoReload()
+    autocmd BufWritePost *.clj,*.cljc,*.cljs call <SID>DoReload()
 augroup END
 
 " if guard to protect against E127
@@ -414,6 +414,7 @@ command! LeinReplClose call LeinReplCloseFunc()
 command! LeinReplRestart py restart_repl()
 
 augroup LeinShutDownGroup
+    autocmd!
     autocmd VimLeavePre * call LeinReplCloseFunc()
 augroup END
 
