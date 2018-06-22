@@ -95,7 +95,7 @@ endfunction
 
 augroup ClojureGroup
     autocmd!
-    autocmd BufWritePost *.clj,*.cljc,*.cljs call <SID>DoReload()
+    autocmd BufWritePost *.clj,*.cljc call <SID>DoReload()
 augroup END
 
 " if guard to protect against E127
@@ -139,6 +139,9 @@ if !exists("*CreateTestFile")
     endfunction
 endif
 
+function! s:pathToNS(path)
+endfunction
+
 " if guard to protect against E127
 if !exists("*CreateNamespaceFile")
     function! CreateNamespaceFile(method)
@@ -151,6 +154,7 @@ if !exists("*CreateNamespaceFile")
 
         let type = expand('%:e')
         let lastNs = substitute(expand('%:p:t'), '.' . type, '', 'g')
+        let lastNs = substitute(lastNs, '_', '-', 'g')
         let newNsPath = substitute(newNs, '-', '_', 'g')
         let newNsPath = substitute(newNsPath, '\.', '/', 'g')
         let path = expand('%:p:h') . "/" . newNsPath . "." . type
