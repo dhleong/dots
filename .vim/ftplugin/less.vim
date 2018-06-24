@@ -1,13 +1,30 @@
 
 " Auto compile on write
-function! CompileLess()
+function! s:compileLess()
+    let destDir = ''
     if expand('%:p:h:t') == 'less'
         if isdirectory('../resources/public/css')
-            silent !lessc % ../resources/public/css/%:t:r.css > /dev/null
+            let destDir = '../resources/public/css/'
         endif
     else
-        silent !lessc % %:t:r.css > /dev/null
+        let destDir = './'
+    endif
+
+    if destDir == ''
+        return
+    endif
+
+    let destName = expand('%:t:r') . '.css'
+    let dest = destDir . destName
+
+    " silent !lessc % %:t:r.css > /dev/null
+    let output = systemlist('lessc ' . shellescape(expand('%')) . ' 2> /dev/null')
+    if len(output) > 0
+        call writefile(output, dest)
     endif
 endfunction
 
-autocmd BufWritePost <buffer> call CompileLess()
+augroup LessAutoCompile
+    autocmd!
+    autocmd BufWritePost <buffer> call <SID>compileLess()
+augroup END
