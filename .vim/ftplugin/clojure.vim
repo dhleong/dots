@@ -251,7 +251,7 @@ endfunction
 setlocal formatoptions+=r
 
 " add some custom fireplace maps...
-nnoremap <buffer> <d-r> :%Eval<cr>
+nnoremap <buffer> grl :Require<cr>
 nnoremap <buffer> cpr :call <SID>RunBufferTests()<cr>
 nnoremap <buffer> cpt :call <SID>RunBufferTests()<cr>
 nmap <buffer> cql cqp<up><cr>
