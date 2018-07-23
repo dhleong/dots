@@ -216,7 +216,7 @@ Plug 'tpope/vim-surround'
 
 "" tcomment: motion-based commenting
 ""
-Plug 'tomtom/tcomment_vim'
+Plug 'tomtom/tcomment_vim', {'commit': 'e365bfab66ab481aebcefd57b795c8ef1d42681f'}
 
 let g:tcomment_types = {
     \ 'java': '// %s',
