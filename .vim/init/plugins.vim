@@ -277,6 +277,7 @@ Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 
 Plug 'guns/vim-clojure-static', {'for': 'clojure'}
 Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
+" Plug '~/git/vim-clojure-highlight', {'for': 'clojure'}
 Plug 'guns/vim-sexp', {'for': 'clojure'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 
@@ -307,7 +308,7 @@ let g:tern_show_signature_in_pum = 1
 
 
 " jsx depends on panglass/vim-javascript:
-Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 
 
 " ======= LaTeX ============================================
@@ -351,6 +352,11 @@ Plug 'Vimjas/vim-python-pep8-indent'
 " ======= Typescript =======================================
 
 Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
+
+let g:js_indent_flat_switch = 1
+
+" disable typescript-vim indent and use the above:
+let g:typescript_indent_disable = 1
 
 
 " ======= Vim ==============================================
