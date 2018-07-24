@@ -61,6 +61,29 @@ augroup CurrentWindowCursorLine
 augroup END
 
 
+" ======= .swp management ==================================
+
+" keep swp files, but don't pollute the file system
+let s:swapdir = $HOME . '/.vim-tmp/swp'
+if !isdirectory(s:swapdir)
+    " make the directory
+    call mkdir(s:swapdir, 'p')
+endif
+exe 'set directory^=' . s:swapdir
+
+
+" ======= undo management ==================================
+
+" persist undo, but don't pollute the file system
+let s:undodir = $HOME . '/.vim-tmp/undo'
+if !isdirectory(s:undodir)
+    " make the directory
+    call mkdir(s:undodir, 'p')
+endif
+exe 'set undodir=' . s:undodir
+set undofile
+
+
 " ======= Wildignore and other filtering ===================
 
 set wildignore=.svn,.git,*.o,*.a,*.class,*.pyc
