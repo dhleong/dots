@@ -10,8 +10,8 @@ BANNER_CHAR = '='
 def build_banner(snip, text):
     b, m, e, i = (s.strip() for s in get_comment_format())
     separators = 3  # before and after the text, and after the comment
-    before = m + ' ' + (BANNER_CHAR*BANNER_LEFT) + ' '
-    after = ' ' + (BANNER_LENGTH - len(before) - len(text) - 1) * '='
+    before = '\n' + m + ' ' + (BANNER_CHAR*BANNER_LEFT) + ' '
+    after = ' ' + (BANNER_LENGTH - len(before) - len(text) - 1) * '=' + '\n'
     return {
         'before': before,
         'after': after
