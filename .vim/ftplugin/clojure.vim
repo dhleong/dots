@@ -99,6 +99,22 @@ augroup ClojureGroup
 augroup END
 
 " if guard to protect against E127
+if !exists("*s:FindTestFile")
+    function! s:FindTestFile()
+        let ext = expand('%:e')
+        let fileName = substitute(
+            \ expand('%'),
+            \ '.' . ext . '$',
+            \ '_test.' . ext,
+            \ '')
+
+        let dir = expand('%:p:h:t')
+
+        exe 'find ' . dir . '/' . fileName
+    endfunction
+endif
+
+" if guard to protect against E127
 if !exists("*CreateTestFile")
     function! CreateTestFile()
         let type = expand('%:e')
@@ -271,8 +287,7 @@ nnoremap <buffer> <leader>nt :call CreateTestFile()<cr>
 nnoremap <buffer> <leader>nf :call CreateNamespaceFile("tabe")<cr>
 " 'split new file'
 nnoremap <buffer> <leader>snf :call CreateNamespaceFile("vsplit")<cr>
-nnoremap <buffer> <leader>ot :exe 'find ' . substitute(expand('%'), 
-            \ "." . expand('%:e') . "$", "_test." . expand('%:e'), "")<cr>
+nnoremap <buffer> <leader>ot :call <SID>FindTestFile()<cr>
 nnoremap <buffer> <leader>op :exe 'find project.clj'<cr>
 nnoremap <buffer> <leader>top :tabe \| exe 'find project.clj'<cr>
 
