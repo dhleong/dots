@@ -26,6 +26,8 @@ export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$NPM_PACKAGES/bin:$PATH"
 
+export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
