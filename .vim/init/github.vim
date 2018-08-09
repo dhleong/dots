@@ -24,13 +24,11 @@ endfunction
 nnoremap <leader>gp :call WriteAndPush()<CR>
 
 function! PushNewUpstream()
-    let start = "ref: refs/heads/"
-    let branch = fugitive#repo().head_ref()
-    if branch[:len(start)-1] != start
-        echo "Unexpected: " . branch[:len(start)]
+    let branch = FugitiveHead()
+    if branch != ''
+        echo "Not on a branch: "
         return
     endif
-    let branch = branch[len(start):]
     echo system('git --no-pager push -u origin ' . branch)
 endfunction
 nnoremap <leader>gu :call PushNewUpstream()<CR>
@@ -67,8 +65,11 @@ endfunction
 command! GithubOpen call GithubOpenFunc()
 
 function! GithubOpenPR()
-    let branch = fugitive#head()
-    if branch == "master"
+    let branch = FugitiveHead()
+    if branch == ""
+        echo "Not on a branch"
+        return
+    else if branch == "master"
         echo "Don't create a PR from master..."
         return
     endif
