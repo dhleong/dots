@@ -121,7 +121,7 @@ Plug '~/git/vim-jsgf'
 "" YouCompleteMe
 ""
 if !(has('nvim') || exists('g:neojet#version'))
-    Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --cs-completer --js-completer --go-completer'}
+    Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --cs-completer --go-completer'}
     " Plug '~/git/YouCompleteMe', {'do': './install.py --omnisharp-completer'}
 
     " related, for c/c++ stuff
