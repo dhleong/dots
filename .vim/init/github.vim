@@ -25,8 +25,8 @@ nnoremap <leader>gp :call WriteAndPush()<CR>
 
 function! PushNewUpstream()
     let branch = FugitiveHead()
-    if branch != ''
-        echo "Not on a branch: "
+    if branch == ''
+        echo "Not on a branch"
         return
     endif
     echo system('git --no-pager push -u origin ' . branch)
@@ -66,7 +66,7 @@ command! GithubOpen call GithubOpenFunc()
 
 function! GithubOpenPR()
     let branch = FugitiveHead()
-    if branch == ""
+    if branch == ''
         echo "Not on a branch"
         return
     else if branch == "master"
