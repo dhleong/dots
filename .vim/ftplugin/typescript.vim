@@ -24,7 +24,7 @@ endif
 nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab("GoToDefinition")<cr>
 nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
-nnoremap <buffer> <leader>jr :YcmCompleter RefactorRename 
+nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
 
 nnoremap <buffer> <leader>op :exe 'find package.json'<cr>
 nnoremap <buffer> <leader>top :tabe \| exe 'find package.json'<cr>

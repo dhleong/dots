@@ -300,7 +300,6 @@ Plug '~/git/vim-wildwildws'
 
 " ======= Javascript/Node ==================================
 
-Plug 'marijnh/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
 Plug 'moll/vim-node', {'for': 'javascript'}
 
 " tern configs

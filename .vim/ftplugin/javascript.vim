@@ -1,35 +1,7 @@
-function! RunLastTermCommand()
 
-    let currentWinnr = winnr()
-
-    for [idx, term] in items(g:ConqueTerm_Terminals)
-        if !has_key(term, 'bufname')
-            continue
-        endif
-
-        let winnr = bufwinnr(term.bufname)
-        if winnr != -1 && term.active != 0
-            " found a Conque shell window!
-
-            exe term.winnr . 'wincmd w'
-            :startinsert
-            exe 'resize ' . term.winSize
-
-            call term.writeln("cd " . b:fullPath)
-            call term.writeln("clear")
-            call term.writeln("./" . b:fileName)
-
-            exe 'inoremap <buffer> <Tab> <esc>:' . currentWinnr . 'wincmd w<cr>'
-        endif
-    endfor
-
-    echo "No shell found"
-endfunction
-
-nnoremap <buffer> gd :TernDef<CR>
-
-nnoremap <buffer> cpr :call RunLastTermCommand()<cr>
-nnoremap <buffer> K :TernDoc<CR>
+nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
+nnoremap <buffer> K :YcmCompleter GetDoc<cr>
+nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
 
 nnoremap <buffer> gpd :!grunt deploy<cr>
 nnoremap <buffer> gpi :!grunt lambda_invoke<cr>
