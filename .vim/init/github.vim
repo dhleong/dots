@@ -69,7 +69,7 @@ function! GithubOpenPR()
     if branch == ''
         echo "Not on a branch"
         return
-    else if branch == "master"
+    elseif branch == "master"
         echo "Don't create a PR from master..."
         return
     endif
