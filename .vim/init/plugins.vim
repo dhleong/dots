@@ -240,7 +240,7 @@ let g:ip_skipfold = 1
 "" Sneak
 Plug 'justinmk/vim-sneak'
 
-let g:sneak#streak = 1
+let g:sneak#label = 1
 
 
 Plug 'vim-scripts/matchit.zip'
