@@ -45,10 +45,31 @@ defaults write com.apple.finder ShowStatusBar -bool true
 defaults write com.apple.finder ShowPathbar -bool true
 
 
-# ======= Dock ============================================
+# ======= Dock, Dashboard, Hot Corners ====================
+
+# Show Dashboard as an overlay, not as a space
+defaults write com.apple.dock dashboard-in-overlay -bool true
+defaults write com.apple.dashboard dashboard-enabled-state -int 3
 
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
+
+# Hot corners
+# Possible values:
+#  0: no-op
+#  2: Mission Control
+#  3: Show application windows
+#  4: Desktop
+#  5: Start screen saver
+#  6: Disable screen saver
+#  7: Dashboard
+# 10: Put display to sleep
+# 11: Launchpad
+# 12: Notification Center
+
+# Top right screen corner → Dashboard
+defaults write com.apple.dock wvous-tr-corner -int 7
+defaults write com.apple.dock wvous-tr-modifier -int 0
 
 
 # ======= Time machine ====================================
@@ -58,6 +79,14 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 # Disable local Time Machine backups
 hash tmutil &> /dev/null && sudo tmutil disablelocal
+
+
+# ======= Restart affected apps ===========================
+
+for app in "Activity Monitor" \
+    "Dock" ; do
+    killall "${app}" &> /dev/null
+done
 
 
 # ======= Footer ==========================================
