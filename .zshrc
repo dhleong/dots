@@ -36,6 +36,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # load zsh-completions from homebrew
 fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=(/usr/local/share/zsh/site-functions $fpath)
 
 # git-completion.zsh:
 fpath=(~/.zsh $fpath)
@@ -148,7 +149,7 @@ _git-fzf-branch() {
     setopt localoptions pipefail 2> /dev/null
 
     # list subdirs from all project dirs
-    cmd='git branch | ag -v -Q \*'
+    cmd='git branch -a | ag -v -Q \*'
     branches=$(eval $cmd)
     if [ -z "$branches" ]
     then
