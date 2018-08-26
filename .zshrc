@@ -68,7 +68,7 @@ setopt AUTO_PARAM_SLASH
 
 # ======= Aliases ==========================================
 
-alias dots='cd ~/.dotfiles/profile'
+alias dots='cd ~/.dotfiles/dots'
 alias gitco='git commit -a'
 alias gituum='git branch -vv | ag gone | awk '"'"'{print $1}'"'"' | xargs git branch -D'
 alias gits='git status'
