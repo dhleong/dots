@@ -131,10 +131,16 @@ zle -N _fzf-find-file
 _fzf-find-project-dir() {
     setopt localoptions pipefail 2> /dev/null
 
-    # list subdirs from all project dirs
-    wild_dirs=( "${PROJECT_DIRS[@]/%/\/*/}" )
+    # list subdirs from all project dirs that exist locally
+    wild_dirs=()
+    for dir in $PROJECT_DIRS; do
+        if [ -d $dir ]; then
+            wild_dirs+=("$dir/*")
+        fi
+    done
     cmd="ls -d $wild_dirs | ag -v :"
     file=$(eval $cmd | fzf)
+
     if [ -n "$file" ]
     then
         # Not really sure why we can't just `cd` here...
