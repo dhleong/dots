@@ -322,7 +322,7 @@ Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 " ======= Markdown =========================================
 
 Plug 'suan/vim-instant-markdown', {'for': 'markdown',
-            \ 'do': 'sudo gem install redcarpet pygments.rb && sudo npm -g install instant-markdown-d'}
+            \ 'do': 'sudo gem install redcarpet pygments.rb && npm -g install instant-markdown-d'}
 
 let g:instant_markdown_slow = 1
 
@@ -347,6 +347,7 @@ let g:jedi#use_splits_not_buffers = "right"
 "" Indenting
 
 Plug 'Vimjas/vim-python-pep8-indent'
+
 
 " ======= Typescript =======================================
 
