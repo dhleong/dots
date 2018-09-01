@@ -21,6 +21,14 @@ nnoremap <Tab> >>_
 " endfor
 
 
+" ======= Text manipulation ===============================
+
+" vim-surround extensions:
+" You can use `r` as the surround type, but not the target?
+" Let's fix that
+nmap ysar ysa]
+
+
 " ======= Insert/Command-mode navigation ===================
 
 " Navigation in insert mode, for use with multicursor
