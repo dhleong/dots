@@ -21,6 +21,12 @@ function! s:FallbackJumpToNextError()
 endfunction
 
 function! s:JumpToNextError()
+
+    if &diff
+        " use built-in method of jumping to the next diff
+        normal! ]c
+    endif
+
     " make sure diagnostics are up-to-date
     :YcmForceCompileAndDiagnostics
     redraw!
