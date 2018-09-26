@@ -154,6 +154,8 @@ nnoremap <silent> <leader>og :call dhleong#nav#FindGradle()<cr>
 " print unicode pairs
 nnoremap ga :call dhleong#text#GetUnicodePairs()<cr>
 
+" open an url in a browser
+nnoremap gbo :silent exe '!open ' . expand('<cWORD>')<cr>
 
 " ======= Prevent trailing whitespace ======================
 
