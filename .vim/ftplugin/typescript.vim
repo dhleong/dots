@@ -21,8 +21,23 @@ if !exists("*CreateTypescriptTestFile")
     endfunction
 endif
 
+function! s:TslintInfo()
+    let line = line('.')
+    let list = ale#engine#GetLoclist(bufnr('%'))
+    for l in list
+        if l['lnum'] == line
+            echo "Opening..."
+            silent exe "!open https://palantir.github.io/tslint/rules/" . l['code']
+            return
+        endif
+    endfor
+
+    echo "No lint info"
+endfunction
+
 nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab("GoToDefinition")<cr>
 nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
+nnoremap <buffer> gti :call <SID>TslintInfo()<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
 nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
 
