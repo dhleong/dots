@@ -8,13 +8,13 @@ build/
 
 # Compiled source #
 ###################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
-*.pyc
+*.com$
+*.class$
+*.dll$
+*.exe$
+*.o$
+*.so$
+*.pyc$
 
 # Android compiled bin stuff
 ###########################
