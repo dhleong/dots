@@ -293,6 +293,14 @@ Plug 'OmniSharp/omnisharp-vim', {'for': 'cs', 'do': 'git submodule update --init
 Plug 'fatih/vim-go'
 
 
+" ======= HTML/XML ========================================
+
+Plug 'alvan/vim-closetag'
+
+let g:closetag_filetypes = 'xml,html,xhtml,typescript.tsx'
+let g:closetag_xhtml_filenames = '*.xhtml,*.tsx'
+
+
 " ======= HTTP/Rest/Websockets =============================
 
 Plug 'baverman/vial-http' | Plug 'baverman/vial'
