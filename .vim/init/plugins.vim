@@ -297,9 +297,8 @@ Plug 'fatih/vim-go'
 
 Plug 'alvan/vim-closetag'
 
-let g:closetag_filetypes = 'xml,html,xhtml,typescript.tsx'
+let g:closetag_filenames = '*.xml,*.html,*.tsx'
 let g:closetag_xhtml_filenames = '*.xhtml,*.tsx'
-
 
 " ======= HTTP/Rest/Websockets =============================
 
