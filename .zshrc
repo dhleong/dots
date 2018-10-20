@@ -76,6 +76,14 @@ alias guts='git status'
 alias gpp='git pull --prune'
 alias gradle='./gradlew'
 
+macvimPath=/Applications/MacVim.app/Contents/MacOS/Vim
+if [ -f $macvimPath ]
+then
+    export EDITOR="$macvimPath"
+    alias vim="$macvimPath"
+else
+    export EDITOR=vim
+fi
 
 # ======= Vim config =======================================
 
