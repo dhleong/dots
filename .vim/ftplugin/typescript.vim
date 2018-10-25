@@ -40,6 +40,7 @@ nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
 nnoremap <buffer> gti :call <SID>TslintInfo()<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
 nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
+nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
 
 nnoremap <buffer> <leader>op :exe 'find package.json'<cr>
 nnoremap <buffer> <leader>top :tabe \| exe 'find package.json'<cr>
