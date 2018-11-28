@@ -1,6 +1,14 @@
 " nmap <d-r> :Require!<cr>cqq
 
+" borrowed from vim-clojure-highlight
+function! s:SessionExists()
+    return exists('g:fireplace_nrepl_sessions') && len(g:fireplace_nrepl_sessions)
+endfunction
+
 function! s:DoReload()
+    if !s:SessionExists()
+        return
+    endif
     try
         silent :Require
         " norm! mz
@@ -15,7 +23,16 @@ function! s:DoReload()
     catch /nREPL/
         redraw! | echohl Error | echo "No REPL found" | echohl None
     endtry
+endfunction
 
+function! s:DoHighlight()
+    try
+        silent! :ClojureHighlightReferences
+    catch /Fireplace:.*REPL/
+        redraw! | echohl Error | echo "No REPL found" | echohl None
+    catch /nREPL/
+        redraw! | echohl Error | echo "No REPL found" | echohl None
+    endtry
 endfunction
 
 function! s:RunCljsTests(ns)
@@ -96,6 +113,7 @@ endfunction
 augroup ClojureGroup
     autocmd!
     autocmd BufWritePost *.clj,*.cljc call <SID>DoReload()
+    autocmd BufWritePost *.cljs call <SID>DoHighlight()
 augroup END
 
 " if guard to protect against E127
@@ -443,4 +461,3 @@ augroup END
 
 let g:clojure_align_multiline_strings = 1
 let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let', '^go-loop', '^fn-']
-
