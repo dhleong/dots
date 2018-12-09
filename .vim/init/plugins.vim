@@ -94,7 +94,6 @@ let g:ale_pattern_options = {
 
 " ======= Syntax plugins =================================== {{{
 
-" use ap's fork here instead of skammer, to add stylus support
 " NB: css-color breaks if loaded on-demand
 Plug 'ap/vim-css-color'
 
@@ -277,8 +276,8 @@ Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 " Plug '~/git/vim-fireplace', {'for': 'clojure'}
 
 Plug 'guns/vim-clojure-static', {'for': 'clojure'}
-Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
-" Plug '~/git/vim-clojure-highlight', {'for': 'clojure'}
+" Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
+Plug '~/git/vim-clojure-highlight', {'for': 'clojure'}
 Plug 'guns/vim-sexp', {'for': 'clojure'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 
