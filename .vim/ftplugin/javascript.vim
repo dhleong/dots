@@ -1,4 +1,20 @@
 
+function! s:EslintInfo()
+    let line = line('.')
+    let list = ale#engine#GetLoclist(bufnr('%'))
+    for l in list
+        if l['lnum'] == line
+            echo "Opening..."
+            silent exe "!open https://eslint.org/docs/rules/" . l['code']
+            return
+        endif
+    endfor
+
+    echo "No lint info"
+endfunction
+
+nnoremap <buffer> gli :call <SID>EslintInfo()<cr>
+
 nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
 nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
