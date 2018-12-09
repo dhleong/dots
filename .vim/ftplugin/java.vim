@@ -1,30 +1,36 @@
 
 function! ConfigureJava()
 
-    if exists("*intellivim#InProject") && intellivim#InProject()
-        nnoremap <buffer> <silent> <leader>fi :JavaOptimizeImports<cr>
-        nnoremap <buffer> <silent> <leader>jc :FixProblem<cr>
-        nnoremap <buffer> <silent> K :GetDocumentation<cr>
-        nnoremap <buffer> <silent> gd :GotoDeclaration<cr>
-        nnoremap <buffer> <silent> <leader>lf :Locate<cr>
-        nnoremap <buffer> <silent> <leader>lc :Locate class<cr>
-        nnoremap <buffer> <silent> <leader>ji :Implement<cr>
+    " if exists("*intellivim#InProject") && intellivim#InProject()
+    "     nnoremap <buffer> <silent> <leader>fi :JavaOptimizeImports<cr>
+    "     nnoremap <buffer> <silent> <leader>jc :FixProblem<cr>
+    "     nnoremap <buffer> <silent> K :GetDocumentation<cr>
+    "     nnoremap <buffer> <silent> gd :GotoDeclaration<cr>
+    "     nnoremap <buffer> <silent> <leader>lf :Locate<cr>
+    "     nnoremap <buffer> <silent> <leader>lc :Locate class<cr>
+    "     nnoremap <buffer> <silent> <leader>ji :Implement<cr>
+    "
+    "     nnoremap <buffer> <silent> <leader>pr :RunProject<cr>
+    "     nnoremap <buffer> cpr :RunTest<cr>
+    " else
+    "     nnoremap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
+    "     nnoremap <buffer> <silent> <leader>jc :JavaCorrect<cr>
+    "     nnoremap <buffer> <silent> <leader>ji :JavaImpl<cr>
+    "     nnoremap <buffer> <silent> K :JavaDocPreview<cr>
+    "     nnoremap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
+    "     nnoremap <buffer> <silent> <leader>lf :LocateFile<cr>
+    "     nnoremap <buffer> <silent> <leader>lc :LocationListClear<cr>
+    "
+    "     nnoremap <buffer> <silent> <leader>pr :ProjectRun<cr>
+    "     nnoremap <buffer> cpr :JUnit<cr>
+    "     nnoremap <buffer> cpt :JUnit %<cr>
+    " endif
 
-        nnoremap <buffer> <silent> <leader>pr :RunProject<cr>
-        nnoremap <buffer> cpr :RunTest<cr>
-    else
-        nnoremap <buffer> <silent> <leader>fi :JavaImportOrganize<cr>
-        nnoremap <buffer> <silent> <leader>jc :JavaCorrect<cr>
-        nnoremap <buffer> <silent> <leader>ji :JavaImpl<cr>
-        nnoremap <buffer> <silent> K :JavaDocPreview<cr>
-        nnoremap <buffer> <silent> gd :JavaSearch -x implementors -s workspace<cr>
-        nnoremap <buffer> <silent> <leader>lf :LocateFile<cr>
-        nnoremap <buffer> <silent> <leader>lc :LocationListClear<cr>
-
-        nnoremap <buffer> <silent> <leader>pr :ProjectRun<cr>
-        nnoremap <buffer> cpr :JUnit<cr>
-        nnoremap <buffer> cpt :JUnit %<cr>
-    endif
+    " nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab("GoToDefinition")<cr>
+    " nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
+    " nnoremap <buffer> K :YcmCompleter GetDoc<cr>
+    " nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
+    " nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
 
     nmap <buffer> <silent> <leader>pp :ProjectProblems!<cr>
     nmap <buffer> <silent> <leader>jf :JavaCorrect<cr>
