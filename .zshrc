@@ -68,6 +68,7 @@ setopt AUTO_PARAM_SLASH
 
 # ======= Aliases ==========================================
 
+alias adbrestart='adb kill-server && adb start-server && adb devices'
 alias dots='cd ~/.dotfiles/dots'
 alias gitco='git commit -a'
 alias gituum='git branch -vv | ag gone | awk '"'"'{print $1}'"'"' | xargs git branch -D'
