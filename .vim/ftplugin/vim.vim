@@ -6,7 +6,7 @@ setlocal foldmethod=marker
 
 " ======= Mappings =========================================
 
-function! GotoPluginHomepage()
+function! s:gotoPluginHomepage()
     redraw!
     let line = getline('.')
     let matches = matchlist(line, 'Plug ''\(.*\)''')
@@ -22,12 +22,13 @@ function! GotoPluginHomepage()
 endfunction
 
 " goto plugin home/open
-nnoremap <buffer> gph :call GotoPluginHomepage()<cr>
-nnoremap <buffer> gpo :call GotoPluginHomepage()<cr>
+nnoremap <buffer> gph :call <SID>gotoPluginHomepage()<cr>
+nnoremap <buffer> gpo :call <SID>gotoPluginHomepage()<cr>
 
 " let K call vim 'help' when in a vim file
 nnoremap <buffer> K :exe 'help ' .expand('<cword>')<cr>
 
+nnoremap <buffer> <silent> gd :call dhleong#nav#vim#GoToDefinition()<cr>
 
 " ======= Autocmds =========================================
 

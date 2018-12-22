@@ -59,7 +59,7 @@ function! dhleong#projects#SetPathToProject()
 
             " build the path
             let projName = strpart(noDir, 0, idx+1)
-            let pathDir = projDir . projName 
+            let pathDir = projDir . projName
 
             " set it
             exe 'set path=' . pathDir . '**'
