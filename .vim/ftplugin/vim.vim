@@ -41,7 +41,7 @@ augroup VimAutoSource
     " Collapse folds on enter
     autocmd BufWinEnter <buffer> normal zM
 
-    " Display ale linting in vimrc (it's more annoying than helpful)
+    " Disable ale linting in vimrc (it's more annoying than helpful)
     autocmd BufWinEnter .vimrc let b:ale_enabled = 0
     autocmd BufWinEnter */.vim/**.vim let b:ale_enabled = 0
 augroup END
