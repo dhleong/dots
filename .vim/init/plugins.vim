@@ -53,8 +53,7 @@ endif
 
 Plug 'tpope/vim-fugitive'
 
-Plug '~/git/hubr'
-Plug '~/git/lily'
+Plug '~/git/lilium'
 
 " only auto-ref issues assigned to me
 let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'

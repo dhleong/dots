@@ -36,20 +36,6 @@ nnoremap <leader>gu :call PushNewUpstream()<CR>
 "
 " Github fun
 "
-let g:gh_cmd = "/Users/dhleong/code/hubr/gh-cmd"
-function! GithubAcceptFunc()
-    let ticket = expand("<cword>")
-    call hubr#tag(ticket, 'accepted')
-    echo "Accepted Github ticket #" . ticket
-endfunction
-command! GithubAccept call GithubAcceptFunc()
-
-function! GithubTakeFunc()
-    let ticket = expand("<cword>")
-    call hubr#assign(ticket, hubr#me_login())
-    echo "Took Github ticket #" . ticket
-endfunction
-command! GithubTake call GithubTakeFunc()
 
 function! GithubOpenFunc()
     " first, are we on a Plug line?
@@ -59,8 +45,8 @@ function! GithubOpenFunc()
     endif
 
     let ticket = expand("<cword>")
-    let repo = hubr#repo_name()
-    exe ":silent !open https://github.com/" . repo . "/issues/" . ticket
+    let repo = lilium#gh().repoUrl()
+    exe ":silent !open " . repo . "/issues/" . ticket
 endfunction
 command! GithubOpen call GithubOpenFunc()
 
@@ -74,28 +60,18 @@ function! GithubOpenPR()
         return
     endif
 
-    let repo = hubr#repo_name()
+    let repo = lilium#gh().repoUrl()
     if type(repo) == type(0)
         echo "No Github repo known"
         return
     endif
 
-    exe ":silent !open 'https://github.com/" . repo . "/compare/" . branch . "?expand=1'"
+    exe ":silent !open '" . repo . "/compare/" . branch . "?expand=1'"
     echo "Opening PR request for " . branch . "..."
 endfunction
 
-" mark the issue number under the cursor as accept
-nnoremap gha :GithubAccept<cr>
-
-" 'take' the issue under the cursor (assign to 'me')
-nnoremap ght :GithubTake<cr>
-"
 " open the issue under the cursor
 nnoremap gho :GithubOpen<cr>
-
-" awesome Unite plugin for issues
-nnoremap ghi :Unite gh_issue:state=open<cr>
-" nnoremap ghi :Unite gh_issue:state=open:milestone?<cr>
 
 " open a window for creating a pull request from the current branch
 nnoremap <silent> gpr :call GithubOpenPR()<cr>
