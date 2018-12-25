@@ -3,7 +3,7 @@ function! s:tryFind(path, fn)
         " jump to the definition of the function if the path exists
         exe 'find +/fun.*\ ' . a:fn . ' ' . a:path
         return
-    catch E345
+    catch /^Vim\%((\a\+)\)\=:E345
         " 'cannot find on path'; fall through to normal gd
     endtry
 endfunction
@@ -21,7 +21,7 @@ function! dhleong#nav#vim#GoToDefinition()
         endif
 
         " this is sorta hax for the path we set up in the .vim root
-        if s:tryFind('.vim/' . expectedPath, word)
+        if s:tryFind(expectedPath, word)
             " got it!
             return
         endif
