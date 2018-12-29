@@ -66,7 +66,11 @@ function! GithubOpenPR()
         return
     endif
 
-    exe ":silent !open '" . repo . "/compare/" . branch . "?expand=1'"
+    let url = repo . "/compare/" . branch . "?expand=1'"
+
+    " use system() instead of :silent !open to avoid Vim trying to substitute
+    " the alternate buffer name for `#` in branch names
+    call system("open " . shellescape(url))
     echo "Opening PR request for " . branch . "..."
 endfunction
 
