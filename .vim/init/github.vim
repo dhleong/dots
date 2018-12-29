@@ -50,6 +50,11 @@ function! GithubOpenFunc()
 endfunction
 command! GithubOpen call GithubOpenFunc()
 
+function! s:urlencode(str)
+    " this is not nearly complete, but it's sufficient for now...
+    return substitute(a:str, '#', '%23', 'g')
+endfunction
+
 function! GithubOpenPR()
     let branch = FugitiveHead()
     if branch == ''
@@ -66,7 +71,7 @@ function! GithubOpenPR()
         return
     endif
 
-    let url = repo . "/compare/" . branch . "?expand=1'"
+    let url = repo . "/compare/master..." . s:urlencode(branch) . "?expand=1'"
 
     " use system() instead of :silent !open to avoid Vim trying to substitute
     " the alternate buffer name for `#` in branch names
