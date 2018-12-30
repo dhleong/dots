@@ -56,6 +56,11 @@ if expand('%') =~# '-test.ts$'
         autocmd!
         autocmd BufWritePost <buffer> :call latte#Run()
     augroup END
+else
+    augroup TryRunLatte
+        autocmd!
+        autocmd BufWritePost <buffer> :call latte#TryRun()
+    augroup END
 endif
 
 if expand('%:e') ==# 'tsx'
