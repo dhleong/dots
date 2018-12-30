@@ -48,6 +48,9 @@ fpath=(~/.zsh $fpath)
 plugins=(
   # git
   gradle
+
+  # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
+  zsh-syntax-highlighting
 )
 
 # NOTE: See .zshenv for zsh path config
