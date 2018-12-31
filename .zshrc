@@ -210,6 +210,14 @@ _git-push() {
 }
 zle -N _git-push
 
+_git-push-upstream() {
+    branchName=$(git branch | grep \* | cut -d ' ' -f2)
+
+    BUFFER="git push -u origin $branchName"
+    zle accept-line
+}
+zle -N _git-push-upstream
+
 _git-status() {
     BUFFER="gits"
     zle accept-line
@@ -236,6 +244,7 @@ bindkey -M vicmd 'gc' _git-commit
 bindkey -M vicmd 'gd' _git-diff
 bindkey -M vicmd 'gl' _git-pull-prune
 bindkey -M vicmd 'gp' _git-push
+bindkey -M vicmd 'gu' _git-push-upstream
 bindkey -M vicmd 'gs' _git-status
 
 bindkey -M vicmd V edit-command-line
