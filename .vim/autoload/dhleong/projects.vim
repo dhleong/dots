@@ -11,6 +11,7 @@ let g:ProjectParentPaths = [
     \'/Users/dhleong/code/go/src/github.com/interspace/',
     \'/Users/dhleong/code/go/src/github.com/dhleong/',
     \'/Users/dhleong/code/',
+    \'/Users/dhleong/judo/',
     \'/Users/dhleong/.dotfiles/',
 \]
 
