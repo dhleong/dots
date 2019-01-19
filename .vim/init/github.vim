@@ -46,6 +46,10 @@ function! GithubOpenFunc()
 
     let ticket = expand("<cword>")
     let repo = lilium#gh().repoUrl()
+    if repo == ''
+        echo "No Github repo found"
+        return
+    endif
     exe ":silent !open " . repo . "/issues/" . ticket
 endfunction
 command! GithubOpen call GithubOpenFunc()
@@ -65,13 +69,13 @@ function! GithubOpenPR()
         return
     endif
 
-    let repo = lilium#gh().repoUrl()
-    if type(repo) == type(0)
-        echo "No Github repo known"
+    let repoUrl = lilium#gh().repoUrl()
+    if repoUrl == ''
+        echo "No Github repo found"
         return
     endif
 
-    let url = repo . "/compare/master..." . s:urlencode(branch) . "?expand=1'"
+    let url = repoUrl . "/compare/master..." . s:urlencode(branch) . "?expand=1'"
 
     " use system() instead of :silent !open to avoid Vim trying to substitute
     " the alternate buffer name for `#` in branch names
