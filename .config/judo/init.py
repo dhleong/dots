@@ -180,7 +180,7 @@ for key, navDir in dirs.iteritems():
 
     def sendDir(d=navDir): send(d)
     inoremap(ctrlKey, sendDir)
-    nnoremap(ctrlKey, sendDir)
+    # nnoremap(ctrlKey, sendDir)
     createMap('nav', key, sendDir)
     if key == ',':
         createMap('nav', '<', lambda d=navDir: sendOpenDoor(d))
