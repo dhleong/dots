@@ -127,16 +127,43 @@ zle -N _up-directory
 _fzf-find-file() {
     setopt localoptions pipefail 2> /dev/null
 
-    file=$(list-repo-files | fzf)
-    if [ -n "$file" ]
+    local file=""
+
+    # trim spaces
+    local cmd=$(echo $LBUFFER | awk '{$1=$1};1')
+
+    # we might provide special file selection for specific commands
+    case $cmd in
+        judo)
+            file=$(list-repo-files ~/judo | ag '.py' | fzf)
+            ;;
+
+        # default to all files in repo
+        *) file=$(list-repo-files | fzf)
+    esac
+
+    local ret=$?
+
+    # no result? stop
+    [ -n "$file" ] || return
+
+    if [ -n "$LBUFFER" ]
     then
-        if [ -d /Applications/MacVim.app ]; then
-            mvim $file
-        else
-            BUFFER="$EDITOR $file"
-            zle accept-line
-        fi
+        # paste the file path into the command line
+        LBUFFER="${LBUFFER}${file}"
+        zle reset-prompt
+        return $ret
     fi
+
+    # with no command, we wanted to edit the file
+    if [ -d /Applications/MacVim.app ]; then
+        mvim $file
+    else
+        BUFFER="$EDITOR $file"
+        zle accept-line
+    fi
+
+    return $ret
 }
 zle -N _fzf-find-file
 
