@@ -11,6 +11,7 @@ try:
     from judo import inoremap, nnoremap
     from judo import judo
     from judo import config, event
+    from judo import vsplit
 except ImportError, e:
     pass
 
@@ -86,6 +87,11 @@ def mapToPickedFile(dirName):
         judo.mapper.createEmpty()
         judo.mapper.saveAs(mapFile)
         print "Created empty map %s" % mapFile
+
+    primaryWindow = judo.current.window
+    if judo.mapper.window.id == primaryWindow.id:
+        judo.mapper.window = vsplit(20)
+        judo.current.window = primaryWindow
 
     def persistMap():
         if judo.mapper.current is not None:
