@@ -361,11 +361,11 @@ nmap <buffer> ]d <Plug>FireplaceSource
 
 
 "
-" lein repl commands! 
+" lein repl commands!
 "
 
 " (re)start
-nnoremap <buffer> glr :py restart_repl()<cr>
+nnoremap <buffer> glr :pyx restart_repl()<cr>
 " stop
 nnoremap <buffer> gls :call LeinReplCloseFunc()<cr>
 " connect (ala :ConnectRepl)
@@ -375,7 +375,7 @@ nnoremap <buffer> glc :ConnectRepl<cr>
 " Auto-start lein repl
 "
 
-python << EOF
+pyx << EOF
 import os, platform, subprocess, vim
 
 try:
@@ -401,7 +401,7 @@ def open_repl():
 
     line = proc.stdout.readline()
     if not line:
-        print "Error"
+        print("Error")
     else:
         # re-open the file to auto-connect
         # do like this to suppress the "return to continue"
@@ -440,15 +440,15 @@ function! LeinReplConnectFunc(...)
     " endif
 endfunction
 
-command! LeinRepl py open_repl()
+command! LeinRepl pyx open_repl()
 command! -nargs=? ConnectRepl call LeinReplConnectFunc(<args>)
 
 function! LeinReplCloseFunc()
-    py close_all_repl()
+    pyx close_all_repl()
 endfunction
 command! LeinReplClose call LeinReplCloseFunc()
 
-command! LeinReplRestart py restart_repl()
+command! LeinReplRestart pyx restart_repl()
 
 augroup LeinShutDownGroup
     autocmd!
