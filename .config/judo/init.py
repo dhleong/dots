@@ -207,9 +207,13 @@ gmap('gs', 'save')
 # "reload init"
 nnoremap('<space>ri', lambda: normal(':load(MYJUDORC)<cr>'))
 
-# muscle memory from terminal: use <ctrl-r> to search history
-# instead of Judo's default <ctrl-s>. We don't support Vim's
-# notion of U (and I don't need to redo an undo very often)
-# so just map redo there. It sort of makes sense
+# muscle memory from terminal: use <ctrl-r> to search history instead of Judo's
+# default <ctrl-s>. We don't support Vim's notion of U (and I don't need to
+# redo an undo very often) so just map redo there. It sort of makes sense
 nnoremap('<ctrl-r>', '<ctrl-s>')
 nnoremap('U', '<ctrl-r>')
+
+# terminal sends <Up> and <Down> for the scroll wheel; I don't use it anyway
+# (except maybe in cmd mode) so let's just map them to scrolling
+nnoremap('<up>', '<ctrl-y>')
+nnoremap('<down>', '<ctrl-e>')
