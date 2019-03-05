@@ -33,7 +33,7 @@ nnoremap gps :action Android.SyncProject<cr>
 nnoremap gjr :action Refactorings.QuickListPopupAction<cr>
 vnoremap gjr :action Refactorings.QuickListPopupAction<cr>
 
-nnoremap <space>ir :action Android.HotswapChanges<cr>
+nnoremap <space>ir :action android.fd.HotswapAction<cr>
 nnoremap <space>pb :action CompileDirty<cr>
 nnoremap <space>pr :action Run<cr>
 
