@@ -18,6 +18,22 @@ call plug#begin('~/.vim/bundle')
 " ======= Plugin defs and settings =========================
 "
 
+
+" ======= Trial-basis ===================================== {{{
+
+" auto-close brackets, parens, etc. on <cr>
+Plug 'rstacruz/vim-closer'
+
+" auto-close other structures
+Plug 'tpope/vim-endwise'
+
+" less/css convenience
+" Plug 'rstacruz/vim-hyperstyle'
+Plug '~/git/vim-hyperstyle'
+
+" }}}
+
+
 " ======= Color-schemes and visual plugins ================= {{{
 
 Plug 'vim-scripts/zenburn'
@@ -344,6 +360,7 @@ let g:instant_markdown_slow = 1
 
 Plug 'tpope/vim-markdown', {'for': 'markdown'}
 
+let g:markdown_fenced_languages = ['clojure', 'javascript', 'typescript']
 
 " ======= Python ===========================================
 
