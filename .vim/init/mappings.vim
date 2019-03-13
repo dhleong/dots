@@ -157,25 +157,12 @@ nnoremap ga :call dhleong#text#GetUnicodePairs()<cr>
 " open an url in a browser
 nnoremap gbo :silent exe '!open "' . expand('<cWORD>') . '"'<cr>
 
+
 " ======= Prevent trailing whitespace ======================
 
 " Clean up trailing whitespace
-function! s:tryCleanWhitespace()
+inoremap <Enter> <C-R>=dhleong#text#TryCleanWhitespace()<cr>
 
-    " minus 1 to be zero-indexed;
-    " minus another because we're in insert mode
-    let col = col('.') - 2
-    let line = getline('.')[:col]
-    let whitespace = len(matchstr(line, '\s*$'))
-    if len(line) == whitespace
-        let prefix = ''
-    else
-        let prefix = repeat("\<BS>", whitespace)
-    endif
-
-    return prefix . "\<Enter>"
-endfunction
-inoremap <expr> <Enter> <SID>tryCleanWhitespace()
 
 " ======= Smart text manipulation ==========================
 

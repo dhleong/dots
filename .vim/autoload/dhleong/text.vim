@@ -26,3 +26,19 @@ function! dhleong#text#GetUnicodePairs()
     redraw!
     echo raw[1:] . ', Pairs ' . pairs
 endfunction
+
+function! dhleong#text#TryCleanWhitespace()
+    " minus 1 to be zero-indexed;
+    " minus another because we're in insert mode
+    let col = col('.') - 2
+    let line = getline('.')[:col]
+    let whitespace = len(matchstr(line, '\s*$'))
+    if len(line) == whitespace
+        let prefix = ''
+    else
+        let prefix = repeat("\<BS>", whitespace)
+    endif
+
+    return prefix . "\<Enter>"
+endfunction
+
