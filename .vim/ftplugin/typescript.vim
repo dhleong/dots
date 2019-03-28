@@ -67,3 +67,6 @@ if expand('%:e') ==# 'tsx'
     " two-space tabs in tsx files, since we're embedding html
     setlocal tabstop=2 shiftwidth=2
 endif
+
+" format comments like javascript does
+setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
