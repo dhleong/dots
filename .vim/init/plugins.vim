@@ -214,7 +214,7 @@ nnoremap gK :Dash!<cr>
 " nnoremap <C-S-k> :Dash " overrides <c-k> for some reason
 let g:dash_map = {
     \ 'javascript': 'electron',
-    \ 'typescript': ['typescript', 'javascript']
+    \ 'typescript': ['typescript', 'javascript', 'nodejs']
     \ }
 
 " }}}
@@ -336,6 +336,9 @@ Plug 'moll/vim-node', {'for': 'javascript'}
 " tern configs
 let g:tern_show_signature_in_pum = 1
 
+" NOTE: we load this *before* vim-javascript to ensure we prefer
+" this for indent
+Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
 
 " jsx depends on panglass/vim-javascript:
 Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript', {'for': 'javascript'}
@@ -383,7 +386,8 @@ Plug 'Vimjas/vim-python-pep8-indent'
 
 " ======= Typescript =======================================
 
-Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
+" NOTE: this is included above (see the note there)
+" Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
 
 let g:js_indent_flat_switch = 1
 
