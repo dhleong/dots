@@ -74,6 +74,7 @@ setopt AUTO_PARAM_SLASH
 
 alias adbrestart='adb kill-server && adb start-server && adb devices'
 alias dots='cd ~/.dotfiles/dots'
+alias clj-repl='(echo "(use '"'"'clojure.repl)" && cat) | clj -Sdeps '"'"'{:deps {nrepl {:mvn/version "0.6.0"}}}'"'"' -m nrepl.cmdline --port 7888 -i'
 alias gitco='git commit -a'
 alias gituum='git branch -vv | ag gone | awk '"'"'{print $1}'"'"' | xargs git branch -D'
 alias gits='git status'
@@ -277,3 +278,19 @@ bindkey -M vicmd 'gu' _git-push-upstream
 bindkey -M vicmd 'gs' _git-status
 
 bindkey -M vicmd V edit-command-line
+
+
+# ======= Vim term interactions ===========================
+
+# if we're in a vim terminal, send input commands to
+# Vim so our <d-r> mapping can potentially make use of it
+notify_vim_term() {
+    echo -n '\e]51;["call", "Tapi_dhl_onTerm", "'$1'"]\07'
+}
+
+if ! [ -z "$VIM_TERMINAL" ]
+then
+    autoload -U add-zsh-hook
+
+    add-zsh-hook preexec notify_vim_term
+fi

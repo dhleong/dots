@@ -55,7 +55,7 @@ function! s:RunCurrentInSplitTerm()
         " manually split the window so we can open it how we want,
         "  and reuse the window via the curwin option
         exe 'below split | resize ' . winSize
-        let termBufNr = term_start('bash -l', {
+        let termBufNr = term_start(&shell, {
                     \ 'curwin': 1,
                     \ 'term_finish': 'close',
                     \ })
@@ -70,7 +70,10 @@ function! s:RunCurrentInSplitTerm()
     else
         " yes! reuse it
         exe termWinNr . 'wincmd w'
-        call feedkeys('i', 't')
+
+        " is there a better way to focus on it?
+        call feedkeys("i\<bs>", 't')
+        call term_wait()
     endif
 
     " We're not really planning to do much real input
@@ -89,6 +92,13 @@ function! s:RunCurrentInSplitTerm()
         let cmd = cmd . " ./" . fileName
     endif
 
+    " allow user to modify the command by typing it
+    " (for example adding DEBUG=*)
+    let lastCmd = get(b:, "_last_term_cmd", "")
+    if lastCmd =~# cmd
+        let cmd = lastCmd
+    endif
+
     " always cd, just in case
     call term_sendkeys(termBufNr, "cd " . fullPath . "\<cr>")
     call term_sendkeys(termBufNr, "clear\<cr>")
@@ -96,3 +106,7 @@ function! s:RunCurrentInSplitTerm()
 endfunction
 nnoremap <silent> <leader>rs :call <SID>RunCurrentInSplitTerm()<cr>
 nnoremap <silent> <d-r> :call <SID>RunCurrentInSplitTerm()<cr>
+
+func! Tapi_dhl_onTerm(bufnr, command)
+    call setbufvar(a:bufnr, "_last_term_cmd", a:command)
+endfunc
