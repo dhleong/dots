@@ -61,6 +61,11 @@ func! dhleong#nav#ByText(projectRoot, sink)
 endfunc
 
 func! dhleong#nav#InProject(projectRoot, sink)
+    if a:projectRoot =~# '^\s*$'
+        echo "Not in a project directory"
+        return
+    endif
+
     call fzf#run({
         \ 'dir': a:projectRoot,
         \ 'options': s:fzf_options,
