@@ -31,6 +31,11 @@ Plug 'tpope/vim-endwise'
 " Plug 'rstacruz/vim-hyperstyle'
 Plug '~/git/vim-hyperstyle'
 
+" convert between single-line and wrapped argument lists
+Plug 'FooSoft/vim-argwrap'
+
+nnoremap <leader>aw :ArgWrap<cr>
+
 " }}}
 
 

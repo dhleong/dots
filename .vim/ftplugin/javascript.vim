@@ -32,3 +32,7 @@ if expand('%') =~# '-test.js$'
     augroup END
 endif
 
+" ======= Plugin config ===================================
+
+" use trailing commas when wrapping argument lines
+let b:argwrap_tail_comma = 1

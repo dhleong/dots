@@ -70,3 +70,9 @@ endif
 
 " format comments like javascript does
 setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
+
+
+" ======= Plugin config ===================================
+
+" use trailing commas when wrapping argument lines
+let b:argwrap_tail_comma = 1
