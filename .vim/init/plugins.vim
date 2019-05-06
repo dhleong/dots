@@ -21,20 +21,9 @@ call plug#begin('~/.vim/bundle')
 
 " ======= Trial-basis ===================================== {{{
 
-" auto-close brackets, parens, etc. on <cr>
-Plug 'rstacruz/vim-closer'
-
-" auto-close other structures
-Plug 'tpope/vim-endwise'
-
 " less/css convenience
 " Plug 'rstacruz/vim-hyperstyle'
 Plug '~/git/vim-hyperstyle'
-
-" convert between single-line and wrapped argument lists
-Plug 'FooSoft/vim-argwrap'
-
-nnoremap <leader>aw :ArgWrap<cr>
 
 " }}}
 
@@ -137,6 +126,11 @@ Plug '~/git/vim-jsgf'
 
 " ======= Text completion ================================== {{{
 
+" auto-close brackets, parens, etc. on <cr>
+Plug '~/git/vim-mirror'
+
+" auto-close other structures
+Plug 'tpope/vim-endwise'
 
 "" YouCompleteMe
 ""
@@ -244,6 +238,11 @@ let g:tcomment_types = {
     \ 'java_block': '// %s'
     \ }
 " }}}
+
+" convert between single-line and wrapped argument lists
+Plug 'FooSoft/vim-argwrap'
+
+nnoremap <leader>aw :ArgWrap<cr>
 
 
 " ======= Text navigation ================================== {{{
