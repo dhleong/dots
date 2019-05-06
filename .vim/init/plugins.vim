@@ -65,6 +65,8 @@ Plug 'tpope/vim-fugitive'
 
 Plug '~/git/lilium'
 
+let g:lilium_matcher = 'fuzzy'
+
 " only auto-ref issues assigned to me
 let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
 " }}}
