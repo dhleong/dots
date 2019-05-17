@@ -77,15 +77,27 @@ function! s:RunBufferTests()
 
 endfunction
 
-function! GuessRoot()
-    if expand('%:t') == 'project.clj'
+function! s:DetectShadowJs()
+    if expand('%:t') == 'shadow-cljs.edn'
+        return 1
+    endif
+
+    if filereadable(expand(s:GuessRoot() . "/shadow-cljs.edn"))
+        return 1
+    endif
+
+    return 0
+endfunction
+
+function! s:GuessRoot()
+    if expand('%:t') == 'project.clj' || expand('%:t') == 'shadow-cljs.edn'
         return expand('%:p:h')
     endif
     return fnamemodify(exists('b:java_root') ? b:java_root : fnamemodify(expand('%'), ':p:s?.*\zs[\/]\(src\|test\)[\/].*??'), ':~')
 endfunction
 
-function! GuessPort()
-    let l:root = GuessRoot()
+function! s:GuessPort()
+    let l:root = s:GuessRoot()
     let l:path = l:root . "/.nrepl-port"
     if filereadable(expand(l:path))
         return system("cat " . l:path)
@@ -299,15 +311,21 @@ nnoremap <buffer> gpp %a<cr><esc>p%
 " 'go stack open'
 nnoremap <buffer> gso :lopen<cr>
 
-" 'new test'
-nnoremap <buffer> <leader>nt :call CreateTestFile()<cr>
 " 'new file'
-nnoremap <buffer> <leader>nf :call CreateNamespaceFile("tabe")<cr>
+nnoremap <buffer> <leader>nf :call CreateNamespaceFile("e")<cr>
+" 'tab new file'
+nnoremap <buffer> <leader>tf :call CreateNamespaceFile("tabe")<cr>
 " 'split new file'
 nnoremap <buffer> <leader>snf :call CreateNamespaceFile("vsplit")<cr>
+
+" 'new test'
+nnoremap <buffer> <leader>nt :call CreateTestFile()<cr>
 nnoremap <buffer> <leader>ot :call <SID>FindTestFile()<cr>
 nnoremap <buffer> <leader>op :exe 'find project.clj'<cr>
 nnoremap <buffer> <leader>top :tabe \| exe 'find project.clj'<cr>
+
+nnoremap <buffer> <leader>os :exe 'find shadow-cljs.edn'<cr>
+nnoremap <buffer> <leader>tos :tabe \| exe 'find shadow-cljs.edn'<cr>
 
 " ... disable default fireplace maps
 let g:fireplace_no_maps = 1
@@ -423,10 +441,15 @@ def restart_repl():
 EOF
 
 function! LeinReplConnectFunc(...)
-    let l:port = a:0 ? a:1 : GuessPort()
+    let l:port = a:0 ? a:1 : s:GuessPort()
     exe "Connect nrepl://localhost:" . l:port
     if "cljs" == expand("%:e")
-        exe "Piggieback (figwheel-sidecar.repl-api/repl-env)"
+        if s:DetectShadowJs()
+            " TODO pick build?
+            :Piggieback :lib
+        else
+            exe "Piggieback (figwheel-sidecar.repl-api/repl-env)"
+        endif
     endif
     "     let response = fireplace#platform().connection.eval("(require 'piggieback)")
     "     echo response
