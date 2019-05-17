@@ -23,6 +23,8 @@ call plug#begin('~/.vim/bundle')
 
 Plug '~/git/vim-pie'
 
+Plug 'jalvesaq/Nvim-R'
+
 " less/css convenience
 " Plug 'rstacruz/vim-hyperstyle'
 Plug '~/git/vim-hyperstyle'
