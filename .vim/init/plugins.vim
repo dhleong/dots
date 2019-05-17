@@ -21,6 +21,8 @@ call plug#begin('~/.vim/bundle')
 
 " ======= Trial-basis ===================================== {{{
 
+Plug '~/git/vim-pie'
+
 " less/css convenience
 " Plug 'rstacruz/vim-hyperstyle'
 Plug '~/git/vim-hyperstyle'
