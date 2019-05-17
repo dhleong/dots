@@ -32,7 +32,7 @@ function! ConfigureJava()
     " nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
     " nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
 
-    nmap <buffer> <silent> <leader>pp :ProjectProblems!<cr>
+    " nmap <buffer> <silent> <leader>pp :ProjectProblems!<cr>
     nmap <buffer> <silent> <leader>jf :JavaCorrect<cr>
     nmap <buffer> <silent> <leader>jd :JavaDocSearch<cr>
     nmap <buffer> <silent> <leader>js :JavaSearch -x declarations -s project<cr>
