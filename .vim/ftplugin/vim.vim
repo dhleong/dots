@@ -30,6 +30,18 @@ nnoremap <buffer> K :exe 'help ' .expand('<cword>')<cr>
 
 nnoremap <buffer> <silent> gd :call dhleong#nav#vim#GoToDefinition()<cr>
 
+func! s:SourceIfLoaded()
+    let allScriptNames = execute('scriptnames', 'silent!')
+    for line in split(allScriptNames, '\n')
+        let [ id, path ] = split(line, ': ')
+        if expand(path) ==# expand('%:p')
+            silent! source %
+            redraw!
+            echo "Reloaded " . expand('%')
+        endif
+    endfor
+endfunc
+
 " ======= Autocmds =========================================
 
 augroup VimAutoSource
@@ -38,6 +50,7 @@ augroup VimAutoSource
     " Source automatically on write
     autocmd BufWritePost .vimrc source %
     autocmd BufWritePost */.vim/init/*.vim source %
+    autocmd BufWritePost <buffer> call s:SourceIfLoaded()
 
     " Collapse folds on enter
     autocmd BufWinEnter <buffer> normal zM
