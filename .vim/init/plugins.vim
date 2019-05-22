@@ -325,6 +325,9 @@ let g:go_highlight_types = 1
 let g:go_highlight_variable_declarations = 1
 let g:go_highlight_variable_assignments = 1
 
+" use ycm
+let g:go_def_mapping_enabled = 0
+
 
 " ======= HTML/XML ========================================
 

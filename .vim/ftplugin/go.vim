@@ -18,7 +18,8 @@ setlocal listchars=tab:\ \ ,trail:·
 " auto-continue comments on <cr>
 setlocal formatoptions+=r
 
-nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab('', ':GoDef')<cr>
+nnoremap <buffer> gd :YcmCompleter GoTo<cr>
+nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab('', ':YcmCompleter GoTo')<cr>
 nnoremap <buffer> <leader>pb :GoBuild<cr>
 
 nnoremap <buffer> <leader>ji :GoImports<cr>
