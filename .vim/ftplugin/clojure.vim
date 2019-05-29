@@ -56,7 +56,9 @@ function! s:RunCljsTests(ns)
         return
     endif
 
-    " something terrible happened
+    " something terrible happened;
+    " upgrading cider/piggieback fixed this for me
+    echo "Error: No `out` response"
     echo resp
 endfunction
 
