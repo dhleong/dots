@@ -138,6 +138,10 @@ Plug '~/git/vim-mirror'
 " auto-close other structures
 Plug 'tpope/vim-endwise'
 
+" we manually map in mappings.vim to avoid breaking other <cr> map
+" augmentations, like hyperstyle
+let g:endwise_no_mappings = 1
+
 "" YouCompleteMe
 ""
 if !(has('nvim') || exists('g:neojet#version'))

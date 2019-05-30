@@ -161,7 +161,11 @@ nnoremap gbo :silent exe '!open "' . expand('<cWORD>') . '"'<cr>
 " ======= Prevent trailing whitespace ======================
 
 " Clean up trailing whitespace
-inoremap <Enter> <C-R>=dhleong#text#TryCleanWhitespace()<cr>
+" NOTE: we manually add the vim-endwise <Plug> mapping here so
+" remaps from eg vim-hyperstyle don't break things; by default,
+" vim-endwise uses <script>-local maps, which we obviously can't
+" reproduce when re-mapping
+imap <Enter> <C-R>=dhleong#text#TryCleanWhitespace()<cr><Plug>DiscretionaryEnd
 
 
 " ======= Smart text manipulation ==========================
