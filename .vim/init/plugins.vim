@@ -331,6 +331,10 @@ let g:go_highlight_variable_assignments = 1
 
 " use ycm
 let g:go_def_mapping_enabled = 0
+" echo_go_info enabled just causes annoying 'press enter to continue' prompt
+" since we use ycm for completion (reproducible by pressing esc after tabbing
+" to insert a completion)
+let g:go_echo_go_info = 0
 
 
 " ======= HTML/XML ========================================
