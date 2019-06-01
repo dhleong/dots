@@ -15,6 +15,7 @@ endfunction
 
 nnoremap <buffer> gli :call <SID>EslintInfo()<cr>
 
+nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab("GoToDefinition")<cr>
 nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
 nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
