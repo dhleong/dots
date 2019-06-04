@@ -21,8 +21,6 @@ call plug#begin('~/.vim/bundle')
 
 " ======= Trial-basis ===================================== {{{
 
-Plug '~/git/vim-pie'
-
 Plug 'jalvesaq/Nvim-R'
 
 " less/css convenience
@@ -347,7 +345,10 @@ let g:closetag_xhtml_filenames = '*.xhtml,*.tsx'
 
 " ======= HTTP/Rest/Websockets =============================
 
-Plug 'baverman/vial-http' | Plug 'baverman/vial'
+" dhleong/vim-pie
+Plug '~/git/vim-pie'
+
+" dhleong/vim-wildwildws
 Plug '~/git/vim-wildwildws'
 
 
