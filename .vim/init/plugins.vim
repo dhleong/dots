@@ -247,12 +247,13 @@ let g:tcomment_types = {
     \ 'java_inline': '/* %s */',
     \ 'java_block': '// %s'
     \ }
-" }}}
 
 " convert between single-line and wrapped argument lists
 Plug 'FooSoft/vim-argwrap'
 
 nnoremap <leader>aw :ArgWrap<cr>
+
+" }}}
 
 
 " ======= Text navigation ================================== {{{
@@ -428,23 +429,11 @@ Plug 'junegunn/vader.vim', {'for': 'vader'}
 " fzf all the things
 Plug '/usr/local/opt/fzf'
 
-" lazy way to only use sessions on mac
-" (seems to cause problems on windows bash)
-if isdirectory("/Applications/MacVim.app")
-
-    " simple session handling
-    " Plug 'xolox/vim-session' | Plug 'xolox/vim-misc'
-
-    " session configs
-    let g:session_autosave = 'yes'
-    let g:session_autoload = 'no'
-
-endif
-
-
 " simple, lightweight file system navigation
 Plug 'tpope/vim-vinegar'
 
+" like it says on the tin:
+Plug 'ciaranm/securemodelines'
 
 " Footer {{{
 call plug#end()
