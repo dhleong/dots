@@ -193,6 +193,40 @@ _fzf-find-project-dir() {
 }
 zle -N _fzf-find-project-dir
 
+# CTRL-R - Paste the selected command from history into the command line
+_fzf-history-widget() {
+    local selected num
+    setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
+    selected=( $(fc -rl 1 |
+    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort --expect=tab $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" fzf) )
+    local ret=$?
+    if [ -n "$selected" ]; then
+        # accept (execute) the line by default
+        local accept=1
+        if [[ $selected[1] = tab ]]; then
+            # if we hit tab (see --expect=tab above) then allow editing
+            accept=0
+            shift selected
+        fi
+
+        num=$selected[1]
+        if [ -n "$num" ]; then
+            zle vi-fetch-history -n $num
+            if [ $accept -eq 1 ]; then
+                # accept!
+                zle accept-line
+            else
+                # switch to normal mode at the start of line
+                zle beginning-of-line
+                zle vi-cmd-mode
+            fi
+        fi
+    fi
+    zle reset-prompt
+    return $ret
+}
+zle -N _fzf-history-widget
+
 _git-fzf-branch() {
     setopt localoptions pipefail 2> /dev/null
 
@@ -257,7 +291,7 @@ zle -N _git-status
 # ======= Extra mappings ===================================
 
 # ctrl-r starts searching history backward
-bindkey '^r' history-incremental-search-backward
+bindkey '^r' _fzf-history-widget
 
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
