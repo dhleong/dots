@@ -444,7 +444,8 @@ EOF
 
 function! LeinReplConnectFunc(...)
     let l:port = a:0 ? a:1 : s:GuessPort()
-    exe "Connect nrepl://localhost:" . l:port
+    let l:root = s:GuessRoot()
+    exe "Connect " . l:port . " " . l:root
     if "cljs" == expand("%:e")
         if s:DetectShadowJs()
             " TODO pick build?
@@ -453,16 +454,6 @@ function! LeinReplConnectFunc(...)
             exe "Piggieback (figwheel-sidecar.repl-api/repl-env)"
         endif
     endif
-    "     let response = fireplace#platform().connection.eval("(require 'piggieback)")
-    "     echo response
-    "     if empty(get(response, 'ex'))
-    " "     exe "Piggieback 9001"
-        "     echo "Connected via Piggieback"
-        " else
-    "         echo "Error: " response.ex
-    "         echo response.ex
-    "     endif
-    " endif
 endfunction
 
 command! LeinRepl pyx open_repl()
