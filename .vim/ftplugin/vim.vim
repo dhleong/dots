@@ -49,11 +49,10 @@ augroup VimAutoSource
 
     " Source automatically on write
     autocmd BufWritePost .vimrc source %
-    autocmd BufWritePost */.vim/init/*.vim source %
-    autocmd BufWritePost <buffer> call s:SourceIfLoaded()
+    autocmd BufWritePost *.vim call s:SourceIfLoaded()
 
     " Collapse folds on enter
-    autocmd BufWinEnter <buffer> normal zM
+    autocmd BufWinEnter *.vim normal zM
 
     " Disable ale linting in vimrc (it's more annoying than helpful)
     autocmd BufWinEnter .vimrc let b:ale_enabled = 0
