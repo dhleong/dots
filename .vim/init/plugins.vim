@@ -302,11 +302,11 @@ Plug '~/git/vim-latte'
 " ======= Clojure ==========================================
 
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-" Plug '~/git/vim-fireplace', {'for': 'clojure'}
+
+" async semantic highlighting (dhleong/vim-mantel)
+Plug '~/git/vim-mantel'
 
 Plug 'guns/vim-clojure-static', {'for': 'clojure'}
-" Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
-Plug '~/git/vim-clojure-highlight', {'for': 'clojure'}
 Plug 'guns/vim-sexp', {'for': 'clojure'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 

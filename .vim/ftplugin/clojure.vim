@@ -11,23 +11,6 @@ function! s:DoReload()
     endif
     try
         silent :Require
-        " norm! mz
-        " norm! gg
-        " norm cpG
-        " norm! `z
-        " norm cpip
-        " norm! `z
-        silent :ClojureHighlightReferences
-    catch /Fireplace:.*REPL/
-        redraw! | echohl Error | echo "No REPL found" | echohl None
-    catch /nREPL/
-        redraw! | echohl Error | echo "No REPL found" | echohl None
-    endtry
-endfunction
-
-function! s:DoHighlight()
-    try
-        silent! :ClojureHighlightReferences
     catch /Fireplace:.*REPL/
         redraw! | echohl Error | echo "No REPL found" | echohl None
     catch /nREPL/
@@ -127,7 +110,6 @@ endfunction
 augroup ClojureGroup
     autocmd!
     autocmd BufWritePost *.clj,*.cljc call <SID>DoReload()
-    autocmd BufWritePost *.cljs call <SID>DoHighlight()
 augroup END
 
 " if guard to protect against E127
@@ -186,9 +168,6 @@ if !exists("*CreateTestFile")
 
     endfunction
 endif
-
-function! s:pathToNS(path)
-endfunction
 
 " if guard to protect against E127
 if !exists("*CreateNamespaceFile")
