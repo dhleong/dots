@@ -1,8 +1,10 @@
-" nmap <d-r> :Require!<cr>cqq
-
-" borrowed from vim-clojure-highlight
 function! s:SessionExists()
-    return exists('g:fireplace_nrepl_sessions') && len(g:fireplace_nrepl_sessions)
+    try
+        call fireplace#client()
+        return 1
+    catch /no live REPL/
+        return 0
+    endtry
 endfunction
 
 function! s:DoReload()
