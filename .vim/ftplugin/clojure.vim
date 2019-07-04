@@ -2,7 +2,7 @@ function! s:SessionExists()
     try
         call fireplace#client()
         return 1
-    catch /no live REPL/
+    catch /Fireplace:.*REPL/
         return 0
     endtry
 endfunction
