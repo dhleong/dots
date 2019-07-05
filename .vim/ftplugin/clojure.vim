@@ -70,7 +70,7 @@ nnoremap <buffer> gls :call hearth#repl#internal#CloseAll()<cr>
 nnoremap <buffer> glc :call hearth#repl#Connect()<cr>
 
 " ... disable default fireplace maps
-let g:fireplace_no_maps = 0
+let g:fireplace_no_maps = 1
 
 " ... add some custom ones
 nmap <buffer> cnpr :<C-U>call <SID>pprint_recall()<CR>
