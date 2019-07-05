@@ -306,6 +306,9 @@ Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 " async semantic highlighting (dhleong/vim-mantel)
 Plug '~/git/vim-mantel'
 
+" my extra clojure utils (dhleong/vim-hearth)
+Plug '~/git/vim-hearth'
+
 Plug 'guns/vim-clojure-static', {'for': 'clojure'}
 Plug 'guns/vim-sexp', {'for': 'clojure'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
