@@ -82,6 +82,7 @@ nmap <buffer> cnpr :<C-U>call <SID>pprint_recall()<CR>
 
 " ======= default fireplace maps ========================== {{{
 
+nmap <buffer> cp <Plug>FireplacePrint
 nmap <buffer> cpp <Plug>FireplaceCountPrint
 nmap <buffer> cq <Plug>FireplaceEdit
 nmap <buffer> cqq <Plug>FireplaceCountEdit
