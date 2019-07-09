@@ -2,6 +2,10 @@
 function s:ClearEcho(msg)
     echon "\r\r"
     echon a:msg
+
+    " make extra sure we empty the echo buffer, in case
+    " there's output from ALE
+    redraw!
 endfunction
 
 function s:TryFixAle()
