@@ -81,7 +81,7 @@ let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
 Plug 'w0rp/ale'
 
 let g:ale_linters = {
-    \   'clojure': ['clj-kondo'],
+    \   'clojure': ['clj-kondo', 'hearth'],
     \   'go': ['go build', 'gofmt', 'golint', 'go vet'],
     \   'html': ['htmlhint'],
     \   'java': [],
@@ -91,6 +91,7 @@ let g:ale_linters = {
     \}
 
 let g:ale_fixers = {
+    \   'clojure': ['hearth'],
     \   'go': ['gofmt'],
     \   'javascript': ['eslint'],
     \   'typescript': ['tslint'],
