@@ -1,0 +1,22 @@
+set incsearch
+set hlsearch
+
+set ignorecase
+set smartcase
+
+set pasteboard
+set clipboard=unnamed
+
+" hide the status bar with the filename
+set laststatus=0
+
+nnoremap <space>pb :make<cr>
+nnoremap <space>pr :run<cr>
+
+nnoremap <c-p> :xccmd openQuickly<cr>
+nnoremap K :xhelp<cr>
+
+nnoremap ]c :nissue<cr>
+nnoremap [c :pissue<cr>
+
+nnoremap <space>js :xcmenucmd Find Selected Symbol in Workspace<cr>
