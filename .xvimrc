@@ -20,3 +20,6 @@ nnoremap ]c :nissue<cr>
 nnoremap [c :pissue<cr>
 
 nnoremap <space>js :xcmenucmd Find Selected Symbol in Workspace<cr>
+
+nnoremap H :tabn<cr>
+nnoremap L :tabn<cr>
