@@ -25,9 +25,6 @@ endfunction
 nnoremap <buffer> gph :call <SID>gotoPluginHomepage()<cr>
 nnoremap <buffer> gpo :call <SID>gotoPluginHomepage()<cr>
 
-" let K call vim 'help' when in a vim file
-nnoremap <buffer> K :exe 'help ' .expand('<cword>')<cr>
-
 nnoremap <buffer> <silent> gd :call dhleong#nav#vim#GoToDefinition()<cr>
 
 func! s:SourceIfLoaded()
