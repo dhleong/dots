@@ -6,7 +6,7 @@ set diffopt=filler,vertical
 nnoremap <leader>gc :Gcommit -a<CR>
 nnoremap <leader>ga :Gcommit -a --amend<CR>
 nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gd :Gdiff<CR><c-w>=
+nnoremap <leader>gd :Gdiffsplit!<CR><c-w>=
 nnoremap <leader>gb :Gblame<CR>
 
 nnoremap <leader>gk :term git push heroku<cr>
