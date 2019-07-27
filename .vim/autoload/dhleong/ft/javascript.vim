@@ -65,20 +65,14 @@ func! dhleong#ft#javascript#Config()
 
     " ======= testing =========================================
 
+    let ext = '.' . expand('%:e')
+    let testSuffix = '-test' . ext
+
     augroup RunLatte
-        " ensure it exists
+        autocmd!
+        exe 'autocmd BufWritePost *' . testSuffix . ' :call latte#Run()'
+        exe 'autocmd BufWritePost *' . ext . ' :call latte#TryRun()'
     augroup END
-
-    augroup TryRunLatte
-        " ensure it exists
-    augroup END
-
-    let testSuffix = '-test.' . expand('%:e') . '$'
-    if expand('%') =~# testSuffix
-        autocmd RunLatte BufWritePost <buffer> :call latte#Run()
-    else
-        autocmd TryRunLatte BufWritePost <buffer> :call latte#TryRun()
-    endif
 
 
     " ======= Plugin config ===================================
