@@ -28,6 +28,10 @@ func! s:filetypeRunCommands.go(fileName)
     endif
 endfunc
 
+func! s:filetypeRunCommands.swift(fileName)
+    return 'swift ' . a:fileName
+endfunc
+
 function! s:RunCurrentInSplitTerm()
 
     let fileType = &filetype
