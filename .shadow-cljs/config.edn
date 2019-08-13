@@ -1,3 +1,4 @@
 {:dependencies
- [[cider/cider-nrepl "0.21.1"]]
+ [[cider/cider-nrepl "0.21.1"]
+  [refactor-nrepl "2.4.0"]]
  :nrepl {:port 9888}}
