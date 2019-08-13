@@ -20,6 +20,7 @@ setlocal formatoptions+=r
 "
 
 let g:hearth_tpl_author = "Daniel Leong"
+let g:hearth_ignored_build_ids = [':ci']
 
 "
 " vim-clojure-static configs
