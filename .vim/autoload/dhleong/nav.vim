@@ -50,7 +50,7 @@ func! dhleong#nav#FindGradle()
 endfunc
 
 func! dhleong#nav#ByText(projectRoot, sink)
-    let opts = s:fzf_options . ' --with-nth=3 --delimiter=:'
+    let opts = s:fzf_options . ' --with-nth=3 --delimiter=: --exact'
     call fzf#run({
         \ 'dir': a:projectRoot,
         \ 'options': opts,
