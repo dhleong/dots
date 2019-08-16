@@ -1,4 +1,6 @@
 
+.lein/credentials.clj.gpg
+
 # transient vim stuff
 .vim/.netrwhist
 .vim/autoload/plug.vim
