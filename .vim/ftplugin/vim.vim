@@ -48,6 +48,9 @@ augroup VimAutoSource
     autocmd BufWritePost .vimrc source %
     autocmd BufWritePost *.vim call s:SourceIfLoaded()
 
+    " run a vader test in the same tabpage, if any
+    autocmd BufWritePost *.vim call latte#TryRun()
+
     " Collapse folds on enter
     autocmd BufWinEnter *.vim normal zM
 
