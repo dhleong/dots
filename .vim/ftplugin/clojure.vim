@@ -78,6 +78,8 @@ nnoremap <buffer> gls :call hearth#repl#internal#CloseAll()<cr>
 
 func! s:overwriteMaps()
     nnoremap <buffer> cpr :call hearth#test#RunForBuffer()<cr>
+    nmap <buffer> gd <Plug>FireplaceDjump
+    nmap <buffer> <C-W>gd <Plug>FireplaceDtabjump
 endfunc
 
 augroup dhleongClojure
