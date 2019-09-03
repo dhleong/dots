@@ -19,7 +19,6 @@ setlocal formatoptions+=r
 " hearth configs
 "
 
-let g:hearth_tpl_author = "Daniel Leong"
 let g:hearth_ignored_build_ids = [':ci']
 
 "
