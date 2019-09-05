@@ -20,6 +20,7 @@ setlocal formatoptions+=r
 "
 
 let g:hearth_ignored_build_ids = [':ci']
+let g:hearth_ignored_build_regex = ':ci.*'
 
 "
 " vim-clojure-static configs
