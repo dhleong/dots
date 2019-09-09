@@ -18,7 +18,7 @@ export PATH=$PATH:~/.dotfiles/bin
 
 export GOPATH=$HOME/code/go
 export GOBIN=$GOPATH/bin
-export GO111MODULE="on"
+export GO111MODULE="auto"
 export PATH=$PATH:$GOBIN
 
 export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
