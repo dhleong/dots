@@ -1,6 +1,6 @@
 {:user
  {:plugins [[refactor-nrepl "2.4.0"]
-            [cider/cider-nrepl "0.21.1"]
+            [cider/cider-nrepl "0.22.2"]
 
             [lein-ancient "0.6.15"]
             [lein-kibit "0.1.6"]]}
