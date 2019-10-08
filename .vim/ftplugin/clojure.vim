@@ -28,7 +28,8 @@ let g:hearth_ignored_build_regex = ':ci.*'
 
 let g:clojure_align_multiline_strings = 1
 let g:clojure_fuzzy_indent_patterns = [
-    \ '^with', '^def', '^let', '^go-loop', '^fn-', '^when-'
+    \ '^with', '^def', '^let', '^go-loop', '^fn-', '^when-',
+    \ '^at-media',
     \ ]
 
 
