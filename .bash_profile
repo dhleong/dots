@@ -9,12 +9,12 @@ fi
 export CLICOLOR=1
 #export LSCOLORS=ExFxCxDxBxegedabagacad
 export LSCOLORS=GxFxCxDxBxegedabagaced
-PATH=$PATH:/lib/android-sdk
-PATH=$PATH:/lib/android-sdk/platform-tools
-PATH=$PATH:/lib/android-sdk/tools
+PATH=$PATH:~/lib/android-sdk
+PATH=$PATH:~/lib/android-sdk/platform-tools
+PATH=$PATH:~/lib/android-sdk/tools
 PATH=$PATH:/usr/local/git/bin
 PATH=~/bin:$PATH
-NDK=/lib/android-ndk
+NDK=~/lib/android-ndk
 PATH=$PATH:$NDK
 
 PATH=$PATH:/usr/local/mysql/bin
@@ -81,7 +81,7 @@ if [ -z "$JAVA_HOME" ]; then
     fi
 fi
 
-export ANDROID_HOME=/lib/android-sdk
+export ANDROID_HOME=~/lib/android-sdk
 export ANDROID_NDK=$NDK
 export PROGUARD_HOME=$ANDROID_HOME/tools/proguard
 

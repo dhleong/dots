@@ -2,12 +2,12 @@
 # .zshrc isn't loaded for script commands in VIM, etc.
 # see: https://stackoverflow.com/a/18570967
 
-export PATH=$PATH:/lib/android-sdk
-export PATH=$PATH:/lib/android-sdk/platform-tools
-export PATH=$PATH:/lib/android-sdk/tools
+export PATH=$PATH:~/lib/android-sdk
+export PATH=$PATH:~/lib/android-sdk/platform-tools
+export PATH=$PATH:~/lib/android-sdk/tools
 export PATH=$PATH:/usr/local/git/bin
 export PATH=~/bin:$PATH
-export NDK=/lib/android-ndk
+export NDK=~/lib/android-ndk
 export PATH=$PATH:$NDK
 
 export PATH=$PATH:/usr/local/mysql/bin
@@ -32,5 +32,5 @@ export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-export ANDROID_HOME=/lib/android-sdk
+export ANDROID_HOME=~/lib/android-sdk
 export ANDROID_NDK=$NDK
