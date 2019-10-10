@@ -171,7 +171,7 @@ _fzf-find-file() {
 
     return $ret
 }
-zle -N find-file
+zle -N _fzf-find-file
 
 _fzf-find-project-dir() {
     setopt localoptions pipefail 2> /dev/null
