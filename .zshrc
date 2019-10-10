@@ -149,6 +149,9 @@ _fzf-find-file() {
     # no result? stop
     [ -n "$file" ] || return
 
+    # wrap for safety
+    local file="'$file'"
+
     if [ -n "$LBUFFER" ]
     then
         # paste the file path into the command line
@@ -168,7 +171,7 @@ _fzf-find-file() {
 
     return $ret
 }
-zle -N _fzf-find-file
+zle -N find-file
 
 _fzf-find-project-dir() {
     setopt localoptions pipefail 2> /dev/null
@@ -186,7 +189,7 @@ _fzf-find-project-dir() {
     if [ -n "$file" ]
     then
         # Not really sure why we can't just `cd` here...
-        BUFFER="cd $file"
+        BUFFER="cd '$file'"
         zle accept-line
     fi
     zle reset-prompt
