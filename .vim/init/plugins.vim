@@ -78,7 +78,7 @@ let g:hubr#auto_ref_issues_args = 'state=open:assignee=dhleong:milestone?'
 
 "" ALE
 ""
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
 let g:ale_linters = {
     \   'clojure': ['clj-kondo'],
