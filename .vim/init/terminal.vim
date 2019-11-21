@@ -4,6 +4,9 @@
 " use zsh, not bash
 if filereadable("/usr/local/bin/zsh")
     set shell=/usr/local/bin/zsh
+elseif filereadable("/bin/zsh")
+    " catalina?
+    set shell=/bin/zsh
 elseif filereadable("/usr/bin/zsh")
     " windows bash, probably. Or actual linux, but maybe similar?
     set shell=/usr/bin/zsh
