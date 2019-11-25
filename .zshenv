@@ -34,3 +34,8 @@ export ZSH=$HOME/.oh-my-zsh
 
 export ANDROID_HOME=~/lib/android-sdk
 export ANDROID_NDK=$NDK
+
+if [ -f "$HOME/.zshenv.local" ]
+then
+    source $HOME/.zshenv.local
+fi
