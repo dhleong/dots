@@ -99,6 +99,7 @@ bindkey -v
 export KEYTIMEOUT=1
 
 # vim-surround emulation:
+# NOTE: zsh-syntax-highlighting currently breaks these :(
 autoload -Uz surround
 zle -N delete-surround surround
 zle -N add-surround surround
