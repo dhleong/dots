@@ -246,6 +246,10 @@ _git-fzf-branch() {
     branch=$(echo $branches | fzf)
     if [ -n "$branch" ]
     then
+        # if we selected a remote branch, ensure that we don't check it out
+        # in a detached state
+        branch=$(echo $branch | sed 's/remotes\/[^/]*\///')
+
         BUFFER="git co $branch"
         zle accept-line
     fi
