@@ -1,6 +1,9 @@
-
 priority -40
 
+snippet debug "import debug" b
+import _debug from "debug";
+const debug = _debug("${1:package}");
+endsnippet
 
 snippet desc "describe (mocha)" b
 describe("${1:description}", () => {
