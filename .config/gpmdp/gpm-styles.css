@@ -1,1 +1,6 @@
 #ytm-button { visibility: hidden !important; }
+
+/* Removes Youtube button */
+[data-id="yt-indicator"] {
+  display: none;
+}
