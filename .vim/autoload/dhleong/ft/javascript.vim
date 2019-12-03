@@ -67,10 +67,12 @@ func! dhleong#ft#javascript#Config()
 
     let ext = '.' . expand('%:e')
     let testSuffix = '-test' . ext
+    let testSuffix2 = '.test' . ext
 
     exe 'augroup RunLatte' . toupper(expand('%:e'))
         autocmd!
         exe 'autocmd BufWritePost *' . testSuffix . ' :call latte#Run()'
+        exe 'autocmd BufWritePost *' . testSuffix2 . ' :call latte#Run()'
         exe 'autocmd BufWritePost *' . ext . ' :call latte#TryRun()'
     augroup END
 
