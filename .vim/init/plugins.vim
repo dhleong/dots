@@ -87,7 +87,7 @@ let g:ale_linters = {
     \   'java': [],
     \   'javascript': ['eslint'],
     \   'python': ['pylint'],
-    \   'typescript': ['tslint'],
+    \   'typescript': ['tslint', 'tsserver'],
     \}
 
 let g:ale_fixers = {
