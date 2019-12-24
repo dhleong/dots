@@ -71,15 +71,15 @@ def gmap(mapKeys, toSend):
     createMap('nav', mapKeys, fn)
 
 
-def logToPickedFile(dirName):
-    logToFile(pickLogFile(dirName), 'append html')
+def logToPickedFile(dirName = None):
+    logToFile(pickLogFile(), 'append html')
 
 
-def mapToPickedFile(dirName):
+def mapToPickedFile(dirName = None):
     config('map:automagic', True)
     config('map:autorender', True)
 
-    mapFile = pickMapFile(dirName)
+    mapFile = pickMapFile()
     if os.path.exists(mapFile):
         judo.mapper.load(mapFile)
         print "Loaded map %s" % mapFile
@@ -103,9 +103,13 @@ def mapToPickedFile(dirName):
     event("DISCONNECTED", persistMap)
 
 
-def pickLogFile(dirName):
+def pickLogFile():
+    scriptDir = os.path.dirname(expandpath("<sfile>"))
+
     dateStr = date.today().isoformat()
-    path = '/Users/dhleong/judo/%s/logs/%s.html' % (dirName, dateStr)
+    path = '%s/logs/%s.html' % (scriptDir, dateStr)
+
+    print "Logging to %s" % path
 
     dirPath = os.path.dirname(path)
     if not os.path.isdir(dirPath):
@@ -113,8 +117,12 @@ def pickLogFile(dirName):
     return path
 
 
-def pickMapFile(dirName):
-    path = '/Users/dhleong/judo/%s/%s.map' % (dirName, dirName)
+def pickMapFile():
+    scriptDir = os.path.dirname(expandpath("<sfile>"))
+    scriptDirName = os.path.basename(scriptDir)
+
+    path = '%s/%s.map' % (scriptDir, scriptDirName)
+    print "Mapping to %s" % path
 
     dirPath = os.path.dirname(path)
     if not os.path.isdir(dirPath):
