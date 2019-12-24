@@ -368,8 +368,8 @@ let g:tern_show_signature_in_pum = 1
 " this for indent
 Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
 
-" jsx depends on panglass/vim-javascript:
-Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+" " jsx depends on panglass/vim-javascript:
+" Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 
 
 " ======= LaTeX ============================================
@@ -397,7 +397,7 @@ let g:markdown_fenced_languages = ['clojure', 'javascript', 'typescript']
 
 "" Jedi
 ""
-Plug 'davidhalter/jedi-vim', {'for': 'python', 'do': 'git submodule update --init'}
+" Plug 'davidhalter/jedi-vim', {'for': 'python', 'do': 'git submodule update --init'}
 
 let g:jedi#completions_enabled = 0
 let g:jedi#squelch_py_warning = 1
