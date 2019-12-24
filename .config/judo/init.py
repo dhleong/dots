@@ -10,7 +10,7 @@ try:
     from judo import normal
     from judo import inoremap, nnoremap
     from judo import judo
-    from judo import config, event
+    from judo import config, event, expandpath
     from judo import vsplit
 except ImportError, e:
     pass
