@@ -25,6 +25,7 @@ Source 'mappings.vim'
 
 Source 'github.vim'
 Source 'loclist.vim'
+Source 'python.vim'
 Source 'terminal.vim'
 
 "
