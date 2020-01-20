@@ -12,6 +12,7 @@ try:
     from judo import judo
     from judo import config, event, expandpath
     from judo import vsplit
+    from judo import recolor
 except ImportError, e:
     pass
 
@@ -225,3 +226,10 @@ nnoremap('U', '<ctrl-r>')
 # (except maybe in cmd mode) so let's just map them to scrolling
 nnoremap('<up>', '<ctrl-y>')
 nnoremap('<down>', '<ctrl-e>')
+
+#
+# Color theme
+#
+
+# strip unnecessary black backgrounds (my terminal bg is already dark)
+recolor('bg', 'black', 'default')
