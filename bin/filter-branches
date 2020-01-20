@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+
+import fileinput
+import re
+
+remoteBranches = []
+localBranches = []
+
+for line in fileinput.input():
+    if " -> " in line:
+        continue
+
+    line = line.strip()
+    if len(line.strip()) == 0:
+        continue
+
+    if line.find("remotes/") != -1:
+        remoteBranches.append(line)
+    else:
+        localBranches.append(line)
+
+# print in reverse order so the fzf is in the correct interface
+localBranches.reverse()
+for l in localBranches:
+    print(l)
+
+remoteRegex = re.compile("^remotes/[^/]*/")
+
+localBranchesSet = set(localBranches)
+remoteBranches.reverse()
+for r in remoteBranches:
+    localVersion = re.sub(r'^remotes/[^/]*/', '', r)
+    if localVersion not in localBranchesSet:
+        print(r)

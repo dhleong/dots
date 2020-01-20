@@ -235,7 +235,7 @@ _git-fzf-branch() {
     setopt localoptions pipefail 2> /dev/null
 
     # list subdirs from all project dirs
-    cmd='git branch -a | ag -v -Q \*'
+    cmd='git branch -a | ag -v -Q \* | ~/.dotfiles/dots/bin/filter-branches'
     branches=$(eval $cmd)
     if [ -z "$branches" ]
     then
