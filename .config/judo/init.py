@@ -23,6 +23,7 @@ except ImportError, e:
 
 config('clipboard', 'unnamed')
 config('inputlines', 4)
+config('mouse', True)
 
 #
 # Colors
