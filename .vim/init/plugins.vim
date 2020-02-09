@@ -82,6 +82,7 @@ Plug 'dense-analysis/ale'
 
 let g:ale_linters = {
     \   'clojure': ['clj-kondo'],
+    \   'cs': ['OmniSharp'],
     \   'go': ['go build', 'gofmt', 'golint', 'go vet', 'golangci-lint'],
     \   'html': ['htmlhint'],
     \   'java': [],
