@@ -57,6 +57,11 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+if [ -f ~/.iterm2_shell_integration.zsh ]; then
+    source ~/.iterm2_shell_integration.zsh
+fi
+
+
 # ======= Settings =========================================
 
 PROJECT_DIRS=(
