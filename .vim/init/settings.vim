@@ -47,6 +47,7 @@ if !get(g:, 'dhleong_set_completeopt', 0)
 endif
 
 set guioptions=c    " hide useless gui
+set mouse=a         " mouse scrolling in iterm
 set ruler           " we may want to know where we are in the file
 set showcmd         " indicate number of selected chars, etc.
 set vb              " visual bell
