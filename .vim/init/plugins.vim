@@ -88,14 +88,14 @@ let g:ale_linters = {
     \   'java': [],
     \   'javascript': ['eslint'],
     \   'python': ['pylint'],
-    \   'typescript': ['tslint', 'tsserver'],
+    \   'typescript': ['tslint', 'tsserver', 'eslint'],
     \}
 
 let g:ale_fixers = {
     \   'clojure': ['hearth'],
     \   'go': ['gofmt'],
     \   'javascript': ['eslint'],
-    \   'typescript': ['tslint'],
+    \   'typescript': ['eslint', 'tslint'],
     \}
 
 let g:ale_pattern_options = {
@@ -318,7 +318,10 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 
 " ======= C# ===============================================
 
-Plug 'OmniSharp/omnisharp-vim', {'for': 'cs', 'do': 'git submodule update --init --recursive && cd server && xbuild'}
+Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
+
+let g:OmniSharp_server_stdio = 0
+let g:OmniSharp_highlight_types = 2
 
 
 " ======= Go ===============================================
