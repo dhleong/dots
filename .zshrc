@@ -242,22 +242,26 @@ _git-fzf-branch() {
     # list subdirs from all project dirs
     cmd='git branch -a | ag -v -Q \* | ~/.dotfiles/dots/bin/filter-branches'
     branches=$(eval $cmd)
-    if [ -z "$branches" ]
-    then
+    if [ -z "$branches" ]; then
         echo "\nYou're on the only branch"
         zle reset-prompt
         return
     fi
 
     branch=$(echo $branches | fzf)
-    if [ -n "$branch" ]
-    then
+    if [ -n "$branch" ]; then
         # if we selected a remote branch, ensure that we don't check it out
         # in a detached state
         branch=$(echo $branch | sed 's/remotes\/[^/]*\///')
 
-        BUFFER="git co $branch"
-        zle accept-line
+        if [ -n "$LBUFFER" ]; then
+            # paste the branch into the command line
+            LBUFFER="${LBUFFER}${branch}"
+        else
+            # no existing line, just select directly
+            BUFFER="git co $branch"
+            zle accept-line
+        fi
     fi
     zle reset-prompt
 }
@@ -311,6 +315,7 @@ bindkey '^e' end-of-line
 
 bindkey '^f' _fzf-find-file
 bindkey '^p' _fzf-find-project-dir
+bindkey '^b' _git-fzf-branch
 
 # vinegar-like up directory
 bindkey -M vicmd '\-' _up-directory
