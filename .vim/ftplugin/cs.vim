@@ -95,7 +95,7 @@ nnoremap <buffer> gid :YcmCompleter GoToDefinition<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
 nnoremap <buffer> <a-cr> :YcmCompleter FixIt<cr>:cclose<cr>
 nnoremap <buffer> <leader>ji :OmniSharpFixUsings<cr>
-nnoremap <buffer> <leader>jr :OmniSharpRename<cr>
+nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
 nnoremap <buffer> <leader>op :call <SID>OpenProblems()<cr>
 
 nnoremap <buffer> <silent> <leader>pb :call <SID>RunProject('build')<cr>
