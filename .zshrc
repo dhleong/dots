@@ -142,6 +142,10 @@ _fzf-find-file() {
 
     # we might provide special file selection for specific commands
     case $cmd in
+        cd)
+            file=$(list-repo-dirs | fzf)
+            ;;
+
         judo)
             file=$(list-repo-files ~/judo | ag '.py' | fzf)
             ;;
