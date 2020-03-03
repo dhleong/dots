@@ -2,14 +2,8 @@
 "
 
 let s:fzf_options = '--color=dark --no-clear'
+let s:popupTermPatch = "patch-8.2.0286"
 
-" " we don't want results from these dirs (inserted below)
-" " let _dirs = substitute("bin,node_modules,build,proguard,out/cljs,app/js/p,app/components", ",", "\/\\\\|", "g") 
-" let s:_dirs = map([
-"             \ 'node_modules', 'build', 'proguard', 'out',
-"             \ 'app/js/p', 'app/components', 'target', 'builds',
-"             \ ], "v:val . '\/**'")
-" let b:dirs = s:_dirs
 
 func! s:OpenProject(dir)
     let pathDir = a:dir
@@ -51,13 +45,20 @@ endfunc
 
 func! dhleong#nav#ByText(projectRoot, sink)
     let opts = s:fzf_options . ' --with-nth=1,3 --nth=2 --delimiter=:'
-    call fzf#run({
+    let window = 'aboveleft 15new'
+
+    if has(s:popupTermPatch)
+        " popup window!
+        let window = { 'width': 1.0, 'height': 0.8 }
+    endif
+
+    call fzf#run(fzf#vim#with_preview({
         \ 'dir': a:projectRoot,
         \ 'options': opts,
         \ 'source': 'ag --nobreak --noheading --ignore vendor .',
         \ 'sink': function('s:OpenByText', [a:sink]),
-        \ 'window': 'aboveleft 15new',
-        \ })
+        \ 'window': window,
+        \ }))
 endfunc
 
 func! dhleong#nav#InProject(projectRoot, sink)
@@ -66,12 +67,23 @@ func! dhleong#nav#InProject(projectRoot, sink)
         return
     endif
 
+    let window = 'aboveleft 15new'
+    if has(s:popupTermPatch)
+        " popup window!
+        let window = {
+            \ 'width': 0.4,
+            \ 'height': 0.8,
+            \ 'yoffset': 0.2,
+            \ 'xoffset': 0.9,
+            \ }
+    endif
+
     call fzf#run({
         \ 'dir': a:projectRoot,
         \ 'options': s:fzf_options,
         \ 'source': 'list-repo-files',
         \ 'sink': a:sink,
-        \ 'window': 'aboveleft 15new',
+        \ 'window': window,
         \ })
 endfunc
 
