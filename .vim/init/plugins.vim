@@ -438,7 +438,7 @@ Plug 'junegunn/vader.vim', {'for': 'vader'}
 "
 
 " fzf all the things
-Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
 " simple, lightweight file system navigation
