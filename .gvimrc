@@ -20,3 +20,7 @@ let g:Tex_IgnoreLevel=8
 
 let g:Tex_FoldedEnvironments=",algorithm"
 
+if has("gui_macvim")
+    " Remove existing icons from touch bar
+    aunmenu TouchBar
+endif
