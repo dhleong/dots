@@ -13,13 +13,12 @@ nnoremap <leader>gk :term git push heroku<cr>
 
 function! WriteAndPush()
     if expand('%') == "COMMIT_EDITMSG" || expand('%:h') == "COMMIT_EDITMSG"
-        :Gwrite
-        " :Git push
-        !git --no-pager push
-    else
-        " :Git push
-        !git --no-pager push
+        " NOTE: Gwrite seems to be broken here for some reason...
+        norm ZZ
     endif
+
+    " :Git push
+    !git --no-pager push
 endfunction
 nnoremap <leader>gp :call WriteAndPush()<CR>
 
