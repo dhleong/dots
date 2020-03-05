@@ -6,6 +6,7 @@ set smartjoin
 set clipboard=unnamed
 
 " plugins
+set argtextobj
 set surround
 set commentary
 set repeat
