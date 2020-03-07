@@ -1,5 +1,5 @@
 nnoremap <buffer> <d-r> :Vader<cr>
-call scriptease#setup_vim()
+" call scriptease#setup_vim()
 
 augroup RunLatte
     autocmd!
