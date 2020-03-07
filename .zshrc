@@ -210,8 +210,12 @@ zle -N _fzf-find-project-dir
 _fzf-history-widget() {
     local selected num
     setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
-    selected=( $(fc -rl 1 |
-    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --preview='echo {} | sed \"s/^[ 0-9]*//\"' --preview-window=down:5:wrap --bind=ctrl-r:toggle-sort --expect=tab $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" fzf) )
+    selected=( $(fc -rl 1 |\
+        # distinct-ify commands:
+        sort -t ' ' -ruk4 |\
+        # re-sort by newest-first
+        sort -t ' ' -rnk1 |\
+        FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-60%} $FZF_DEFAULT_OPTS --nth=2..,.. --tiebreak=index --preview='echo {} | sed \"s/^[ 0-9]*//\"' --preview-window=down:5:wrap --bind=ctrl-r:toggle-sort --expect=tab $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m --no-sort" fzf) )
     local ret=$?
     if [ -n "$selected" ]; then
         # accept (execute) the line by default
