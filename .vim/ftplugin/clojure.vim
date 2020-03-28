@@ -36,7 +36,7 @@ let s:fuzzy_indent_specter = [
     \ ]
 
 let g:clojure_fuzzy_indent_patterns = [
-    \ '^with', '^def', '^let', '^go-loop', '^fn-', '^when-',
+    \ '^with', '^def', '^let', '^plet', '^go-loop', '^fn-', '^when-',
     \ ]
     \ + s:fuzzy_indent_spade
     \ + s:fuzzy_indent_specter
