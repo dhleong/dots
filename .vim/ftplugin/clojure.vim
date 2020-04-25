@@ -55,6 +55,9 @@ exe 'nmap <buffer> cqu cqp<up>' &cedit | norm 0
 " 'nice print recall'
 nnoremap <buffer> cnpr :<C-U>call <SID>pprint_recall()<CR>
 
+" re-evaluate the current defn
+nmap <buffer> cpf cpaF
+
 " paste AFTER the current form, on the same level
 " we use gpp instead of gp to prevent confusion with gpr
 nnoremap <buffer> gpp %a<cr><esc>p%
