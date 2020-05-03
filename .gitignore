@@ -6,3 +6,6 @@
 .vim/autoload/plug.vim
 .vim/bundle
 .vim/sessions
+
+# don't commit custom zsh plugins
+.zsh/plugins
