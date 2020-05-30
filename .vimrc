@@ -31,6 +31,25 @@ Source 'loclist.vim'
 Source 'python.vim'
 Source 'terminal.vim'
 
+" NOTE: TEMPORARY
+
+let g:ycm_language_server = [
+    \ {
+    \   'name': 'sparkling',
+    \   'cmdline': ['/Users/dhleong/git/sparkling/run'],
+    \   'filetypes': ['clojure'],
+    \   'project_root_files': ['deps.edn', 'project.clj', 'shadow-cljs.edn'],
+    \ }
+    \ ]
+
+func! ShowLogs()
+    call feedkeys(":YcmToggleLogs spark\<tab>\<cr>", 'nt')
+    call histdel(':', 'YcmToggleLogs spark.*')
+endfunc
+
+nnoremap <leader>yr :YcmCompleter RestartServer<cr>
+nnoremap <leader>yt :call ShowLogs()<cr>
+
 "
 " My project path script init
 "
