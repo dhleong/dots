@@ -32,10 +32,12 @@ Plug '~/git/vim-hyperstyle'
 
 " ======= Color-schemes and visual plugins ================= {{{
 
-Plug 'vim-scripts/zenburn'
+if !exists('g:started_by_firenvim')
+    Plug 'vim-scripts/zenburn'
 
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+    Plug 'bling/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+endif
 
 " airline configs {{{
 set laststatus=2
@@ -87,7 +89,7 @@ let g:ale_linters = {
     \   'html': ['htmlhint'],
     \   'java': [],
     \   'javascript': ['eslint'],
-    \   'python': ['pylint'],
+    \   'python': ['pylint', 'flake8'],
     \   'typescript': ['tslint', 'tsserver', 'eslint'],
     \}
 
@@ -147,8 +149,9 @@ let g:endwise_no_mappings = 1
 "" YouCompleteMe
 ""
 if !(has('nvim') || exists('g:neojet#version'))
-    Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --cs-completer --go-completer --ts-completer'}
-    " Plug '~/git/YouCompleteMe', {'do': './install.py --omnisharp-completer'}
+    " Plug 'puremourning/YouCompleteMe', {'do': './install.py --clang-completer --cs-completer --go-completer --ts-completer'}
+    " Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --cs-completer --go-completer --ts-completer'}
+    Plug '~/git/YouCompleteMe', {'do': './install.py --clang-completer --cs-completer --go-completer --ts-completer'}
 
     " related, for c/c++ stuff
     Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
@@ -296,6 +299,12 @@ Plug 'wellle/targets.vim'
 
 " }}}
 
+
+" ======= Neovim-specific =================================
+
+if has('nvim')
+    Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+endif
 
 " ======= Language-specific ================================
 "
