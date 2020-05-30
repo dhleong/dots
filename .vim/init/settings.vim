@@ -44,6 +44,11 @@ if !get(g:, 'dhleong_set_completeopt', 0)
     let g:dhleong_set_completeopt = 1
 
     set completeopt=menu,preview,longest
+
+    if has('patch-8.1.1880')
+        set completeopt+=popup
+        set completepopup=border:off,width:40
+    endif
 endif
 
 set guioptions=c    " hide useless gui
