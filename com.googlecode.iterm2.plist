@@ -446,14 +446,14 @@
 		<key>0x19-0x60000</key>
 		<dict>
 			<key>Action</key>
-			<integer>39</integer>
+			<integer>2</integer>
 			<key>Text</key>
 			<string></string>
 		</dict>
 		<key>0x9-0x40000</key>
 		<dict>
 			<key>Action</key>
-			<integer>32</integer>
+			<integer>0</integer>
 			<key>Text</key>
 			<string></string>
 		</dict>
@@ -606,15 +606,19 @@ Marks and Annotations.Next Mark</string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>110 353 592 584 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-300 1199 668 633 -373 960 2560 1417 </string>
+	<string>923 142 570 429 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>768 508 570 429 0 0 1536 937 </string>
+	<string>877 508 570 429 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>951 442 570 429 0 0 1536 937 </string>
+	<string>955 44 570 429 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>535 479 570 429 0 0 1536 937 </string>
+	<string>446 482 570 429 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>93 192 1074 650 0 0 1536 937 </string>
+	<string>898 345 570 429 0 0 1536 937 </string>
+	<key>NSWindow Frame iTerm Window 5</key>
+	<string>337 336 570 429 0 0 1536 937 </string>
+	<key>NSWindow Frame iTerm Window 6</key>
+	<string>826 446 570 429 0 0 1536 937 </string>
 	<key>NeverWarnAboutShortLivedSessions_A78E4FB6-F136-4DB8-8B30-A2B3875356C0</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_A78E4FB6-F136-4DB8-8B30-A2B3875356C0_selection</key>
@@ -2000,6 +2004,7 @@ Marks and Annotations.Next Mark</string>
 	<array>
 		<string>3.3.7</string>
 		<string>3.3.8</string>
+		<string>3.3.9</string>
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
@@ -2014,6 +2019,10 @@ Marks and Annotations.Next Mark</string>
 	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
 	<integer>0</integer>
+	<key>NoSyncDoNotWarnBeforePastingOneLineEndingInNewlineAtShellPrompt</key>
+	<true/>
+	<key>NoSyncDoNotWarnBeforePastingOneLineEndingInNewlineAtShellPrompt_selection</key>
+	<integer>1</integer>
 	<key>NoSyncEnableAutomaticProfileSwitchingLogging</key>
 	<false/>
 	<key>NoSyncFrame_SharedPreferences</key>
@@ -2026,7 +2035,7 @@ Marks and Annotations.Next Mark</string>
 	<key>NoSyncInstallationId</key>
 	<string>3CB3BCCF-CDE8-4F34-8E82-26FC6AE9B9D6</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>9</integer>
+	<integer>30</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2827,7 +2836,7 @@ Marks and Annotations.Next Mark</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-02-13T22:18:49Z</date>
+	<date>2020-05-30T16:36:58Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -2851,7 +2860,7 @@ Marks and Annotations.Next Mark</string>
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.3.8</string>
+	<string>3.3.9</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
