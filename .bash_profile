@@ -182,3 +182,5 @@ if [ -f /usr/libexec/path_helper ]; then
     eval $(/usr/libexec/path_helper -s)
 fi
 source ~/.bashrc
+
+export PATH="$HOME/.cargo/bin:$PATH"
