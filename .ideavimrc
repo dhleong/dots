@@ -20,6 +20,8 @@ set repeat
 " (I almost always hit esc when I get in there anyway)
 set idearefactormode=keep
 
+" more magical Join command
+set ideajoin
 
 " ======= mappings ========================================
 
