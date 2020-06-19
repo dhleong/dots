@@ -5,11 +5,24 @@ set smartjoin
 
 set clipboard=unnamed
 
-" plugins
+
+" ======= plugins =========================================
+
 set argtextobj
 set surround
 set commentary
 set repeat
+
+
+" ======= idea-specific config ============================
+
+" stay in normal mode when performing a refactor
+" (I almost always hit esc when I get in there anyway)
+set idearefactormode=keep
+
+
+" ======= mappings ========================================
+
 
 nnoremap H gT
 nnoremap L gt
