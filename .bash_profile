@@ -87,8 +87,6 @@ export PROGUARD_HOME=$ANDROID_HOME/tools/proguard
 
 # export LEIN_JAVA_CMD=/usr/local/bin/drip
 
-export HOMEBREW_GITHUB_API_TOKEN=08cec7f5967f472ededdb39dc031898a648b6155
-
 alias aj='ag --java'
 alias airportcycle='networksetup -setairportpower airport off; networksetup -setairportpower airport on'
 alias dots='cd ~/.dotfiles/profile'
