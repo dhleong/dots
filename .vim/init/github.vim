@@ -86,4 +86,4 @@ endfunction
 nnoremap gho :GithubOpen<cr>
 
 " open a window for creating a pull request from the current branch
-nnoremap <silent> gpr :call GithubOpenPR()<cr>
+nnoremap <silent> gpr :term gh pr create<cr>
