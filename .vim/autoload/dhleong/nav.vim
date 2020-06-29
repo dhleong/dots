@@ -100,3 +100,8 @@ func! dhleong#nav#Projects()
         \ 'sink': function('s:OpenProject'),
         \ })
 endfunc
+
+func! dhleong#nav#Link()
+    let url = expand("<cfile>")
+    exe "!open " . url
+endfunc

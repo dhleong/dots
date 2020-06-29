@@ -142,6 +142,10 @@ nnoremap <silent> <leader>p :call dhleong#nav#Projects()<cr>
 " nnoremap <silent> \  :<C-u>Unite -buffer-name=search
 "     \ line -start-insert<CR>
 
+" NOTE: netrw's gx is not behaving for some reason. let's just
+" use our own because netrw is weird
+nnoremap <silent> gx :call dhleong#nav#Link()<cr>
+
 
 " ======= Misc =============================================
 
