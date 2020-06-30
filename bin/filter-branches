@@ -14,7 +14,7 @@ for line in fileinput.input():
     if len(line.strip()) == 0:
         continue
 
-    if line == "remotes/origin/master":
+    if line in ["remotes/origin/main", "remotes/origin/master"]:
         continue
 
     if line.find("remotes/") != -1:
