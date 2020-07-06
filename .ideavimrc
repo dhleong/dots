@@ -55,6 +55,7 @@ nnoremap <space>ir :action android.deploy.ApplyChanges<cr>
 nnoremap <space>ic :action android.deploy.CodeSwap<cr>
 nnoremap <space>pb :action Compile<cr>
 nnoremap <space>pr :action Run<cr>
+nnoremap <space>pd :action Debug<cr>
 
 " 'go re-load'
 nnoremap grl :action Compile<cr>
