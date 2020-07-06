@@ -194,6 +194,8 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 
 let g:ycm_always_populate_location_list = 1
 
+let g:ycm_tsserver_binary_path = "/Users/dhleong/.npm-packages/bin/tsserver"
+
 " let g:ycm_max_diagnostics_to_display = 50
 " }}}
 
