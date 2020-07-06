@@ -53,8 +53,11 @@ vnoremap gjr :action Refactorings.QuickListPopupAction<cr>
 
 nnoremap <space>ir :action android.deploy.ApplyChanges<cr>
 nnoremap <space>ic :action android.deploy.CodeSwap<cr>
-nnoremap <space>pb :action CompileDirty<cr>
+nnoremap <space>pb :action Compile<cr>
 nnoremap <space>pr :action Run<cr>
+
+" 'go hot swap'
+nnoremap ghs :action Compile<cr>
 
 nnoremap <space>jc :action ShowIntentionActions<cr>
 nnoremap <space>jr :action RenameElement<cr>
