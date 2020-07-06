@@ -56,8 +56,8 @@ nnoremap <space>ic :action android.deploy.CodeSwap<cr>
 nnoremap <space>pb :action Compile<cr>
 nnoremap <space>pr :action Run<cr>
 
-" 'go hot swap'
-nnoremap ghs :action Compile<cr>
+" 'go re-load'
+nnoremap grl :action Compile<cr>
 
 nnoremap <space>jc :action ShowIntentionActions<cr>
 nnoremap <space>jr :action RenameElement<cr>
