@@ -46,6 +46,7 @@ nnoremap gpr :action ChooseRunConfiguration<cr>
 " 'sync'; so we don't have to use the mouse to do this
 " whenever we change gradle configs
 nnoremap gps :action Android.SyncProject<cr>
+nnoremap glc :action ActivateLogcatToolWindow<cr>
 
 " 'go java refactor'
 nnoremap gjr :action Refactorings.QuickListPopupAction<cr>
