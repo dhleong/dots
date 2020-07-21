@@ -2,6 +2,15 @@
 # .zshrc isn't loaded for script commands in VIM, etc.
 # see: https://stackoverflow.com/a/18570967
 
+macvimPath=/Applications/MacVim.app/Contents/MacOS/Vim
+if [ -f $macvimPath ]
+then
+    export EDITOR="$macvimPath"
+    alias vim="$macvimPath"
+else
+    export EDITOR=vim
+fi
+
 export PATH=$PATH:~/lib/android-sdk
 export PATH=$PATH:~/lib/android-sdk/platform-tools
 export PATH=$PATH:~/lib/android-sdk/tools
