@@ -52,6 +52,8 @@ nnoremap glc :action ActivateLogcatToolWindow<cr>
 nnoremap gjr :action Refactorings.QuickListPopupAction<cr>
 vnoremap gjr :action Refactorings.QuickListPopupAction<cr>
 
+nnoremap gjo :action OverrideMethods<cr>
+
 nnoremap <space>ir :action android.deploy.ApplyChanges<cr>
 nnoremap <space>ic :action android.deploy.CodeSwap<cr>
 nnoremap <space>pb :action Compile<cr>
