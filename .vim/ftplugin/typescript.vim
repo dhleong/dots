@@ -13,7 +13,7 @@ function! s:TslintInfo()
     echo "No lint info"
 endfunction
 
-nnoremap <buffer> gti :call <SID>TslintInfo()<cr>
+nnoremap <buffer> gli :call <SID>TslintInfo()<cr>
 
 if expand('%:e') ==# 'tsx'
     " two-space tabs in tsx files, since we're embedding html
