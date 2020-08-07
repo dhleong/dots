@@ -601,20 +601,22 @@ Marks and Annotations.Next Mark</string>
 	</dict>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
 	<string>368 366 799 448 0 0 1536 937 </string>
+	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
+	<string>460 572 616 174 0 0 1536 937 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>458 408 620 392 0 0 1536 937 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>110 353 592 584 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>944 96 570 429 0 0 1536 937 </string>
+	<string>889 35 570 429 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>915 227 570 429 0 0 1536 937 </string>
+	<string>0 508 570 429 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>702 508 591 429 0 0 1536 937 </string>
+	<string>825 177 570 429 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>1212 1732 570 429 -726 960 3440 1417 </string>
+	<string>938 183 570 429 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>1942 1631 570 429 -726 960 3440 1417 </string>
+	<string>260 309 570 429 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
 	<string>337 336 570 429 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
@@ -2036,7 +2038,7 @@ Marks and Annotations.Next Mark</string>
 	<key>NoSyncInstallationId</key>
 	<string>3CB3BCCF-CDE8-4F34-8E82-26FC6AE9B9D6</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>36</integer>
+	<integer>38</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2787,6 +2789,8 @@ Marks and Annotations.Next Mark</string>
 	</dict>
 	<key>NoSyncTipOfTheDayEligibilityBeganTime</key>
 	<real>599603122.183339</real>
+	<key>PMPrintingExpandedStateForPrint2</key>
+	<false/>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -2824,6 +2828,8 @@ Marks and Annotations.Next Mark</string>
 	<string>/Users/dhleong/.dotfiles/dots</string>
 	<key>PreserveWindowSizeWhenTabBarVisibilityChanges</key>
 	<true/>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>QuitWhenAllWindowsClosed</key>
 	<true/>
 	<key>SUAutomaticallyUpdate</key>
@@ -2837,7 +2843,7 @@ Marks and Annotations.Next Mark</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-06-21T12:01:24Z</date>
+	<date>2020-07-28T15:10:38Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
