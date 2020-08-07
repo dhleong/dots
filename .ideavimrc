@@ -77,5 +77,6 @@ nnoremap <space>gp :action Vcs.Push<cr>
 
 nnoremap <space>nf :action Kotlin.NewFile<cr>
 nnoremap <space>ns :action Kotlin.NewScript<cr>
+nnoremap <space>nl :action template.create.XMLLayout XML File<cr>
 
 nnoremap <space>fl :action Flutter.Toolbar.ReloadAction<cr>
