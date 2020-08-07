@@ -44,7 +44,14 @@ func! dhleong#nav#FindGradle()
 endfunc
 
 func! dhleong#nav#ByText(projectRoot, sink)
-    let opts = s:fzf_options . ' --with-nth=1,3 --nth=2 --delimiter=:'
+    " NOTE: use 3.. as the query and presentation target
+    " to handle Swift (and other code that uses colons).
+    " Use no-extended since we generally want strings of results
+    let opts = s:fzf_options . ' '
+            \ . '--with-nth=1,3.. '
+            \ . '--nth=3.. '
+            \ . '--no-extended '
+            \ . '--delimiter=:'
     let window = 'aboveleft 15new'
 
     if has(s:popupTermPatch)
