@@ -47,9 +47,11 @@ func! dhleong#nav#ByText(projectRoot, sink)
     " NOTE: use 3.. as the query and presentation target
     " to handle Swift (and other code that uses colons).
     " Use no-extended since we generally want strings of results
+    " NOTE: nth=2.. instead of 3 is (I THINK) because with-nth
+    " changes the indexing, so 3 becomes 2.
     let opts = s:fzf_options . ' '
             \ . '--with-nth=1,3.. '
-            \ . '--nth=3.. '
+            \ . '--nth=2.. '
             \ . '--no-extended '
             \ . '--delimiter=:'
     let window = 'aboveleft 15new'
