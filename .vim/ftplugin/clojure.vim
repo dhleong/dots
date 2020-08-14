@@ -2,11 +2,17 @@
 " ======= utils ===========================================
 
 function! s:pprint_recall() abort
-    let ns = 'clojure'
+    let platform = 'clojure'
     if "cljs" == expand("%:e")
         let ns = 'cljs'
     endif
-    call fireplace#eval('(' . ns . '.pprint/pp)')
+
+    " NOTE: if we just eval directly, shadow may simply echo it in the console
+    " instead of returning it (this could also just be due to an old version
+    " of shadow...)
+    " call fireplace#eval('(' . ns . '.pprint/pp)')
+    let resp = fireplace#platform().Eval('(symbol (with-out-str (' . ns . '.pprint/pp)))')
+    echo join(resp.value, "\n")
 endfunction
 
 
@@ -53,7 +59,7 @@ nmap <buffer> cql cqp<up><cr>
 exe 'nmap <buffer> cqu cqp<up>' &cedit | norm 0
 
 " 'nice print recall'
-nnoremap <buffer> cnpr :<C-U>call <SID>pprint_recall()<CR>
+nnoremap <silent> <buffer> cnpr :<C-U>call <SID>pprint_recall()<CR>
 
 " re-evaluate the current defn
 nmap <buffer> cpf cpaF
