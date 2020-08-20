@@ -105,6 +105,8 @@ let g:ale_pattern_options = {
     \   },
     \}
 
+let g:ale_javascript_eslint_options = '--cache'
+
 " }}}
 
 
