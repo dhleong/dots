@@ -58,32 +58,21 @@ function! s:urlencode(str)
     return substitute(a:str, '#', '%23', 'g')
 endfunction
 
-function! GithubOpenPR()
-    let branch = FugitiveHead()
-    if branch == ''
-        echo "Not on a branch"
-        return
-    elseif branch == "master"
-        echo "Don't create a PR from master..."
-        return
-    endif
-
-    let repoUrl = lilium#gh().repoUrl()
-    if repoUrl == ''
-        echo "No Github repo found"
-        return
-    endif
-
-    let url = repoUrl . "/compare/master..." . s:urlencode(branch) . "?expand=1'"
-
-    " use system() instead of :silent !open to avoid Vim trying to substitute
-    " the alternate buffer name for `#` in branch names
-    call system("open " . shellescape(url))
-    echo "Opening PR request for " . branch . "..."
-endfunction
-
 " open the issue under the cursor
 nnoremap gho :GithubOpen<cr>
 
+func! s:openGithubPrCreator()
+    let args = ''
+
+    " if this is a branch against eg a staging branch, specify the
+    " base branch automatically:
+    let parentBranch = dhleong#git#ParentBranch()
+    if parentBranch !=# ''
+        let args .= ' --base ' . parentBranch
+    endif
+
+    exe 'term gh pr create' . args
+endfunc
+
 " open a window for creating a pull request from the current branch
-nnoremap <silent> gpr :term gh pr create<cr>
+nnoremap <silent> gpr :call <SID>openGithubPrCreator()<cr>
