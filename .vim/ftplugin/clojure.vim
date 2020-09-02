@@ -68,6 +68,8 @@ nmap <buffer> cpf cpaF
 " we use gpp instead of gp to prevent confusion with gpr
 nnoremap <buffer> gpp %a<cr><esc>p%
 
+nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
+
 "
 " Project file navigation
 "
