@@ -20,6 +20,10 @@ func! dhleong#git#DefaultBranch()
                 \."| sed 's@^refs/remotes/origin/@@'")
 endfunc
 
+func! dhleong#git#HashOf(obj)
+    return system('git rev-parse ' . a:obj)
+endfunc
+
 func! dhleong#git#ParentBranch()
     " NOTE: if we're not currently on the default branch, returns the "parent"
     " branch for the current git ref. If on the default branch, or the
@@ -34,6 +38,11 @@ func! dhleong#git#ParentBranch()
 
     let rawParent = s:parentBranchIsh()
     if rawParent == defaultBranch
+        return ''
+    endif
+
+    if dhleong#git#HashOf(rawParent) ==# dhleong#git#HashOf(defaultBranch)
+        " IE: there's an "empty" branch aligned with main
         return ''
     endif
 
