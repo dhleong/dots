@@ -15,19 +15,6 @@ endfunction
 
 nnoremap <buffer> gli :call <SID>TslintInfo()<cr>
 
-if expand('%:e') ==# 'tsx'
-    " two-space tabs in tsx files, since we're embedding html
-    setlocal tabstop=2 shiftwidth=2
-else
-    " load from a prettier config, if it exists
-    let prettierFile = findfile('.prettierrc')
-    if filereadable(prettierFile)
-        let config = json_decode(join(readfile(prettierFile)))
-        let ts = get(config, 'tabWidth', 4)
-        exe 'setlocal tabstop=' . ts . ' shiftwidth=' . ts
-    endif
-endif
-
 " format comments like javascript does
 setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
 

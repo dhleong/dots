@@ -45,6 +45,29 @@ endif
 func! dhleong#ft#javascript#Config()
     " Shared config for javascript-based languages (including typescript)
 
+    " ======= settings ========================================
+
+    if expand('%:e') =~# '[jt]sx'
+        " two-space tabs in tsx files, since we're embedding html
+        setlocal tabstop=2 shiftwidth=2
+    endif
+
+    " load from a prettier config, if it exists
+    let prettierFile = findfile('.prettierrc')
+    if filereadable(prettierFile)
+        let config = json_decode(join(readfile(prettierFile)))
+        let ts = get(config, 'tabWidth', 4)
+        exe 'setlocal tabstop=' . ts . ' shiftwidth=' . ts
+
+        " also, enable prettier auto-format
+        let b:ale_fixers = {
+            \ "typescript": ["prettier"],
+            \ "javascript": ["prettier"],
+            \ }
+        let b:ale_fix_on_save = 1
+    endif
+
+
     " ======= mappings ========================================
 
     nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab("GoToDefinition")<cr>
