@@ -56,3 +56,6 @@ export GRAALVM_HOME="/Library/Java/JavaVirtualMachines/graalvm-ce-java8-${GRAALV
 if [ -d $GRAALVM_HOME ]; then
     export PATH="$PATH:$GRAALVM_HOME/bin"
 fi
+
+# Checking for fastlane updates is unnecessarily slow and noisy
+export FASTLANE_SKIP_UPDATE_CHECK=1
