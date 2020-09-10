@@ -1,5 +1,6 @@
-
 .lein/credentials.clj.gpg
+
+.clojure/trace.edn
 
 # transient vim stuff
 .vim/.netrwhist
