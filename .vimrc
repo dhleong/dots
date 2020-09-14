@@ -14,6 +14,9 @@ command! -nargs=1 Source :call SourceInitFileFunc(<args>)
 " will use it as expected
 let mapleader = " "
 
+" using the same as the "local leader" for now
+let maplocalleader = " "
+
 " source the plug defs and settings
 Source 'plugins.vim'
 
