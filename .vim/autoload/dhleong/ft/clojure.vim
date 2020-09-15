@@ -1,6 +1,6 @@
 
 func! dhleong#ft#clojure#Jump(inNewTab)
-    if fireplace#op_available('eval')
+    try
         " if connected to fireplace, prefer that
         if a:inNewTab
             exe "normal \<Plug>FireplaceDtabjump"
@@ -8,9 +8,11 @@ func! dhleong#ft#clojure#Jump(inNewTab)
             exe "normal \<Plug>FireplaceDjump"
         endif
         return
-    endif
+    catch /Fireplace:.*REPL/
+        " not connected to fireplace REPL...
+    endtry
 
-    " try YCM's lsp integration
+    " ... try YCM's lsp integration
     if a:inNewTab
         call dhleong#GotoInNewTab("GoTo")
     else
