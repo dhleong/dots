@@ -55,9 +55,9 @@ func! dhleong#ft#javascript#Config()
     " load from a prettier config, if it exists
     let prettierFile = findfile('.prettierrc')
     if filereadable(prettierFile)
-        # NOTE: findfile automatically also tries to search various suffixes,
-        # including .js for js files, so we need to make sure to handle the
-        # .prettierrc.js case
+        " NOTE: findfile automatically also tries to search various suffixes,
+        " including .js for js files, so we need to make sure to handle the
+        " .prettierrc.js case
         let ts = -1
         if prettierFile =~# '.js$'
             let tsMatch = matchlist(readfile(prettierFile), '\vtabWidth[ ]*[:=][ ]*(\d+)')
