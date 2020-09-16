@@ -55,9 +55,23 @@ func! dhleong#ft#javascript#Config()
     " load from a prettier config, if it exists
     let prettierFile = findfile('.prettierrc')
     if filereadable(prettierFile)
-        let config = json_decode(join(readfile(prettierFile)))
-        let ts = get(config, 'tabWidth', 4)
-        exe 'setlocal tabstop=' . ts . ' shiftwidth=' . ts
+        # NOTE: findfile automatically also tries to search various suffixes,
+        # including .js for js files, so we need to make sure to handle the
+        # .prettierrc.js case
+        let ts = -1
+        if prettierFile =~# '.js$'
+            let tsMatch = matchlist(readfile(prettierFile), '\vtabWidth[ ]*[:=][ ]*(\d+)')
+            if len(tsMatch)
+                let ts = str2nr(tsMatch[1])
+            endif
+        else
+            let config = json_decode(join(readfile(prettierFile)))
+            let ts = get(config, 'tabWidth', 4)
+        endif
+
+        if ts > 0
+            exe 'setlocal tabstop=' . ts . ' shiftwidth=' . ts
+        endif
 
         " also, enable prettier auto-format
         let b:ale_fixers = {
