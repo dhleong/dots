@@ -3,7 +3,7 @@ function! s:tryFind(path, fn)
         " jump to the definition of the function if the path exists
         exe 'find +/fun.*\ ' . a:fn . ' ' . a:path
         return
-    catch /^Vim\%((\a\+)\)\=:E345
+    catch /^Vim\%((\a\+)\)\=:E345/
         " 'cannot find on path'; fall through to normal gd
     endtry
 endfunction
