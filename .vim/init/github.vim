@@ -62,16 +62,17 @@ endfunction
 nnoremap gho :GithubOpen<cr>
 
 func! s:openGithubPrCreator()
-    let args = ''
+    let args = []
 
     " if this is a branch against eg a staging branch, specify the
     " base branch automatically:
     let parentBranch = dhleong#git#ParentBranch()
     if parentBranch !=# ''
-        let args .= ' --base ' . parentBranch
+        call extend(args, ['--base', parentBranch])
     endif
 
-    exe 'term gh pr create' . args
+    " exe 'term gh pr create' . args
+    call lilium#pr#Create(args)
 endfunc
 
 " open a window for creating a pull request from the current branch
