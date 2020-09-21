@@ -1,7 +1,10 @@
 
-import os
-import json
-from datetime import date
+# NOTE: these are imported on-demand, below; that saves a few hundred ms if the
+# modules aren't actually used
+
+# import os
+# import json
+# from datetime import date
 
 # pylint: disable=unused-import
 try:
@@ -106,7 +109,10 @@ def mapToPickedFile(dirName = None):
 
 
 def pickLogFile():
-    scriptDir = os.path.dirname(expandpath("<sfile>"))
+    import os
+    from datetime import date
+
+    scriptDir = os.path.dirname(findScriptDir())
 
     dateStr = date.today().isoformat()
     path = '%s/logs/%s.html' % (scriptDir, dateStr)
@@ -120,7 +126,9 @@ def pickLogFile():
 
 
 def pickMapFile():
-    scriptDir = os.path.dirname(expandpath("<sfile>"))
+    import os
+
+    scriptDir = os.path.dirname(findScriptDir())
     scriptDirName = os.path.basename(scriptDir)
 
     path = '%s/%s.map' % (scriptDir, scriptDirName)
@@ -131,6 +139,12 @@ def pickMapFile():
         os.makedirs(dirPath)
     return path
 
+def findScriptDir():
+    scriptFile = expandpath("<sfile>")
+    if scriptFile is not None:
+        return scriptFile
+
+    return expandpath("<lastread>")
 
 def sendMsdp(command, arg):
     IAC = "\xff"
@@ -143,6 +157,8 @@ def sendMsdp(command, arg):
 
 
 def sendGmcp(command, arg=None):
+    import json
+
     IAC = "\xff"
     SB = "\xfa"
     SE = "\xf0"
