@@ -11,13 +11,19 @@ endfunction
 command! FixLineEndings call FixLineEndingsFunc()
 
 
-" ======= Pretty-format JSON ===============================
+" ======= Pretty-format JSON/EDN ===========================
 
-function! DocToJson()
+func! s:docToJson()
     :%!python -mjson.tool
     set ft=javascript
-endfunction
-command! JSON call DocToJson()
+endfunc
+command! JSON call <SID>docToJson()
+
+func! s:docToEdn()
+    :%!clj -e "(require 'clojure.pprint) (clojure.pprint/pprint (read *in*))"
+    set ft=clojure
+endfunc
+command! EDN call <SID>docToEdn()
 
 
 " ======= Open a split term to execute this file ===========
