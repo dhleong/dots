@@ -2,26 +2,27 @@ func! s:parentBranchIsh()
     " NOTE: if on the default branch, this may return "some" previous branch
 
     " based on: https://stackoverflow.com/a/17843908
-    return system('git show-branch '
+    let branch = system('git show-branch '
                 \.'| sed "s/].*//" '
                 \.'| grep "\*" '
                 \.'| grep -v "$(git rev-parse --abbrev-ref HEAD)"'
                 \.'| head -n1 '
                 \.'| sed "s/^.*\[//"')
+    return trim(branch)
 endfunc
 
 func! dhleong#git#CurrentBranch()
-    return system('git branch --show-current')
+    return trim(system('git branch --show-current'))
 endfunc
 
 func! dhleong#git#DefaultBranch()
     " based on: https://stackoverflow.com/a/44750379
-    return system('git symbolic-ref refs/remotes/origin/HEAD '
-                \."| sed 's@^refs/remotes/origin/@@'")
+    return trim(system('git symbolic-ref refs/remotes/origin/HEAD '
+                    \."| sed 's@^refs/remotes/origin/@@'"))
 endfunc
 
 func! dhleong#git#HashOf(obj)
-    return system('git rev-parse ' . a:obj)
+    return trim(system('git rev-parse ' . a:obj))
 endfunc
 
 func! dhleong#git#ParentBranch()
