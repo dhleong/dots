@@ -65,8 +65,12 @@ func! dhleong#ft#javascript#Config()
                 let ts = str2nr(tsMatch[1])
             endif
         else
-            let config = json_decode(join(readfile(prettierFile)))
-            let ts = get(config, 'tabWidth', 4)
+            try
+                let config = json_decode(join(readfile(prettierFile)))
+                let ts = get(config, 'tabWidth', 4)
+            catch /.*/
+                " ignore?
+            endtry
         endif
 
         if ts > 0
