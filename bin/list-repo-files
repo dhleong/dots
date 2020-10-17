@@ -6,6 +6,10 @@ then
     path=$1
 fi
 
+function filter-ignored() {
+    ag -v '/(node_modules|cljs-runtime|target|nashorn_code_cache|Pods|.expo)'
+}
+
 function files_from_git() {
     cd $path
 
@@ -28,12 +32,10 @@ function files_from_git() {
 
 function find_files() {
     # fallback if it's not a git repo
-    find $path -path "*/\.*" -prune -o -type f -print -o -type l -print |\
-        ag -v '/(node_modules|cljs-runtime|target|nashorn_code_cache|Pods)'
+    find $path -path "*/\.*" -prune -o -type f -print -o -type l -print
 }
 
 (
     files_from_git \
         || find_files
-) \
-    | ag -v vendor/
+) | filter-ignored
