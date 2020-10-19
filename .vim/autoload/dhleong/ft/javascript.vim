@@ -42,6 +42,16 @@ if !exists("*s:CreateJsLikeTestFile")
     endfunction
 endif
 
+func! s:FindPrettierConfig()
+    let old = &wildignore
+    set wildignore+=**/node_modules/**
+
+    let path = trim(system('git rev-parse --show-toplevel'))
+    let prettierFile = findfile('.prettierrc', path)
+
+    let &wildignore = old
+endfunc
+
 func! dhleong#ft#javascript#Config()
     " Shared config for javascript-based languages (including typescript)
 
@@ -53,7 +63,7 @@ func! dhleong#ft#javascript#Config()
     endif
 
     " load from a prettier config, if it exists
-    let prettierFile = findfile('.prettierrc')
+    let prettierFile = s:FindPrettierConfig()
     if filereadable(prettierFile)
         " NOTE: findfile automatically also tries to search various suffixes,
         " including .js for js files, so we need to make sure to handle the
