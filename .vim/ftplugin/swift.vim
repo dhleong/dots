@@ -16,14 +16,14 @@ endfunc
 func! s:xcodebuild(args)
     let config = s:xcodeConfig()
     if config ==# ''
-        return v:null
+        return ''
     endif
     return 'xcodebuild ' . config . ' ' . a:args
 endfunc
 
 func! s:xcodejson(args)
     let cmd = s:xcodebuild(a:args)
-    if !cmd
+    if cmd ==# ''
         return v:null
     endif
 
@@ -35,8 +35,9 @@ func! s:ensureScheme()
     if get(b:, 'swift_xcode_scheme', '') ==# ''
         echo "Locating project..."
 
-        let info = s:xcodebuild('-list')
+        let info = s:xcodejson('-list')
         if type(info) != v:t_dict
+            echom "Couldn't locate xcode config"
             return
         endif
 
@@ -65,8 +66,9 @@ func! s:Run()
 
     let win = winnr()
 
+    " TODO: open in float?
     let winSize = 7
-    exe 'below split | resize ' . winSize
+    exe 'botright split | resize ' . winSize
     let job = term_start(s:xcodebuild('-scheme ' . scheme), {
         \ 'term_name': 'Xcode Build',
         \ 'curwin': 1,
