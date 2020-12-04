@@ -106,6 +106,11 @@ func! s:Run() " {{{
 
     let win = winnr()
 
+    " make sure we're up to date
+    if &modified
+        write
+    endif
+
     " TODO: open in float?
     let winSize = 7
     exe 'botright split | resize ' . winSize
