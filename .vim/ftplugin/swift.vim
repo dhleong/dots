@@ -1,3 +1,13 @@
+" ======= state ===========================================
+
+if !exists("s:openTerms")
+    let s:openTerms = {}
+endif
+
+" ======= util ============================================
+
+" xcode discovery + communication {{{
+
 func! s:xcodeConfig()
     let existing = get(b:, 'swift_xcode_config', '')
     if existing !=# ''
@@ -31,7 +41,9 @@ func! s:xcodejson(args)
     return json_decode(output)
 endfunc
 
-func! s:ensureScheme()
+" }}}
+
+func! s:ensureScheme() " {{{
     if get(b:, 'swift_xcode_scheme', '') ==# ''
         echo "Locating project..."
 
@@ -55,32 +67,67 @@ func! s:ensureScheme()
     endif
 
     return scheme
-endfunc
+endfunc " }}}
 
-func! s:Run()
+func! s:onRunComplete(termWinNr, job, status) " {{{
+    let term = s:openTerms[a:termWinNr]
+    let win = bufwinnr(term.bufnr)
+    if win == -1
+        " nop?
+        return
+    endif
+
+    if a:status == 0
+        " successful run; close the window
+        exe win . 'wincmd q'
+    else
+        " keep the window open (and focus!) something went wrong
+        let current = winnr()
+        exe win . 'wincmd w'
+        resize +5
+        exe current . 'wincmd w'
+    endif
+endfunc " }}}
+
+func! s:Run() " {{{
     let scheme = s:ensureScheme()
     if scheme ==# ''
         return
     endif
 
-    " TODO ensure any previous job is stopped
+    " ensure any previous job is stopped
+    for term in values(s:openTerms)
+        let win = bufwinnr(term.bufnr)
+        if win != -1
+            call job_stop(term.job)
+            exe win . 'wincmd q'
+        endif
+    endfor
 
     let win = winnr()
 
     " TODO: open in float?
     let winSize = 7
     exe 'botright split | resize ' . winSize
-    let job = term_start(s:xcodebuild('-scheme ' . scheme), {
+    let termWinNr = winnr()
+
+    let termBufNr = term_start(s:xcodebuild('-scheme ' . scheme), {
         \ 'term_name': 'Xcode Build',
         \ 'curwin': 1,
-        \ 'term_finish': 'close',
+        \ 'exit_cb': function('s:onRunComplete', [termWinNr]),
         \ })
+
+    let job = term_getjob(termBufNr)
+    let s:openTerms[termWinNr] = {
+        \ 'bufnr': termBufNr,
+        \ 'job': job,
+        \ }
 
     if win != 0
         " go back to the previous window
         exe win . 'wincmd w'
     endif
-endfunc
+endfunc " }}}
 
 
 " ======= mappings ========================================
