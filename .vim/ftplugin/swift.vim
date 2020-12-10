@@ -1,3 +1,4 @@
+" TODO: extract some of this into a plugin, probably
 " ======= state ===========================================
 
 if !exists("s:openTerms")
@@ -9,15 +10,9 @@ endif
 " xcode discovery + communication {{{
 
 func! s:xcodeConfig()
-    let existing = get(b:, 'swift_xcode_config', '')
-    if existing !=# ''
-        return existing
-    endif
-
-    let project = fnamemodify(findfile('project.pbxproj'), ':p:h')
-    if project !=# '' && project =~# '.xcodeproj$'
-        let b:swift_xcode_config = '-project ' . project
-        return b:swift_xcode_config
+    let path = dhleong#ft#swift#FindProj()
+    if path !=# ''
+        return '-project ' . path
     endif
 
     return ''
@@ -145,3 +140,7 @@ nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
 
 " swift/xcode-specific
 nnoremap <silent> <leader>pr :call <SID>Run()<cr>
+
+" ======= init ============================================
+
+call dhleong#ft#swift#init()
