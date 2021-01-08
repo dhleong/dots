@@ -148,6 +148,20 @@ let g:endwise_no_mappings = 1
 
 "" YouCompleteMe
 ""
+
+" YCM LSP {{{
+
+let g:ycm_language_server = [
+    \ {
+    \   'name': 'sourcekit-lsp',
+    \   'cmdline': ['xcrun', 'sourcekit-lsp', '--log-level=debug'],
+    \   'filetypes': ['swift'],
+    \   'project_root_files': [ 'Package.swift' ],
+    \ }
+    \ ]
+
+" }}}
+
 if !(has('nvim') || exists('g:neojet#version'))
     Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --cs-completer --go-completer --ts-completer'}
     " Plug '~/git/YouCompleteMe', {'do': './install.py --omnisharp-completer'}
