@@ -88,6 +88,7 @@ let g:ale_linters = {
     \   'java': [],
     \   'javascript': ['eslint'],
     \   'python': ['pylint'],
+    \   'tex': ['chktex'],
     \   'typescript': ['tslint', 'tsserver', 'eslint'],
     \}
 
@@ -399,11 +400,10 @@ Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
 
 " ======= LaTeX ============================================
 
-" Plug 'vim-latex/vim-latex'
-" NOTE: Haven't actually used latex in a long time, and this plugin
-"  includes some /plugin scripts which I haven't wanted or needed...
-"  But this looks like the plugin I was using, so I'll leave the
-"  reference in here for future reference.
+Plug 'lervag/vimtex'
+
+" ignore 'command terminated with space'
+let g:ale_tex_chktex_options = '-nowarn 1'
 
 
 " ======= Markdown =========================================
