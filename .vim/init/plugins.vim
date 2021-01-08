@@ -163,9 +163,11 @@ let g:ycm_language_server = [
 
 " }}}
 
+let s:ycmCompleters = ['clang', 'cs', 'go', 'rust', 'ts']
+
 if !(has('nvim') || exists('g:neojet#version'))
-    Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --cs-completer --go-completer --ts-completer'}
-    " Plug '~/git/YouCompleteMe', {'do': './install.py --omnisharp-completer'}
+    let flags = join(map(s:ycmCompleters, '"--" . v:val . "-completer"'), ' ')
+    Plug 'ycm-core/YouCompleteMe', {'do': './install.py ' . flags}
 
     " related, for c/c++ stuff
     Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
