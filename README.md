@@ -24,6 +24,11 @@ $ .dotfiles/bin/dot add git@github.com:dhleong/dots.git
 $ .dotfiles/bin/dot update
 ```
 
+### Full automated setup
+
+```bash
+sh -c "$(curl -fsSL https://raw.github.com/dhleong/dots/master/.config/dhleong/setup)"
+```
 
 [1]: https://github.com/svetlyak40wt/dotfiler
 [2]: https://github.com/dhleong/dotfiler
