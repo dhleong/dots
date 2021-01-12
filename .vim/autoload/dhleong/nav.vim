@@ -97,12 +97,20 @@ func! dhleong#nav#InProject(projectRoot, sink)
 endfunc
 
 func! dhleong#nav#Projects()
-    let cmd = "ls -d"
+    let dirs = ""
     for parentPath in g:ProjectParentPaths
         if isdirectory(parentPath)
-            let cmd = cmd . " " . parentPath . "*"
+            let dirs = dirs . " " . parentPath . "*"
         endif
     endfor
+
+    if !len(dirs)
+        echom "No project dirs exist? Checked:"
+        echom g:ProjectParentPaths
+        return
+    endif
+
+    let cmd = "ls -d" . dirs
     call fzf#run({
         \ 'options': s:fzf_options,
         \ 'source': cmd,

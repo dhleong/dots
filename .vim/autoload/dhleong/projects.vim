@@ -5,15 +5,15 @@
 "   project directories.
 " NOTE that we're lazy, so these MUST contain
 "   the trailing backslash
-let g:ProjectParentPaths = [
-    \'/Users/dhleong/git/',
-    \'/Users/dhleong/code/appengine/',
-    \'/Users/dhleong/code/go/src/github.com/interspace/',
-    \'/Users/dhleong/code/go/src/github.com/dhleong/',
-    \'/Users/dhleong/code/',
-    \'/Users/dhleong/judo/',
-    \'/Users/dhleong/.dotfiles/',
-\]
+let g:ProjectParentPaths = map([
+    \'/git/',
+    \'/code/appengine/',
+    \'/code/go/src/github.com/interspace/',
+    \'/code/go/src/github.com/dhleong/',
+    \'/code/',
+    \'/judo/',
+    \'/.dotfiles/',
+\], '$HOME . v:val')
 
 function! dhleong#projects#MapCtrlP(path)
     " craziness to ensure pwd is always set correctly
