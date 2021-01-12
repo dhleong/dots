@@ -1,6 +1,22 @@
 #!/bin/bash
 # A full setup script
 
+ensure_cask() {
+    dotAppName=$1
+    brewName=$2
+
+    if [ -d "/Applications/$dotAppName.app" ]; then
+        echo " Installed: $dotAppName"
+    else
+        echo "Installing: $dotAppName (cask $brewName)..."
+        brew install --cask $brewName
+    fi
+}
+
+has_cli() {
+    which $1 > /dev/null
+}
+
 # install command line tools:
 xcode-select --install
 
@@ -13,20 +29,15 @@ defaults write -g com.apple.trackpad.scaling 3
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 # homebrew
-if which brew; then
+if has_cli brew; then
     echo " Installed: homebrew"
 else
     echo "Installing: homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# 1pass
-if [ -d "/Applications/1Password 7.app" ]; then
-    echo " Installed: 1Password"
-else
-    echo "Installing: 1Password..."
-    brew install 1password
-fi
+# 1pass (needed to authenticate with github)
+ensure_cask "1Password 7" "1password"
 
 # github config (for cloning dotfiles)
 if [ -d "$HOME/.ssh" ]; then
@@ -88,11 +99,33 @@ else
 fi
 
 # a few more apps to get started:
-echo "Installing: (various tools)..."
-brew install --cask bettertouchtool macvim iterm2
-brew install the_silver_searcher fzf hub zsh-completions
+ensure_cask "MacVim" "macvim"
+ensure_cask "BetterTouchTool" "bettertouchtool"
+ensure_cask "iTerm" "iterm2"
+
+if has_cli cmake; then
+    echo " Installed: build tools (for YCM)"
+else
+    echo "Installing: build tools (for YCM)"
+    brew install cmake python mono go nodejs
+fi
+
+if has_cli gh && has_cli hub; then
+    echo " Installed: github cli"
+else
+    echo "Installing: github cli..."
+    brew install gh hub
+fi
+
+if has_cli go && has_cli fzf; then
+    echo " Installed: (various tools)"
+else
+    echo "Installing: (various tools)..."
+    brew install the_silver_searcher fzf zsh-completions
+fi
 
 echo "Done!"
 echo ' - You may need to logout and back in for some settings to update'
 echo ' - Remap capslock to escape by hand... not sure how to automate'
+echo ' - gh and hub are not setup automatically'
 echo ' - Brewfile can be loaded by running `brew bundle` in ~/.dotfiles'
