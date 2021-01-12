@@ -81,6 +81,10 @@ if [ -d "$HOME/.dotfiles" ]; then
 else
     echo "Installing: personal dotfiles..."
 
+    # create this before updating dots, so dotfiler doesn't cause all
+    # local-specific config to try to go into our dots repo
+    mkdir $HOME/.config
+
     git clone git@github.com:dhleong/dotfiler.git $HOME/.dotfiles
     $HOME/.dotfiles/bin/dot add git@github.com:dhleong/dots.git
     $HOME/.dotfiles/bin/dot update
