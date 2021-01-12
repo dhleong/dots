@@ -82,6 +82,9 @@ else
     echo "Installing: Inconsolata font..."
     curl "https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/Inconsolata%20for%20Powerline.otf" \
         -o "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
+
+    # open to ensure it's available
+    open "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
 fi
 
 # a few more apps to get started:
