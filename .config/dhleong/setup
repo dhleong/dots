@@ -75,6 +75,15 @@ else
     $HOME/.dotfiles/bin/dot update
 fi
 
+# fonts
+if [ -f "$HOME/Library/Fonts/Inconsolata for Powerline.otf" ]; then
+    echo " Installed: Inconsolata font"
+else
+    echo "Installing: Inconsolata font..."
+    curl -s "https://raw.github.com/powerline/fonts/blob/master/Inconsolata/Inconsolata%20for%20Powerline.otf" \
+        -o "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
+fi
+
 # a few more apps to get started:
 echo "Installing: (various tools)..."
 brew install --cask bettertouchtool macvim iterm2
