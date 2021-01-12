@@ -80,7 +80,7 @@ if [ -f "$HOME/Library/Fonts/Inconsolata for Powerline.otf" ]; then
     echo " Installed: Inconsolata font"
 else
     echo "Installing: Inconsolata font..."
-    curl -s "https://raw.github.com/powerline/fonts/blob/master/Inconsolata/Inconsolata%20for%20Powerline.otf" \
+    curl "https://github.com/powerline/fonts/blob/master/Inconsolata/Inconsolata%20for%20Powerline.otf?raw=true" \
         -o "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
 fi
 
