@@ -225,7 +225,12 @@ let g:ycm_tsserver_binary_path = "/Users/dhleong/.npm-packages/bin/tsserver"
 ""
 " NOTE: this MUST be AFTER YouCompleteMe for... some reason.
 " If before, we get an ABRT signal :|
-Plug 'SirVer/ultisnips' | Plug '~/git/vim-cs-snippets' | Plug 'honza/vim-snippets'
+let s:hasPython3 = exists("+pythonthreehome") && !empty(&pythonthreehome)
+if s:hasPython3
+    " NOTE: if python3 isn't setup, ultisnips barfs HARD on *every* keypress.
+    " Let's just disable it so we can still do things
+    Plug 'SirVer/ultisnips' | Plug '~/git/vim-cs-snippets' | Plug 'honza/vim-snippets'
+endif
 
 let g:UltiSnipsListSnippets="<C-M-Tab>"
 let g:UltiSnipsExpandTrigger="<C-Enter>"
