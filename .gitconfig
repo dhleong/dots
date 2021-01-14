@@ -19,4 +19,7 @@
     trustExitCode = false
     cmd = '/Applications/Unity/Unity.app/Contents/Tools/UnityYAMLMerge' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
 [pull]
-	ff = only
+    ff = only
+
+[includeIf "gitdir:~/work/"]
+    path = ~/work/.gitconfig

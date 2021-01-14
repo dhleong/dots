@@ -12,6 +12,7 @@ let g:ProjectParentPaths = map([
     \'/code/go/src/github.com/dhleong/',
     \'/code/',
     \'/judo/',
+    \'/work/',
     \'/.dotfiles/',
 \], '$HOME . v:val')
 

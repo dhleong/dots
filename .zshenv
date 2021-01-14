@@ -59,3 +59,5 @@ fi
 
 # Checking for fastlane updates is unnecessarily slow and noisy
 export FASTLANE_SKIP_UPDATE_CHECK=1
+
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

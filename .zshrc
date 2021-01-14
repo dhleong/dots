@@ -69,6 +69,7 @@ PROJECT_DIRS=(
     ~/code/go/src/github.com/interspace
     ~/code/go/src/github.com/dhleong
     ~/judo
+    ~/work
 )
 
 setopt AUTO_PARAM_SLASH
@@ -103,3 +104,10 @@ bindkey -M vicmd 'gs' _git-status
 bindkey -M vicmd V edit-command-line
 
 
+#compdef clid
+_clid() {
+  eval $(env COMMANDLINE="${words[1,$CURRENT]}" _CLID_COMPLETE=complete-zsh  clid)
+}
+if [[ "$(basename -- ${(%):-%x})" != "_clid" ]]; then
+  compdef _clid clid
+fi
