@@ -17,6 +17,9 @@ let mapleader = " "
 " using the same as the "local leader" for now
 let maplocalleader = " "
 
+" try to configure python *first* so plugins.vim is aware
+Source 'python.vim'
+
 " source the plug defs and settings
 Source 'plugins.vim'
 
@@ -28,7 +31,6 @@ Source 'mappings.vim'
 
 Source 'github.vim'
 Source 'loclist.vim'
-Source 'python.vim'
 Source 'terminal.vim'
 
 "
