@@ -15,3 +15,21 @@ let b:ale_fixers = {
     \ "rust": ["rustfmt"],
     \ }
 let b:ale_fix_on_save = 1
+
+
+" ======= Test running ====================================
+
+func! s:tryRunTests()
+    let [line, _] = searchpos('\C#\[cfg(test)\]', 'nw', 0, 100)
+    if line > 0
+        call latte#Run()
+    endif
+endfunc
+
+" ======= Autocmds ========================================
+
+augroup MyRustAutoCmds
+    autocmd!
+
+    autocmd BufWritePost <buffer> call <SID>tryRunTests()
+augroup END
