@@ -67,27 +67,28 @@ EOL
     read -p " - Press enter to continue"
 fi
 
-# oh-my-zsh *first* (since it overwrites a personal .zshrc)
-if [ -d "$HOME/.oh-my-zsh" ]; then
-    echo " Installed: oh-my-zsh"
-else
-    echo "Installing: oh-my-zsh..."
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-fi
-
 # dotfiles, finally
 if [ -d "$HOME/.dotfiles" ]; then
     echo " Installed: dotfiles"
 else
     echo "Installing: personal dotfiles..."
 
-    # create this before updating dots, so dotfiler doesn't cause all
+    # create these before updating dots, so dotfiler doesn't cause all
     # local-specific config to try to go into our dots repo
     mkdir $HOME/.config
+    mkdir $HOME/.zsh
 
     git clone git@github.com:dhleong/dotfiler.git $HOME/.dotfiles
     $HOME/.dotfiles/bin/dot add git@github.com:dhleong/dots.git
     $HOME/.dotfiles/bin/dot update
+fi
+
+# oh-my-zsh, making sure not to overwrite the local zshrc
+if [ -d "$HOME/.oh-my-zsh" ]; then
+    echo " Installed: oh-my-zsh"
+else
+    echo "Installing: oh-my-zsh..."
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --keep-zshrc
 fi
 
 # fonts
