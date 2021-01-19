@@ -9,7 +9,8 @@ function s:ClearEcho(msg)
 endfunction
 
 function s:TryFixAle()
-    call ale#fix#Fix(bufnr(''), '')
+    " NOTE: ! flag to not complain when there are no ale fixers
+    call ale#fix#Fix(bufnr(''), '!')
 endfunction
 
 function! dhleong#fix#Fix()

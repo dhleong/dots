@@ -171,5 +171,5 @@ imap <silent> <Enter> <C-R>=dhleong#text#TryCleanWhitespace()<cr><Plug>Discretio
 
 " ======= Smart text manipulation ==========================
 
-nnoremap <a-cr> :call dhleong#fix#Fix()<cr>
+nnoremap <silent> <a-cr> :call dhleong#fix#Fix()<cr>
 
