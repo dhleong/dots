@@ -51,6 +51,10 @@ then
     source $HOME/.zshenv.local
 fi
 
+if [ -f "$HOME/.cargo/env" ]; then
+    source "$HOME/.cargo/env"
+fi
+
 export GRAALVM_VERSION="19.3.1"
 export GRAALVM_HOME="/Library/Java/JavaVirtualMachines/graalvm-ce-java8-${GRAALVM_VERSION}/Contents/Home"
 if [ -d $GRAALVM_HOME ]; then

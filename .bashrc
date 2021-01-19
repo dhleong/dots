@@ -13,3 +13,9 @@ if ! [ -f $macvimPath ] && [ -t 1 ]; then
     # manually switch to zsh on windows bash
     exec zsh
 fi
+
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+if [ -f "$HOME/.cargo/env" ]; then
+    source "$HOME/.cargo/env"
+fi

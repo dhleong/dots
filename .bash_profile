@@ -180,7 +180,3 @@ if [ -f /usr/libexec/path_helper ]; then
     eval $(/usr/libexec/path_helper -s)
 fi
 source ~/.bashrc
-
-export PATH="$HOME/.cargo/bin:$PATH"
-
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
