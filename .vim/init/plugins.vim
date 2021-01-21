@@ -97,6 +97,7 @@ let g:ale_fixers = {
     \   'go': ['gofmt'],
     \   'javascript': ['eslint'],
     \   'typescript': ['eslint', 'tslint'],
+    \   'typescriptreact': ['eslint', 'prettier'],
     \}
 
 let g:ale_pattern_options = {
