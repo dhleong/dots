@@ -40,6 +40,10 @@ nnoremap <tab> >>
 " from the Dash plugin
 nnoremap <space>K :action SmartSearchAction<cr>
 
+nnoremap <c-p> :action SearchEverywhere<cr>
+nnoremap [c :action GotoPreviousError<cr>
+nnoremap ]c :action GotoNextError<cr>
+
 nnoremap gid :action GotoImplementation<cr>
 nnoremap gpr :action ChooseRunConfiguration<cr>
 
