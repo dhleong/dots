@@ -4,6 +4,12 @@
 let s:fzf_options = '--color=dark --no-clear'
 let s:popupTermPatch = "patch-8.2.0286"
 
+func! s:ensureTerminalInput(_)
+    if mode() !=# 't'
+        " still in normal mode for some reason
+        call feedkeys('i')
+    endif
+endfunc
 
 func! s:OpenProject(dir)
     let pathDir = a:dir
@@ -94,6 +100,8 @@ func! dhleong#nav#InProject(projectRoot, sink)
         \ 'sink': a:sink,
         \ 'window': window,
         \ })
+
+    call timer_start(10, function('s:ensureTerminalInput'))
 endfunc
 
 func! dhleong#nav#Projects()
