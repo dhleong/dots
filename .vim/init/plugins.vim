@@ -416,12 +416,6 @@ let g:ale_tex_chktex_options = '-nowarn 1'
 
 " ======= Markdown =========================================
 
-Plug 'suan/vim-instant-markdown', {'for': 'markdown',
-            \ 'do': 'sudo gem install redcarpet pygments.rb && npm -g install instant-markdown-d'}
-
-let g:instant_markdown_slow = 1
-
-
 Plug 'tpope/vim-markdown', {'for': 'markdown'}
 
 let g:markdown_fenced_languages = ['clojure', 'javascript', 'typescript']
