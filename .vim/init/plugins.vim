@@ -304,7 +304,7 @@ Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
 
 
-Plug 'vim-scripts/matchit.zip'
+Plug 'chrisbra/matchit'
 Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
 
 " }}}
