@@ -127,7 +127,6 @@ Plug 'keith/swift.vim'
 Plug 'tfnico/vim-gradle'
 Plug 'wavded/vim-stylus'
 Plug 'leafgarland/typescript-vim'
-" Plug 'ianks/vim-tsx'
 Plug '~/git/vim-jsx-typescript'
 Plug 'vim-scripts/ShaderHighLight'
 Plug 'zchee/vim-flatbuffers'
@@ -398,12 +397,7 @@ Plug 'moll/vim-node', {'for': 'javascript'}
 " tern configs
 let g:tern_show_signature_in_pum = 1
 
-" NOTE: we load this *before* vim-javascript to ensure we prefer
-" this for indent
-Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
-
-" " jsx depends on panglass/vim-javascript:
-" Plug 'mxw/vim-jsx' | Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+" Plug 'jason0x43/vim-js-indent', {'for': 'typescript'}
 
 
 " ======= LaTeX ============================================
@@ -446,8 +440,8 @@ Plug 'Vimjas/vim-python-pep8-indent'
 
 let g:js_indent_flat_switch = 1
 
-" disable typescript-vim indent and use the above:
-let g:typescript_indent_disable = 1
+" " disable typescript-vim indent and use the above:
+" let g:typescript_indent_disable = 1
 
 
 " ======= Vim ==============================================
