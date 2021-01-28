@@ -163,11 +163,6 @@ let g:ycm_language_server = [
 
 " }}}
 
-" NOTE: use the version installed via homebrew:
-if filereadable('/usr/local/bin/rust-analyzer')
-    let g:ycm_rust_toolchain_root = '/usr/local'
-endif
-
 let s:ycmCompleters = ['clang', 'cs', 'go', 'rust', 'ts']
 
 if !(has('nvim') || exists('g:neojet#version'))
@@ -208,8 +203,6 @@ let g:ycm_filter_diagnostics = {
     \   }
     \ }
 
-let g:ycm_extra_conf_globlist = ["~/git/juuce/*"]
-
 let g:ycm_key_list_previous_completion = ['<Up>'] " NOT s-tab; we do the right thing below:
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<c-d>"
 
@@ -221,6 +214,17 @@ let g:ycm_always_populate_location_list = 1
 let g:ycm_auto_hover = ''
 
 let g:ycm_tsserver_binary_path = "/Users/dhleong/.npm-packages/bin/tsserver"
+
+" NOTE: use the version installed via homebrew:
+if filereadable('/usr/local/bin/rust-analyzer')
+    let g:ycm_rust_toolchain_root = '/usr/local'
+endif
+
+let g:ycm_extra_conf_globlist = [
+    \ '~/.dotfiles/dots/.vim/bundle/YouCompleteMe/*',
+    \ '~/git/juuce/*',
+    \ '~/git/iaido/*',
+    \ ]
 
 " let g:ycm_max_diagnostics_to_display = 50
 " }}}
