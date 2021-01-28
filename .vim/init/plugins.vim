@@ -163,6 +163,11 @@ let g:ycm_language_server = [
 
 " }}}
 
+" NOTE: use the version installed via homebrew:
+if filereadable('/usr/local/bin/rust-analyzer')
+    let g:ycm_rust_toolchain_root = '/usr/local'
+endif
+
 let s:ycmCompleters = ['clang', 'cs', 'go', 'rust', 'ts']
 
 if !(has('nvim') || exists('g:neojet#version'))
