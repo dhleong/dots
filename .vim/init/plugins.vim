@@ -135,6 +135,13 @@ Plug '~/git/vim-jsgf'
 " }}}
 
 
+" ======= Debugging ======================================= {{{
+
+Plug 'puremourning/vimspector'
+
+" }}}
+
+
 " ======= Text completion ================================== {{{
 
 " auto-close brackets, parens, etc. on <cr>

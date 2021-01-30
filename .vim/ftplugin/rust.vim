@@ -26,6 +26,17 @@ func! s:tryRunTests()
     endif
 endfunc
 
+
+" ======= Debugging =======================================
+
+call dhleong#vimspector#Config()
+
+nnoremap <buffer> <silent> <leader>rd :call dhleong#ft#rust#debug#StartModTest()<cr>
+nnoremap <silent> <leader>rq :call vimspector#Reset()<cr>
+
+nnoremap <buffer> <silent> <leader>bc :call vimspector#ClearBreakpoints()<cr>
+nnoremap <buffer> <silent> <leader>bt :call vimspector#ToggleBreakpoint()<cr>
+
 " ======= Autocmds ========================================
 
 augroup MyRustAutoCmds
