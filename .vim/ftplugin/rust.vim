@@ -37,6 +37,10 @@ nnoremap <silent> <leader>rq :call vimspector#Reset()<cr>
 nnoremap <buffer> <silent> <leader>bc :call vimspector#ClearBreakpoints()<cr>
 nnoremap <buffer> <silent> <leader>bt :call vimspector#ToggleBreakpoint()<cr>
 
+nmap <buffer> <leader>dc <Plug>VimspectorRunToCursor
+nmap <buffer> <leader>di <Plug>VimspectorStepInto
+nmap <buffer> <leader>dn <Plug>VimspectorStepOver
+
 " ======= Autocmds ========================================
 
 augroup MyRustAutoCmds
