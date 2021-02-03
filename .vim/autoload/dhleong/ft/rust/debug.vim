@@ -30,5 +30,6 @@ func! dhleong#ft#rust#debug#StartModTest()
     call vimspector#LaunchWithSettings({
         \ 'configuration': 'Run Test',
         \ 'Exe': path,
+        \ 'Module': mod,
         \ })
 endfunc
