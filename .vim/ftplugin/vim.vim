@@ -56,5 +56,6 @@ augroup VimAutoSource
 
     " Disable ale linting in vimrc (it's more annoying than helpful)
     autocmd BufWinEnter .vimrc let b:ale_enabled = 0
-    autocmd BufWinEnter */.vim/**.vim let b:ale_enabled = 0
+    autocmd BufWinEnter */.vim/init/**.vim let b:ale_enabled = 0
+    autocmd BufWinEnter */.vim/bundle/**.vim let b:ale_enabled = 0
 augroup END
