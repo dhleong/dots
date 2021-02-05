@@ -11,3 +11,12 @@ nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
 nnoremap <buffer> K :YcmCompleter GetDoc<cr>
 nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
 nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
+
+" let b:latte_python_exe = $HOME . '/.virtualenvs/discord_api/bin/python3'
+let b:latte_python_exe = '/usr/local/Cellar/python@3.9/3.9.1_8/bin/python3'
+
+augroup RunPyLatte
+    autocmd!
+    autocmd BufWritePost *.py call latte#TryRun()
+    autocmd BufWritePost test_*.py :call latte#Run()
+augroup END
