@@ -18,6 +18,8 @@ call plug#begin('~/.vim/bundle')
 " ======= Plugin defs and settings =========================
 "
 
+Plug '~/work/otsukare'
+
 
 " ======= Trial-basis ===================================== {{{
 
@@ -118,6 +120,7 @@ let g:ale_javascript_eslint_options = '--cache'
 Plug 'ap/vim-css-color'
 
 Plug 'digitaltoad/vim-jade'
+Plug 'elubow/cql-vim'
 Plug 'groenewege/vim-less'
 Plug 'kchmck/vim-coffee-script'
 Plug 'LokiChaos/vim-tintin'
@@ -231,6 +234,7 @@ let g:ycm_extra_conf_globlist = [
     \ '~/.dotfiles/dots/.vim/bundle/YouCompleteMe/*',
     \ '~/git/juuce/*',
     \ '~/git/iaido/*',
+    \ '~/work/*',
     \ ]
 
 " let g:ycm_max_diagnostics_to_display = 50
