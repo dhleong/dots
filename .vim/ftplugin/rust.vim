@@ -40,6 +40,7 @@ nnoremap <buffer> <silent> <leader>bt :call vimspector#ToggleBreakpoint()<cr>
 nmap <buffer> <leader>dc <Plug>VimspectorRunToCursor
 nmap <buffer> <leader>di <Plug>VimspectorStepInto
 nmap <buffer> <leader>dn <Plug>VimspectorStepOver
+nmap <buffer> <leader>do <Plug>VimspectorStepOut
 
 " ======= Autocmds ========================================
 
