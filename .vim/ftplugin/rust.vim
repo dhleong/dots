@@ -46,5 +46,5 @@ nmap <buffer> <leader>dn <Plug>VimspectorStepOver
 augroup MyRustAutoCmds
     autocmd!
 
-    autocmd BufWritePost <buffer> call <SID>tryRunTests()
+    autocmd BufWritePost *.rs call <SID>tryRunTests()
 augroup END
