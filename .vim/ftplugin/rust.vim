@@ -20,10 +20,19 @@ let b:ale_fix_on_save = 1
 " ======= Test running ====================================
 
 func! s:tryRunTests()
+    " prefer to re-run a failed test, if any
+    if latte#TryRun({'ifFailed': 1})
+        return
+    endif
+
     let [line, _] = searchpos('\C#\[cfg(test)\]', 'nw', 0, 100)
     if line > 0
         call latte#Run()
+        return
     endif
+
+    " no tests and n on failed? just try to re-run any
+    call latte#TryRun()
 endfunc
 
 
