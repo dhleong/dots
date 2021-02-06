@@ -12,7 +12,7 @@ nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
 let b:argwrap_tail_comma = 1
 
 let b:ale_fixers = {
-    \ "rust": ["rustfmt"],
+    \ 'rust': ['rustfmt'],
     \ }
 let b:ale_fix_on_save = 1
 
@@ -46,10 +46,6 @@ nnoremap <silent> <leader>rq :call vimspector#Reset()<cr>
 nnoremap <buffer> <silent> <leader>bc :call vimspector#ClearBreakpoints()<cr>
 nnoremap <buffer> <silent> <leader>bt :call vimspector#ToggleBreakpoint()<cr>
 
-nmap <buffer> <leader>dc <Plug>VimspectorRunToCursor
-nmap <buffer> <leader>di <Plug>VimspectorStepInto
-nmap <buffer> <leader>dn <Plug>VimspectorStepOver
-nmap <buffer> <leader>do <Plug>VimspectorStepOut
 
 " ======= Autocmds ========================================
 
