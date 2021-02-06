@@ -1,5 +1,9 @@
 func! dhleong#ft#rust#debug#StartModTest()
     let path = expand('%:p:r')
+    if path =~# '/mod'
+        let path = fnamemodify(path, ':h')
+    endif
+
     let root_end = stridx(path, '/src/')
     let mod = substitute(path[root_end + 5:], '/', '::', 'g')
 
