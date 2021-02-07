@@ -3,7 +3,7 @@
 
 function! s:pprint_recall() abort
     let platform = 'clojure'
-    if "cljs" == expand("%:e")
+    if 'cljs' ==# expand('%:e')
         let ns = 'cljs'
     endif
 
@@ -56,7 +56,7 @@ nnoremap <buffer> grl :Require<cr>
 nmap <buffer> cql cqp<up><cr>
 
 " ie: 'up'; just open last input but don't execute
-exe 'nmap <buffer> cqu cqp<up>' &cedit | norm 0
+exe 'nmap <buffer> cqu cqp<up>' &cedit | norm! 0
 
 " 'nice print recall'
 nnoremap <silent> <buffer> cnpr :<C-U>call <SID>pprint_recall()<CR>
