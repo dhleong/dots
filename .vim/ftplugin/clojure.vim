@@ -104,3 +104,12 @@ augroup dhleongClojure
     au!
     au User FireplaceActivate call s:overwriteMaps()
 augroup END
+
+
+" ======= babshaka tests ==================================
+
+command! Test call dhleong#autorun#OpenTerm({'command': 'bb %s --test'})
+augroup AutoRetryBabshkaTests
+    autocmd!
+    autocmd BufWritePost *.clj call dhleong#autorun#Try()
+augroup END
