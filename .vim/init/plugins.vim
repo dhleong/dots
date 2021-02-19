@@ -135,6 +135,7 @@ Plug 'vim-scripts/ShaderHighLight'
 Plug 'zchee/vim-flatbuffers'
 Plug '~/git/vim-interspace'
 Plug '~/git/vim-jsgf'
+Plug 'elixir-editors/vim-elixir'
 " }}}
 
 
@@ -168,9 +169,14 @@ let g:ycm_language_server = [
     \   'cmdline': ['xcrun', 'sourcekit-lsp', '--log-level=debug'],
     \   'filetypes': ['swift'],
     \   'project_root_files': [ 'Package.swift' ],
+    \ },
+    \ {
+    \   'name': 'elixir-ls',
+    \   'cmdline': [$HOME . '/work/elixir-ls/language_server.sh'],
+    \   'filetypes': ['elixir'],
+    \   'project_root_files': [ 'mix.exs' ],
     \ }
     \ ]
-
 " }}}
 
 let s:ycmCompleters = ['clang', 'cs', 'go', 'rust', 'ts']
