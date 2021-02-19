@@ -45,7 +45,6 @@ build/
 ######################
 .DS_Store*
 ehthumbs.db
-Icon?
 Thumbs.db
 
 # amplify shader editor
