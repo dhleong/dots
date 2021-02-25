@@ -37,3 +37,15 @@ func! dhleong#ft#rust#debug#StartModTest()
         \ 'Module': mod,
         \ })
 endfunc
+
+func! dhleong#ft#rust#debug#StartApp()
+    echom 'Compiling  ...'
+
+    let path = ''
+    !cargo build
+    redraw!
+
+    call vimspector#LaunchWithSettings({
+        \ 'configuration': 'Run App',
+        \ })
+endfunc

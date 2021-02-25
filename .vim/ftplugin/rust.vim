@@ -40,12 +40,13 @@ endfunc
 
 call dhleong#vimspector#Config()
 
+command! Debug call dhleong#ft#rust#debug#StartApp()
+
 nnoremap <buffer> <silent> <leader>rd :call dhleong#ft#rust#debug#StartModTest()<cr>
 nnoremap <silent> <leader>rq :call vimspector#Reset()<cr>
 
 nnoremap <buffer> <silent> <leader>bc :call vimspector#ClearBreakpoints()<cr>
 nnoremap <buffer> <silent> <leader>bt :call vimspector#ToggleBreakpoint()<cr>
-
 
 " ======= Autocmds ========================================
 
