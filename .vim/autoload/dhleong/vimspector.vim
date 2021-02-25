@@ -3,6 +3,7 @@ let s:debuggerMappings = {
     \ 'gi': '<Plug>VimspectorStepInto',
     \ 'gn': '<Plug>VimspectorStepOver',
     \ 'go': '<Plug>VimspectorStepOut',
+    \ 'gr': '<Plug>VimspectorContinue',
     \ }
 
 func! s:ConfigureWatches()
@@ -67,7 +68,9 @@ func! dhleong#vimspector#Config()
     augroup MyVimspectorConfigs
         autocmd!
         autocmd BufEnter vimspector.Watches call <SID>ConfigureWatches()
+        autocmd BufWinEnter * call <SID>SetOrClearDebuggerMappings()
         autocmd WinEnter * call <SID>SetOrClearDebuggerMappings()
+        autocmd User VimspectorUICreated call <SID>SetOrClearDebuggerMappings()
     augroup END
 
     nmap <buffer> <leader>dc <Plug>VimspectorRunToCursor
