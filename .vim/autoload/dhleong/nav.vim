@@ -2,7 +2,7 @@
 "
 
 let s:fzf_options = '--color=dark --no-clear'
-let s:popupTermPatch = "patch-8.2.0286"
+let s:popupTermPatch = 'patch-8.2.0286'
 
 func! s:ensureTerminalInput(_)
     if mode() !=# 't'
@@ -32,7 +32,7 @@ endfunc
 func! s:OpenByText(sink, line)
     let parts = split(a:line, ':')
     if len(parts) < 2
-        echo "Unexpected input: " . a:line
+        echo 'Unexpected input: ' . a:line
     endif
 
     let [ file, line; _ ] = parts
@@ -77,8 +77,12 @@ func! dhleong#nav#ByText(projectRoot, sink)
 endfunc
 
 func! dhleong#nav#InProject(projectRoot, sink)
-    if a:projectRoot =~# '^\s*$'
-        echo "Not in a project directory"
+    let projectRoot = a:projectRoot
+    if projectRoot =~# '^\s*$'
+        let projectRoot = get(g:, 'otsukare_default_project_root', '')
+    endif
+    if projectRoot =~# '^\s*$'
+        echo 'Not in a project directory'
         return
     endif
 
@@ -94,7 +98,7 @@ func! dhleong#nav#InProject(projectRoot, sink)
     endif
 
     call fzf#run({
-        \ 'dir': a:projectRoot,
+        \ 'dir': projectRoot,
         \ 'options': s:fzf_options,
         \ 'source': 'list-repo-files',
         \ 'sink': a:sink,
@@ -105,20 +109,20 @@ func! dhleong#nav#InProject(projectRoot, sink)
 endfunc
 
 func! dhleong#nav#Projects()
-    let dirs = ""
+    let dirs = ''
     for parentPath in g:ProjectParentPaths
         if isdirectory(parentPath)
-            let dirs = dirs . " " . parentPath . "*"
+            let dirs = dirs . ' ' . parentPath . '*'
         endif
     endfor
 
     if !len(dirs)
-        echom "No project dirs exist? Checked:"
+        echom 'No project dirs exist? Checked:'
         echom g:ProjectParentPaths
         return
     endif
 
-    let cmd = "ls -d" . dirs
+    let cmd = 'ls -d' . dirs
     call fzf#run({
         \ 'options': s:fzf_options,
         \ 'source': cmd,
@@ -127,6 +131,6 @@ func! dhleong#nav#Projects()
 endfunc
 
 func! dhleong#nav#Link()
-    let url = expand("<cfile>")
-    exe "!open " . url
+    let url = expand('<cfile>')
+    exe '!open ' . url
 endfunc
