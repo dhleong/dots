@@ -73,7 +73,7 @@ func! dhleong#nav#ByText(projectRoot, sink)
         \ 'source': 'ag --nobreak --noheading --ignore vendor .',
         \ 'sink': function('s:OpenByText', [a:sink]),
         \ 'window': window,
-        \ }))
+        \ }, 'right:+{2}/2'))
 endfunc
 
 func! dhleong#nav#InProject(projectRoot, sink)
