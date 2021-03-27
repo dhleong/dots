@@ -22,7 +22,7 @@ function! dhleong#projects#MapCtrlP(path)
     " isn't set as expected when opening Unite after using
     " the projectopen func below...
 
-    if &ft == "java" && exists("*intellivim#InProject") && intellivim#IsRunning()
+    if &filetype ==# 'java' && exists('*intellivim#InProject') && intellivim#IsRunning()
         nnoremap <buffer> <silent> <c-p> :Locate<cr>
     else
         execute 'nnoremap <silent> <buffer> <c-p> :call ' .
@@ -46,7 +46,7 @@ endfunction
 
 " function to automatically set the appropriate path :)
 function! dhleong#projects#SetPathToProject()
-    let this_file = expand("%:p:h") . '/' . expand("%:t")
+    let this_file = expand('%:p:h') . '/' . expand('%:t')
     for projDir in g:ProjectParentPaths
         " check if our file matches a project src dir
         let len = strlen(projDir)
@@ -67,9 +67,9 @@ function! dhleong#projects#SetPathToProject()
             exe 'set path=' . pathDir . '**'
             call dhleong#projects#MapCtrlP(pathDir)
 
-            if expand("%") == ".vimrc"
-                let inits = resolve(expand("~/.vim/init"))
-                exec "set path=" . inits . "/**," . &path
+            if expand('%') ==# '.vimrc'
+                let inits = resolve(expand('~/.vim/init'))
+                exec 'set path=' . inits . '/**,' . &path
             endif
             return
         endif
@@ -84,5 +84,5 @@ function! dhleong#projects#SetPathToProject()
     endif
 
     " reset ctrl-p to default
-    call dhleong#projects#MapCtrlP("")
+    call dhleong#projects#MapCtrlP('')
 endfunction
