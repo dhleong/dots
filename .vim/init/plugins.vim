@@ -23,7 +23,7 @@ Plug '~/work/otsukare'
 
 " ======= Trial-basis ===================================== {{{
 
-Plug 'jalvesaq/Nvim-R'
+Plug 'AndrewRadev/splitjoin.vim'
 
 " less/css convenience
 " Plug 'rstacruz/vim-hyperstyle'
@@ -128,6 +128,7 @@ Plug 'milch/vim-fastlane'
 Plug 'udalov/kotlin-vim'
 Plug 'keith/swift.vim'
 Plug 'tfnico/vim-gradle'
+Plug 'cespare/vim-toml'
 Plug 'wavded/vim-stylus'
 Plug 'leafgarland/typescript-vim'
 Plug '~/git/vim-jsx-typescript'
