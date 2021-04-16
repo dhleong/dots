@@ -138,7 +138,7 @@ _git-fzf-branch() {
 
         if [ -n "$LBUFFER" ]; then
             # paste the branch into the command line
-            LBUFFER="${LBUFFER}${branch}"
+            LBUFFER="${LBUFFER} ${branch}"
         else
             # no existing line, just select directly
             BUFFER="git co $branch"
