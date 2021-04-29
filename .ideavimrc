@@ -12,6 +12,7 @@ set argtextobj
 set surround
 set commentary
 set repeat
+set sneak
 
 
 " ======= idea-specific config ============================
