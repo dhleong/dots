@@ -65,3 +65,7 @@ fi
 export FASTLANE_SKIP_UPDATE_CHECK=1
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# enable persistent history in elixir/erlang shells
+export ERL_AFLAGS="-kernel shell_history enabled"
+
