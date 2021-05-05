@@ -108,6 +108,24 @@ func! dhleong#nav#InProject(projectRoot, sink)
     call timer_start(10, function('s:ensureTerminalInput'))
 endfunc
 
+func! dhleong#nav#InProjectSubpath(projectRoot, sink)
+    " NOTE: projectRoot should always have a trailing backslash
+    let contextPath = expand('%:p')
+    if empty(contextPath)
+        " in a new tab, for example
+        let contextPath = expand('#:p')
+    endif
+
+    let path = contextPath[len(a:projectRoot) - 1:]
+    let subpaths = split(path, '/')
+    if !len(subpaths)
+        return dhleong#nav#InProject(a:projectRoot, a:sink)
+    endif
+
+    let fullPath = a:projectRoot . subpaths[0]
+    call dhleong#nav#InProject(fullPath, a:sink)
+endfunc
+
 func! dhleong#nav#Projects()
     let dirs = ''
     for parentPath in g:ProjectParentPaths

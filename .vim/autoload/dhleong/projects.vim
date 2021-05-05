@@ -27,6 +27,8 @@ function! dhleong#projects#MapCtrlP(path)
     else
         execute 'nnoremap <silent> <buffer> <c-p> :call ' .
                     \ 'dhleong#nav#InProject("' a:path .'", "e")<cr>'
+        execute 'nnoremap <silent> <buffer> <c-]> :call ' .
+                    \ 'dhleong#nav#InProjectSubpath("' a:path .'", "e")<cr>'
         execute 'nnoremap <silent> <buffer> <c-w><c-p> :call ' .
                     \ 'dhleong#nav#InProject("' a:path .'", "tabe")<cr>'
         execute 'nnoremap <silent> <buffer> <c-s><c-p> :call ' .
