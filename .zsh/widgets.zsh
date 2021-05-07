@@ -21,7 +21,7 @@ _fzf-find-file() {
             ;;
 
         judo)
-            file=$(list-repo-files ~/judo | ag '.py' | fzf)
+            file=$(list-repo-files ~/judo | rg '.py' | fzf)
             ;;
 
         # default to all files in repo
@@ -67,7 +67,7 @@ _fzf-find-project-dir() {
             wild_dirs+=("$dir/*")
         fi
     done
-    cmd="ls -d $wild_dirs | ag -v :"
+    cmd="ls -d $wild_dirs | rg -v :"
     file=$(eval $cmd | fzf)
 
     if [ -n "$file" ]
@@ -122,7 +122,7 @@ _git-fzf-branch() {
     setopt localoptions pipefail 2> /dev/null
 
     # list subdirs from all project dirs
-    cmd='git branch -a | ag -v -Q \* | ~/.dotfiles/dots/bin/filter-branches'
+    cmd='git branch -a | rg -v -F \* | ~/.dotfiles/dots/bin/filter-branches'
     branches=$(eval $cmd)
     if [ -z "$branches" ]; then
         echo "\nYou're on the only branch"

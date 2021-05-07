@@ -1,4 +1,4 @@
 #!/bin/bash
 
 find . -type d -mindepth 1 |\
-    ag -v '.idea|.git|.gradle|/build/|/node_modules/'
+    rg -v '.idea|.git|.gradle|/build/|/node_modules/'

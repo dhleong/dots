@@ -7,7 +7,7 @@ then
 fi
 
 function filter-ignored() {
-    ag -v '/(node_modules|cljs-runtime|target|nashorn_code_cache|Pods|.expo)'
+    rg -v '/(node_modules|cljs-runtime|target|nashorn_code_cache|Pods|.expo)'
 }
 
 function files_from_git() {

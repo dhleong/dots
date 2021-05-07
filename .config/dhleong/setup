@@ -131,11 +131,11 @@ else
     brew install gh hub
 fi
 
-if has_cli go && has_cli fzf; then
+if has_cli rg && has_cli fzf; then
     echo " Installed: (various tools)"
 else
     echo "Installing: (various tools)..."
-    brew install the_silver_searcher fzf zsh-completions
+    brew install ripgrep fzf zsh-completions
 fi
 
 echo "Done!"

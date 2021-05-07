@@ -45,7 +45,7 @@ brew "postgresql"
 brew "redis", restart_service: true
 brew "scc"
 brew "sshfs"
-brew "the_silver_searcher"
+brew "ripgrep"
 brew "yarn"
 brew "youtube-dl"
 brew "zsh-completions"

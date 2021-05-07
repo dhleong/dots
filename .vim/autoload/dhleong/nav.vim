@@ -50,14 +50,14 @@ func! dhleong#nav#FindGradle()
 endfunc
 
 func! dhleong#nav#ByText(projectRoot, sink)
-    " NOTE: use 3.. as the query and presentation target
+    " NOTE: use 4.. as the query and presentation target
     " to handle Swift (and other code that uses colons).
     " Use no-extended since we generally want strings of results
-    " NOTE: nth=2.. instead of 3 is (I THINK) because with-nth
-    " changes the indexing, so 3 becomes 2.
+    " NOTE: nth=3.. instead of 4 is (I THINK) because with-nth
+    " changes the indexing, so 4 becomes 3.
     let opts = s:fzf_options . ' '
-            \ . '--with-nth=1,3.. '
-            \ . '--nth=2.. '
+            \ . '--with-nth=1,4.. '
+            \ . '--nth=3.. '
             \ . '--no-extended '
             \ . '--delimiter=:'
     let window = 'aboveleft 15new'
@@ -70,7 +70,7 @@ func! dhleong#nav#ByText(projectRoot, sink)
     call fzf#run(fzf#vim#with_preview({
         \ 'dir': a:projectRoot,
         \ 'options': opts,
-        \ 'source': 'ag --nobreak --noheading --ignore vendor .',
+        \ 'source': 'rg --column --line-number --no-heading --smart-case -- .',
         \ 'sink': function('s:OpenByText', [a:sink]),
         \ 'window': window,
         \ }, 'right:+{2}/2'))
