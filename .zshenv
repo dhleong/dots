@@ -69,3 +69,4 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc
 # enable persistent history in elixir/erlang shells
 export ERL_AFLAGS="-kernel shell_history enabled"
 
+export RIPGREP_CONFIG_PATH="$HOME/.config/rg"
