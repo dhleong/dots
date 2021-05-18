@@ -42,6 +42,14 @@ EOF
     endif
 endfunc " }}}
 
+func! s:tryEnsureAdded()
+    try
+        call s:ensureAdded()
+    catch /Could not load library/
+        " ignore
+    endtry
+endfunc
+
 func! s:promptAddToTarget(projectRoot, file, targets)
     " TODO other prompt methods?
 
@@ -111,7 +119,7 @@ endfunc
 func! dhleong#ft#swift#init()
     augroup swift_xcode
         autocmd!
-        autocmd BufWrite <buffer> call <SID>ensureAdded()
+        autocmd BufWrite <buffer> call <SID>tryEnsureAdded()
         " TODO generate initial template?
     augroup END
 endfunc
