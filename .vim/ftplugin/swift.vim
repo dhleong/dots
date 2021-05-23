@@ -1,7 +1,7 @@
 " TODO: extract some of this into a plugin, probably
 " ======= state ===========================================
 
-if !exists("s:openTerms")
+if !exists('s:openTerms')
     let s:openTerms = {}
 endif
 
@@ -40,7 +40,7 @@ endfunc
 
 func! s:ensureScheme() " {{{
     if get(b:, 'swift_xcode_scheme', '') ==# ''
-        echo "Locating project..."
+        echo 'Locating project...'
 
         " TODO: we probably ought to refactor this to be done async
         let info = s:xcodejson('-list')
@@ -57,7 +57,7 @@ func! s:ensureScheme() " {{{
 
     let scheme = get(b:, 'swift_xcode_scheme', '')
     if scheme ==# ''
-        echom "No scheme found"
+        echom 'No scheme found'
         return
     endif
 

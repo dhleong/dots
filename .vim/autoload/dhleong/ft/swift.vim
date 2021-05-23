@@ -1,9 +1,9 @@
 func! s:ensureAdded() " {{{
     " NOTE: requires: gem install xcode proj
 
-    " if get(b:, '_swift_xcode_added', 0)
-    "     return
-    " endif
+    if get(b:, '_swift_xcode_added', 0)
+        return
+    endif
 
     let b:_swift_xcode_added = 1
     let proj = dhleong#ft#swift#FindProj()
@@ -11,7 +11,7 @@ func! s:ensureAdded() " {{{
         return
     endif
 
-    let file = expand("%:p")
+    let file = expand('%:p')
     let project = {'targets': []}
     func project.setTargets(targets) dict
         let self.targets = a:targets
@@ -45,6 +45,8 @@ endfunc " }}}
 func! s:tryEnsureAdded()
     try
         call s:ensureAdded()
+    catch /cannot load such file/
+        " ignore
     catch /Could not load library/
         " ignore
     endtry
