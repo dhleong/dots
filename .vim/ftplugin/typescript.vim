@@ -4,13 +4,13 @@ function! s:TslintInfo()
     let list = ale#engine#GetLoclist(bufnr('%'))
     for l in list
         if l['lnum'] == line
-            echo "Opening..."
-            silent exe "!open https://palantir.github.io/tslint/rules/" . l['code']
+            echo 'Opening...'
+            silent exe '!open https://palantir.github.io/tslint/rules/' . l['code']
             return
         endif
     endfor
 
-    echo "No lint info"
+    echo 'No lint info'
 endfunction
 
 nnoremap <buffer> gli :call <SID>TslintInfo()<cr>
