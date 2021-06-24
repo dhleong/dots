@@ -11,16 +11,16 @@ funct! s:FallbackJumpToNextError()
     catch /.*No.more.items$/
         lfirst
     catch /.*No.Errors$/
-        call dhleong#util#EchoBold("No errors :)")
+        call dhleong#util#EchoBold('No errors :)')
     catch /.*No.location.list$/
     endtry
 endfunc
 
 func! s:JumpToMergeConflict()
-    let line = search("=======")
+    let line = search('=======')
     if line == 0
         normal! ]c
-        call dhleong#util#EchoBold("No more merge conflicts in file")
+        call dhleong#util#EchoBold('No more merge conflicts in file')
     endif
 endfunc
 
@@ -33,11 +33,13 @@ func! dhleong#loclist#JumpToNextError()
         return
     endif
 
-    " make sure diagnostics are up-to-date
-    :YcmForceCompileAndDiagnostics
-    redraw!
+    if exists(':YcmForceCompileAndDiagnostics')
+        " make sure diagnostics are up-to-date
+        :YcmForceCompileAndDiagnostics
+        redraw!
+    endif
 
-    if index(s:YcmJumpingTypes, &ft) != -1
+    if index(s:YcmJumpingTypes, &filetype) != -1
         call s:FallbackJumpToNextError()
         return
     endif
@@ -49,11 +51,11 @@ func! dhleong#loclist#JumpToNextError()
         call cursor(l:nearest)
 
         if l:nearest[0] == line('.')
-            echo "This is the only error!"
+            echo 'This is the only error!'
         endif
     elseif len(getloclist(0)) > 0
         call s:FallbackJumpToNextError()
     else
-        call dhleong#util#EchoBold("No errors :)")
+        call dhleong#util#EchoBold('No errors :)')
     endif
 endfunc
