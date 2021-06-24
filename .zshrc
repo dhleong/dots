@@ -102,12 +102,3 @@ bindkey -M vicmd 'gu' _git-push-upstream
 bindkey -M vicmd 'gs' _git-status
 
 bindkey -M vicmd V edit-command-line
-
-
-#compdef clid
-_clid() {
-  eval $(env COMMANDLINE="${words[1,$CURRENT]}" _CLID_COMPLETE=complete-zsh  clid)
-}
-if [[ "$(basename -- ${(%):-%x})" != "_clid" ]]; then
-  compdef _clid clid
-fi
