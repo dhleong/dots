@@ -40,12 +40,14 @@ let s:fuzzy_indent_specter = [
     \ '^recursive-path',
     \ '^if-path',
     \ ]
+let s:fuzzy_indent_match = [ '^match' ]
 
 let g:clojure_fuzzy_indent_patterns = [
     \ '^with', '^def', '^let', '^plet', '^go-loop', '^fn-', '^when-',
     \ ]
     \ + s:fuzzy_indent_spade
     \ + s:fuzzy_indent_specter
+    \ + s:fuzzy_indent_match
 
 " ======= Custom maps =====================================
 
