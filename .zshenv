@@ -11,12 +11,19 @@ else
     export EDITOR=vim
 fi
 
-export PATH=$PATH:~/lib/android-sdk
-export PATH=$PATH:~/lib/android-sdk/platform-tools
-export PATH=$PATH:~/lib/android-sdk/tools
+if [ -f "$HOME/lib/android-sdk" ]; then
+    export ANDROID_HOME=~/lib/android-sdk
+else
+    export ANDROID_HOME=$HOME/Library/Android/sdk
+fi
+export ANDROID_NDK=~/lib/android-ndk
+
+export PATH=$PATH:$ANDROID_HOME
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:/usr/local/git/bin
 export PATH=~/bin:$PATH
-export NDK=~/lib/android-ndk
+export NDK=$ANDROID_NDK
 export PATH=$PATH:$NDK
 
 export PATH=$PATH:/usr/local/mysql/bin
@@ -42,9 +49,6 @@ export PATH=$PATH:$HOME/.cargo/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-
-export ANDROID_HOME=~/lib/android-sdk
-export ANDROID_NDK=$NDK
 
 if [ -f "$HOME/.zshenv.local" ]
 then
