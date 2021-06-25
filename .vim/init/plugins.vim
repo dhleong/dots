@@ -159,30 +159,22 @@ Plug 'tpope/vim-endwise'
 " augmentations, like hyperstyle
 let g:endwise_no_mappings = 1
 
-"" coc.nvim {{{
+"" Completer selection
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:dhleong_completer = 'coc'
 
-let g:coc_global_extensions = [
-    \ 'coc-elixir',
-    \ 'coc-go',
-    \ 'coc-jedi',
-    \ 'coc-json',
-    \ 'coc-omnisharp',
-    \ 'coc-prettier',
-    \ 'coc-rust-analyzer',
-    \ 'coc-snippets',
-    \ 'coc-sourcekit',
-    \ 'coc-tsserver',
-    \ 'coc-vimlsp',
-    \ ]
+if g:dhleong_completer ==# 'coc'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    source './coc.vim'
+elseif !(has('nvim') || exists('g:neojet#version'))
+    let flags = join(map(s:ycmCompleters, '"--" . v:val . "-completer"'), ' ')
+    Plug 'ycm-core/YouCompleteMe', {'do': './install.py ' . flags}
 
-inoremap <silent><expr> <tab>
-    \ pumvisible() ? "\<C-n>" : "\<tab>"
+    " related, for c/c++ stuff
+    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 
-inoremap <silent><expr> <c-space> coc#refresh()
-
-"" }}}
+    source './ycm.vim'
+endif
 
 "" Ultisnips
 ""

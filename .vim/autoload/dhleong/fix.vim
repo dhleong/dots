@@ -14,8 +14,7 @@ function s:TryFixAle()
 endfunction
 
 function! dhleong#fix#Fix()
-    let ycmCommands = youcompleteme#SubCommandsComplete('','', 0)
-    if ycmCommands == ''
+    if !dhleong#completer().HasQuickFixes()
         " no completer options; clear error output from above
         call s:ClearEcho('')
 
@@ -25,16 +24,13 @@ function! dhleong#fix#Fix()
 
     let before = changenr()
 
-    if match(ycmCommands, 'FixIt') != -1
-        " FixIt supported!
-        YcmCompleter FixIt
-    endif
+    call dhleong#completer().PerformQuickFix()
 
-    let afterYcm = changenr()
-    if afterYcm == before
+    let afterCompleter = changenr()
+    if afterCompleter == before
         " YCM's default message would be nice if we weren't about
         " to also try ALE...
-        call s:ClearEcho("YCM found nothing to fix...")
+        call s:ClearEcho('Completer found nothing to fix...')
     endif
 
     call s:TryFixAle()

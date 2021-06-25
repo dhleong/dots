@@ -1,6 +1,10 @@
 " Lazy-loaded functions for use in various .vimrc mappings, etc.
 "
 
+func! dhleong#completer()
+    return dhleong#completer#Create()
+endfunc
+
 function! dhleong#GotoInNewTab(...)
     let l:method = 'GoTo'
     if a:0

@@ -34,12 +34,7 @@ func! dhleong#loclist#JumpToNextError()
     endif
 
     " make sure diagnostics are up-to-date
-    if exists(':YcmForceCompileAndDiagnostics')
-        :YcmForceCompileAndDiagnostics
-        redraw!
-    elseif exists('*CocAction')
-        call coc#rpc#request('fillDiagnostics', [bufnr('%')])
-    endif
+    call dhleong#completer().FillLocList()
 
     if index(s:YcmJumpingTypes, &filetype) != -1
         call s:FallbackJumpToNextError()
