@@ -163,18 +163,19 @@ let g:endwise_no_mappings = 1
 
 let g:dhleong_completer = 'coc'
 
+let s:completer_config_path = resolve(expand('~/.vim/init/' . g:dhleong_completer . '.vim'))
+
 if g:dhleong_completer ==# 'coc'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    source './coc.vim'
 elseif !(has('nvim') || exists('g:neojet#version'))
     let flags = join(map(s:ycmCompleters, '"--" . v:val . "-completer"'), ' ')
     Plug 'ycm-core/YouCompleteMe', {'do': './install.py ' . flags}
 
     " related, for c/c++ stuff
     Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-
-    source './ycm.vim'
 endif
+
+exe 'source ' . s:completer_config_path
 
 "" Ultisnips
 ""
