@@ -21,11 +21,14 @@ func! s:completer.RenameWord() abort
     call CocActionAsync('rename')
 endfunc
 
-func! s:completer.MapNavigation() abort
-    " FIXME: new tab handling
-    nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab("GoToDefinition")<cr>
-    nmap <silent><buffer> gd <Plug>(coc-definition)
-    nmap <silent><buffer> <leader>js <Plug>(coc-references)
-    nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
+func! s:completer.Navigate(method) abort
+    " Can we distinguish between GoTo and GoToDefinition?
+    call CocActionAsync('jumpDefinition')
+endfunc
+
+func! s:completer.MapNavigation(...) abort
+    call dhleong#completer#shared#MapSharedNavigation(get(a:, 1, ''))
+
     nnoremap <silent><buffer> K :call CocActionAsync('doHover')<cr>
+    nmap <silent><buffer> <leader>js <Plug>(coc-references)
 endfunc

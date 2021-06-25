@@ -11,16 +11,10 @@ function! dhleong#GotoInNewTab(...)
         let l:method = a:1
     endif
 
-    if a:0 > 1
-        let l:cmd = a:2
-    else
-        let l:cmd = ':YcmCompleter ' . l:method
-    endif
-
     let l:c = getpos('.')
     tabe %
     call cursor(l:c[1], l:c[2])
-    exe l:cmd
+    call dhleong#completer().Navigate(l:method)
 endfunction
 
 function! dhleong#OpenPlugRepo()

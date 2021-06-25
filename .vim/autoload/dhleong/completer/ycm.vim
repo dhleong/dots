@@ -24,10 +24,13 @@ func! s:completer.RenameWord() abort
     call feedkeys('q:iYcmCompleter RefactorRename ' . word . "\<esc>b", 'n')
 endfunc
 
-func! s:completer.MapNavigation() abort
-    nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab("GoToDefinition")<cr>
-    nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
+func! s:completer.Navigate(method) abort
+    exe ':YcmCompleter ' . a:method
+endfunc
+
+func! s:completer.MapNavigation(...) abort
+    call dhleong#completer#shared#MapSharedNavigation(get(a:, 1, ''))
+
     nnoremap <buffer> K :YcmCompleter GetDoc<cr>
-    nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
     nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
 endfunc
