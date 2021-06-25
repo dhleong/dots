@@ -3,5 +3,6 @@
     "coc.preferences.promptInput": false,
     "diagnostic.errorSign": "❌",
     "diagnostic.warningSign": "⚠️ ",
-    "suggest.triggerAfterInsertEnter": true
+    "suggest.triggerAfterInsertEnter": true,
+    "javascript.suggestionActions.enabled": false
 }
