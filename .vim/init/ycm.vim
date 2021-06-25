@@ -16,8 +16,6 @@ let g:ycm_language_server = [
     \ ]
 " }}}
 
-let s:ycmCompleters = ['clang', 'cs', 'go', 'rust', 'ts']
-
 let g:ycm_filetype_blacklist = {
     \ 'tagbar' : 1,
     \ 'qf' : 1,

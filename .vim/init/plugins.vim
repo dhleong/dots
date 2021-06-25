@@ -161,13 +161,14 @@ let g:endwise_no_mappings = 1
 
 "" Completer selection
 
-let g:dhleong_completer = 'coc'
+let g:dhleong_completer = 'ycm'
 
 let s:completer_config_path = resolve(expand('~/.vim/init/' . g:dhleong_completer . '.vim'))
 
 if g:dhleong_completer ==# 'coc'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 elseif !(has('nvim') || exists('g:neojet#version'))
+    let s:ycmCompleters = ['clang', 'cs', 'go', 'rust', 'ts']
     let flags = join(map(s:ycmCompleters, '"--" . v:val . "-completer"'), ' ')
     Plug 'ycm-core/YouCompleteMe', {'do': './install.py ' . flags}
 
