@@ -133,10 +133,7 @@ endfunc " }}}
 " ======= mappings ========================================
 
 " my standard mappings
-nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab("GoToDefinition")<cr>
-nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
-nnoremap <buffer> K :YcmCompleter GetHover<cr>
-nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
+call dhleong#completer().MapNavigation()
 
 " swift/xcode-specific
 nnoremap <silent> <leader>pr :call <SID>Run()<cr>

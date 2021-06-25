@@ -23,3 +23,11 @@ func! s:completer.RenameWord() abort
     let word = expand('<cword>')
     call feedkeys('q:iYcmCompleter RefactorRename ' . word . "\<esc>b", 'n')
 endfunc
+
+func! s:completer.MapNavigation() abort
+    nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab("GoToDefinition")<cr>
+    nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
+    nnoremap <buffer> K :YcmCompleter GetDoc<cr>
+    nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
+    nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
+endfunc
