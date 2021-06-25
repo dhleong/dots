@@ -1,0 +1,4 @@
+{
+    "coc.preferences.formatOnSaveFiletypes": ["python", "rust"],
+    "coc.preferences.promptInput": false
+}

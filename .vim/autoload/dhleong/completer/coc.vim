@@ -16,3 +16,7 @@ endfunc
 func! s:completer.PerformQuickFix() abort
     call CocActionAsync('doQuickfix')
 endfunc
+
+func! s:completer.RenameWord() abort
+    call CocActionAsync('rename')
+endfunc

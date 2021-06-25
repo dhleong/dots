@@ -28,7 +28,7 @@ function! dhleong#fix#Fix()
 
     let afterCompleter = changenr()
     if afterCompleter == before
-        " YCM's default message would be nice if we weren't about
+        " The completer's default message would be nice if we weren't about
         " to also try ALE...
         call s:ClearEcho('Completer found nothing to fix...')
     endif

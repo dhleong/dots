@@ -1,7 +1,7 @@
 
 " all types that should fallback to standard loclist navigation
-" and which rely on YCM's diagnostics instead of ALE
-let s:YcmJumpingTypes = [
+" and which rely on the completer's diagnostics instead of ALE
+let s:AleIgnoringJumpingTypes = [
     \ 'cs', 'cpp',
     \ ]
 
@@ -36,7 +36,7 @@ func! dhleong#loclist#JumpToNextError()
     " make sure diagnostics are up-to-date
     call dhleong#completer().FillLocList()
 
-    if index(s:YcmJumpingTypes, &filetype) != -1
+    if index(s:AleIgnoringJumpingTypes, &filetype) != -1
         call s:FallbackJumpToNextError()
         return
     endif
