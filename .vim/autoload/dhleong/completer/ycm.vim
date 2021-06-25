@@ -34,3 +34,7 @@ func! s:completer.MapNavigation(...) abort
     nnoremap <buffer> K :YcmCompleter GetDoc<cr>
     nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
 endfunc
+
+func! s:completer.HandleConfirmCompletion(keys) abort
+    " NOP: YCM doesn't do anything with this (I think?)
+endfunc

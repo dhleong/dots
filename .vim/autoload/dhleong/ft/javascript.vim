@@ -99,6 +99,7 @@ func! dhleong#ft#javascript#Config()
     " ======= mappings ========================================
 
     call dhleong#completer().MapNavigation()
+    call dhleong#completer().HandleConfirmCompletion(['.', '(', '<space>'])
 
     nnoremap <buffer> <leader>op :exe 'find package.json'<cr>
     nnoremap <buffer> <leader>top :tabe \| exe 'find package.json'<cr>

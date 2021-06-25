@@ -32,3 +32,23 @@ func! s:completer.MapNavigation(...) abort
     nnoremap <silent><buffer> K :call CocActionAsync('doHover')<cr>
     nmap <silent><buffer> <leader>js <Plug>(coc-references)
 endfunc
+
+func! s:ConfirmCompletion(key) abort
+    let state = complete_info()
+    let selected = state['selected']
+    if selected == -1
+        return a:key
+    endif
+
+    " NOTE: this does not actually seem to do anything:
+    let item = state['items'][selected]
+    call coc#rpc#notify('CocAutocmd', ['CompleteDone', item])
+
+    return a:key
+endfunc
+
+func! s:completer.HandleConfirmCompletion(keys) abort
+    for key in a:keys
+        exe 'inoremap <buffer><silent><expr> ' . key . ' <SID>ConfirmCompletion("' . key . '")'
+    endfor
+endfunc
