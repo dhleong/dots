@@ -5,7 +5,7 @@ let s:YcmJumpingTypes = [
     \ 'cs', 'cpp',
     \ ]
 
-funct! s:FallbackJumpToNextError()
+func! s:FallbackJumpToNextError()
     try
         lnext
     catch /.*No.more.items$/
@@ -33,10 +33,12 @@ func! dhleong#loclist#JumpToNextError()
         return
     endif
 
+    " make sure diagnostics are up-to-date
     if exists(':YcmForceCompileAndDiagnostics')
-        " make sure diagnostics are up-to-date
         :YcmForceCompileAndDiagnostics
         redraw!
+    elseif exists('*CocAction')
+        call coc#rpc#request('fillDiagnostics', [bufnr('%')])
     endif
 
     if index(s:YcmJumpingTypes, &filetype) != -1
@@ -53,9 +55,7 @@ func! dhleong#loclist#JumpToNextError()
         if l:nearest[0] == line('.')
             echo 'This is the only error!'
         endif
-    elseif len(getloclist(0)) > 0
-        call s:FallbackJumpToNextError()
     else
-        call dhleong#util#EchoBold('No errors :)')
+        call s:FallbackJumpToNextError()
     endif
 endfunc
