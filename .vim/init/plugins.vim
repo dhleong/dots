@@ -168,6 +168,7 @@ let g:coc_global_extensions = [
     \ 'coc-go',
     \ 'coc-jedi',
     \ 'coc-json',
+    \ 'coc-omnisharp',
     \ 'coc-prettier',
     \ 'coc-rust-analyzer',
     \ 'coc-snippets',
@@ -178,6 +179,8 @@ let g:coc_global_extensions = [
 
 inoremap <silent><expr> <tab>
     \ pumvisible() ? "\<C-n>" : "\<tab>"
+
+inoremap <silent><expr> <c-space> coc#refresh()
 
 "" }}}
 
