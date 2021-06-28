@@ -11,7 +11,7 @@ endfunc
 
 func! s:completer.HasQuickFixes() abort
     let ycmCommands = youcompleteme#SubCommandsComplete('','', 0)
-    return match(ycmCommands, 'FixIt')
+    return match(ycmCommands, 'FixIt') != -1
 endfunc
 
 func! s:completer.PerformQuickFix() abort
