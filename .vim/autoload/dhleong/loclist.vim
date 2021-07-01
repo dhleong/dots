@@ -1,11 +1,11 @@
 
 " all types that should fallback to standard loclist navigation
-" and which rely on YCM's diagnostics instead of ALE
-let s:YcmJumpingTypes = [
+" and which rely on the completer's diagnostics instead of ALE
+let s:AleIgnoringJumpingTypes = [
     \ 'cs', 'cpp',
     \ ]
 
-funct! s:FallbackJumpToNextError()
+func! s:FallbackJumpToNextError()
     try
         lnext
     catch /.*No.more.items$/
@@ -33,13 +33,10 @@ func! dhleong#loclist#JumpToNextError()
         return
     endif
 
-    if exists(':YcmForceCompileAndDiagnostics')
-        " make sure diagnostics are up-to-date
-        :YcmForceCompileAndDiagnostics
-        redraw!
-    endif
+    " make sure diagnostics are up-to-date
+    call dhleong#completer().FillLocList()
 
-    if index(s:YcmJumpingTypes, &filetype) != -1
+    if index(s:AleIgnoringJumpingTypes, &filetype) != -1
         call s:FallbackJumpToNextError()
         return
     endif
@@ -53,9 +50,7 @@ func! dhleong#loclist#JumpToNextError()
         if l:nearest[0] == line('.')
             echo 'This is the only error!'
         endif
-    elseif len(getloclist(0)) > 0
-        call s:FallbackJumpToNextError()
     else
-        call dhleong#util#EchoBold('No errors :)')
+        call s:FallbackJumpToNextError()
     endif
 endfunc

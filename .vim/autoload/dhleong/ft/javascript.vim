@@ -1,9 +1,9 @@
 func! s:CreateTestFilePath()
     let type = expand('%:e')
     let path = expand('%:p')
-    let path = substitute(path, "." . type . "$", "-test." . type, "")
-    let path = substitute(path, "/src/", "/test/", "")
-    let path = substitute(path, "/lib/", "/test/", "")
+    let path = substitute(path, '.' . type . '$', '-test.' . type, '')
+    let path = substitute(path, '/src/', '/test/', '')
+    let path = substitute(path, '/lib/', '/test/', '')
 
     return path
 endfunc
@@ -11,8 +11,8 @@ endfunc
 func! s:FillTestFile(path)
     let path = a:path
     if !filereadable(path)
-        if !isdirectory(expand("%:p:h"))
-            call mkdir(expand("%:p:h"), "p")
+        if !isdirectory(expand('%:p:h'))
+            call mkdir(expand('%:p:h'), 'p')
         endif
 
         let type = expand('%:e')
@@ -25,7 +25,7 @@ func! s:FillTestFile(path)
                         \ '',
                         \ 'chai.should();']
         else
-            let buffer = [];
+            let buffer = []
         endif
 
         call append(0, buffer)
@@ -33,11 +33,11 @@ func! s:FillTestFile(path)
 endfunc
 
 " if guard to protect against E127
-if !exists("*s:CreateJsLikeTestFile")
+if !exists('*s:CreateJsLikeTestFile')
     function! s:CreateJsLikeTestFile()
         let path = s:CreateTestFilePath()
 
-        exe "edit " . path
+        exe 'edit ' . path
         call s:FillTestFile(path)
     endfunction
 endif
@@ -89,8 +89,8 @@ func! dhleong#ft#javascript#Config()
 
         " also, enable prettier auto-format
         let b:ale_fixers = {
-            \ "typescript": ["prettier"],
-            \ "javascript": ["prettier"],
+            \ 'typescript': ['prettier'],
+            \ 'javascript': ['prettier'],
             \ }
         let b:ale_fix_on_save = 1
     endif
@@ -98,11 +98,8 @@ func! dhleong#ft#javascript#Config()
 
     " ======= mappings ========================================
 
-    nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab("GoToDefinition")<cr>
-    nnoremap <buffer> gd :YcmCompleter GoToDefinition<cr>
-    nnoremap <buffer> K :YcmCompleter GetDoc<cr>
-    nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
-    nnoremap <buffer> <leader>js :YcmCompleter GoToReferences<cr>
+    call dhleong#completer().MapNavigation()
+    call dhleong#completer().HandleConfirmCompletion(['.', '(', '<space>'])
 
     nnoremap <buffer> <leader>op :exe 'find package.json'<cr>
     nnoremap <buffer> <leader>top :tabe \| exe 'find package.json'<cr>
