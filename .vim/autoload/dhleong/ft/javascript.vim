@@ -50,6 +50,8 @@ func! s:FindPrettierConfig()
     let prettierFile = findfile('.prettierrc', path)
 
     let &wildignore = old
+
+    return prettierFile
 endfunc
 
 func! dhleong#ft#javascript#Config()
@@ -89,6 +91,7 @@ func! dhleong#ft#javascript#Config()
 
         " also, enable prettier auto-format
         let b:ale_fixers = {
+            \ 'typescriptreact': ['prettier'],
             \ 'typescript': ['prettier'],
             \ 'javascript': ['prettier'],
             \ }
