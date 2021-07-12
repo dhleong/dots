@@ -8,6 +8,7 @@
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     co = checkout
     new = !git init && git symbolic-ref HEAD refs/heads/main
+    when = log --pretty=format:'%Cgreen%h %Cred%d %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all --grep
 [color]
     ui = auto
 [push]
