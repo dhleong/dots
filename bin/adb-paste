@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ "$1" != "" ]]
+then
+    TEXT="$1"
+else
+    TEXT=$(pbpaste)
+fi
+
+echo "Sending: $TEXT"
+echo "input text '$TEXT'" | adb shell
