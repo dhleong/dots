@@ -54,6 +54,45 @@ func! s:FindPrettierConfig()
     return prettierFile
 endfunc
 
+func! dhleong#ft#javascript#FindPrettierConfig()
+    return s:FindPrettierConfig()
+endfunc
+
+func! dhleong#ft#javascript#ExtractPrettierConfig() " {{{
+    let config = {}
+
+    let prettierFile = s:FindPrettierConfig()
+    if !filereadable(prettierFile)
+        return config
+    endif
+
+    let config.found = 1
+
+    " NOTE: findfile automatically also tries to search various suffixes,
+    " including .js for js files, so we need to make sure to handle the
+    " .prettierrc.js case
+    let ts = -1
+    if prettierFile =~# '.js$'
+        let tsMatch = matchlist(readfile(prettierFile), '\vtabWidth[ ]*[:=][ ]*(\d+)')
+        if len(tsMatch)
+            let ts = str2nr(tsMatch[1])
+        endif
+    else
+        try
+            let json = json_decode(join(readfile(prettierFile)))
+            let ts = json(config, 'tabWidth', ts)
+        catch /.*/
+            " ignore?
+        endtry
+    endif
+
+    if ts > 0
+        let config.ts = ts
+    endif
+
+    return config
+endfunc " }}}
+
 func! dhleong#ft#javascript#Config()
     " Shared config for javascript-based languages (including typescript)
 
@@ -65,28 +104,10 @@ func! dhleong#ft#javascript#Config()
     endif
 
     " load from a prettier config, if it exists
-    let prettierFile = s:FindPrettierConfig()
-    if filereadable(prettierFile)
-        " NOTE: findfile automatically also tries to search various suffixes,
-        " including .js for js files, so we need to make sure to handle the
-        " .prettierrc.js case
-        let ts = -1
-        if prettierFile =~# '.js$'
-            let tsMatch = matchlist(readfile(prettierFile), '\vtabWidth[ ]*[:=][ ]*(\d+)')
-            if len(tsMatch)
-                let ts = str2nr(tsMatch[1])
-            endif
-        else
-            try
-                let config = json_decode(join(readfile(prettierFile)))
-                let ts = get(config, 'tabWidth', 4)
-            catch /.*/
-                " ignore?
-            endtry
-        endif
-
-        if ts > 0
-            exe 'setlocal tabstop=' . ts . ' shiftwidth=' . ts
+    let config = dhleong#ft#javascript#ExtractPrettierConfig()
+    if config.found
+        if get(config, 'ts', 0) > 0
+            exe 'setlocal tabstop=' . config.ts . ' shiftwidth=' . config.ts
         endif
 
         " also, enable prettier auto-format
