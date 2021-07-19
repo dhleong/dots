@@ -110,12 +110,13 @@ func! dhleong#ft#javascript#Config()
             exe 'setlocal tabstop=' . config.ts . ' shiftwidth=' . config.ts
         endif
 
-        " also, enable prettier auto-format
-        let b:ale_fixers = {
-            \ 'typescriptreact': ['prettier'],
-            \ 'typescript': ['prettier'],
-            \ 'javascript': ['prettier'],
-            \ }
+        " also, enable prettier auto-format (without overriding other fixers)
+        let languages = ['typescriptreact', 'typescript', 'javascript']
+        let fixers = {}
+        for language in languages
+            let fixers[language] = get(g:ale_fixers, language, []) + ['prettier']
+        endfor
+        let b:ale_fixers = fixers
         let b:ale_fix_on_save = 1
     endif
 
