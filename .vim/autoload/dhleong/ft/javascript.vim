@@ -59,7 +59,7 @@ func! dhleong#ft#javascript#FindPrettierConfig()
 endfunc
 
 func! dhleong#ft#javascript#ExtractPrettierConfig() " {{{
-    let config = {}
+    let config = {'found': 0}
 
     let prettierFile = s:FindPrettierConfig()
     if !filereadable(prettierFile)
