@@ -37,6 +37,11 @@ Plug '~/git/vim-hyperstyle'
 Plug 'vim-scripts/zenburn'
 Plug 'rhysd/vim-color-spring-night'
 
+let g:fzf_colors = {
+    \ 'bg+': ['bg', 'Visual'],
+    \ 'pointer': ['fg', 'SpecialComment', 'StatusLine'],
+    \ }
+
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 

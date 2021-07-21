@@ -19,6 +19,12 @@ elseif filereadable("/usr/bin/zsh")
     endif
 endif
 
+" For Vim 7.4.1799 or later
+if has('termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+endif
 
 " ======= Run current file in a split :term ================
 

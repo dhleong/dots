@@ -1,7 +1,7 @@
 " Lazy-loaded functions for navigating between files
 "
 
-let s:fzf_options = '--color=dark --no-clear'
+let s:fzf_options = '--no-clear'
 let s:popupTermPatch = 'patch-8.2.0286'
 
 func! s:ensureTerminalInput(_)
@@ -41,6 +41,18 @@ func! s:OpenByText(sink, line)
     norm! zz
 endfunc
 
+func! s:FZF(config)
+    let wrapped = fzf#wrap(a:config)
+
+    " Ensure we have some basic colors, if not otherwise specified
+    " (see g:fzf_colors)
+    if get(wrapped, 'options', '') !~# '--color'
+        let wrapped.options .= ' --color=dark'
+    endif
+
+    return fzf#run(wrapped)
+endfunc
+
 func! dhleong#nav#FindGradle()
     try
         find! ./build.gradle
@@ -71,7 +83,7 @@ func! dhleong#nav#ByText(projectRoot, sink)
         let window = { 'width': 1.0, 'height': 0.8 }
     endif
 
-    call fzf#run(fzf#vim#with_preview({
+    call s:FZF(fzf#vim#with_preview({
         \ 'dir': a:projectRoot,
         \ 'options': opts,
         \ 'source': source,
@@ -101,7 +113,7 @@ func! dhleong#nav#InProject(projectRoot, sink)
             \ }
     endif
 
-    call fzf#run({
+    call s:FZF({
         \ 'dir': projectRoot,
         \ 'options': s:fzf_options,
         \ 'source': 'list-repo-files',
@@ -145,7 +157,7 @@ func! dhleong#nav#Projects()
     endif
 
     let cmd = 'ls -d' . dirs
-    call fzf#run({
+    call s:FZF({
         \ 'options': s:fzf_options,
         \ 'source': cmd,
         \ 'sink': function('s:OpenProject'),
