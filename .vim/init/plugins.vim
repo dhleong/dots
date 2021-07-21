@@ -35,6 +35,7 @@ Plug '~/git/vim-hyperstyle'
 " ======= Color-schemes and visual plugins ================= {{{
 
 Plug 'vim-scripts/zenburn'
+Plug 'rhysd/vim-color-spring-night'
 
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -42,7 +43,6 @@ Plug 'vim-airline/vim-airline-themes'
 " airline configs {{{
 set laststatus=2
 let g:airline#extensions#whitespace#enabled = 0
-" let g:airline#extensions#eclim#enabled = 0
 let g:airline#extensions#default#section_truncate_width = {
   \ 'x': 88,
   \ 'y': 88,

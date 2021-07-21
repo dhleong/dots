@@ -24,7 +24,8 @@ set smartcase       " but if we WANT case, use it
 " ======= Visual tweaks ====================================
 
 " color scheme
-colorscheme zenburn
+colorscheme spring-night
+let g:airline_theme = "spring_night"
 
 " adjust splits behaviour
 set splitright      " horizontal splits should not open on the left...
