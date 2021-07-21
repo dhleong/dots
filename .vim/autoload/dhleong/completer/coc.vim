@@ -9,8 +9,7 @@ func! s:completer.FillLocList() abort
 endfunc
 
 func! s:completer.HasQuickFixes() abort
-    let fixes = coc#rpc#request('quickfixes', [])
-    return !empty(fixes)
+    return CocHasProvider('codeAction')
 endfunc
 
 func! s:completer.PerformQuickFix() abort
