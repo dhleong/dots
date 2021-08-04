@@ -29,6 +29,11 @@ Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'rstacruz/vim-hyperstyle'
 Plug '~/git/vim-hyperstyle'
 
+Plug 'vim-denops/denops.vim'
+Plug '~/git/vim-feather'
+
+let g:denops#debug = 1
+
 " }}}
 
 
@@ -99,6 +104,10 @@ let g:ale_linters = {
     \   'typescript': ['tslint', 'tsserver', 'eslint'],
     \}
 
+let g:ale_linters_ignore = {
+    \   'typescriptreact': ['deno']
+    \}
+
 let g:ale_fixers = {
     \   'clojure': ['hearth'],
     \   'go': ['gofmt'],
@@ -166,13 +175,13 @@ let g:endwise_no_mappings = 1
 
 "" Completer selection
 
-let g:dhleong_completer = 'ycm'
+let g:dhleong_completer = 'coc'
 
 let s:completer_config_path = resolve(expand('~/.vim/init/' . g:dhleong_completer . '.vim'))
 
 if g:dhleong_completer ==# 'coc'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-elseif !(has('nvim') || exists('g:neojet#version'))
+elseif !(has('nvim') || exists('g:neojet#version')) && g:dhleong_completer ==# 'ycm'
     let s:ycmCompleters = ['clang', 'cs', 'go', 'rust', 'ts']
     let flags = join(map(s:ycmCompleters, '"--" . v:val . "-completer"'), ' ')
     Plug 'ycm-core/YouCompleteMe', {'do': './install.py ' . flags}
