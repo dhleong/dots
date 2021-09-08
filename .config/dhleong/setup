@@ -1,9 +1,21 @@
 #!/bin/bash
 # A full setup script
 
+is_mac() {
+    [[ "$OSTYPE" == "darwin"* ]]
+}
+
+is_not_mac() {
+    [[ ! is_mac ]]
+}
+
 ensure_cask() {
     dotAppName=$1
     brewName=$2
+
+    if is_not_mac; then
+        return
+    fi
 
     if [ -d "/Applications/$dotAppName.app" ]; then
         echo " Installed: $dotAppName"
@@ -17,32 +29,40 @@ has_cli() {
     which $1 > /dev/null
 }
 
-# install command line tools:
-xcode-select --install
+has_nix() {
+    which nix-env > /dev/null
+}
 
-# some can't-live-without macos settings:
+if is_mac; then
 
-# Faster mouse movement
-defaults write -g com.apple.trackpad.scaling 3
+    # install command line tools:
+    xcode-select --install
 
-# Disable “natural” (Lion-style) scrolling
-defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+    # some can't-live-without macos settings:
 
-# homebrew
-if has_cli brew; then
-    echo " Installed: homebrew"
-else
-    echo "Installing: homebrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # Faster mouse movement
+    defaults write -g com.apple.trackpad.scaling 3
+
+    # Disable “natural” (Lion-style) scrolling
+    defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+    # homebrew
+    if has_cli brew; then
+        echo " Installed: homebrew"
+    else
+        echo "Installing: homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
+    # 1pass (needed to authenticate with github)
+    ensure_cask "1Password 7" "1password"
+
 fi
-
-# 1pass (needed to authenticate with github)
-ensure_cask "1Password 7" "1password"
 
 # github config (for cloning dotfiles)
 if [ -d "$HOME/.ssh" ]; then
     echo "     Setup: github"
-else
+elif is_mac; then
     echo "Setting up: github"
     echo " - New ssh key; enter email: "
     read email
@@ -94,7 +114,7 @@ fi
 # fonts
 if [ -f "$HOME/Library/Fonts/Inconsolata for Powerline.otf" ]; then
     echo " Installed: Inconsolata font"
-else
+elif is_mac; then
     echo "Installing: Inconsolata font..."
     curl "https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/Inconsolata%20for%20Powerline.otf" \
         -o "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
@@ -106,7 +126,7 @@ fi
 # iterm2 shell integration
 if [ -f "$HOME/.iterm2_shell_integration" ]; then
     echo " Installed: iTerm2 shell integration"
-else
+elif is_mac; then
     echo "Installing: iTerm2 shell integration"
     curl -L https://iterm2.com/shell_integration/zsh \ 
         -o ~/.iterm2_shell_integration.zsh
@@ -119,27 +139,39 @@ ensure_cask "iTerm" "iterm2"
 
 if has_cli cmake; then
     echo " Installed: build tools (for YCM)"
-else
+elif is_mac; then
     echo "Installing: build tools (for YCM)"
     brew install cmake python mono go nodejs
+else
+    echo "NOT Installing: build tools (for YCM)"
 fi
 
 if has_cli gh && has_cli hub; then
     echo " Installed: github cli"
-else
+elif is_mac; then
     echo "Installing: github cli..."
     brew install gh hub
+else
+    echo "NOT Installing: github cli"
 fi
 
 if has_cli rg && has_cli fzf; then
     echo " Installed: (various tools)"
-else
+elif is_mac; then
     echo "Installing: (various tools)..."
     brew install ripgrep fzf zsh-completions
+elif has_nix; then
+    echo "Installing: (various tools)..."
+    nix-env -i ripgrep -i fzf -i zsh-completions
+else
+    echo "NOT Installing: (various tools)"
 fi
 
 echo "Done!"
 echo ' - You may need to logout and back in for some settings to update'
-echo ' - Remap capslock to escape by hand... not sure how to automate'
 echo ' - gh and hub are not setup automatically'
-echo ' - Brewfile can be loaded by running `brew bundle` in ~/.dotfiles'
+
+if is_mac; then
+    echo ' - Remap capslock to escape by hand... not sure how to automate'
+    echo ' - Brewfile can be loaded by running `brew bundle` in ~/.dotfiles'
+fi
