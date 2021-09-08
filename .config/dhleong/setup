@@ -5,15 +5,11 @@ is_mac() {
     [[ "$OSTYPE" == "darwin"* ]]
 }
 
-is_not_mac() {
-    [[ ! is_mac ]]
-}
-
 ensure_cask() {
     dotAppName=$1
     brewName=$2
 
-    if is_not_mac; then
+    if ! is_mac; then
         return
     fi
 
