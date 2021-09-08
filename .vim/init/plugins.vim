@@ -105,7 +105,7 @@ let g:ale_linters = {
     \}
 
 let g:ale_linters_ignore = {
-    \   'typescriptreact': ['deno']
+    \   'typescriptreact': ['deno', 'tsserver']
     \}
 
 let g:ale_fixers = {
