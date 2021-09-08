@@ -1964,6 +1964,8 @@ Marks and Annotations.Next Mark</string>
 	<true/>
 	<key>ShowAutomaticProfileSwitchingBanner</key>
 	<false/>
+	<key>ShowFullScreenTabBar</key>
+	<true/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>StatusBarPosition</key>
