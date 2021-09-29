@@ -16,7 +16,9 @@ if [ -f "$HOME/lib/android-sdk" ]; then
 else
     export ANDROID_HOME=$HOME/Library/Android/sdk
 fi
-export ANDROID_NDK=~/lib/android-ndk
+if [ -f "$HOME/lib/android-ndk" ]; then
+    export ANDROID_NDK=~/lib/android-ndk
+fi
 
 export PATH=$PATH:$ANDROID_HOME
 export PATH=$PATH:$ANDROID_HOME/platform-tools
