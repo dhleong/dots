@@ -13,7 +13,8 @@ func! s:completer.HasQuickFixes() abort
 endfunc
 
 func! s:completer.PerformQuickFix() abort
-    call CocActionAsync('doQuickfix')
+    " call CocActionAsync('doQuickfix')
+    :CocAction
 endfunc
 
 func! s:completer.RenameWord() abort
