@@ -352,6 +352,14 @@ Plug 'alvan/vim-closetag'
 let g:closetag_filenames = '*.xml,*.html,*.tsx'
 let g:closetag_xhtml_filenames = '*.xhtml,*.tsx'
 
+let g:closetag_regions = {
+    \ 'typescript.jsx': 'jsxRegion,tsxRegion',
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'typescriptreact': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ 'javascriptreact': 'jsxRegion',
+    \ }
+
 " ======= HTTP/Rest/Websockets =============================
 
 " dhleong/vim-pie
