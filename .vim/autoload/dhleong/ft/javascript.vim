@@ -106,9 +106,9 @@ func! dhleong#ft#javascript#Config()
     " load from a prettier config, if it exists
     let config = dhleong#ft#javascript#ExtractPrettierConfig()
     if config.found
-        if get(config, 'ts', 0) > 0
-            exe 'setlocal tabstop=' . config.ts . ' shiftwidth=' . config.ts
-        endif
+        " Prettier defaults to 2-space tabs, if not set explicitly
+        let ts = get(config, 'ts', 2)
+        exe 'setlocal tabstop=' . ts . ' shiftwidth=' . ts
 
         " also, enable prettier auto-format (without overriding other fixers)
         let languages = ['typescriptreact', 'typescript', 'javascript']
