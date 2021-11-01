@@ -7,53 +7,35 @@
 "
 
 function! s:FindProjectRoot()
-    let cwd = expand("%:p:h")
-    let home = expand("~")
-    while cwd != "/" && cwd != home
-        let dir = cwd . "/ProjectSettings"
+    let cwd = expand('%:p:h')
+    let home = expand('~')
+    while cwd !=# '/' && cwd != home
+        let dir = cwd . '/ProjectSettings'
         let glob = glob(dir, 1)
-        if glob != ''
+        if glob !=# ''
             return cwd
         endif
 
         let cwd = fnamemodify(cwd, ':h')
     endwhile
 
-    return ""
+    return ''
 endfunction
 
-let s:path = expand("<sfile>:p:h")
+let s:path = expand('<sfile>:p:h')
 function! s:RunProject(mode)
-    if !system("pgrep Unity")
+    if !system('pgrep Unity')
         " can we start the project directly?
         let projectRoot = <SID>FindProjectRoot()
-        if projectRoot != ''
-            echo "Starting Unity..."
-            call system("/Applications/Unity/Unity.app/Contents/MacOS/Unity -projectPath " . projectRoot . " &")
+        if projectRoot !=# ''
+            echo 'Starting Unity...'
+            call system('/Applications/Unity/Unity.app/Contents/MacOS/Unity -projectPath ' . projectRoot . ' &')
             return
         endif
     endif
 
     silent exe 'silent !osascript ' . s:path . '/cs-' . a:mode . '-project.applescript'
-    echo "Project playing!"
-endfunction
-
-function! s:OpenProblems()
-    let winnr = winnr()
-    :YcmDiags
-
-    if !len(getloclist(winnr))
-        :q
-        echo ""
-        redraw!
-        echohl WarningMsg
-        echo "No problems! :)"
-        echohl None
-        return
-    endif
-
-    " automatically close the diags window when leaving it
-    autocmd WinLeave <buffer> :q
+    echo 'Project playing!'
 endfunction
 
 function! MyGetCSIndent(lnum) abort
@@ -70,7 +52,7 @@ function! MyGetCSIndent(lnum) abort
         " If previous_line is an attribute line:
         let ind = indent(a:lnum - 1)
         return ind
-    elseif previous_line =~# '=>\s*$' && this_line =~# "{"
+    elseif previous_line =~# '=>\s*$' && this_line =~# '{'
         return cindent(a:lnum - 1)
     else
         return cindent(a:lnum)
@@ -88,36 +70,21 @@ let b:did_indent = 1
 "
 " Mappings
 "
-nnoremap <buffer> <c-w>gd :call dhleong#GotoInNewTab()<cr>
-nnoremap <buffer> gd :YcmCompleter GoTo<cr>
+call dhleong#completer().MapNavigation()
+
 " 'goto initial definition'
 nnoremap <buffer> gid :YcmCompleter GoToDefinition<cr>
-nnoremap <buffer> K :YcmCompleter GetDoc<cr>
 nnoremap <buffer> <a-cr> :YcmCompleter FixIt<cr>:cclose<cr>
 nnoremap <buffer> <leader>ji :OmniSharpFixUsings<cr>
-nnoremap <buffer> <leader>jr :call dhleong#refactor#Rename()<cr>
-nnoremap <buffer> <leader>op :call <SID>OpenProblems()<cr>
 
 nnoremap <buffer> <silent> <leader>pb :call <SID>RunProject('build')<cr>
 nnoremap <buffer> <silent> <leader>pr :call <SID>RunProject('run')<cr>
 
 " Let the matchit plugin know what items can be matched.
-if exists("loaded_matchit")
+if exists('loaded_matchit')
     let b:match_ignorecase = 0
     let b:match_words = &matchpairs . ',' .
                 \'^#region::^#endregion'
     " let b:match_skip = 'string\|character'
     let b:match_skip = 's:comment\|string\|regex\|character'
 endif
-
-"
-" augroup
-"
-" augroup omnisharp_commands
-"     autocmd!
-"
-"     "show type information automatically when the cursor stops moving
-"     autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
-" augroup END
-
-" nnoremap <buffer> <leader>jr "0yiwq:iYcmCompleter RefactorRename <esc>"0p
