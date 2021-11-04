@@ -4,6 +4,7 @@
     "diagnostic.errorSign": "❌",
     "diagnostic.warningSign": "⚠️ ",
     "suggest.triggerAfterInsertEnter": true,
+    "suggest.keepCompleteopt": true,
     "javascript.suggestionActions.enabled": false,
     "javascript.showUnused": false,
     "typescript.showUnused": false,

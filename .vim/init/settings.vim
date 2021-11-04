@@ -44,7 +44,7 @@ if !get(g:, 'dhleong_set_completeopt', 0)
     " causes it to disappear after the second character. Wild.
     let g:dhleong_set_completeopt = 1
 
-    set completeopt=menu,preview,longest
+    set completeopt=menuone,preview,noinsert,noselect
 
     if has('patch-8.1.1880')
         set completeopt+=popup
