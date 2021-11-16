@@ -70,7 +70,6 @@ func! dhleong#nav#ByText(projectRoot, sink)
     let opts = s:fzf_options . ' '
             \ . '--with-nth=1,4.. '
             \ . '--nth=2.. '
-            \ . '--no-extended '
             \ . '--delimiter=:'
     let window = 'aboveleft 15new'
     let source = 'rg --column --line-number --no-heading --smart-case'
