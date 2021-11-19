@@ -321,6 +321,7 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
 
 let g:OmniSharp_server_stdio = 0
+let g:OmniSharp_server_use_mono = 1
 let g:OmniSharp_highlight_types = 2
 
 

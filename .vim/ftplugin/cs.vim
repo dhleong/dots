@@ -72,9 +72,6 @@ let b:did_indent = 1
 "
 call dhleong#completer().MapNavigation()
 
-" 'goto initial definition'
-nnoremap <buffer> gid :YcmCompleter GoToDefinition<cr>
-nnoremap <buffer> <a-cr> :YcmCompleter FixIt<cr>:cclose<cr>
 nnoremap <buffer> <leader>ji :OmniSharpFixUsings<cr>
 
 nnoremap <buffer> <silent> <leader>pb :call <SID>RunProject('build')<cr>

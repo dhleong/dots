@@ -3,7 +3,6 @@ let g:coc_global_extensions = [
     \ 'coc-go',
     \ 'coc-jedi',
     \ 'coc-json',
-    \ 'coc-omnisharp',
     \ 'coc-prettier',
     \ 'coc-rust-analyzer',
     \ 'coc-snippets',

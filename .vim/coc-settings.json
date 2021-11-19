@@ -1,6 +1,8 @@
 {
     "coc.preferences.formatOnSaveFiletypes": ["python", "rust"],
     "coc.preferences.promptInput": false,
+    "coc.source.OmniSharp.enable": true,
+    "coc.source.OmniSharp.triggerCharacters": ".",
     "diagnostic.errorSign": "❌",
     "diagnostic.warningSign": "⚠️ ",
     "suggest.triggerAfterInsertEnter": true,
