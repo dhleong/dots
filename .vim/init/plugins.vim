@@ -320,9 +320,19 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 
 Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
 
-let g:OmniSharp_server_stdio = 0
 let g:OmniSharp_server_use_mono = 1
-let g:OmniSharp_highlight_types = 2
+let g:OmniSharp_highlighting = 2
+
+let s:osTypeColor = 'SpecialComment'
+let g:OmniSharp_highlight_groups = {
+    \ 'ClassName': s:osTypeColor,
+    \ 'EnumName': s:osTypeColor,
+    \ 'StructName': s:osTypeColor,
+    \ 'FieldName': 'SpecialChar',
+    \ 'PropertyName': 'SpecialChar',
+    \ 'LocalName': 'Normal',
+    \ 'ParameterName': 'Normal',
+    \ }
 
 
 " ======= Go ===============================================

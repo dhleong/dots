@@ -72,6 +72,8 @@ let b:did_indent = 1
 "
 call dhleong#completer().MapNavigation()
 
+nmap <buffer> gd <Plug>(omnisharp_go_to_definition)
+nmap <buffer> K <Plug>(omnisharp_documentation)
 nnoremap <buffer> <leader>ji :OmniSharpFixUsings<cr>
 
 nnoremap <buffer> <silent> <leader>pb :call <SID>RunProject('build')<cr>
