@@ -42,8 +42,24 @@ Plug 'tpope/vim-endwise'
 -- augmentations, like hyperstyle
 vim.g.endwise_no_mappings = 1
 
-Plug 'neovim/nvim-lspconfig'
+Plug 'SirVer/ultisnips'
+Plug '~/git/vim-cs-snippets'
+Plug 'honza/vim-snippets'
 
+vim.g.UltiSnipsListSnippets = '<C-M-Tab>'
+vim.g.UltiSnipsExpandTrigger = '<C-Enter>'
+vim.g.UltiSnipsJumpForwardTrigger = '<C-J>'
+vim.g.UltiSnipsJumpBackwardTrigger = '<C-K>'
+
+-- LSP Config
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
+
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+Plug 'hrsh7th/nvim-cmp'
 
 -- }}}
 

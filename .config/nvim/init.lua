@@ -10,3 +10,4 @@ require 'init.plugins'
 
 require 'init.settings'
 require 'init.mappings'
+require 'init.lsp'
