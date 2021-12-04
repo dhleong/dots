@@ -23,6 +23,7 @@ vim.o.clipboard = 'unnamed'
 -- color scheme
 vim.cmd('colorscheme spring-night')
 vim.g.airline_theme = "spring_night"
+vim.o.termguicolors = true
 
 -- adjust splits behaviour
 vim.o.splitright = true -- horizontal splits should not open on the left...

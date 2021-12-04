@@ -9,8 +9,6 @@ Plug.begin('~/.config/nvim/bundle')
 Plug 'vim-scripts/zenburn'
 Plug 'rhysd/vim-color-spring-night'
 
-vim.o.termguicolors = true
-
 vim.g.fzf_colors = {
     ['bg+'] = {'bg', 'Visual'},
     ['pointer'] = {'fg', 'SpecialComment', 'StatusLine'},
