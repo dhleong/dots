@@ -55,6 +55,8 @@ vim.g.UltiSnipsJumpBackwardTrigger = '<C-K>'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
+Plug 'nvim-lua/plenary.nvim' -- dependency of null-ls
+Plug 'jose-elias-alvarez/null-ls.nvim'
 
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'

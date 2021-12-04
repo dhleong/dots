@@ -18,3 +18,14 @@ cmp.setup({
     { name = 'buffer' },
   })
 })
+
+require("null-ls").config({
+  sources = {
+    require("null-ls").builtins.code_actions.eslint,
+    require("null-ls").builtins.diagnostics.eslint,
+    require("null-ls").builtins.formatting.black,
+    require("null-ls").builtins.formatting.eslint,
+    require("null-ls").builtins.formatting.prettier,
+  },
+})
+require("lspconfig")["null-ls"].setup{}
