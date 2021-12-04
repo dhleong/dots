@@ -20,7 +20,8 @@ vim.g.fzf_colors = {
 
 Plug 'tpope/vim-fugitive'
 
-Plug '~/git/lilium'
+-- TODO: make compat with nvim jobs:
+-- Plug '~/git/lilium'
 
 vim.g.lilium_matcher = 'fuzzy'
 
