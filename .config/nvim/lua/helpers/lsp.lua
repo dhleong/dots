@@ -31,6 +31,16 @@ local function prepare_events(filetype, file_extension)
   ]], filetype, file_extension))
 end
 
+local function on_attach(_, bufnr)
+  require'lsp_signature'.on_attach({
+    bind = true,
+    handler_opts = {
+      border = 'rounded',
+    },
+    hint_prefix = '',
+  }, bufnr)
+end
+
 local Lsp = {
   config = function (server_name, opts)
     local filetype = vim.bo.filetype
@@ -38,8 +48,10 @@ local Lsp = {
     local server_available, requested_server = lsp_installer_servers.get_server(server_name)
     if server_available then
       requested_server:on_ready(function ()
-        opts.capabilities = lsp_capabilities
-        requested_server:setup(opts or {})
+        local setup_opts = opts or {}
+        setup_opts.capabilities = lsp_capabilities
+        setup_opts.on_attach = on_attach
+        requested_server:setup(setup_opts)
 
         -- Config init
         prepare_mappings()

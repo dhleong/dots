@@ -62,6 +62,8 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'hrsh7th/nvim-cmp'
 
+Plug 'ray-x/lsp_signature.nvim'
+
 -- }}}
 
 -- ======= Text manipulation ================================ {{{
