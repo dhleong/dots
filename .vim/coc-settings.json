@@ -10,5 +10,8 @@
     "javascript.suggestionActions.enabled": false,
     "javascript.showUnused": false,
     "typescript.showUnused": false,
-    "rust-analyzer.procMacro.enable": true
+    "rust-analyzer.procMacro.enable": true,
+    "rust-analyzer.diagnostics.disabled": [
+        "unresolved-macro-call"
+    ]
 }
