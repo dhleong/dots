@@ -29,7 +29,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'rstacruz/vim-hyperstyle'
 Plug '~/git/vim-hyperstyle'
 
-Plug 'vim-denops/denops.vim'
+"Plug 'vim-denops/denops.vim'
 Plug '~/git/vim-feather'
 
 let g:denops#debug = 1
