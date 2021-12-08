@@ -90,14 +90,14 @@ Plug 'justinmk/vim-sneak'
 vim.g['sneak#label'] = 1
 
 Plug 'chrisbra/matchit'
-Plug('Valloric/MatchTagAlways', {ft = {'html', 'xml'}})
+Plug('Valloric/MatchTagAlways', { ft = {'html', 'xml'} })
 --
 -- }}}
 
 -- ======= Vim ==============================================
 
-Plug('tpope/vim-scriptease', {ft = 'vim'})
-Plug('junegunn/vader.vim', {ft = 'vader'})
+Plug('tpope/vim-scriptease', { ft = 'vim' })
+Plug('junegunn/vader.vim', { ft = 'vader' })
 
 
 -- ======= Utility ==========================================
