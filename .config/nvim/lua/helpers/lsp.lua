@@ -19,14 +19,28 @@ local function prepare_mappings()
   nmap('<m-cr>', 'buf.code_action()')
 end
 
+local function prepare_events(filetype, file_extension)
+  vim.cmd(string.format([[
+    augroup lsp_autocmds_%s
+      autocmd!
+      autocmd BufWritePre *.%s lua vim.lsp.buf.formatting_seq_sync(nil, 1000)
+    augroup END
+  ]], filetype, file_extension))
+end
+
 local Lsp = {
-  config = function (server, opts)
-    local server_available, requested_server = lsp_installer_servers.get_server(server)
+  config = function (server_name, opts)
+    local filetype = vim.bo.filetype
+    local file_extension = vim.fn.expand('%:e')
+    local server_available, requested_server = lsp_installer_servers.get_server(server_name)
     if server_available then
       requested_server:on_ready(function ()
         opts.capabilities = lsp_capabilities
         requested_server:setup(opts or {})
+
+        -- Config init
         prepare_mappings()
+        prepare_events(filetype, file_extension)
       end)
       if not requested_server:is_installed() then
         -- Queue the server to be installed
