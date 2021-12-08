@@ -24,9 +24,8 @@ local Lsp = {
     local server_available, requested_server = lsp_installer_servers.get_server(server)
     if server_available then
       requested_server:on_ready(function ()
-        local opts = opts or {}
         opts.capabilities = lsp_capabilities
-        requested_server:setup(opts)
+        requested_server:setup(opts or {})
         prepare_mappings()
       end)
       if not requested_server:is_installed() then
