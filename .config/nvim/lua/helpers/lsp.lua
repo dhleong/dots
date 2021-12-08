@@ -17,6 +17,9 @@ local function prepare_mappings()
   nmap('<leader>js', 'buf.references()')
   nmap('<leader>jr', 'buf.rename()')
   nmap('<m-cr>', 'buf.code_action()')
+
+  nmap('[c', 'diagnostic.goto_prev()')
+  nmap(']c', 'diagnostic.goto_next()')
 end
 
 local function prepare_events(filetype, file_extension)
