@@ -32,15 +32,15 @@ local function create_project_navigation_maps (project_dir)
   -- TODO by_text
 end
 
-local function configure_buffer ()
+local function configure_buffer()
   local this_file = vim.fn.expand('%:p')
 
   for _, proj_dir in ipairs(parent_paths) do
     -- Check if our file matches a project src dir
-    local len = string.len(proj_dir)
-    if string.sub(this_file, 1, len) == proj_dir then
-      local file_in_dir = string.sub(this_file, len) -- path w/o projDir
-      local idx = string.find(file_in_dir, '/', 2)
+    local len = proj_dir:len()
+    if this_file:sub(1, len) == proj_dir then
+      local file_in_dir = this_file:sub(len) -- path w/o projDir
+      local idx = file_in_dir:find('/', 2)
 
       -- If there's no /, we're not in a project
       if not idx then
@@ -48,7 +48,7 @@ local function configure_buffer ()
       end
 
       -- Build the path
-      local proj_name = string.sub(file_in_dir, 2, idx) -- skip past the /
+      local proj_name = file_in_dir:sub(2, idx) -- skip past the /
       local path_dir = proj_dir .. proj_name
 
       -- Set it!

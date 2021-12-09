@@ -11,7 +11,7 @@ local function fzf(config)
 
   -- Ensure we have some basic colors, if not otherwise specified
   -- (see g:fzf_colors)
-  if not string.find(wrapped.options, '--color') then
+  if not wrapped.options:find('--color') then
     wrapped.options = wrapped.options .. ' --color=dark'
   end
 
