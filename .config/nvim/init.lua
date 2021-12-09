@@ -12,3 +12,5 @@ require 'init.settings'
 require 'init.mappings'
 require 'init.lsp'
 require 'init.github'
+
+require'dhleong.projects'.init()
