@@ -13,7 +13,7 @@ end
 -- nvim makes Y consistent with C/D but I like the old way
 nnoremap('Y', 'yy')
 
--- nvim config file opening: 
+-- nvim config file opening:
 --
 
 -- helpers {{{
@@ -27,7 +27,7 @@ paths.init = function(path)
 end
 
 local function mapOpenFile(leaderMap, path)
-    with_path = '<c-r>=resolve("' .. path .. '")<cr><cr>'
+    local with_path = '<c-r>=resolve("' .. path .. '")<cr><cr>'
     nnoremap('<Leader>' .. leaderMap, ':e ' .. with_path)
     nnoremap('<Leader>t' .. leaderMap, ':tabe ' .. with_path)
 end
@@ -39,3 +39,7 @@ mapOpenFile('vs', paths.init('settings.lua'))
 mapOpenFile('vb', paths.nvim('bundle'))
 
 mapOpenFile('eft', paths.nvim('ftplugin/" . &filetype . ".lua'))
+
+-- ======= File navigation ==================================
+
+nnoremap('<leader>p', "<cmd>lua require'dhleong.nav'.projects()<cr>")
