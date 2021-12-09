@@ -72,8 +72,11 @@ Plug 'ray-x/lsp_signature.nvim'
 Plug 'vim-scripts/VisIncr'
 
 Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+
+-- }}}
 
 -- ======= Text navigation ================================== {{{
 
@@ -102,7 +105,7 @@ Plug('tpope/vim-scriptease', { ft = 'vim' })
 Plug('junegunn/vader.vim', { ft = 'vader' })
 
 
--- ======= Utility ==========================================
+-- ======= Utility ========================================== {{{
 --
 
 -- fzf all the things
