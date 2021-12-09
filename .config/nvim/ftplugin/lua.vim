@@ -7,6 +7,7 @@ setlocal foldmethod=marker
 func s:SourceIfLoaded()
     let allScriptNames = execute('scriptnames', 'silent!')
     let myPath = expand('%:p')
+    execute "lua require'dhleong.dev'.reset_cache('" . myPath . "')"
     for line in split(allScriptNames, '\n')
         let [ id, path ] = split(line, ': ')
         if expand(path) ==# myPath
