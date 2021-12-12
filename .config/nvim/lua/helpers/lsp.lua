@@ -4,22 +4,29 @@ local cmp_nvim_lsp = require 'cmp_nvim_lsp'
 local lsp_capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local function prepare_mappings()
-  local function nmap(lhs, lsp_command)
-    local rhs = '<cmd>lua vim.lsp.' .. lsp_command .. '<cr>'
+  local function nmap(lhs, lua)
+    local rhs = '<cmd>lua ' .. lua .. '<cr>'
     vim.api.nvim_buf_set_keymap(0, 'n', lhs, rhs, {
-      noremap = true
+      noremap = true,
+      silent = true,
     })
   end
+  local function lsp_map(lhs, lsp_command)
+    local rhs = 'vim.lsp.' .. lsp_command
+    nmap(lhs, rhs)
+  end
 
-  nmap('K', 'buf.hover()')
-  nmap('gd', 'buf.definition()')
-  nmap('gid', 'buf.implementation()')
-  nmap('<leader>js', 'buf.references()')
-  nmap('<leader>jr', 'buf.rename()')
-  nmap('<m-cr>', 'buf.code_action()')
+  lsp_map('K', 'buf.hover()')
+  lsp_map('gd', 'buf.definition()')
+  lsp_map('gid', 'buf.implementation()')
+  nmap('<c-w>gd', "require'dhleong.nav'.lsp_in_new_tab('definition')")
+  nmap('<c-w>gid', "require'dhleong.nav'.lsp_in_new_tab('implementation')")
+  lsp_map('<leader>js', 'buf.references()')
+  lsp_map('<leader>jr', 'buf.rename()')
+  lsp_map('<m-cr>', 'buf.code_action()')
 
-  nmap('[c', 'diagnostic.goto_prev()')
-  nmap(']c', 'diagnostic.goto_next()')
+  lsp_map('[c', 'diagnostic.goto_prev()')
+  lsp_map(']c', 'diagnostic.goto_next()')
 end
 
 local function prepare_events(filetype, file_extension)

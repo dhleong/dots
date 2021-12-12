@@ -53,6 +53,13 @@ end
 local Nav = {
   in_project = navigate_in_project,
 
+  lsp_in_new_tab = function (buffer_method)
+    local cursor = vim.fn.getpos('.')
+    vim.cmd('tabe %')
+    vim.fn.cursor(cursor[2], cursor[3])
+    vim.lsp.buf[buffer_method]()
+  end,
+
   projects = function ()
     local parent_paths = require'dhleong.projects'.parent_paths
     local dirs = vim.tbl_map(function (path)
