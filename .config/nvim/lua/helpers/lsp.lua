@@ -48,28 +48,36 @@ local function on_attach(_, bufnr)
   }, bufnr)
 end
 
-local Lsp = {
-  config = function (server_name, opts)
-    local filetype = vim.bo.filetype
-    local file_extension = vim.fn.expand('%:e')
-    local server_available, requested_server = lsp_installer_servers.get_server(server_name)
-    if server_available then
-      requested_server:on_ready(function ()
-        local setup_opts = opts or {}
-        setup_opts.capabilities = lsp_capabilities
-        setup_opts.on_attach = on_attach
-        requested_server:setup(setup_opts)
+local configured = {}
 
-        -- Config init
-        prepare_mappings()
-        prepare_events(filetype, file_extension)
-      end)
-      if not requested_server:is_installed() then
-        -- Queue the server to be installed
-        requested_server:install()
-      end
+local Lsp = {}
+
+function Lsp.config(server_name, opts)
+  local filetype = vim.bo.filetype
+  if configured[filetype] then
+    prepare_mappings()
+    return
+  end
+
+  local file_extension = vim.fn.expand('%:e')
+  local server_available, requested_server = lsp_installer_servers.get_server(server_name)
+  if server_available then
+    requested_server:on_ready(function ()
+      local setup_opts = opts or {}
+      setup_opts.capabilities = lsp_capabilities
+      setup_opts.on_attach = on_attach
+      requested_server:setup(setup_opts)
+
+      -- Config init
+      configured[filetype] = true
+      prepare_mappings()
+      prepare_events(filetype, file_extension)
+    end)
+    if not requested_server:is_installed() then
+      -- Queue the server to be installed
+      requested_server:install()
     end
   end
-}
+end
 
 return Lsp
