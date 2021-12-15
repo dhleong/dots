@@ -4,6 +4,11 @@ Plug = require 'helpers.plug'
 
 Plug.begin('~/.config/nvim/bundle')
 
+-- ======= Plugin defs and settings =========================
+--
+
+Plug '~/work/otsukare'
+
 -- ======= Color-schemes and visual plugins ================= {{{
 
 Plug 'vim-scripts/zenburn'
