@@ -5,13 +5,19 @@ vim.cmd(':source ~/.vim/init/mappings.vim')
 local function nnoremap(lhs, rhs)
     vim.api.nvim_set_keymap('n', lhs, rhs, { noremap = true })
 end
+
+local function inoremap(lhs, rhs)
+    vim.api.nvim_set_keymap('i', lhs, rhs, { noremap = true })
+end
 -- }}}
 
--- vim compat
+-- vim compat {{{
 --
 
 -- nvim makes Y consistent with C/D but I like the old way
 nnoremap('Y', 'yy')
+
+-- }}}
 
 -- nvim config file opening:
 --
@@ -39,6 +45,13 @@ mapOpenFile('vs', paths.init('settings.lua'))
 mapOpenFile('vb', paths.nvim('bundle'))
 
 mapOpenFile('eft', paths.nvim('ftplugin/" . &filetype . ".lua'))
+
+--
+-- ======= Text manipulation ================================
+
+-- Muscle memory from macOS defaults
+inoremap('<m-bs>', '<c-w>')
+
 
 -- ======= File navigation ==================================
 
