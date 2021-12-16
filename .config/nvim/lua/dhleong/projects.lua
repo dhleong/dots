@@ -27,9 +27,8 @@ local function create_project_navigation_maps (project_dir)
 
   local project_path = 'nil'
   if project_dir then
-    project_path = '" .. project_dir .. "'
+    project_path = '"' .. project_dir .. '"'
   end
-
 
   nmap('<c-p>', "in_project(" .. project_path .. ", 'e')")
   nmap('<c-w><c-p>', "in_project(" .. project_path .. ", 'tabe')")
@@ -39,7 +38,10 @@ local function create_project_navigation_maps (project_dir)
 end
 
 local function configure_buffer()
-  local this_file = vim.fn.expand('%:p')
+  -- NOTE: This is NOT exactly the same as `expand('%:p')` this lets us
+  -- treat empty buffers (like from :tabe) as being part of the same
+  -- "project"
+  local this_file = vim.fn.expand('%:p:h') .. '/' .. vim.fn.expand('%:t')
   vim.b.configd = true
 
   for _, proj_dir in ipairs(parent_paths) do
