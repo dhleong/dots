@@ -18,7 +18,21 @@ local function fzf(config)
   return vim.fn['fzf#run'](wrapped)
 end
 
-local function navigate_in_project(project_dir, sink)
+local M = {}
+
+function M.open_project(project_dir)
+  if vim.fn.isdirectory(project_dir) == 1 then
+    vim.bo.path = project_dir .. '**'
+    vim.cmd('lcd ' .. project_dir)
+
+    require'dhleong.projects'.configure_buffer()
+    M.in_project(project_dir, 'e')
+  else
+    vim.cmd('edit ' .. project_dir)
+  end
+end
+
+function M.in_project(project_dir, sink)
   local window = 'aboveleft 15new'
   if vim.fn.has(POPUP_TERM_PATCH) then
     window = {
@@ -29,8 +43,14 @@ local function navigate_in_project(project_dir, sink)
     }
   end
 
+  local dir = project_dir or vim.g.otsukare_default_project_root
+  if not dir then
+    print('Not in a project directory')
+    return
+  end
+
   fzf{
-    dir = project_dir,
+    dir = dir,
     options = {},
     source = 'list-repo-files',
     sink = sink,
@@ -38,36 +58,21 @@ local function navigate_in_project(project_dir, sink)
   }
 end
 
-local function open_project(project_dir)
-  if vim.fn.isdirectory(project_dir) == 1 then
-    vim.bo.path = project_dir .. '**'
-    vim.cmd('lcd ' .. project_dir)
-
-    require'dhleong.projects'.configure_buffer()
-    navigate_in_project(project_dir, 'e')
-  else
-    vim.cmd('edit ' .. project_dir)
-  end
+function M.lsp_in_new_tab(buffer_method)
+  local cursor = vim.fn.getpos('.')
+  vim.cmd('tabe %')
+  vim.fn.cursor(cursor[2], cursor[3])
+  vim.lsp.buf[buffer_method]()
 end
 
-local Nav = {
-  in_project = navigate_in_project,
-
-  lsp_in_new_tab = function (buffer_method)
-    local cursor = vim.fn.getpos('.')
-    vim.cmd('tabe %')
-    vim.fn.cursor(cursor[2], cursor[3])
-    vim.lsp.buf[buffer_method]()
-  end,
-
-  projects = function ()
-    local parent_paths = require'dhleong.projects'.parent_paths
-    local dirs = vim.tbl_map(function (path)
-      if vim.fn.isdirectory(path) == 1 then
-        return path .. '*'
-      end
-    end, parent_paths)
-    dirs = vim.tbl_filter(not_nil, dirs)
+function M.projects()
+  local parent_paths = require'dhleong.projects'.parent_paths
+  local dirs = vim.tbl_map(function (path)
+    if vim.fn.isdirectory(path) == 1 then
+      return path .. '*'
+    end
+  end, parent_paths)
+  dirs = vim.tbl_filter(not_nil, dirs)
 
     if #dirs == 0 then
       print('No project dirs exist? Checked:')
@@ -78,9 +83,8 @@ local Nav = {
     local cmd = 'ls -d ' .. table.concat(dirs, ' ')
     fzf{
       source = cmd,
-      sink = open_project,
+      sink = M.open_project,
     }
-  end,
-}
+  end
 
-return Nav
+return M

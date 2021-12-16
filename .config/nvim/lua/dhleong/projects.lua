@@ -25,15 +25,22 @@ local function create_project_navigation_maps (project_dir)
     })
   end
 
-  nmap('<c-p>', "in_project('" .. project_dir .. "', 'e')")
-  nmap('<c-w><c-p>', "in_project('" .. project_dir .. "', 'tabe')")
-  nmap('<c-s><c-p>', "in_project('" .. project_dir .. "', 'vsplit')")
+  local project_path = 'nil'
+  if project_dir then
+    project_path = '" .. project_dir .. "'
+  end
+
+
+  nmap('<c-p>', "in_project(" .. project_path .. ", 'e')")
+  nmap('<c-w><c-p>', "in_project(" .. project_path .. ", 'tabe')")
+  nmap('<c-s><c-p>', "in_project(" .. project_path .. ", 'vsplit')")
   -- TODO in_project_subpath
   -- TODO by_text
 end
 
 local function configure_buffer()
   local this_file = vim.fn.expand('%:p')
+  vim.b.configd = true
 
   for _, proj_dir in ipairs(parent_paths) do
     -- Check if our file matches a project src dir
@@ -61,10 +68,7 @@ local function configure_buffer()
   end
 
   -- If we got here, we found no path
-  if vim.g.DefaultPath then
-    vim.bo.path = vim.g.DefaultPath .. '**'
-    create_project_navigation_maps(vim.g.DefaultPath)
-  end
+  create_project_navigation_maps(nil)
 end
 
 local Projects = {

@@ -40,6 +40,7 @@ end
 -- }}}
 
 mapOpenFile('ev', paths.nvim('init.lua'))
+mapOpenFile('vm', paths.init('mappings.lua'))
 mapOpenFile('vp', paths.init('plugins.lua'))
 mapOpenFile('vs', paths.init('settings.lua'))
 mapOpenFile('vb', paths.nvim('bundle'))
