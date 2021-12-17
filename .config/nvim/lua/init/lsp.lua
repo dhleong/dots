@@ -25,7 +25,7 @@ require("null-ls").config({
     require("null-ls").builtins.diagnostics.eslint,
     require("null-ls").builtins.formatting.black,
     require("null-ls").builtins.formatting.eslint,
-    require("null-ls").builtins.formatting.prettier,
+    require('dhleong.null_ls.prettier'),
   },
 })
 require("lspconfig")["null-ls"].setup{}
