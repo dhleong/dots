@@ -19,7 +19,7 @@ cmp.setup({
   })
 })
 
-require("null-ls").config({
+require("null-ls").setup({
   sources = {
     require("null-ls").builtins.code_actions.eslint,
     require("null-ls").builtins.diagnostics.eslint,
@@ -28,4 +28,3 @@ require("null-ls").config({
     require('dhleong.null_ls.prettier'),
   },
 })
-require("lspconfig")["null-ls"].setup{}
