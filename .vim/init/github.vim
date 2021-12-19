@@ -76,8 +76,16 @@ func! s:openGithubPrCreator()
         call extend(args, ['--base', parentBranch])
     endif
 
-    " exe 'term gh pr create' . args
-    call lilium#pr#Create(args)
+    try
+      call lilium#pr#Create(args)
+    catch /E117.*/
+      " Lilium not installed
+      let command = 'term gh pr create' . join(args, ' ')
+      if has('nvim')
+        let command = 'sp | ' . command
+      endif
+      execute command
+    endtry
 endfunc
 
 " open a window for creating a pull request from the current branch
