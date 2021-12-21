@@ -33,6 +33,18 @@ vim.o.equalalways = false -- 'no equal always'--don't resize my splits!
 vim.o.list = true
 vim.o.listchars = 'tab:»·,trail:·'
 
+-- ======= Undo management ==================================
+
+-- Persist undo, but don't pollute the file system
+local undodir = vim.env.HOME .. '/.local/share/nvim/.tmp/undo'
+if not vim.fn.isdirectory(undodir) then
+  -- Make the directory
+  vim.fn.mkdir(undodir, 'p')
+end
+vim.o.undodir = undodir
+vim.o.undofile = true
+
+
 -- ======= Misc =============================================
 
 --
