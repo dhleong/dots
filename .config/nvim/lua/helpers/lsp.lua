@@ -1,15 +1,12 @@
 local lsp_installer_servers = require 'nvim-lsp-installer.servers'
 local cmp_nvim_lsp = require 'cmp_nvim_lsp'
+local map = require'helpers.map'
 
 local lsp_capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local function prepare_mappings()
   local function nmap(lhs, lua)
-    local rhs = '<cmd>lua ' .. lua .. '<cr>'
-    vim.api.nvim_buf_set_keymap(0, 'n', lhs, rhs, {
-      noremap = true,
-      silent = true,
-    })
+    map.buf_nno(lhs, { lua_call = lua })
   end
   local function lsp_map(lhs, lsp_command)
     local rhs = 'vim.lsp.' .. lsp_command

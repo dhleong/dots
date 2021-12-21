@@ -1,3 +1,5 @@
+local map = require'helpers.map'
+
 -- Plug auto-install and setup {{{
 Plug = require 'helpers.plug'
 -- }}}
@@ -32,6 +34,34 @@ vim.g.lilium_matcher = 'fuzzy'
 
 -- only auto-ref issues assigned to me
 vim.g['hubr#auto_ref_issues_args'] = 'state=open:assignee=dhleong:milestone?'
+-- }}}
+
+-- ======= Testing / Debugging ============================== {{{
+
+Plug 'vim-test/vim-test'
+Plug '~/git/neo-latte'
+
+map.nno'<leader>tt'{
+  lua_module = 'neo-latte',
+  lua_call = 'toggle_auto_test()',
+}
+
+map.nno'<leader>tn'{
+  lua_module = 'neo-latte',
+  lua_call = "toggle_auto_test('nearest')",
+}
+
+map.nno'<leader>trn'{
+  lua_module = 'neo-latte',
+  lua_call = "run('nearest')",
+}
+
+map.nno'<leader>trf'{
+  lua_module = 'neo-latte',
+  lua_call = "run('file')",
+}
+
+
 -- }}}
 
 -- ======= Text completion ================================== {{{
