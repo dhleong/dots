@@ -76,7 +76,8 @@ Plug 'tpope/vim-endwise'
 -- augmentations, like hyperstyle
 vim.g.endwise_no_mappings = 1
 
-Plug 'SirVer/ultisnips'
+-- Plug 'SirVer/ultisnips'
+Plug '~/git/ultisnips'
 Plug '~/git/vim-cs-snippets'
 Plug 'honza/vim-snippets'
 
