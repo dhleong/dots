@@ -69,4 +69,8 @@ function M.nno(lhs, rhs)
   return global('n', true, lhs, rhs)
 end
 
+function M.tno(lhs, rhs)
+  return global('t', true, lhs, rhs)
+end
+
 return M

@@ -1,3 +1,5 @@
+local map = require'helpers.map'
+
 -- Laziness:
 vim.cmd(':source ~/.vim/init/mappings.vim')
 
@@ -57,3 +59,9 @@ inoremap('<m-bs>', '<c-w>')
 -- ======= File navigation ==================================
 
 nnoremap('<leader>p', "<cmd>lua require'dhleong.nav'.projects()<cr>")
+
+-- ======= Terminal =========================================
+
+-- I'm used to <a-bs> and it sorta works but for whatever reason it leaves a . behind where <c-w>
+-- doesn't, so let's just use that:
+map.tno('<a-bs>', '<c-w>')
