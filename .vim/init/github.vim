@@ -85,6 +85,7 @@ func! s:openGithubPrCreator()
         let command = 'sp | ' . command
       endif
       execute command
+      startinsert
     endtry
 endfunc
 
