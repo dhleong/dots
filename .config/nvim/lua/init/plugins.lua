@@ -26,6 +26,7 @@ vim.g.fzf_colors = {
 -- ======= Git/Github-related =============================== {{{
 
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb' -- Exclusively for :GBrowse
 
 -- TODO: make compat with nvim jobs:
 -- Plug '~/git/lilium'
