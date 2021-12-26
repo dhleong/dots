@@ -62,17 +62,17 @@ function M.projects()
   end, parent_paths)
   dirs = vim.tbl_filter(not_nil, dirs)
 
-    if #dirs == 0 then
-      print('No project dirs exist? Checked:')
-      print(parent_paths)
-      return
-    end
-
-    local cmd = 'ls -d ' .. table.concat(dirs, ' ')
-    ui.fzf{
-      source = cmd,
-      sink = M.open_project,
-    }
+  if #dirs == 0 then
+    print('No project dirs exist? Checked:')
+    print(parent_paths)
+    return
   end
+
+  local cmd = 'ls -d ' .. table.concat(dirs, ' ')
+  ui.fzf{
+    source = cmd,
+    sink = M.open_project,
+  }
+end
 
 return M
