@@ -1,21 +1,9 @@
+local ui = require'dhleong.ui'
+
 local POPUP_TERM_PATCH = 'patch-8.2.0286'
 
 local function not_nil(value)
   return value ~= nil
-end
-
-local function fzf(config)
-  local wrapped = vim.fn['fzf#wrap'](config)
-  wrapped.options = '--no-clear ' .. wrapped.options
-  wrapped.sink = config.sink -- Lua fns don't come back from wrap
-
-  -- Ensure we have some basic colors, if not otherwise specified
-  -- (see g:fzf_colors)
-  if not wrapped.options:find('--color') then
-    wrapped.options = wrapped.options .. ' --color=dark'
-  end
-
-  return vim.fn['fzf#run'](wrapped)
 end
 
 local M = {}
@@ -49,7 +37,7 @@ function M.in_project(project_dir, sink)
     return
   end
 
-  fzf{
+  ui.fzf{
     dir = dir,
     options = {},
     source = 'list-repo-files',
@@ -81,7 +69,7 @@ function M.projects()
     end
 
     local cmd = 'ls -d ' .. table.concat(dirs, ' ')
-    fzf{
+    ui.fzf{
       source = cmd,
       sink = M.open_project,
     }

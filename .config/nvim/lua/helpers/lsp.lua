@@ -24,6 +24,10 @@ local function prepare_mappings()
 
   lsp_map('[c', 'diagnostic.goto_prev()')
   lsp_map(']c', 'diagnostic.goto_next()')
+
+  vim.ui.select = function (items, opts, on_choice)
+    require'dhleong.ui'.select(items, opts, on_choice)
+  end
 end
 
 local function prepare_events(filetype, file_extension)
