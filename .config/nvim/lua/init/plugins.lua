@@ -146,6 +146,9 @@ Plug('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 -- Provides contextual commenting (for eg tsx)
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
+-- Provides various text objects
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
 -- Provides "smart" text objects
 Plug 'RRethy/nvim-treesitter-textsubjects'
 

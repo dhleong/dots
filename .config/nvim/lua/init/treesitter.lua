@@ -17,8 +17,27 @@ require'nvim-treesitter.configs'.setup {
 
   -- Plugins:
 
+
   context_commentstring = {
     enable = true
+  },
+
+  textobjects = {
+    select = {
+      enable = true,
+
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+
+      keymaps = {
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+      },
+    },
   },
 
   textsubjects = {
