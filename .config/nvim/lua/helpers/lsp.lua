@@ -62,7 +62,18 @@ function Lsp.config(server_name, opts)
     requested_server:on_ready(function ()
       local setup_opts = opts or {}
       setup_opts.capabilities = lsp_capabilities
-      setup_opts.on_attach = on_attach
+
+      -- Wrap any provided on_attach callback
+      local provided_on_attach = setup_opts.on_attach
+      if provided_on_attach then
+        setup_opts.on_attach = function (client, bufnr)
+          provided_on_attach(client, bufnr)
+          on_attach(client, bufnr)
+        end
+      else
+        setup_opts.on_attach = on_attach
+      end
+
       requested_server:setup(setup_opts)
 
       -- Config init
