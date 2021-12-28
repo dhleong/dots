@@ -8,6 +8,11 @@ end
 
 local M = {}
 
+function M.link()
+  local url = vim.fn.expand('<cfile>')
+  vim.api.nvim_exec([[!open ]] .. url, true)
+end
+
 function M.open_project(project_dir)
   if vim.fn.isdirectory(project_dir) == 1 then
     vim.bo.path = project_dir .. '**'

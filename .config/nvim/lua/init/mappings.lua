@@ -5,7 +5,10 @@ vim.cmd(':source ~/.vim/init/mappings.vim')
 
 -- utils {{{
 local function nnoremap(lhs, rhs)
-    vim.api.nvim_set_keymap('n', lhs, rhs, { noremap = true })
+    vim.api.nvim_set_keymap('n', lhs, rhs, {
+      noremap = true,
+      silent = true,
+    })
 end
 
 local function inoremap(lhs, rhs)
@@ -59,6 +62,10 @@ inoremap('<m-bs>', '<c-w>')
 -- ======= File navigation ==================================
 
 nnoremap('<leader>p', "<cmd>lua require'dhleong.nav'.projects()<cr>")
+
+-- NOTE: netrw's gx is not behaving for some reason. Let's just
+-- use our own because netrw is weird
+nnoremap('gx', "<cmd>lua require'dhleong.nav'.link()<cr>")
 
 -- ======= Terminal =========================================
 
