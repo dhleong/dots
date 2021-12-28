@@ -5,11 +5,13 @@ local function entry_has_key(entry, key)
     return
   end
 
-  if not entry.completion_item.textEdit then
-    return
+  if entry.completion_item.textEdit then
+    return entry.completion_item.textEdit.newText:find(key, 1, true)
   end
 
-  return entry.completion_item.textEdit.newText:find(key, 1, true)
+  if entry.completion_item.insertText then
+    return entry.completion_item.insertText:find(key, 1, true)
+  end
 end
 
 local function try_accept_completion(key)
