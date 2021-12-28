@@ -21,6 +21,8 @@ vim.g.fzf_colors = {
     ['pointer'] = {'fg', 'SpecialComment', 'StatusLine'},
 }
 
+Plug 'nvim-lualine/lualine.nvim'
+
 -- }}}
 
 -- ======= Git/Github-related =============================== {{{
