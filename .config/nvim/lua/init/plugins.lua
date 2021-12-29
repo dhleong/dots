@@ -41,7 +41,8 @@ vim.g['hubr#auto_ref_issues_args'] = 'state=open:assignee=dhleong:milestone?'
 
 -- ======= Testing / Debugging ============================== {{{
 
-Plug 'vim-test/vim-test'
+-- Plug 'vim-test/vim-test'
+Plug '~/git/vim-test'
 Plug '~/git/neo-latte'
 
 map.nno'<leader>tt'{
@@ -63,6 +64,8 @@ map.nno'<leader>trf'{
   lua_module = 'neo-latte',
   lua_call = "run('file')",
 }
+
+Plug 'puremourning/vimspector'
 
 
 -- }}}

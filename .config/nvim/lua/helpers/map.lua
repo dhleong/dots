@@ -16,6 +16,10 @@ local function transform_rhs(rhs)
       s = '<cmd>lua ' .. s .. '<cr>'
     end
 
+    if rhs.vim_call then
+      s = '<cmd>call ' .. rhs.vim_call .. '<cr>'
+    end
+
     return s
   end
 

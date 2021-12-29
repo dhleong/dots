@@ -1,4 +1,6 @@
-require('helpers.lsp').config('rust_analyzer', {
+local map = require'helpers.map'
+
+require'helpers.lsp'.config('rust_analyzer', {
   settings = {
     ['rust-analyzer'] = {
       diagnostics = {
@@ -13,3 +15,11 @@ require('helpers.lsp').config('rust_analyzer', {
   },
 })
 
+require'dhleong.debugger'.configure{
+  adapter = 'CodeLLDB',
+}
+
+map.nno'<leader>rd'{
+  lua_module = 'ft.rust',
+  lua_call = 'debug_nearest()',
+}
