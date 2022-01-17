@@ -8,9 +8,13 @@ local function prepare_mappings()
   local function nmap(lhs, lua)
     map.buf_nno(lhs, { lua_call = lua })
   end
-  local function lsp_map(lhs, lsp_command)
-    local rhs = 'vim.lsp.' .. lsp_command
+  local function vim_map(lhs, vim_command)
+    local rhs = 'vim.' .. vim_command
     nmap(lhs, rhs)
+  end
+  local function lsp_map(lhs, lsp_command)
+    local rhs = 'lsp.' .. lsp_command
+    vim_map(lhs, rhs)
   end
 
   lsp_map('K', 'buf.hover()')
@@ -22,8 +26,8 @@ local function prepare_mappings()
   lsp_map('<leader>jr', 'buf.rename()')
   lsp_map('<m-cr>', 'buf.code_action()')
 
-  lsp_map('[c', 'diagnostic.goto_prev()')
-  lsp_map(']c', 'diagnostic.goto_next()')
+  vim_map('[c', 'diagnostic.goto_prev()')
+  vim_map(']c', 'diagnostic.goto_next()')
 
   vim.ui.select = function (items, opts, on_choice)
     require'dhleong.ui'.select(items, opts, on_choice)
