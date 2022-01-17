@@ -60,6 +60,12 @@ function M.handle_mappings()
   end
 end
 
+function M.configure_watches()
+  set_mappings{
+    ['dd'] = '<del>',
+  }
+end
+
 ---@param opts DebuggerOpts
 function M.configure(opts)
   if not opts.adapter then
@@ -78,6 +84,7 @@ function M.configure(opts)
   vim.cmd([[
     augroup MyVimspectorConfigs
       autocmd!
+      autocmd BufEnter vimspector.Watches lua require'dhleong.debugger'.configure_watches()
       autocmd BufWinEnter * lua require'dhleong.debugger'.handle_mappings()
       autocmd WinEnter * lua require'dhleong.debugger'.handle_mappings()
       autocmd User VimspectorUICreated lua require'dhleong.debugger'.handle_mappings()
