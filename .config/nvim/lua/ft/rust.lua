@@ -23,6 +23,16 @@ function M.compile_module_for_executable(module)
   end
 end
 
+function M.debug_app()
+  print('Compiling ...')
+  vim.cmd([[!cargo build]])
+  vim.cmd([[redraw!]])
+
+  vim.fn['vimspector#LaunchWithSettings']{
+    configuration = 'Run App',
+  }
+end
+
 function M.debug_nearest()
   local module = M.get_nearest_module()
 
@@ -34,11 +44,11 @@ function M.debug_nearest()
     return
   end
 
-  vim.fn['vimspector#LaunchWithSettings']({
+  vim.fn['vimspector#LaunchWithSettings']{
     configuration = 'Run Test',
     Exe = path,
     Module = module,
-  })
+  }
 end
 
 return M

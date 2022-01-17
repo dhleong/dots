@@ -23,3 +23,5 @@ map.nno'<leader>rd'{
   lua_module = 'ft.rust',
   lua_call = 'debug_nearest()',
 }
+
+vim.cmd([[command! Debug lua require'ft.rust'.debug_app()]])
