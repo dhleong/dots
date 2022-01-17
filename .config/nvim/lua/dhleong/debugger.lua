@@ -5,7 +5,9 @@ local debugger_mappings = {
   ['gi'] = '<Plug>VimspectorStepInto',
   ['gn'] = '<Plug>VimspectorStepOver',
   ['go'] = '<Plug>VimspectorStepOut',
+  ['gp'] = '<Plug>VimspectorPause',
   ['gr'] = '<Plug>VimspectorContinue',
+  ['gq'] = ':call vimspector#Reset()<cr>',
 }
 
 ---@alias DebuggerOpts { adapter: string }
