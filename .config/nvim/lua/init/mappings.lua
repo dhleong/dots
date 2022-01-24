@@ -72,3 +72,8 @@ nnoremap('gx', "<cmd>lua require'dhleong.nav'.link()<cr>")
 -- I'm used to <a-bs> and it sorta works but for whatever reason it leaves a . behind where <c-w>
 -- doesn't, so let's just use that:
 map.tno('<a-bs>', '<c-w>')
+
+-- Saving files with <apple-s> in CLI mode (with help from iterm2)
+-- Configure a key map to "Send text with 'vim' Special Chars" as <F-20>
+nnoremap('<F-20>', ':w<cr>')
+inoremap('<F-20>', '<esc>:w<cr>')
