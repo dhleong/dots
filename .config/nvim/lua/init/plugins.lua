@@ -159,10 +159,28 @@ Plug 'RRethy/nvim-treesitter-textsubjects'
 
 -- }}}
 
+-- ======= Language-specific ================================
+--
+
+-- ======= Clojure ==========================================
+
+Plug 'tpope/vim-fireplace' { ft = 'clojure' }
+
+-- Async semantic highlighting (dhleong/vim-mantel)
+Plug '~/git/vim-mantel'
+
+-- My extra clojure utils (dhleong/vim-hearth)
+Plug '~/git/vim-hearth'
+
+Plug 'guns/vim-clojure-static' { ft = 'clojure' }
+Plug 'guns/vim-sexp' { ft = 'clojure' }
+Plug 'tpope/vim-sexp-mappings-for-regular-people' { ft = 'clojure' }
+
+
 -- ======= Vim ==============================================
 
-Plug('tpope/vim-scriptease', { ft = 'vim' })
-Plug('junegunn/vader.vim', { ft = 'vader' })
+Plug 'tpope/vim-scriptease' { ft = 'vim' }
+Plug 'junegunn/vader.vim' { ft = 'vader' }
 
 
 -- ======= Utility ========================================== {{{

@@ -18,17 +18,25 @@ local Plug = {
 local meta = {
 
   -- Function call "operation"
+  ---@diagnostic disable-next-line:unused-local
   __call = function(self, repo, opts)
     opts = opts or vim.empty_dict()
 
-    -- we declare some aliases for `do` and `for`
+    -- We declare some aliases for `do` and `for`
     opts['do'] = opts.run
     opts.run = nil
 
     opts['for'] = opts.ft
     opts.ft = nil
 
-    vim.call('plug#', repo, opts)
+    local declare = vim.fn['plug#']
+
+    declare(repo, opts)
+
+    -- Support a slightly cleaner, command-like syntax:
+    return function (command_like_opts)
+      declare(repo, command_like_opts)
+    end
   end
 }
 
