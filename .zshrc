@@ -102,3 +102,8 @@ bindkey -M vicmd 'gu' _git-push-upstream
 bindkey -M vicmd 'gs' _git-status
 
 bindkey -M vicmd V edit-command-line
+
+if [ -f "$HOME/.zshrc.local" ]
+then
+    source $HOME/.zshrc.local
+fi
