@@ -1,0 +1,31 @@
+# ======= Personal global snippets ========================
+
+priority -55
+
+global !p
+from vimsnippets import get_comment_format
+BANNER_LENGTH = 60
+BANNER_LEFT = 7
+BANNER_CHAR = '='
+def build_banner(snip, text):
+    b, m, e, i = (s.strip() for s in get_comment_format())
+    separators = 3  # before and after the text, and after the comment
+    before = '\n' + m + ' ' + (BANNER_CHAR*BANNER_LEFT) + ' '
+    after = ' ' + (BANNER_LENGTH - len(before) - len(text) - 1) * '=' + '\n'
+    return {
+        'before': before,
+        'after': after
+    }
+endglobal
+
+snippet banner "A simple banner with the current comment symbol" b
+`!p
+banner = build_banner(snip, t[1])
+snip.rv = banner['before']
+`${1:${VISUAL:content}}`!p
+banner = build_banner(snip, t[1])
+snip.rv = banner['after']`
+$0
+endsnippet
+
+
