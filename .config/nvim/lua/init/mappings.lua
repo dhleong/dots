@@ -77,3 +77,8 @@ map.tno('<a-bs>', '<c-w>')
 -- Configure a key map to "Send text with 'vim' Special Chars" as <F-20>
 nnoremap('<F-20>', ':w<cr>')
 inoremap('<F-20>', '<esc>:w<cr>')
+
+nnoremap('<F-21>', ':tabe<cr>')  -- Similarly, <apple-t> ...
+inoremap('<F-21>', '<esc>:tabe<cr>')
+nnoremap('<F-22>', ':q<cr>')  -- ... and <apple-w>
+inoremap('<F-22>', '<esc>:q<cr>')
