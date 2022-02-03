@@ -2202,6 +2202,17 @@ Marks and Annotations.Next Mark</string>
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
+				<key>0x19-0x60000-0x30</key>
+				<dict>
+					<key>Action</key>
+					<integer>38</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>gT</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
 				<key>0x2d-0x40000</key>
 				<dict>
 					<key>Action</key>
@@ -2288,6 +2299,17 @@ Marks and Annotations.Next Mark</string>
 					<string></string>
 					<key>Text</key>
 					<string>&lt;F-22&gt;</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
+				<key>0x9-0x40000-0x30</key>
+				<dict>
+					<key>Action</key>
+					<integer>38</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>gt</string>
 					<key>Version</key>
 					<integer>1</integer>
 				</dict>
