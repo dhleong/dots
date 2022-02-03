@@ -2084,12 +2084,16 @@ Marks and Annotations.Next Mark</string>
 			<true/>
 			<key>Background Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.098039215686274508</real>
+				<real>0.32156862745098042</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.078431372549019607</real>
+				<real>0.25490196078431371</real>
 				<key>Red Component</key>
-				<real>0.058823529411764705</real>
+				<real>0.20000000000000001</real>
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
@@ -2180,12 +2184,16 @@ Marks and Annotations.Next Mark</string>
 			<false/>
 			<key>Foreground Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.81176470588235294</real>
+				<real>0.92156862745098034</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.88235294117647056</real>
+				<real>0.99607843137254903</real>
 				<key>Red Component</key>
-				<real>0.90196078431372551</real>
+				<real>1</real>
 			</dict>
 			<key>Guid</key>
 			<string>B7217829-6162-4468-89DC-019D46385AB7</string>
@@ -2588,12 +2596,16 @@ Marks and Annotations.Next Mark</string>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.25098039215686274</real>
+				<real>0.36470588235294116</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.20000000000000001</real>
+				<real>0.28627450980392155</real>
 				<key>Red Component</key>
-				<real>0.14509803921568629</real>
+				<real>0.4392156862745098</real>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
