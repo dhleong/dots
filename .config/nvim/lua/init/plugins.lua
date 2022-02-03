@@ -23,6 +23,11 @@ vim.g.fzf_colors = {
 
 Plug 'nvim-lualine/lualine.nvim'
 
+-- Syntax plugins:
+-- Shouldn't need many of these thanks to treesitter, but they can live here:
+
+Plug 'elubow/cql-vim'
+
 -- }}}
 
 -- ======= Git/Github-related =============================== {{{
