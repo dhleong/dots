@@ -34,7 +34,9 @@ local function create_project_navigation_maps (project_dir)
   nmap('<c-w><c-p>', "in_project(" .. project_path .. ", 'tabe')")
   nmap('<c-s><c-p>', "in_project(" .. project_path .. ", 'vsplit')")
   -- TODO in_project_subpath
-  -- TODO by_text
+  nmap('\\', "by_text(" .. project_path .. ", 'e')")
+  nmap('<c-w>\\', "by_text(" .. project_path .. ", 'tabe')")
+  nmap('<c-s>\\', "by_text(" .. project_path .. ", 'tabe')")
 end
 
 local function configure_buffer()

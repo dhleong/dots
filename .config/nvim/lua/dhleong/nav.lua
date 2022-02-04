@@ -6,6 +6,34 @@ local function not_nil(value)
   return value ~= nil
 end
 
+local function fzf(config)
+  if not config.window and vim.fn.has(POPUP_TERM_PATCH) then
+    config.window = {
+      width = 0.4,
+      height = 0.8,
+      yoffset = 0.2,
+      xoffset = 0.9,
+    }
+  end
+  if not vim.fn.has(POPUP_TERM_PATCH) or not config.window then
+    config.window = 'aboveleft 15new'
+  end
+
+  if not config.dir then
+    config.dir = vim.g.otsukare_default_project_root
+    if not config.dir then
+      print('Not in a project directory')
+      return
+    end
+  end
+
+  if not config.options then
+    config.options = {}
+  end
+
+  ui.fzf(config)
+end
+
 local M = {}
 
 function M.link()
@@ -26,28 +54,45 @@ function M.open_project(project_dir)
 end
 
 function M.in_project(project_dir, sink)
-  local window = 'aboveleft 15new'
-  if vim.fn.has(POPUP_TERM_PATCH) then
-    window = {
-      width = 0.4,
-      height = 0.8,
-      yoffset = 0.2,
-      xoffset = 0.9,
-    }
-  end
-
-  local dir = project_dir or vim.g.otsukare_default_project_root
-  if not dir then
-    print('Not in a project directory')
-    return
-  end
-
-  ui.fzf{
-    dir = dir,
+  fzf{
+    dir = project_dir,
     options = {},
     source = 'list-repo-files',
     sink = sink,
-    window = window,
+  }
+end
+
+function M.by_text(project_dir, sink)
+  local options = {
+    -- NOTE: use 4.. as the query and presentation target to handle Swift
+    -- (and other code that uses colons).
+    '--with-nth=1,4..',
+    '--nth=2..',
+    '--delimiter=:',
+  }
+  local source = {
+    'rg', '--column', '--line-number', '--no-heading', '--smart-case',
+    "--glob '!*.lock'",
+    "--glob '!tsconfig.json'",
+    '--', '.',
+  }
+
+  fzf{
+    dir = project_dir,
+    options = options,
+    source = table.concat(source, ' '),
+    window = { width = 1.0, height = 0.8, yoffset = 0 },
+    sink = function (output)
+      local _, _, file, line = string.find(output, '^([^:]+):(%d+):')
+      if not file and not line then
+        print('Unexpected input: ' .. output)
+        return
+      end
+
+      vim.cmd(sink .. ' ' .. file)
+      vim.cmd('normal! ' .. line .. 'G')
+      vim.cmd[[normal! zz]]
+    end,
   }
 end
 
