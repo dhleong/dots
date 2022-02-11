@@ -1,3 +1,8 @@
+-- ======= Global behavior ================================
+
+-- Unload buffers when all windows are abandoned
+vim.o.hidden = false
+
 -- ======= Indent-related ===================================
 
 vim.o.autoindent = true
