@@ -1,9 +1,14 @@
 local Dev = {
   reset_cache = function (path)
     path = vim.fn.fnamemodify(path, ':p:r')
+
     local package_name = ''
     while path:len() > 1 do
       local package_part = vim.fn.fnamemodify(path, ':t')
+      if package_part == 'init' then
+        -- EG: lua/dhleong/dev/init => dhleong.dev
+        package_part = ''
+      end
 
       if package_name:len() > 0 then
         package_name = '.' .. package_name
