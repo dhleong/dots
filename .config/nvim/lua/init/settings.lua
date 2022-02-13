@@ -23,6 +23,13 @@ vim.o.smartcase = true -- but if we WANT case, use it
 
 vim.o.clipboard = 'unnamed'
 
+-- NOTE: When not in tmux, we can just use the normal clipboard and
+-- skip loading this completely
+if vim.env.TMUX then
+  vim.g.clipboard = require'dhleong.clipboard'.create()
+end
+
+
 -- ======= Visual tweaks ====================================
 
 -- color scheme
@@ -52,8 +59,7 @@ vim.o.undofile = true
 
 -- ======= Misc =============================================
 
---
--- for some reason, the autochdir option causes wacky behavior
+-- For some reason, the autochdir option causes wacky behavior
 --  with netrw, with this repro:
 --   - open a file
 --   - :vsp
