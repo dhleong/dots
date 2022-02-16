@@ -182,6 +182,10 @@ Plug 'guns/vim-sexp' { ft = 'clojure' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people' { ft = 'clojure' }
 
 
+-- ======= React ==========================================
+
+Plug '~/git/vim-hyperstyle'
+
 -- ======= Vim ==============================================
 
 Plug 'tpope/vim-scriptease' { ft = 'vim' }
