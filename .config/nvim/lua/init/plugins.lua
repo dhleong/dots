@@ -186,6 +186,9 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people' { ft = 'clojure' }
 
 Plug '~/git/vim-hyperstyle'
 
+Plug 'windwp/nvim-ts-autotag'
+
+
 -- ======= Vim ==============================================
 
 Plug 'tpope/vim-scriptease' { ft = 'vim' }

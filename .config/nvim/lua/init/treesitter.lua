@@ -17,9 +17,12 @@ require'nvim-treesitter.configs'.setup {
 
   -- Plugins:
 
+  autotag = {
+    enable = true,
+  },
 
   context_commentstring = {
-    enable = true
+    enable = true,
   },
 
   textobjects = {
