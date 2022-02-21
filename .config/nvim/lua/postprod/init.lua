@@ -1,9 +1,16 @@
 local async = require'plenary.async'
 
+local builtins = {
+  'postprod.handlers.eslint',
+}
+
 local function handle_request(request)
   local original_content = request.content
 
   for _, handler in ipairs(request.handlers) do
+    if type(handler) == 'string' then
+      handler = require(handler)
+    end
     handler.handle(request)
 
     if vim.b.changetick ~= request.changetick or vim.bo[request.bufnr].modified then
@@ -23,7 +30,12 @@ local M = {
 }
 
 function M.register(handler)
-  for _, ft in ipairs(handler.filetypes) do
+  local module = handler
+  if type(module) == 'string' then
+    module = require(module)
+  end
+
+  for _, ft in ipairs(module.filetypes) do
     if not M.handlers[ft] then
       M.handlers[ft] = {}
     end
@@ -66,8 +78,9 @@ function M.setup(opts)
   ]]
 end
 
--- Register default handlers
--- TODO: Probably move this inside setup(); it's convenient here for hot reloads
-M.register(require'postprod.handlers.eslint')
+-- Convenience for hot reload
+for _, module_name in ipairs(builtins) do
+  M.register(module_name)
+end
 
 return M
