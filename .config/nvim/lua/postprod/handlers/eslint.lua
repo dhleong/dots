@@ -12,8 +12,8 @@ local M = {
   },
 }
 
-function M.handle(request)
-  helpers.command({
+M.handle = helpers.command_handler(function (request)
+  return {
     command = 'eslint_d',
     args = {
       '--fix-to-stdout',
@@ -21,7 +21,7 @@ function M.handle(request)
       '--stdin-filename', request.path,
     },
     resolver = cmd_resolver.from_node_modules,
-  }, request)
-end
+  }
+end)
 
 return M

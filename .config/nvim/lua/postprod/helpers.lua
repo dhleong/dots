@@ -44,4 +44,11 @@ M.command = async(3, function (args, request, callback)
   })
 end)
 
+function M.command_handler(fn)
+  return function (request)
+    local config = fn(request)
+    return M.command(config, request)
+  end
+end
+
 return M
