@@ -13,21 +13,14 @@ local M = {
 }
 
 function M.handle(request)
-  local eslint_d = cmd_resolver.from_node_modules {
-    command = 'eslint_d',
-    bufnr = request.bufnr,
-  }
-  if not eslint_d then
-    return
-  end
-
   helpers.command({
-    command = eslint_d,
+    command = 'eslint_d',
     args = {
       '--fix-to-stdout',
       '--stdin',
       '--stdin-filename', request.path,
     },
+    resolver = cmd_resolver.from_node_modules,
   }, request)
 end
 
