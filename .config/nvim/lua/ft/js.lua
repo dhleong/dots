@@ -1,3 +1,26 @@
+local tsserver_settings = {
+  -- NOTE: For whatever reason, these don't seem to be respected...
+  javascript = {
+    showUnused = false,
+    suggestionActions = {
+      enabled = false,
+    },
+  },
+  typescript = {
+    showUnused = false,
+  },
+
+  -- So for now we ignore specific annoying ones
+  diagnostics = {
+    ignoredCodes = {
+      -- These can be found here:
+      -- https://github.com/microsoft/TypeScript/blob/master/src/compiler/diagnosticMessages.json
+
+      80001, -- "This is a CommonJS file"
+    },
+  },
+}
+
 local function readfile(path)
   return table.concat(vim.fn.readfile(path), '\n')
 end
@@ -46,6 +69,8 @@ end
 
 function M.init()
   require('helpers.lsp').config('tsserver', {
+    settings = tsserver_settings,
+
     on_attach = function (client)
       -- Disable tsserver formatting
       client.resolved_capabilities.document_formatting = false
