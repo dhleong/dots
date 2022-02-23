@@ -7,12 +7,15 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = {
       -- For endwise compat:
       'elixir', 'lua', 'ruby', 'vim',
+
+      -- To colorize css files
+      'css',
     },
   },
 
   indent = {
     enable = true,
-    disable = { 'lua', 'rust', 'python' },
+    disable = { 'css', 'lua', 'rust', 'python' },
   },
 
   -- Plugins:

@@ -184,6 +184,7 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people' { ft = 'clojure' }
 
 -- ======= React ==========================================
 
+Plug 'ap/vim-css-color'
 Plug '~/git/vim-hyperstyle'
 
 Plug 'windwp/nvim-ts-autotag'
