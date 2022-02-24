@@ -38,7 +38,7 @@ local function prepare_events(filetype, file_extension)
   vim.cmd(string.format([[
     augroup lsp_autocmds_%s
       autocmd!
-      autocmd BufWritePre *.%s lua vim.lsp.buf.formatting_seq_sync(nil, 1000)
+      autocmd BufWritePre *.%s lua vim.lsp.buf.formatting_seq_sync(nil, 2000)
     augroup END
   ]], filetype, file_extension))
 end
