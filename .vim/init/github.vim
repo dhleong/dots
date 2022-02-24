@@ -80,7 +80,7 @@ func! s:openGithubPrCreator()
       call lilium#pr#Create(args)
     catch /E117.*/
       " Lilium not installed
-      let command = 'term gh pr create' . join(args, ' ')
+      let command = 'term gh pr create ' . join(args, ' ')
       if has('nvim')
         let command = 'sp | ' . command
       endif
