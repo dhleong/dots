@@ -125,6 +125,11 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 
+-- Convert between single-line and wrapped argument lists
+Plug 'FooSoft/vim-argwrap'
+
+map.nno'<leader>aw' ':ArgWrap<cr>'
+
 -- }}}
 
 -- ======= Text navigation ================================== {{{
