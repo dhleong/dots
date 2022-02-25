@@ -1,12 +1,14 @@
 local function encode_osc52_tmux(lines)
   -- With help from: https://github.com/ojroques/vim-oscyank
-  local base64 = vim.fn.system({'base64'}, lines)
+  local base64 = table.concat(vim.fn.systemlist({'base64'}, lines))
   local trimmed, _ = string.gsub(base64, '%s*$', '')
   return '\x1BPtmux;\x1B\x1B]52;c;' .. trimmed .. '\x07\x1B\\'
 end
 
 local function create_copy(register)
   return function (lines)
+    vim.g.foo = 'test'
+    vim.b.lines = lines
     vim.fn.setreg(register, lines)
 
     -- I only use tmux on remote systems; in such cases, attempt to use
