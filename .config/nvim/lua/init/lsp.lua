@@ -40,7 +40,7 @@ cmp.setup({
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<Space>'] = try_accept_completion(),
+    ['<Space>'] = try_accept_completion(' '),
     ['<CR>'] = try_accept_completion(),
     ['('] = try_accept_completion('('),
     ['.'] = try_accept_completion('.'),
