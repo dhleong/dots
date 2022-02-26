@@ -56,12 +56,15 @@ cmp.setup({
   })
 })
 
+require'null-ls.config'.reset()
+require'null-ls.sources'.reset()
 require'null-ls'.setup{
   sources = {
     require('null-ls').builtins.code_actions.eslint_d,
     require('null-ls').builtins.diagnostics.eslint_d,
     require('null-ls').builtins.diagnostics.flake8,
     require('null-ls').builtins.formatting.black,
+    require('lilium').completer,
     require('dhleong.null_ls.filename'),
     require('dhleong.null_ls.prettier'),
   },

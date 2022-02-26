@@ -35,10 +35,7 @@ Plug 'elubow/cql-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' -- Exclusively for :GBrowse
 
--- TODO: make compat with nvim jobs:
--- Plug '~/git/lilium'
-
-vim.g.lilium_matcher = 'fuzzy'
+Plug '~/git/lilium'
 
 -- only auto-ref issues assigned to me
 vim.g['hubr#auto_ref_issues_args'] = 'state=open:assignee=dhleong:milestone?'
