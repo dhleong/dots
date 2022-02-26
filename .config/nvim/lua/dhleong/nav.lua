@@ -63,24 +63,29 @@ function M.in_project(project_dir, sink)
 end
 
 function M.by_text(project_dir, sink)
+  local rg = table.concat({
+    'rg', '--column', '--line-number', '--no-heading', '--smart-case',
+    "--glob '!*.lock'",
+    "--glob '!tsconfig.json'",
+    '--',
+  }, ' ')
+
   local options = {
     -- NOTE: use 4.. as the query and presentation target to handle Swift
     -- (and other code that uses colons).
     '--with-nth=1,4..',
     '--nth=2..',
     '--delimiter=:',
-  }
-  local source = {
-    'rg', '--column', '--line-number', '--no-heading', '--smart-case',
-    "--glob '!*.lock'",
-    "--glob '!tsconfig.json'",
-    '--', '.',
+
+    -- Automatically create a new search with the query text on change; this is much
+    -- faster than waiting for rg to load all text in the project
+    '--bind', 'change:reload:' .. rg .. ' {q} || true',
   }
 
   fzf{
     dir = project_dir,
     options = options,
-    source = table.concat(source, ' '),
+    source = rg .. ' .',
     window = { width = 1.0, height = 0.8, yoffset = 0 },
     sink = function (output)
       local _, _, file, line = string.find(output, '^([^:]+):(%d+):')
