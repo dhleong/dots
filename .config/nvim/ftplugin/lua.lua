@@ -10,3 +10,7 @@ require('helpers.lsp').config('sumneko_lua', {
     },
   },
 })
+
+vim.cmd [[
+  nnoremap <buffer> K <cmd>lua require'ft.lua'.doc()<cr>
+]]
