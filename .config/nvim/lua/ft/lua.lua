@@ -32,7 +32,18 @@ function M.doc()
     return M.doc_vim()
   end
 
-  -- TODO Check if it's a vim.fn. call
+  -- Vim fns in the expression
+  local node_string = ts_utils.get_node_text(node:parent())
+  if vim.startswith(node_string[1], 'vim.fn.') then
+    return M.doc_vim()
+  elseif vim.startswith(node_string[1], 'vim.') then
+    local query = ':help ' .. node_string[1]
+    local ok = pcall(vim.cmd, query)
+    if not ok then
+      M.doc_vim()
+    end
+    return
+  end
 
   -- Else... assume lua
   return M.doc_default()
