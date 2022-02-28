@@ -57,6 +57,11 @@ map.nno'<leader>tn'{
   lua_call = "toggle_auto_test('nearest')",
 }
 
+map.nno'<leader>tq'{
+  lua_module = 'neo-latte',
+  lua_call = "stop()",
+}
+
 map.nno'<leader>trn'{
   lua_module = 'neo-latte',
   lua_call = "run('nearest')",
