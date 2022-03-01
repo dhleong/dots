@@ -91,4 +91,18 @@ function M.select(items, opts, on_choice)
   M.fzf(config)
 end
 
+function M.input(opts, on_confirm)
+  vim.fn.inputsave()
+
+  -- Prepare the typeahead buffer so input() gets opened into cmdline mode
+  local keys = vim.api.nvim_replace_termcodes('<C-f>b', true, false, true)
+  vim.api.nvim_feedkeys(keys, 'n', true)
+
+  -- Start the default input()
+  local result = vim.fn.input(opts)
+
+  vim.fn.inputrestore()
+  on_confirm(result)
+end
+
 return M

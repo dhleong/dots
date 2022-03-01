@@ -29,6 +29,10 @@ local function prepare_mappings()
   vim_map('[c', 'diagnostic.goto_prev()')
   vim_map(']c', 'diagnostic.goto_next()')
 
+  vim.ui.input = function (opts, on_confirm)
+    require'dhleong.ui'.input(opts, on_confirm)
+  end
+
   vim.ui.select = function (items, opts, on_choice)
     require'dhleong.ui'.select(items, opts, on_choice)
   end
