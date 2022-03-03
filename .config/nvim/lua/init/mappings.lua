@@ -11,6 +11,13 @@ local function nnoremap(lhs, rhs)
     })
 end
 
+local function tnoremap(lhs, rhs)
+    vim.api.nvim_set_keymap('t', lhs, rhs, {
+      noremap = true,
+      silent = true,
+    })
+end
+
 local function inoremap(lhs, rhs)
     vim.api.nvim_set_keymap('i', lhs, rhs, { noremap = true })
 end
@@ -82,3 +89,10 @@ nnoremap('<F-21>', ':tabe<cr>')  -- Similarly, <apple-t> ...
 inoremap('<F-21>', '<esc>:tabe<cr>')
 nnoremap('<F-22>', ':q<cr>')  -- ... and <apple-w>
 inoremap('<F-22>', '<esc>:q<cr>')
+
+nnoremap('<F-23>', 'gt')
+nnoremap('<F-24>', 'gT')
+inoremap('<F-23>', '<esc>gt')
+inoremap('<F-24>', '<esc>gT')
+tnoremap('<F-23>', '<C-\\><C-N>gt')
+tnoremap('<F-24>', '<C-\\><C-N>gT')
