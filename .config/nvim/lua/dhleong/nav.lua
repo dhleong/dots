@@ -123,7 +123,7 @@ function M.by_text(project_dir, sink)
       end
 
       vim.cmd(sink .. ' ' .. file)
-      vim.cmd('normal! ' .. line .. 'G')
+      vim.api.nvim_win_set_cursor(0, {tonumber(line, 10), 0})
       vim.cmd[[normal! zz]]
 
       if query ~= '' then
@@ -177,7 +177,7 @@ end
 function M.lsp_in_new_tab(buffer_method)
   local cursor = vim.fn.getpos('.')
   vim.cmd('tabe %')
-  vim.fn.cursor(cursor[2], cursor[3])
+  vim.api.nvim_win_set_cursor(0, {cursor[2], cursor[3] - 1})
   vim.lsp.buf[buffer_method]()
 end
 
