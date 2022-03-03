@@ -45,7 +45,6 @@ local function configure_buffer()
   -- treat empty buffers (like from :tabe) as being part of the same
   -- "project"
   local this_file = vim.fn.expand('%:p:h') .. '/' .. vim.fn.expand('%:t')
-  vim.b.configd = true
 
   for _, proj_dir in ipairs(parent_paths) do
     -- Check if our file matches a project src dir
