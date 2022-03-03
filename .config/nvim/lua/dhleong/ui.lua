@@ -28,7 +28,10 @@ local M = {}
 function M.fzf(config)
   local wrapped = vim.fn['fzf#wrap'](config)
   wrapped.options = '--no-clear ' .. wrapped.options
-  wrapped.sink = config.sink -- Lua fns don't come back from wrap
+
+  -- Lua fns don't come back from wrap
+  wrapped.sink = config.sink
+  wrapped.sinklist = config.sinklist
 
   -- Ensure we have some basic colors, if not otherwise specified
   -- (see g:fzf_colors)
