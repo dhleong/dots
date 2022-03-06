@@ -1,3 +1,5 @@
+local map = require'helpers.map'
+
 -- ======= Options, etc ====================================
 
 -- Continue comments with 'enter'
@@ -28,3 +30,9 @@ vim.g.clojure_fuzzy_indent_patterns = {
   -- match:
  '^match',
 }
+
+
+-- ======= Custom maps ====================================
+
+-- Execute the 'last' quasi-repl command
+map.buf 'cql' 'cqp<up><cr>'

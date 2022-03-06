@@ -65,6 +65,10 @@ end
 
 local M = {}
 
+function M.buf(lhs, rhs)
+  return buffer('n', false, lhs, rhs)
+end
+
 function M.buf_nno(lhs, rhs)
   return buffer('n', true, lhs, rhs)
 end
