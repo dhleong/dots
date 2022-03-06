@@ -94,8 +94,8 @@ function M.by_text(project_dir, sink)
   local rg = table.concat({
     'rg', '--column', '--line-number', '--no-heading', '--smart-case',
     '--fixed-strings', -- I almost never want to use regex here
-    -- '--glob', '"!*.lock"',
-    -- '--glob', '"!tsconfig.json"',
+    '--glob', '"!*.lock"',
+    '--glob', '"!tsconfig.json"',
     '--',
   }, ' ')
 
