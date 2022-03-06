@@ -61,7 +61,12 @@ end)
 
 function M.link()
   local url = vim.fn.expand('<cfile>')
-  vim.api.nvim_exec([[!open ]] .. url, true)
+  local browser = vim.env.BROWSER or 'open'
+  local output = vim.api.nvim_exec('!' .. browser .. ' ' .. url, true)
+  local lines = vim.fn.split(output, '\n')
+  if #lines > 1 then
+    print(vim.fn.trim(table.concat(vim.list_slice(lines, 2), '\n')))
+  end
 end
 
 function M.open_project(project_dir)
