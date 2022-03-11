@@ -64,9 +64,9 @@ require'null-ls'.setup{
     require('null-ls').builtins.diagnostics.eslint_d,
     require('null-ls').builtins.diagnostics.flake8,
     require('null-ls').builtins.formatting.black,
+    require('null-ls').builtins.formatting.prettier,
     require('lilium').completer,
     require('dhleong.null_ls.filename'),
-    require('dhleong.null_ls.prettier'),
   },
 }
 
