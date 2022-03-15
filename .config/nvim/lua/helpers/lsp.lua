@@ -92,13 +92,40 @@ function Lsp.config(server_name, opts)
 
       -- Wrap any provided on_attach callback
       local provided_on_attach = setup_opts.on_attach
-      if provided_on_attach then
+
+      -- Integrate with otsukare
+      local otsukare_on_attach = nil
+      local ok, otsukare_module = pcall(require, 'otsukare.' .. filetype)
+      if ok and otsukare_module then
+        otsukare_on_attach = otsukare_module.lsp_on_attach
+      end
+
+      if provided_on_attach or otsukare_on_attach then
         setup_opts.on_attach = function (client, bufnr)
-          provided_on_attach(client, bufnr)
-          on_attach(client, bufnr)
+          local any = nil
+          if provided_on_attach then
+            local result = provided_on_attach(client, bufnr)
+            if result then
+              any = result
+            end
+          end
+          if otsukare_on_attach then
+            local result = otsukare_on_attach(client, bufnr)
+            if result then
+              any = result
+            end
+          end
+          return on_attach(client, bufnr) or any
         end
       else
         setup_opts.on_attach = on_attach
+      end
+
+      -- Integrate with otsukare
+      if ok and otsukare_module and otsukare_module.lsp_update_config then
+        local duplicate = vim.deepcopy(setup_opts)
+        otsukare_module.lsp_update_config(duplicate)
+        setup_opts = duplicate
       end
 
       requested_server:setup(setup_opts)
