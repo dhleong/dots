@@ -4,6 +4,15 @@ local map = require'helpers.map'
 
 local lsp_capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+-- NOTE: Uncomment this line to get more logging output from LSP servers for debug purposes:
+-- vim.lsp.set_log_level("trace")
+
+vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
+  print('[' .. client.name .. '][' .. lvl .. '] ' .. result.message)
+end
+
 local function prepare_mappings()
   local function nmap(lhs, lua)
     map.buf_nno(lhs, { lua_call = lua })
