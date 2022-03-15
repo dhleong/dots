@@ -84,6 +84,12 @@ function Lsp.config(server_name, opts)
       local setup_opts = opts or {}
       setup_opts.capabilities = lsp_capabilities
 
+      if setup_opts.update_capabilities then
+        local duplicate = vim.deepcopy(setup_opts.capabilities)
+        setup_opts.update_capabilities(duplicate)
+        setup_opts.capabilities = duplicate
+      end
+
       -- Wrap any provided on_attach callback
       local provided_on_attach = setup_opts.on_attach
       if provided_on_attach then
