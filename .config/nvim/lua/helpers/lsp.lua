@@ -72,11 +72,32 @@ local Lsp = {}
 
 function Lsp.config(server_name, opts)
   local filetype = vim.bo.filetype
-  if configured[filetype] then
+  if vim.deep_equal(configured[filetype], opts) then
+    -- No change in config; just set the buffer mappings
     prepare_mappings()
+    return
+  elseif configured[filetype] then
+    -- Configuration has changed, but the server *is* running! Merge the new settings
+    -- with the default config settings and notify the change
+    local lspconfig = require'lspconfig'[server_name]
+    local settings = opts.settings
+
+    local default_settings = lspconfig.document_config.default_config.settings
+    if default_settings then
+      settings = vim.tbl_deep_extend('keep', settings, default_settings)
+    end
+
+    -- Notify clients for this buffer that the config has changed
+    for _, client in pairs(vim.lsp.buf_get_clients()) do
+      if client.name == server_name then
+        client.workspace_did_change_configuration(settings)
+      end
+    end
     return
   end
 
+  -- New, unconfigured server!
+  local input_opts = vim.deepcopy(opts)
   local file_extension = vim.fn.expand('%:e')
   local server_available, requested_server = lsp_installer_servers.get_server(server_name)
   if server_available then
@@ -84,6 +105,7 @@ function Lsp.config(server_name, opts)
       local setup_opts = opts or {}
       setup_opts.capabilities = lsp_capabilities
 
+      -- Allow clients to tweak the capabilities we report to the server
       if setup_opts.update_capabilities then
         local duplicate = vim.deepcopy(setup_opts.capabilities)
         setup_opts.update_capabilities(duplicate)
@@ -100,6 +122,7 @@ function Lsp.config(server_name, opts)
         otsukare_on_attach = otsukare_module.lsp_on_attach
       end
 
+      -- Prepare on_attach hook
       if provided_on_attach or otsukare_on_attach then
         setup_opts.on_attach = function (client, bufnr)
           local any = nil
@@ -128,15 +151,17 @@ function Lsp.config(server_name, opts)
         setup_opts = duplicate
       end
 
+      -- Setup the server!
       requested_server:setup(setup_opts)
 
       -- Config init
-      configured[filetype] = true
+      configured[filetype] = input_opts
       prepare_mappings()
       prepare_events(filetype, file_extension)
     end)
+
+    -- Ensure the server gets installed
     if not requested_server:is_installed() then
-      -- Queue the server to be installed
       requested_server:install()
     end
   end
