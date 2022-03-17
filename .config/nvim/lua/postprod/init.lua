@@ -27,6 +27,10 @@ local function handle_request(request)
   if ignore_trailing_newlines(original_content) ~= ignore_trailing_newlines(request.content) then
     local lines = vim.fn.split(request.content, '\n')
     vim.api.nvim_buf_set_lines(request.bufnr, 0, -1, false, lines)
+
+    if vim.fn.bufnr('%') == request.bufnr then
+      vim.cmd [[ write ]]
+    end
   end
 end
 
