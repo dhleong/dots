@@ -4,6 +4,11 @@ local builtins = {
   'postprod.handlers.eslint',
 }
 
+local function ignore_trailing_newlines(s)
+  local only_at_end = 2
+  return vim.fn.trim(s, '\n', only_at_end)
+end
+
 local function handle_request(request)
   local original_content = request.content
 
@@ -19,7 +24,7 @@ local function handle_request(request)
   end
 
   -- TODO: We could record the changenr to avoid re-running on a no-op save
-  if original_content ~= request.content then
+  if ignore_trailing_newlines(original_content) ~= ignore_trailing_newlines(request.content) then
     local lines = vim.fn.split(request.content, '\n')
     vim.api.nvim_buf_set_lines(request.bufnr, 0, -1, false, lines)
   end
