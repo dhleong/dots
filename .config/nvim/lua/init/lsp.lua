@@ -56,6 +56,26 @@ cmp.setup({
   })
 })
 
+local function find_file(params, ...)
+  local files = vim.tbl_flatten({ ... })
+
+  local dir = params.bufname
+  for _ = 1, 100 do
+    local last_dir = dir
+    dir = vim.fn.fnamemodify(dir, ':h')
+    if not dir or dir == last_dir then
+      break
+    end
+
+    for _, file in ipairs(files) do
+      local candidate = dir .. '/' .. file
+      if vim.fn.filereadable(candidate) == 1 then
+        return candidate
+      end
+    end
+  end
+end
+
 require'null-ls.config'.reset()
 require'null-ls.sources'.reset()
 require'null-ls'.setup{
@@ -64,7 +84,13 @@ require'null-ls'.setup{
     require('null-ls').builtins.diagnostics.eslint_d,
     require('null-ls').builtins.diagnostics.flake8,
     require('null-ls').builtins.formatting.black,
-    require('null-ls').builtins.formatting.prettier,
+    require('null-ls').builtins.formatting.prettier.with {
+      runtime_condition = function (params)
+        -- Only run prettier if there's actually a config for it
+        -- TODO cache this...
+        return find_file(params, '.prettierrc', '.prettierrc.js')
+      end,
+    },
     require('lilium').completer,
     require('dhleong.null_ls.filename'),
   },
