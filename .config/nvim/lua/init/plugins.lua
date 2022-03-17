@@ -117,6 +117,16 @@ Plug 'ray-x/lsp_signature.nvim'
 
 -- }}}
 
+
+-- ======= Text Documentation =============================
+
+Plug '~/git/trot.nvim'
+
+map.nno '<leader>K' {
+  lua_module = 'trot',
+  lua_call = 'search()',
+}
+
 -- ======= Text manipulation ================================ {{{
 
 -- visual-mode number incrementing
