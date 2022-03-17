@@ -76,6 +76,12 @@ nnoremap('gx', "<cmd>lua require'dhleong.nav'.link()<cr>")
 
 -- ======= Terminal =========================================
 
+-- "Open terminal"
+map.nno '<leader>ot' {
+  lua_module = 'dhleong.term',
+  lua_call = 'split()',
+}
+
 -- I'm used to <a-bs> and it sorta works but for whatever reason it leaves a . behind where <c-w>
 -- doesn't, so let's just use that:
 map.tno('<a-bs>', '<c-w>')
