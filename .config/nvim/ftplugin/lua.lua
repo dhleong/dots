@@ -4,10 +4,6 @@ require('helpers.lsp').config('sumneko_lua', {
       diagnostics = {
         globals = { 'vim' },
       },
-      telemetry = {
-        -- Disable sending (anonymized) telemetry
-        enable = false,
-      },
     },
   },
 })
