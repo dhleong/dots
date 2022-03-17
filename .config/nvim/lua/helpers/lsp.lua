@@ -93,6 +93,7 @@ function Lsp.config(server_name, opts)
         client.workspace_did_change_configuration(settings)
       end
     end
+    prepare_mappings()
     return
   end
 
