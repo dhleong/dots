@@ -14,7 +14,15 @@ local function entry_has_key(entry, key)
   end
 end
 
-local function try_accept_completion(key)
+---@param key_or_config string|{ key:string, cmdwin: string }
+local function try_accept_completion(key_or_config)
+  local key = key_or_config
+  local cmdwin = nil
+  if type(key_or_config) == 'table' then
+    key = key_or_config.key
+    cmdwin = key_or_config.cmdwin
+  end
+
   return cmp.mapping(function (fallback)
     local entry = cmp.get_active_entry()
     if cmp.visible() and entry then
@@ -23,6 +31,9 @@ local function try_accept_completion(key)
       if key and not entry_has_key(entry, key) then
         vim.api.nvim_feedkeys(key, 'nt', false)
       end
+    elseif cmdwin and vim.fn.getcmdwintype() ~= '' then
+      local to_feed = vim.api.nvim_replace_termcodes(cmdwin, true, false, true)
+      vim.api.nvim_feedkeys(to_feed, 'nt', true)
     else
       fallback()
     end
@@ -41,9 +52,14 @@ cmp.setup({
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
     ['<Space>'] = try_accept_completion(' '),
-    ['<CR>'] = try_accept_completion(),
     ['('] = try_accept_completion('('),
     ['.'] = try_accept_completion('.'),
+
+    -- NOTE: The enter key is a bit special here; if we use the normal fallback
+    -- from the cmdline window, we will end up performing a bunch of edits due to
+    -- the fallback mappings from endwise (which would run *after* the cmdline
+    -- window gets closed)
+    ['<CR>'] = try_accept_completion { cmdwin = '<CR>' },
   },
 
   preselect = cmp.PreselectMode.None,
