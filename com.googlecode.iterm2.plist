@@ -2565,6 +2565,7 @@ Marks and Annotations.Next Mark</string>
 				<string>dhleong&amp;ssh</string>
 				<string>&amp;coder</string>
 				<string>/home/discord/*&amp;ssh</string>
+				<string>&amp;nvim</string>
 			</array>
 			<key>Character Encoding</key>
 			<integer>4</integer>
@@ -3168,7 +3169,7 @@ Marks and Annotations.Next Mark</string>
 	<key>ShowAutomaticProfileSwitchingBanner</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>StatusBarPosition</key>
