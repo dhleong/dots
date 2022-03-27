@@ -105,6 +105,8 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'nvim-lua/plenary.nvim' -- dependency of null-ls
 
+Plug 'b0o/schemastore.nvim' -- for jsonls
+
 -- Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug '~/git/null-ls.nvim'
 
