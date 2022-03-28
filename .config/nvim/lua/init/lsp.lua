@@ -92,6 +92,26 @@ local function find_file(params, ...)
   end
 end
 
+vim.diagnostic.config {
+  float = {
+    format = function (diagnostic)
+      local formatted = ''
+
+      if diagnostic.code then
+        formatted = formatted .. '[' .. diagnostic.code .. '] '
+      end
+
+      formatted = formatted .. diagnostic.message
+
+      if diagnostic.source then
+        formatted = formatted .. '\n\nSource: ' .. diagnostic.source .. ''
+      end
+
+      return formatted
+    end
+  },
+}
+
 require'null-ls.config'.reset()
 require'null-ls.sources'.reset()
 require'null-ls'.setup{
