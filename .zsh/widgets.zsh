@@ -45,7 +45,10 @@ _fzf-find-file() {
     fi
 
     # with no command, we wanted to edit the file
-    if [ -d /Applications/MacVim.app ]; then
+    if $(which vimr); then
+        BUFFER="vimr $file"
+        zle accept-line
+    elif [ -d /Applications/MacVim.app ]; then
         BUFFER="mvim $file"
         zle accept-line
     else
