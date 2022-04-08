@@ -11,6 +11,13 @@ Plug.begin('~/.config/nvim/bundle')
 
 Plug '~/work/otsukare'
 
+
+-- ======= Fun! ============================================= {{{
+
+Plug '~/git/kodachi'
+
+-- }}}
+
 -- ======= Color-schemes and visual plugins ================= {{{
 
 Plug 'vim-scripts/zenburn'
