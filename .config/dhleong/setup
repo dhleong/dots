@@ -133,15 +133,6 @@ ensure_cask "MacVim" "macvim"
 ensure_cask "BetterTouchTool" "bettertouchtool"
 ensure_cask "iTerm" "iterm2"
 
-if has_cli cmake; then
-    echo " Installed: build tools (for YCM)"
-elif is_mac; then
-    echo "Installing: build tools (for YCM)"
-    brew install cmake python mono go nodejs
-else
-    echo "NOT Installing: build tools (for YCM)"
-fi
-
 if has_cli gh && has_cli hub; then
     echo " Installed: github cli"
 elif is_mac; then
