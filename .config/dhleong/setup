@@ -29,8 +29,25 @@ has_nix() {
     which nix-env > /dev/null
 }
 
-if is_mac; then
+ensure_brew_nix() {
+    cli_name=$1
+    brew_name=$2
+    nix_name=$3
 
+    if has_cli $cli_name; then
+        echo " Installed: $cli_name"
+    elif is_mac && [ "$brew_name" ]; then
+        echo "Installing: $cli_name..."
+        brew install $brew_name
+    elif has_nix && [ "$nix_name" ]; then
+        echo "Installing: $cli_name..."
+        nix-env -i $nix_name
+    else
+        echo "NOT Installing: $cli_name"
+    fi
+}
+
+if is_mac; then
     # install command line tools:
     xcode-select --install
 
@@ -52,7 +69,6 @@ if is_mac; then
 
     # 1pass (needed to authenticate with github)
     ensure_cask "1Password 7" "1password"
-
 fi
 
 # github config (for cloning dotfiles)
@@ -132,6 +148,10 @@ fi
 ensure_cask "MacVim" "macvim"
 ensure_cask "BetterTouchTool" "bettertouchtool"
 ensure_cask "iTerm" "iterm2"
+
+# I generally prefer neovim these days:
+ensure_cask "VimR" "vimr"
+ensure_brew_nix "nvim" "neovim" "--attr nixpkgs.neovim"
 
 if has_cli gh && has_cli hub; then
     echo " Installed: github cli"
