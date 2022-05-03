@@ -11,7 +11,7 @@ end
 local function fzf(config)
   if not config.window and vim.fn.has(POPUP_TERM_PATCH) then
     config.window = {
-      width = 0.4,
+      width = 0.6,
       height = 0.8,
       yoffset = 0.2,
       xoffset = 0.9,
