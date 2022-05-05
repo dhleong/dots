@@ -1,26 +1,27 @@
-local map = require'helpers.map'
+local map = require 'helpers.map'
 
 -- Laziness:
 vim.cmd(':source ~/.vim/init/mappings.vim')
 
 -- utils {{{
 local function nnoremap(lhs, rhs)
-    vim.api.nvim_set_keymap('n', lhs, rhs, {
-      noremap = true,
-      silent = true,
-    })
+  vim.api.nvim_set_keymap('n', lhs, rhs, {
+    noremap = true,
+    silent = true,
+  })
 end
 
 local function tnoremap(lhs, rhs)
-    vim.api.nvim_set_keymap('t', lhs, rhs, {
-      noremap = true,
-      silent = true,
-    })
+  vim.api.nvim_set_keymap('t', lhs, rhs, {
+    noremap = true,
+    silent = true,
+  })
 end
 
 local function inoremap(lhs, rhs)
-    vim.api.nvim_set_keymap('i', lhs, rhs, { noremap = true })
+  vim.api.nvim_set_keymap('i', lhs, rhs, { noremap = true })
 end
+
 -- }}}
 
 -- vim compat {{{
@@ -36,19 +37,20 @@ nnoremap('Y', 'yy')
 
 -- helpers {{{
 local paths = {
-    nvim = function(path)
-        return '~/.config/nvim/' .. path
-    end,
+  nvim = function(path)
+    return '~/.config/nvim/' .. path
+  end,
 }
 paths.init = function(path)
-    return paths.nvim('lua/init/' .. path)
+  return paths.nvim('lua/init/' .. path)
 end
 
 local function mapOpenFile(leaderMap, path)
-    local with_path = '<c-r>=resolve("' .. path .. '")<cr><cr>'
-    nnoremap('<Leader>' .. leaderMap, ':e ' .. with_path)
-    nnoremap('<Leader>t' .. leaderMap, ':tabe ' .. with_path)
+  local with_path = '<c-r>=resolve("' .. path .. '")<cr><cr>'
+  nnoremap('<Leader>' .. leaderMap, ':e ' .. with_path)
+  nnoremap('<Leader>t' .. leaderMap, ':tabe ' .. with_path)
 end
+
 -- }}}
 
 mapOpenFile('ev', paths.nvim('init.lua'))
@@ -86,14 +88,20 @@ map.nno '<leader>ot' {
 -- doesn't, so let's just use that:
 map.tno('<a-bs>', '<c-w>')
 
--- Saving files with <apple-s> in CLI mode (with help from iterm2)
+-- Support leaving terminals with typical mappings
+tnoremap('<C-H>', '<C-\\><C-N><C-W><C-H>')
+tnoremap('<C-L>', '<C-\\><C-N><C-W><C-L>')
+tnoremap('<C-J>', '<C-\\><C-N><C-W><C-J>')
+tnoremap('<C-K>', '<C-\\><C-N><C-W><C-K>')
+
+-- Saving files with <cmd-s> in CLI mode (with help from iterm2)
 -- Configure a key map to "Send text with 'vim' Special Chars" as <F-20>
 nnoremap('<F-20>', ':w<cr>')
 inoremap('<F-20>', '<esc>:w<cr>')
 
-nnoremap('<F-21>', ':tabe<cr>')  -- Similarly, <apple-t> ...
+nnoremap('<F-21>', ':tabe<cr>') -- Similarly, <cmd-t> ...
 inoremap('<F-21>', '<esc>:tabe<cr>')
-nnoremap('<F-22>', ':q<cr>')  -- ... and <apple-w>
+nnoremap('<F-22>', ':q<cr>') -- ... and <cmd-w>
 inoremap('<F-22>', '<esc>:q<cr>')
 
 nnoremap('<F-23>', 'gt')
