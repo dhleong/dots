@@ -1950,6 +1950,17 @@ Marks and Annotations.Next Mark</string>
 					<key>Version</key>
 					<integer>1</integer>
 				</dict>
+				<key>0x6b-0x100000-0x28</key>
+				<dict>
+					<key>Action</key>
+					<integer>38</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>&lt;F-25&gt;</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
 				<key>0x74-0x100000-0x11</key>
 				<dict>
 					<key>Action</key>
@@ -2393,7 +2404,7 @@ Marks and Annotations.Next Mark</string>
 	<key>ShowAutomaticProfileSwitchingBanner</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>StatusBarPosition</key>
