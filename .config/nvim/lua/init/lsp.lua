@@ -1,4 +1,4 @@
-local cmp = require'cmp'
+local cmp = require 'cmp'
 
 local function entry_has_key(entry, key)
   if not entry.completion_item then
@@ -23,7 +23,7 @@ local function try_accept_completion(key_or_config)
     cmdwin = key_or_config.cmdwin
   end
 
-  return cmp.mapping(function (fallback)
+  return cmp.mapping(function(fallback)
     local entry = cmp.get_active_entry()
     if cmp.visible() and entry then
       cmp.confirm()
@@ -94,7 +94,7 @@ end
 
 vim.diagnostic.config {
   float = {
-    format = function (diagnostic)
+    format = function(diagnostic)
       local formatted = ''
 
       if diagnostic.code then
@@ -112,16 +112,20 @@ vim.diagnostic.config {
   },
 }
 
-require'null-ls.config'.reset()
-require'null-ls.sources'.reset()
-require'null-ls'.setup{
+require 'null-ls.config'.reset()
+require 'null-ls.sources'.reset()
+require 'null-ls'.setup {
   sources = {
     require('null-ls').builtins.code_actions.eslint_d,
     require('null-ls').builtins.diagnostics.eslint_d,
-    require('null-ls').builtins.diagnostics.flake8,
+    require('null-ls').builtins.diagnostics.flake8.with {
+      cwd = function(params)
+        return vim.fn.fnamemodify(params.bufname, ':h')
+      end,
+    },
     require('null-ls').builtins.formatting.black,
     require('null-ls').builtins.formatting.prettier.with {
-      runtime_condition = function (params)
+      runtime_condition = function(params)
         -- Only run prettier if there's actually a config for it
         -- TODO cache this...
         return find_file(params, '.prettierrc', '.prettierrc.js')
@@ -132,4 +136,4 @@ require'null-ls'.setup{
   },
 }
 
-require'postprod'.setup()
+require 'postprod'.setup()
