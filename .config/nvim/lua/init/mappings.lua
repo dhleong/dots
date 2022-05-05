@@ -110,3 +110,10 @@ inoremap('<F-23>', '<esc>gt')
 inoremap('<F-24>', '<esc>gT')
 tnoremap('<F-23>', '<C-\\><C-N>gt')
 tnoremap('<F-24>', '<C-\\><C-N>gT')
+
+-- In term mode, let cmd-k act like c-l to clear the screen. Since we're in
+-- vim, we don't want to clear vim's UI
+-- TODO maybe this should only be when not in GUI mode?
+inoremap('<F-25>', '<nop>')
+nnoremap('<F-25>', '<nop>')
+tnoremap('<F-25>', '<c-l>')
