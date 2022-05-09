@@ -117,3 +117,9 @@ tnoremap('<F-24>', '<C-\\><C-N>gT')
 inoremap('<F-25>', '<nop>')
 nnoremap('<F-25>', '<nop>')
 tnoremap('<F-25>', '<c-l>')
+
+if vim.env.BROWSER then
+  vim.cmd [[
+      command! -nargs=1 OpenBrowser :silent !$BROWSER <q-args>
+  ]]
+end
