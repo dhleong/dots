@@ -117,6 +117,7 @@ require 'null-ls.sources'.reset()
 require 'null-ls'.setup {
   sources = {
     require('null-ls').builtins.code_actions.eslint_d,
+    require('null-ls').builtins.diagnostics.clj_kondo,
     require('null-ls').builtins.diagnostics.eslint_d,
     require('null-ls').builtins.diagnostics.flake8.with {
       cwd = function(params)

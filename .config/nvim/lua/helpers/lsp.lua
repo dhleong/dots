@@ -70,7 +70,8 @@ local configured = {}
 
 local Lsp = {}
 
-function Lsp.config(server_name, opts)
+function Lsp.config(server_name, provided_opts)
+  local opts = provided_opts or {}
   local filetype = vim.bo.filetype
   if vim.deep_equal(configured[filetype], opts) then
     -- No change in config; just set the buffer mappings
