@@ -27,6 +27,16 @@ local function readfile(path)
   return table.concat(vim.fn.readfile(path), '\n')
 end
 
+local function findfile_with_suffixes(name, path, suffixes)
+  local oldsuffixes = vim.bo.suffixesadd
+  vim.bo.suffixesadd = table.concat(suffixes, ',')
+
+  local found = vim.fn.findfile(name, path)
+
+  vim.bo.suffixesadd = oldsuffixes
+  return found
+end
+
 local M = {}
 
 ---@return string|nil
@@ -35,7 +45,8 @@ function M.find_prettier_config()
   vim.o.wildignore = vim.o.wildignore .. '**/node_modules/**'
 
   local path = vim.fn.trim(vim.fn.system('git rev-parse --show-toplevel'))
-  local prettier_file = vim.fn.findfile('.prettierrc', path)
+
+  local prettier_file = findfile_with_suffixes('.prettierrc', path, { '.js', '.json' })
 
   vim.o.wildignore = old_ignore
 
@@ -69,16 +80,7 @@ function M.extract_prettier_config()
   return config
 end
 
-function M.init()
-  require('helpers.lsp').config('tsserver', {
-    settings = tsserver_settings,
-
-    on_attach = function (client)
-      -- Disable tsserver formatting
-      client.resolved_capabilities.document_formatting = false
-    end
-  })
-
+function M.init_prettier_config()
   -- Load from a prettier config, if it exists
   local config = M.extract_prettier_config()
   if config then
@@ -89,6 +91,19 @@ function M.init()
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
   end
+end
+
+function M.init()
+  require('helpers.lsp').config('tsserver', {
+    settings = tsserver_settings,
+
+    on_attach = function (client)
+      -- Disable tsserver formatting
+      client.resolved_capabilities.document_formatting = false
+    end
+  })
+
+  M.init_prettier_config()
 end
 
 return M
