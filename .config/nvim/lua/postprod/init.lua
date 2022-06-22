@@ -1,4 +1,4 @@
-local async = require'plenary.async'
+local async = require 'plenary.async'
 
 local builtins = {
   'postprod.handlers.eslint',
@@ -18,7 +18,7 @@ local function handle_request(request)
     end
     handler.handle(request)
 
-    if vim.b.changetick ~= request.changetick or vim.bo[request.bufnr].modified then
+    if vim.b[request.bufnr].changedtick ~= request.changedtick or vim.bo[request.bufnr].modified then
       return
     end
   end
@@ -62,14 +62,14 @@ function M.on_buf_write_post()
   local bufnr = vim.fn.bufnr('%')
   local request = {
     bufnr = bufnr,
-    changetick = vim.b.changetick,
+    changedtick = vim.b.changedtick,
     content = table.concat(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false), '\n'),
     cwd = vim.fn.getcwd(),
     handlers = handlers,
     path = vim.fn.expand('#' .. bufnr .. ':p'),
   }
 
-  async.run(function ()
+  async.run(function()
     handle_request(request)
   end)
 end
