@@ -5,4 +5,18 @@ require('helpers.lsp').config('pyright', {
       vim.lsp.protocol.DiagnosticTag.Deprecated
     }
   end,
+
+  settings = {
+    python = {
+      analysis = {
+        -- logLevel = 'Trace',
+
+        diagnosticSeverityOverrides = {
+          reportSelfClsParameterName = 'off',
+        },
+      },
+
+      venvPath = vim.env.HOME .. '/.virtualenvs',
+    },
+  },
 })
