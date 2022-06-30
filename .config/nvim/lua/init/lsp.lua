@@ -129,7 +129,7 @@ require 'null-ls'.setup {
       runtime_condition = function(params)
         -- Only run prettier if there's actually a config for it
         -- TODO cache this...
-        return find_file(params, '.prettierrc', '.prettierrc.js')
+        return find_file(params, '.prettierrc', '.prettierrc.js', '.prettierrc.json')
       end,
     },
     require('lilium').completer,
