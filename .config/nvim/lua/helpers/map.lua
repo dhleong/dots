@@ -1,8 +1,14 @@
 ---@diagnostic disable-next-line: deprecated
 local spread = unpack or table.unpack
 
+local mappings = {}
+
 local function transform_rhs(rhs)
-  if type(rhs) == 'table' then
+  if type(rhs) == 'function' then
+    local id = '' .. #mappings
+    mappings[id] = rhs
+    return '<cmd>lua require("helpers.map")._invoke("' .. id .. '")<cr>'
+  elseif type(rhs) == 'table' then
     local s = ''
 
     if rhs.lua_module then
@@ -79,6 +85,14 @@ end
 
 function M.tno(lhs, rhs)
   return global('t', true, lhs, rhs)
+end
+
+function M._invoke(id)
+  local fn = mappings[id]
+  if not fn then
+    print(id, vim.inspect(mappings))
+  end
+  return fn()
 end
 
 return M
