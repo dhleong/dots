@@ -1,6 +1,6 @@
 local lsp_installer_servers = require 'nvim-lsp-installer.servers'
 local cmp_nvim_lsp = require 'cmp_nvim_lsp'
-local map = require'helpers.map'
+local map = require 'helpers.map'
 
 local lsp_capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -17,10 +17,12 @@ local function prepare_mappings()
   local function nmap(lhs, lua)
     map.buf_nno(lhs, { lua_call = lua })
   end
+
   local function vim_map(lhs, vim_command)
     local rhs = 'vim.' .. vim_command
     nmap(lhs, rhs)
   end
+
   local function lsp_map(lhs, lsp_command)
     local rhs = 'lsp.' .. lsp_command
     vim_map(lhs, rhs)
@@ -38,12 +40,12 @@ local function prepare_mappings()
   vim_map('[c', 'diagnostic.goto_prev()')
   vim_map(']c', 'diagnostic.goto_next()')
 
-  vim.ui.input = function (opts, on_confirm)
-    require'dhleong.ui'.input(opts, on_confirm)
+  vim.ui.input = function(opts, on_confirm)
+    require 'dhleong.ui'.input(opts, on_confirm)
   end
 
-  vim.ui.select = function (items, opts, on_choice)
-    require'dhleong.ui'.select(items, opts, on_choice)
+  vim.ui.select = function(items, opts, on_choice)
+    require 'dhleong.ui'.select(items, opts, on_choice)
   end
 end
 
@@ -57,7 +59,7 @@ local function prepare_events(filetype, file_extension)
 end
 
 local function on_attach(_, bufnr)
-  require'lsp_signature'.on_attach({
+  require 'lsp_signature'.on_attach({
     bind = true,
     handler_opts = {
       border = 'rounded',
@@ -73,14 +75,15 @@ local Lsp = {}
 function Lsp.config(server_name, provided_opts)
   local opts = provided_opts or {}
   local filetype = vim.bo.filetype
-  if vim.deep_equal(configured[filetype], opts) then
+  local existing = configured[filetype]
+  if vim.deep_equal(existing and existing.settings, opts.settings) then
     -- No change in config; just set the buffer mappings
     prepare_mappings()
     return
   elseif configured[filetype] then
     -- Configuration has changed, but the server *is* running! Merge the new settings
     -- with the default config settings and notify the change
-    local lspconfig = require'lspconfig'[server_name]
+    local lspconfig = require 'lspconfig'[server_name]
     local settings = opts.settings
 
     local default_settings = lspconfig.document_config.default_config.settings
@@ -103,7 +106,7 @@ function Lsp.config(server_name, provided_opts)
   local file_extension = vim.fn.expand('%:e')
   local server_available, requested_server = lsp_installer_servers.get_server(server_name)
   if server_available then
-    requested_server:on_ready(function ()
+    requested_server:on_ready(function()
       local setup_opts = opts or {}
       setup_opts.capabilities = lsp_capabilities
 
@@ -126,7 +129,7 @@ function Lsp.config(server_name, provided_opts)
 
       -- Prepare on_attach hook
       if provided_on_attach or otsukare_on_attach then
-        setup_opts.on_attach = function (client, bufnr)
+        setup_opts.on_attach = function(client, bufnr)
           local any = nil
           if provided_on_attach then
             local result = provided_on_attach(client, bufnr)
