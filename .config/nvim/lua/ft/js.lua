@@ -97,7 +97,7 @@ function M.init()
   require('helpers.lsp').config('tsserver', {
     settings = tsserver_settings,
 
-    on_attach = function (client)
+    on_attach = function(client)
       -- Disable tsserver formatting
       client.resolved_capabilities.document_formatting = false
     end

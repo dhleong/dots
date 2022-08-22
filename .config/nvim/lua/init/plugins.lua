@@ -1,4 +1,4 @@
-local map = require'helpers.map'
+local map = require 'helpers.map'
 
 -- Plug auto-install and setup {{{
 Plug = require 'helpers.plug'
@@ -24,8 +24,8 @@ Plug 'vim-scripts/zenburn'
 Plug 'rhysd/vim-color-spring-night'
 
 vim.g.fzf_colors = {
-    ['bg+'] = {'bg', 'Visual'},
-    ['pointer'] = {'fg', 'SpecialComment', 'StatusLine'},
+  ['bg+'] = { 'bg', 'Visual' },
+  ['pointer'] = { 'fg', 'SpecialComment', 'StatusLine' },
 }
 
 Plug 'nvim-lualine/lualine.nvim'
@@ -54,27 +54,27 @@ vim.g['hubr#auto_ref_issues_args'] = 'state=open:assignee=dhleong:milestone?'
 Plug '~/git/vim-test'
 Plug '~/git/neo-latte'
 
-map.nno'<leader>tt'{
+map.nno '<leader>tt' {
   lua_module = 'neo-latte',
   lua_call = 'toggle_auto_test()',
 }
 
-map.nno'<leader>tn'{
+map.nno '<leader>tn' {
   lua_module = 'neo-latte',
   lua_call = "toggle_auto_test('nearest')",
 }
 
-map.nno'<leader>tq'{
+map.nno '<leader>tq' {
   lua_module = 'neo-latte',
   lua_call = "stop()",
 }
 
-map.nno'<leader>trn'{
+map.nno '<leader>trn' {
   lua_module = 'neo-latte',
   lua_call = "run('nearest')",
 }
 
-map.nno'<leader>trf'{
+map.nno '<leader>trf' {
   lua_module = 'neo-latte',
   lua_call = "run('file')",
 }
@@ -114,8 +114,8 @@ Plug 'nvim-lua/plenary.nvim' -- dependency of null-ls
 
 Plug 'b0o/schemastore.nvim' -- for jsonls
 
--- Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug '~/git/null-ls.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+-- Plug '~/git/null-ls.nvim'
 
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -150,7 +150,7 @@ Plug 'tpope/vim-surround'
 -- Convert between single-line and wrapped argument lists
 Plug 'FooSoft/vim-argwrap'
 
-map.nno'<leader>aw' ':ArgWrap<cr>'
+map.nno '<leader>aw' ':ArgWrap<cr>'
 
 -- }}}
 
@@ -171,7 +171,7 @@ Plug 'justinmk/vim-sneak'
 vim.g['sneak#label'] = 1
 
 Plug 'chrisbra/matchit'
-Plug('Valloric/MatchTagAlways', { ft = {'html', 'xml'} })
+Plug('Valloric/MatchTagAlways', { ft = { 'html', 'xml' } })
 --
 -- }}}
 
