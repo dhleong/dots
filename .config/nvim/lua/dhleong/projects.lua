@@ -28,6 +28,11 @@ local function create_project_navigation_maps (project_dir)
   local project_path = 'nil'
   if project_dir then
     project_path = '"' .. project_dir .. '"'
+
+    -- NOTE: vim-test *must* be run from the project root, frustratingly. It supplies
+    -- this "feature" to workaround that assumption, but it's global and doesn't support
+    -- a buffer-local for... reasons :\
+    vim.g['test#project_root'] = project_dir
   end
 
   nmap('<c-p>', "in_project(" .. project_path .. ", 'e')")
