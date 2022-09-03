@@ -76,11 +76,11 @@ function Lsp.config(server_name, provided_opts)
   local opts = provided_opts or {}
   local filetype = vim.bo.filetype
   local existing = configured[filetype]
-  if vim.deep_equal(existing and existing.settings, opts.settings) then
+  if existing and vim.deep_equal(existing and existing.settings, opts.settings) then
     -- No change in config; just set the buffer mappings
     prepare_mappings()
     return
-  elseif configured[filetype] then
+  elseif existing then
     -- Configuration has changed, but the server *is* running! Merge the new settings
     -- with the default config settings and notify the change
     local lspconfig = require 'lspconfig'[server_name]
