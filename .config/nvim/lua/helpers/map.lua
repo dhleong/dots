@@ -65,7 +65,7 @@ local function global(mode, noremap, lhs, rhs)
   return handle(vim.api.nvim_set_keymap, { mode }, noremap, lhs, rhs)
 end
 
-local function buffer(mode, noremap, lhs, rhs)
+local function buffer(mode, noremap, lhs, rhs, opts)
   return handle(vim.api.nvim_buf_set_keymap, { 0, mode }, noremap, lhs, rhs)
 end
 

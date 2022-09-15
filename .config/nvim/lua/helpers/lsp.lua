@@ -1,6 +1,8 @@
-local lsp_installer_servers = require 'nvim-lsp-installer.servers'
+local lspconfig = require 'lspconfig'
 local cmp_nvim_lsp = require 'cmp_nvim_lsp'
+
 local map = require 'helpers.map'
+local fn = require'dhleong.functional'
 
 local lsp_capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -49,16 +51,18 @@ local function prepare_mappings()
   end
 end
 
-local function prepare_events(filetype, file_extension)
+local function prepare_events(filetype)
   vim.cmd(string.format([[
     augroup lsp_autocmds_%s
       autocmd!
-      autocmd BufWritePre *.%s lua vim.lsp.buf.formatting_seq_sync(nil, 2000)
+      autocmd FileType %s lua require'helpers.lsp'.on_attach()
     augroup END
-  ]], filetype, file_extension))
+  ]], filetype, filetype, filetype))
 end
 
 local function on_attach(_, bufnr)
+  vim.g.attached = true
+
   require 'lsp_signature'.on_attach({
     bind = true,
     handler_opts = {
@@ -72,21 +76,26 @@ local configured = {}
 
 local Lsp = {}
 
+function Lsp.on_attach()
+  vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync(nil, 2000)")
+
+  prepare_mappings()
+end
+
 function Lsp.config(server_name, provided_opts)
   local opts = provided_opts or {}
-  local filetype = vim.bo.filetype
-  local existing = configured[filetype]
+
+  local existing = configured[server_name]
   if existing and vim.deep_equal(existing and existing.settings, opts.settings) then
-    -- No change in config; just set the buffer mappings
-    prepare_mappings()
+    -- No change in config
     return
   elseif existing then
     -- Configuration has changed, but the server *is* running! Merge the new settings
     -- with the default config settings and notify the change
-    local lspconfig = require 'lspconfig'[server_name]
+    local server = lspconfig[server_name]
     local settings = opts.settings
 
-    local default_settings = lspconfig.document_config.default_config.settings
+    local default_settings = server.document_config.default_config.settings
     if default_settings then
       settings = vim.tbl_deep_extend('keep', settings, default_settings)
     end
@@ -97,78 +106,49 @@ function Lsp.config(server_name, provided_opts)
         client.workspace_did_change_configuration(settings)
       end
     end
-    prepare_mappings()
     return
   end
 
   -- New, unconfigured server!
   local input_opts = vim.deepcopy(opts)
-  local file_extension = vim.fn.expand('%:e')
-  local server_available, requested_server = lsp_installer_servers.get_server(server_name)
-  if server_available then
-    requested_server:on_ready(function()
-      local setup_opts = opts or {}
-      setup_opts.capabilities = lsp_capabilities
+  local server = lspconfig[server_name]
+  local server_filetypes = server.filetypes or server.document_config.default_config.filetypes
 
-      -- Allow clients to tweak the capabilities we report to the server
-      if setup_opts.update_capabilities then
-        local duplicate = vim.deepcopy(setup_opts.capabilities)
-        setup_opts.update_capabilities(duplicate)
-        setup_opts.capabilities = duplicate
-      end
+  local setup_opts = opts or {}
+  setup_opts.capabilities = lsp_capabilities
 
-      -- Wrap any provided on_attach callback
-      local provided_on_attach = setup_opts.on_attach
+  -- Allow clients to tweak the capabilities we report to the server
+  if setup_opts.update_capabilities then
+    local duplicate = vim.deepcopy(setup_opts.capabilities)
+    setup_opts.update_capabilities(duplicate)
+    setup_opts.capabilities = duplicate
+  end
 
-      -- Integrate with otsukare
-      local otsukare_on_attach = nil
-      local ok, otsukare_module = pcall(require, 'otsukare.' .. filetype)
-      if ok and otsukare_module then
-        otsukare_on_attach = otsukare_module.lsp_on_attach
-      end
+  -- Wrap any provided on_attach callback. Note that we call ours *last*
+  setup_opts.on_attach = fn.add_hook_before(on_attach, setup_opts.on_attach)
 
-      -- Prepare on_attach hook
-      if provided_on_attach or otsukare_on_attach then
-        setup_opts.on_attach = function(client, bufnr)
-          local any = nil
-          if provided_on_attach then
-            local result = provided_on_attach(client, bufnr)
-            if result then
-              any = result
-            end
-          end
-          if otsukare_on_attach then
-            local result = otsukare_on_attach(client, bufnr)
-            if result then
-              any = result
-            end
-          end
-          return on_attach(client, bufnr) or any
-        end
-      else
-        setup_opts.on_attach = on_attach
-      end
+  -- Integrate with otsukare
+  for _, filetype in ipairs(server_filetypes) do
+    local ok, otsukare_module = pcall(require, 'otsukare.' .. filetype)
+    if ok and otsukare_module then
+      setup_opts.on_attach = fn.add_hook_before(setup_opts.on_attach, otsukare_module.lsp_on_attach)
 
-      -- Integrate with otsukare
-      if ok and otsukare_module and otsukare_module.lsp_update_config then
+      if otsukare_module.lsp_update_config then
         local duplicate = vim.deepcopy(setup_opts)
         otsukare_module.lsp_update_config(duplicate)
         setup_opts = duplicate
       end
-
-      -- Setup the server!
-      requested_server:setup(setup_opts)
-
-      -- Config init
-      configured[filetype] = input_opts
-      prepare_mappings()
-      prepare_events(filetype, file_extension)
-    end)
-
-    -- Ensure the server gets installed
-    if not requested_server:is_installed() then
-      requested_server:install()
     end
+  end
+
+  -- Setup the server!
+  server.setup(setup_opts)
+
+  -- Config init
+  configured[server_name] = input_opts
+
+  for _, filetype in ipairs(server_filetypes) do
+    prepare_events(filetype)
   end
 end
 

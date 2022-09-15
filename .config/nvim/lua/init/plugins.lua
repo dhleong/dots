@@ -108,8 +108,9 @@ vim.g.UltiSnipsJumpBackwardTrigger = '<C-K>'
 
 -- LSP Config
 
-Plug 'neovim/nvim-lspconfig' { commit = '4eac16e' }
-Plug 'williamboman/nvim-lsp-installer'
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim' -- dependency of null-ls
 
 Plug 'b0o/schemastore.nvim' -- for jsonls
@@ -120,7 +121,7 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-Plug 'hrsh7th/nvim-cmp' { commit = '1001683' }
+Plug 'hrsh7th/nvim-cmp'
 
 Plug 'ray-x/lsp_signature.nvim'
 
