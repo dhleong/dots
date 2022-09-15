@@ -2,7 +2,7 @@ local lspconfig = require 'lspconfig'
 local cmp_nvim_lsp = require 'cmp_nvim_lsp'
 
 local map = require 'helpers.map'
-local fn = require'dhleong.functional'
+local fn = require 'dhleong.functional'
 
 local lsp_capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -126,17 +126,16 @@ function Lsp.config(server_name, provided_opts)
 
   -- Wrap any provided on_attach callback. Note that we call ours *last*
   setup_opts.on_attach = fn.add_hook_before(on_attach, setup_opts.on_attach)
+  setup_opts.on_new_config = function(config, root_dir)
+    -- Integrate with otsukare
+    for _, filetype in ipairs(server_filetypes) do
+      local ok, otsukare_module = pcall(require, 'otsukare.' .. filetype)
+      if ok and otsukare_module then
+        config.on_attach = fn.add_hook_before(config.on_attach, otsukare_module.lsp_on_attach)
 
-  -- Integrate with otsukare
-  for _, filetype in ipairs(server_filetypes) do
-    local ok, otsukare_module = pcall(require, 'otsukare.' .. filetype)
-    if ok and otsukare_module then
-      setup_opts.on_attach = fn.add_hook_before(setup_opts.on_attach, otsukare_module.lsp_on_attach)
-
-      if otsukare_module.lsp_update_config then
-        local duplicate = vim.deepcopy(setup_opts)
-        otsukare_module.lsp_update_config(duplicate)
-        setup_opts = duplicate
+        if otsukare_module.lsp_update_config then
+          otsukare_module.lsp_update_config(config, root_dir)
+        end
       end
     end
   end

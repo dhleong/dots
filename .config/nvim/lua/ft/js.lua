@@ -1,29 +1,3 @@
-local tsserver_settings = {
-  -- NOTE: For whatever reason, these don't seem to be respected...
-  javascript = {
-    showUnused = false,
-    suggestionActions = {
-      enabled = false,
-    },
-  },
-  typescript = {
-    showUnused = false,
-  },
-
-  -- So for now we ignore specific annoying ones
-  diagnostics = {
-    ignoredCodes = {
-      -- These can be found here:
-      -- https://github.com/microsoft/TypeScript/blob/master/src/compiler/diagnosticMessages.json
-
-      6133, -- "X Is declared but its value is enver read"
-      80001, -- "This is a CommonJS file"
-      80005, -- "This require may be converted to an import"
-      80006, -- "This may be converted to an async function"
-    },
-  },
-}
-
 local function readfile(path)
   return table.concat(vim.fn.readfile(path), '\n')
 end
@@ -95,27 +69,6 @@ function M.init_prettier_config()
 end
 
 function M.init()
-  require('helpers.lsp').config('tsserver', {
-    settings = tsserver_settings,
-
-    on_attach = function(client)
-      -- Disable tsserver formatting
-      client.resolved_capabilities.document_formatting = false
-    end
-  })
-
-  local ok, cssmodules = require 'nvim-lsp-installer.servers'.get_server('cssmodules_ls')
-  if ok then
-    cssmodules:on_ready(function()
-      cssmodules:setup {
-        on_attach = function(client)
-          -- Avoid conflicts with tsserver go-to-definition
-          client.resolved_capabilities.goto_definition = false
-        end
-      }
-    end)
-  end
-
   M.init_prettier_config()
 end
 
