@@ -112,6 +112,19 @@ vim.diagnostic.config {
   },
 }
 
+require 'mason'.setup()
+require 'mason-lspconfig'.setup {
+  automatic_installation = true,
+}
+
+-- Load all lsp configs automatically
+local lsp_config_languages = vim.fn.glob('~/.config/nvim/lua/init/lsp/*', false, true)
+for _, language_file in ipairs(lsp_config_languages) do
+  local language = vim.fn.fnamemodify(language_file, ':t:r')
+  require('init.lsp.' .. language)
+end
+
+
 require 'null-ls.config'.reset()
 require 'null-ls.sources'.reset()
 require 'null-ls'.setup {
