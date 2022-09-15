@@ -11,6 +11,10 @@ require('helpers.lsp').config('pyright', {
       analysis = {
         -- logLevel = 'Trace',
 
+        autoSearchPaths = true,
+        diagnosticMode = "workspace",
+        useLibraryCodeForTypes = true,
+
         diagnosticSeverityOverrides = {
           reportSelfClsParameterName = 'off',
         },
