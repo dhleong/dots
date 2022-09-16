@@ -88,11 +88,23 @@ function Lsp.on_attach()
     buffer = bufnr,
     desc = 'Auto format using lsp',
     callback = function()
-      vim.lsp.buf.formatting_seq_sync(nil, 2000)
+      Lsp.format()
     end
   })
+end
 
-  prepare_mappings()
+function Lsp.format()
+  if vim.lsp.buf.format then
+    vim.lsp.buf.format {
+      timeout = 2000,
+      filter = function (client)
+        return client.name ~= 'tsserver'
+      end
+    }
+  else
+    -- NOTE: This is deprecated:
+    vim.lsp.buf.formatting_seq_sync(nil, 2000)
+  end
 end
 
 function Lsp.config(server_name, provided_opts)
