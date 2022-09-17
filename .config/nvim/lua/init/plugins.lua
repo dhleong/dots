@@ -108,7 +108,7 @@ vim.g.UltiSnipsJumpBackwardTrigger = '<C-K>'
 
 -- LSP Config
 
-Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig' { commit = '4eac16e' }
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'nvim-lua/plenary.nvim' -- dependency of null-ls
 
@@ -120,7 +120,7 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/nvim-cmp' { commit = '1001683' }
 
 Plug 'ray-x/lsp_signature.nvim'
 
@@ -178,7 +178,7 @@ Plug('Valloric/MatchTagAlways', { ft = { 'html', 'xml' } })
 -- ======= Tree sitter ====================================== {{{
 -- See treesitter.lua for config
 
-Plug('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
+Plug 'nvim-treesitter/nvim-treesitter' { run = ':TSUpdate', commit = '8d92fa85' }
 
 -- Provides contextual commenting (for eg tsx)
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
