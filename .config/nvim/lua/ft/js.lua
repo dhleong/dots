@@ -104,6 +104,18 @@ function M.init()
     end
   })
 
+  local ok, cssmodules = require 'nvim-lsp-installer.servers'.get_server('cssmodules_ls')
+  if ok then
+    cssmodules:on_ready(function()
+      cssmodules:setup {
+        on_attach = function(client)
+          -- Avoid conflicts with tsserver go-to-definition
+          client.resolved_capabilities.goto_definition = false
+        end
+      }
+    end)
+  end
+
   M.init_prettier_config()
 end
 
