@@ -1,5 +1,5 @@
-local cmd_resolver = require'null-ls.helpers.command_resolver'
-local helpers = require'postprod.helpers'
+local cmd_resolver = require 'null-ls.helpers.command_resolver'
+local helpers = require 'postprod.helpers'
 
 local M = {
   name = 'eslint',
@@ -12,7 +12,7 @@ local M = {
   },
 }
 
-M.handle = helpers.command_handler(function (request)
+M.handle = helpers.command_handler(function(request)
   return {
     command = 'eslint_d',
     args = {
@@ -20,7 +20,7 @@ M.handle = helpers.command_handler(function (request)
       '--stdin',
       '--stdin-filename', request.path,
     },
-    resolver = cmd_resolver.from_node_modules,
+    resolver = cmd_resolver.from_node_modules(),
   }
 end)
 
