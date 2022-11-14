@@ -77,7 +77,20 @@ local configured = {}
 local Lsp = {}
 
 function Lsp.on_attach()
-  vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync(nil, 2000)")
+  -- We could perhaps use a global autocmd for this and run conditionally, but
+  -- native lsp uses buffer-specific groups like this and I kinda like it.
+
+  local bufnr = vim.fn.bufnr()
+  local augroup_name = "dhleong_lsp_b_" .. bufnr
+  local augroup = vim.api.nvim_create_augroup(augroup_name, {})
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = augroup,
+    buffer = bufnr,
+    desc = 'Auto format using lsp',
+    callback = function()
+      vim.lsp.buf.formatting_seq_sync(nil, 2000)
+    end
+  })
 
   prepare_mappings()
 end
