@@ -33,11 +33,11 @@ function M.doc()
   end
 
   -- Vim fns in the expression
-  local node_string = ts_utils.get_node_text(node:parent())
-  if vim.startswith(node_string[1], 'vim.fn.') then
+  local node_string = vim.treesitter.query.get_node_text(node:parent(), 0)
+  if vim.startswith(node_string, 'vim.fn.') then
     return M.doc_vim()
-  elseif vim.startswith(node_string[1], 'vim.') then
-    local query = ':help ' .. node_string[1]
+  elseif vim.startswith(node_string, 'vim.') then
+    local query = ':help ' .. node_string
     local ok = pcall(vim.cmd, query)
     if not ok then
       M.doc_vim()

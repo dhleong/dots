@@ -33,10 +33,16 @@ local function transform_rhs(rhs)
 end
 
 local function create_mapper(f, lhs, config)
-  return function (input_rhs)
+  return function(input_rhs)
+    local mode = config.args[#config.args - 1]
+    if vim.fn.mapcheck(lhs, mode) ~= "" then
+      -- Already a mapping; don't override
+      return
+    end
+
     local rhs = transform_rhs(input_rhs)
 
-    local call = {spread(config.args)}
+    local call = { spread(config.args) }
     table.insert(call, lhs)
     table.insert(call, rhs)
     table.insert(call, config.opts)
@@ -65,7 +71,7 @@ local function global(mode, noremap, lhs, rhs)
   return handle(vim.api.nvim_set_keymap, { mode }, noremap, lhs, rhs)
 end
 
-local function buffer(mode, noremap, lhs, rhs, opts)
+local function buffer(mode, noremap, lhs, rhs)
   return handle(vim.api.nvim_buf_set_keymap, { 0, mode }, noremap, lhs, rhs)
 end
 
