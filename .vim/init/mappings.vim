@@ -171,5 +171,8 @@ imap <silent> <Enter> <C-R>=dhleong#text#TryCleanWhitespace()<cr><Plug>Discretio
 
 " ======= Smart text manipulation ==========================
 
-nnoremap <silent> <a-cr> :call dhleong#fix#Fix()<cr>
+if !has('nvim')
+    " NOTE: in nvim we just use LSP for this:
+    nnoremap <silent> <a-cr> :call dhleong#fix#Fix()<cr>
+end
 
