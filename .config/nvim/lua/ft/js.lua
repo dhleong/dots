@@ -25,7 +25,9 @@ function M.find_prettier_config()
 
   vim.o.wildignore = old_ignore
 
-  return prettier_file ~= '' and prettier_file
+  if prettier_file ~= '' then
+    return prettier_file
+  end
 end
 
 function M.extract_prettier_config()
