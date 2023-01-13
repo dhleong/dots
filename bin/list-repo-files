@@ -6,7 +6,7 @@ then
     path=$1
 fi
 
-function filter-ignored() {
+function filter_ignored() {
     rg -v '/(node_modules|cljs-runtime|target|nashorn_code_cache|Pods|.expo)'
 }
 
@@ -38,4 +38,4 @@ function find_files() {
 (
     files_from_git \
         || find_files
-) | filter-ignored
+) | filter_ignored
