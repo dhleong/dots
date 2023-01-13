@@ -26,7 +26,7 @@ vim.o.clipboard = 'unnamed'
 -- NOTE: When not in tmux, we can just use the normal clipboard and
 -- skip loading this completely
 if vim.env.TMUX then
-  vim.g.clipboard = require'dhleong.clipboard'.create()
+  vim.g.clipboard = require 'dhleong.clipboard'.create()
 end
 
 
@@ -58,6 +58,10 @@ vim.o.undofile = true
 
 
 -- ======= Misc =============================================
+
+if vim.fn.executable('/bin/zsh') ~= 0 then
+  vim.go.shell = '/bin/zsh'
+end
 
 -- For some reason, the autochdir option causes wacky behavior
 --  with netrw, with this repro:
