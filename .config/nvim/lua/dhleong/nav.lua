@@ -93,7 +93,7 @@ function M.in_project(project_dir, sink)
   fzf {
     dir = project_dir,
     options = {},
-    source = 'list-repo-files',
+    source = vim.env.HOME .. '/bin/list-repo-files',
     sink = sink,
   }
 end

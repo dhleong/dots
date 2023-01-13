@@ -2,12 +2,12 @@ local function get_filter_predicate()
   local ft = vim.bo.filetype
 
   if string.match(ft, '^typescript') then
-    return function (item)
+    return function(item)
       return not string.match(item, '^Disable ESLint')
     end
   end
 
-  return function ()
+  return function()
     return true
   end
 end
@@ -22,7 +22,7 @@ end
 
 local M = {}
 
----@alias FzfConfig {prompt: string, source: string[], sink: fun(string)}
+---@alias FzfConfig {prompt: string, source: string|string[], sink: fun(string), sinklist: fun(lines: string[])}
 
 ---@param config FzfConfig
 function M.fzf(config)
@@ -72,7 +72,7 @@ function M.select(items, opts, on_choice)
   local config = {
     prompt = opts.prompt,
     source = to_present,
-    sink = function (value)
+    sink = function(value)
       local index = item_str_to_index(value)
       if index then
         on_choice(items[index], index)
