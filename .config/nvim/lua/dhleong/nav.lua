@@ -70,8 +70,7 @@ function M.link()
     url = homepage .. '/issues/' .. string.sub(url, 2)
   end
 
-  local output = vim.api.nvim_exec('!' .. browser .. ' ' .. url, true)
-  local lines = vim.fn.split(output, '\n')
+  local lines = vim.fn.system({ browser, url })
   if #lines > 1 then
     print(vim.fn.trim(table.concat(vim.list_slice(lines, 2), '\n')))
   end
