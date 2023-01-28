@@ -54,3 +54,20 @@ map.buf_nno('gpp', function()
   local keys = vim.api.nvim_replace_termcodes(macro, true, false, true)
   vim.api.nvim_feedkeys(keys, 'n', false)
 end)
+
+map.buf_nno('cnpr', function()
+  local ns = 'clojure'
+  if 'cljs' == vim.fn.expand('%:e') then
+    ns = 'cljs'
+  end
+
+  -- NOTE: if we just eval directly, shadow may simply echo it in the console
+  -- instead of returning it (this could also just be due to an old version
+  -- of shadow...)
+  -- call fireplace#eval('(' . ns . '.pprint/pp)')
+
+  -- NOTE: this is a bit hacky, since fireplace#platform().Eval is nil for some reason.
+  -- So, we use a vimscript bridge to get the result map, and work with that
+  local resp = vim.fn['dhleong#clojure#PlatformEval']('(symbol (with-out-str (' .. ns .. '.pprint/pp)))')
+  print(table.concat(resp.value, '\n'))
+end)
