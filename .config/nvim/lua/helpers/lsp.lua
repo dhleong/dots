@@ -4,7 +4,7 @@ local cmp_nvim_lsp = require 'cmp_nvim_lsp'
 local map = require 'helpers.map'
 local fn = require 'dhleong.functional'
 
-local lsp_capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local lsp_capabilities = cmp_nvim_lsp.default_capabilities()
 
 -- NOTE: Uncomment this line to get more logging output from LSP servers for debug purposes:
 -- vim.lsp.set_log_level("trace")
@@ -132,9 +132,14 @@ function Lsp.config(server_name, provided_opts)
 
   -- Allow clients to tweak the capabilities we report to the server
   if setup_opts.update_capabilities then
-    local duplicate = vim.deepcopy(setup_opts.capabilities)
-    setup_opts.update_capabilities(duplicate)
-    setup_opts.capabilities = duplicate
+    -- NOTE: As of cmp-nvim-lsp@389f06d3101fb412db64cb49ca4f22a67882e469, we no longer
+    -- have the full capabilities object by default; to keep things simple we only
+    -- inflate a full map if the client provides an update_capabilities fn:
+    local duplicate = vim.lsp.protocol.make_client_capabilities()
+    local new_config = vim.tbl_deep_extend('keep', duplicate, setup_opts.capabilities)
+
+    setup_opts.update_capabilities(new_config)
+    setup_opts.capabilities = new_config
   end
 
   -- Wrap any provided on_attach callback. Note that we call ours *last*
