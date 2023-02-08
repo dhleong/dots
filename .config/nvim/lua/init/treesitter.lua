@@ -1,4 +1,4 @@
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   ensure_installed = 'all',
 
   highlight = {
@@ -10,6 +10,9 @@ require'nvim-treesitter.configs'.setup {
 
       -- To colorize css files
       'css',
+
+      -- These just don't look good by default:
+      'clojure',
     },
   },
 
