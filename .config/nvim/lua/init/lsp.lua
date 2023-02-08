@@ -124,7 +124,14 @@ for _, language_file in ipairs(lsp_config_languages) do
   require('init.lsp.' .. language)
 end
 
-local _, kodachi = pcall(require, 'kodachi.null-ls.completion')
+local function optional_require(ns)
+  return function()
+    local ok, mod = pcall(require, ns)
+    if ok then
+      return mod
+    end
+  end
+end
 
 require 'null-ls.config'.reset()
 require 'null-ls.sources'.reset()
@@ -148,7 +155,7 @@ require 'null-ls'.setup {
     },
     require('lilium').completer,
     require('dhleong.null_ls.filename'),
-    kodachi,
+    optional_require('kodachi.null-ls.completion')
   },
 }
 
