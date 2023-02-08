@@ -29,10 +29,6 @@ require('helpers.lsp').config('tsserver', {
 
   on_attach = function(client)
     -- Disable tsserver formatting
-    if client.server_capabilities then
-      client.server_capabilities.documentFormattingProvider = false
-    else
-      client.resolved_capabilities.document_formatting = false
-    end
+    client.server_capabilities.documentFormattingProvider = false
   end
 })
