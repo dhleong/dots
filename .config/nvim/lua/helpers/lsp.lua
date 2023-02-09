@@ -89,12 +89,12 @@ function Lsp.on_attach()
     desc = 'Auto format using lsp',
     callback = function()
       -- NOTE: We temporarily swap to "manual" fold method to avoid collapsing folds on save
-      local old_method = vim.bo.foldmethod
-      vim.bo.foldmethod = 'manual'
+      local old_method = vim.wo.foldmethod
+      vim.wo.foldmethod = 'manual'
 
       Lsp.format()
 
-      vim.bo.foldmethod = old_method
+      vim.wo.foldmethod = old_method
     end
   })
 
