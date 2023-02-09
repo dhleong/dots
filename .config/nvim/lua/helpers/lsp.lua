@@ -15,6 +15,14 @@ vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
   print('[' .. client.name .. '][' .. lvl .. '] ' .. result.message)
 end
 
+local function prepare_commands()
+  vim.api.nvim_buf_create_user_command(0, 'W', function()
+    vim.b.lsp_no_auto_format = 1
+    vim.cmd.write()
+    vim.b.lsp_no_auto_format = nil
+  end, {})
+end
+
 local function prepare_mappings()
   local function nmap(lhs, lua)
     map.buf_nno(lhs, { lua_call = lua })
@@ -61,8 +69,6 @@ local function prepare_events(filetype)
 end
 
 local function on_attach(_, bufnr)
-  vim.g.attached = true
-
   require 'lsp_signature'.on_attach({
     bind = true,
     handler_opts = {
@@ -88,6 +94,10 @@ function Lsp.on_attach()
     buffer = bufnr,
     desc = 'Auto format using lsp',
     callback = function()
+      if vim.b.lsp_no_auto_format == 1 then
+        return
+      end
+
       -- NOTE: We temporarily swap to "manual" fold method to avoid collapsing folds on save
       local old_method = vim.wo.foldmethod
       vim.wo.foldmethod = 'manual'
@@ -98,6 +108,7 @@ function Lsp.on_attach()
     end
   })
 
+  prepare_commands()
   prepare_mappings()
 end
 
