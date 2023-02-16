@@ -179,7 +179,7 @@ Plug('Valloric/MatchTagAlways', { ft = { 'html', 'xml' } })
 -- ======= Tree sitter ====================================== {{{
 -- See treesitter.lua for config
 
-Plug 'nvim-treesitter/nvim-treesitter' { run = ':TSUpdate', commit = '8d92fa85' }
+Plug 'nvim-treesitter/nvim-treesitter' { run = ':TSUpdate' }
 
 -- Provides contextual commenting (for eg tsx)
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
