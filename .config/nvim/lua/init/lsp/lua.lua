@@ -1,4 +1,4 @@
-require('helpers.lsp').config('sumneko_lua', {
+require('helpers.lsp').config('lua_ls', {
   settings = {
     Lua = {
       runtime = {
