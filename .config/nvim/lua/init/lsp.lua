@@ -124,10 +124,12 @@ for _, language_file in ipairs(lsp_config_languages) do
   require('init.lsp.' .. language)
 end
 
-local function optional_require(ns)
+local function optional_require(ns, path)
   return function()
     local ok, mod = pcall(require, ns)
-    if ok then
+    if ok and path then
+      return mod[path[1]]
+    elseif ok then
       return mod
     end
   end
@@ -153,7 +155,7 @@ require 'null-ls'.setup {
         return find_file(params, '.prettierrc', '.prettierrc.js', '.prettierrc.json')
       end,
     },
-    require('lilium').completer,
+    optional_require('lilium', { 'completer' }),
     require('dhleong.null_ls.filename'),
     optional_require('kodachi.null-ls.completion')
   },
