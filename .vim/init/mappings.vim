@@ -166,7 +166,9 @@ nnoremap ga :call dhleong#text#GetUnicodePairs()<cr>
 " remaps from eg vim-hyperstyle don't break things; by default,
 " vim-endwise uses <script>-local maps, which we obviously can't
 " reproduce when re-mapping
-imap <silent> <Enter> <C-R>=dhleong#text#TryCleanWhitespace()<cr><Plug>DiscretionaryEnd
+" We also do vim-mirror since its laziness might cause it to not
+" initialize properly with cmp
+imap <silent> <Enter> <C-R>=dhleong#text#TryCleanWhitespace()<cr><Plug>MirrorClose<Plug>DiscretionaryEnd
 
 
 " ======= Smart text manipulation ==========================
