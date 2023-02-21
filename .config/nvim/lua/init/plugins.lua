@@ -146,6 +146,7 @@ Plug 'vim-scripts/VisIncr'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 
 -- Convert between single-line and wrapped argument lists
