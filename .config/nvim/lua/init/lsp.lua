@@ -141,7 +141,11 @@ require 'null-ls'.setup {
   sources = {
     require('null-ls').builtins.code_actions.eslint_d,
     require('null-ls').builtins.diagnostics.clj_kondo,
-    require('null-ls').builtins.diagnostics.eslint_d,
+    require('null-ls').builtins.diagnostics.eslint_d.with {
+      runtime_condition = function(params)
+        return find_file(params, '.eslintrc', '.eslintrc.js')
+      end
+    },
     require('null-ls').builtins.diagnostics.flake8.with {
       cwd = function(params)
         return vim.fn.fnamemodify(params.bufname, ':h')
