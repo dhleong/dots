@@ -8,7 +8,10 @@ function M.doc_default()
 end
 
 function M.doc_vim()
-  vim.cmd('help ' .. vim.fn['scriptease#helptopic']())
+  local ok, err = pcall(vim.cmd.help, vim.fn['scriptease#helptopic']())
+  if not ok then
+    print(err)
+  end
 end
 
 function M.doc()
