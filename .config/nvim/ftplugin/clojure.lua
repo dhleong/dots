@@ -71,3 +71,14 @@ map.buf_nno('cnpr', function()
   local resp = vim.fn['dhleong#clojure#PlatformEval']('(symbol (with-out-str (' .. ns .. '.pprint/pp)))')
   print(table.concat(resp.value, '\n'))
 end)
+
+local augroup = vim.api.nvim_create_augroup('dhleongClojure', {})
+vim.api.nvim_create_autocmd('User', {
+  group = augroup,
+  pattern = 'FireplaceActivate',
+  callback = function()
+    map.override.buf('cpr', function()
+      vim.fn['hearth#test#RunForBuffer']()
+    end)
+  end
+})

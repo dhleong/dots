@@ -1,13 +1,10 @@
 ---@diagnostic disable-next-line: deprecated
 local spread = unpack or table.unpack
 
-local mappings = {}
-
-local function transform_rhs(rhs)
+local function transform_rhs(opts, rhs)
   if type(rhs) == 'function' then
-    local id = '' .. #mappings
-    mappings[id] = rhs
-    return '<cmd>lua require("helpers.map")._invoke("' .. id .. '")<cr>'
+    opts.callback = rhs
+    return ''
   elseif type(rhs) == 'table' then
     local s = ''
 
@@ -35,12 +32,12 @@ end
 local function create_mapper(f, lhs, config)
   return function(input_rhs)
     local mode = config.args[#config.args - 1]
-    if vim.fn.mapcheck(lhs, mode) ~= "" then
-      -- Already a mapping; don't override
+    if not config.override and vim.fn.mapcheck(lhs, mode) ~= "" then
+      -- Already a mapping; don't override (unless requested)
       return
     end
 
-    local rhs = transform_rhs(input_rhs)
+    local rhs = transform_rhs(config.opts, input_rhs)
 
     local call = { spread(config.args) }
     table.insert(call, lhs)
@@ -51,14 +48,14 @@ local function create_mapper(f, lhs, config)
   end
 end
 
-local function handle(f, args, noremap, lhs, rhs)
-  local mapper = create_mapper(f, lhs, {
+local function handle(f, args, opts, lhs, rhs)
+  local mapper = create_mapper(f, lhs, vim.tbl_extend('force', opts, {
     args = args,
     opts = {
-      noremap = noremap,
+      noremap = opts.noremap,
       silent = true,
     },
-  })
+  }))
 
   if rhs then
     return mapper(rhs)
@@ -75,30 +72,39 @@ local function buffer(mode, noremap, lhs, rhs)
   return handle(vim.api.nvim_buf_set_keymap, { 0, mode }, noremap, lhs, rhs)
 end
 
-local M = {}
+local function create_interface(opts)
+  local iface = {}
 
-function M.buf(lhs, rhs)
-  return buffer('n', false, lhs, rhs)
-end
-
-function M.buf_nno(lhs, rhs)
-  return buffer('n', true, lhs, rhs)
-end
-
-function M.nno(lhs, rhs)
-  return global('n', true, lhs, rhs)
-end
-
-function M.tno(lhs, rhs)
-  return global('t', true, lhs, rhs)
-end
-
-function M._invoke(id)
-  local fn = mappings[id]
-  if not fn then
-    print(id, vim.inspect(mappings))
+  function iface.buf(lhs, rhs)
+    return buffer('n', vim.tbl_extend('force', opts, { noremap = false }), lhs, rhs)
   end
-  return fn()
+
+  function iface.buf_nno(lhs, rhs)
+    return buffer('n', vim.tbl_extend('force', opts, { noremap = true }), lhs, rhs)
+  end
+
+  function iface.nno(lhs, rhs)
+    return global('n', vim.tbl_extend('force', opts, { noremap = true }), lhs, rhs)
+  end
+
+  function iface.tno(lhs, rhs)
+    return global('t', vim.tbl_extend('force', opts, { noremap = true }), lhs, rhs)
+  end
+
+  return iface
 end
+
+local M = create_interface({})
+
+M = setmetatable(M, {
+  __index = function(table, index)
+    -- NOTE: This just lets us set a single flag... we could perhaps build
+    -- something more recursive to get eg map.override.nno.buf, but... this is fine for now
+    if index == 'override' then
+      return create_interface({ override = true })
+    end
+    return rawget(table, index)
+  end
+})
 
 return M
