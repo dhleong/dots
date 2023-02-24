@@ -37,8 +37,8 @@ local function fzf(config)
 end
 
 local function unpack_text_result(result)
-  local _, _, file, line, text = string.find(result, '^([^:]+):(%d+):(.*)')
-  return file, line, text
+  local _, _, file, line, col, text = string.find(result, '^([^:]+):(%d+):(%d+):(.*)')
+  return file, line, col, text
 end
 
 local M = {
@@ -53,6 +53,7 @@ M._preserve_search_results = a.void(function(args)
   }
 
   M._last_search[args.dir] = {
+    command = args.command,
     query = args.query,
     results = results,
     selected = args.selected,
@@ -101,9 +102,9 @@ function M.by_text(project_dir, sink)
   local rg = table.concat({
     'rg', '--column', '--line-number', '--no-heading', '--smart-case',
     '--fixed-strings', -- I almost never want to use regex here
-    '--glob', '"!*.lock"',
-    '--glob', '"!package*.json"',
-    '--glob', '"!tsconfig.json"',
+    '--glob', "'!*.lock'",
+    '--glob', "'!package*.json'",
+    '--glob', "'!tsconfig.json'",
     '--',
   }, ' ')
 
@@ -129,14 +130,17 @@ function M.by_text(project_dir, sink)
     window = { width = 1.0, height = 0.8, yoffset = 0 },
     sinklist = function(output)
       local query = output[1]
-      local file, line = unpack_text_result(output[2])
+      local file, line, col = unpack_text_result(output[2])
       if not file and not line then
         print('Unexpected input: ' .. output[2])
         return
       end
 
       vim.cmd(sink .. ' ' .. file)
-      vim.api.nvim_win_set_cursor(0, { tonumber(line, 10), 0 })
+      vim.api.nvim_win_set_cursor(0, {
+        tonumber(line, 10),
+        tonumber(col, 10) - 1,
+      })
       vim.cmd [[normal! zz]]
 
       if query ~= '' then
@@ -163,11 +167,12 @@ function M.resume_by_text(project_dir)
   local selected_index = nil
   local items = {}
   for i, result in ipairs(search.results) do
-    local file, line, text = unpack_text_result(result)
+    local file, line, col, text = unpack_text_result(result)
     items[i] = {
       text = text,
-      filename = file,
+      filename = project_dir .. file,
       lnum = line,
+      col = col,
       pattern = search.query,
     }
 
