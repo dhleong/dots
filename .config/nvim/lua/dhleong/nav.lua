@@ -98,7 +98,7 @@ function M.in_project(project_dir, sink)
   }
 end
 
-function M.by_text(project_dir, sink)
+function M.by_text(project_dir, sink, opts)
   local rg = table.concat({
     'rg', '--column', '--line-number', '--no-heading', '--smart-case',
     '--fixed-strings', -- I almost never want to use regex here
@@ -122,6 +122,11 @@ function M.by_text(project_dir, sink)
     -- faster than waiting for rg to load all text in the project
     '--bind', 'change:reload:' .. rg .. ' {q} || true',
   }
+
+  if opts and opts.query then
+    table.insert(options, '--query')
+    table.insert(options, opts.query)
+  end
 
   fzf {
     dir = project_dir,

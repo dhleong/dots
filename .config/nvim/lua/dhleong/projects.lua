@@ -12,12 +12,12 @@ local parent_paths = {
 }
 
 -- Automatically expand the project parents into absolute paths:
-parent_paths = vim.tbl_map(function (path)
+parent_paths = vim.tbl_map(function(path)
   return vim.env.HOME .. path
 end, parent_paths)
 
-local function create_project_navigation_maps (project_dir)
-  local function nmap (lhs, nav_call)
+local function create_project_navigation_maps(project_dir)
+  local function nmap(lhs, nav_call)
     local lua_call = "require'dhleong.nav'." .. nav_call
     vim.api.nvim_buf_set_keymap(0, 'n', lhs, '<cmd>lua ' .. lua_call .. '<cr>', {
       noremap = true,
@@ -43,6 +43,7 @@ local function create_project_navigation_maps (project_dir)
   nmap('|', "resume_by_text(" .. project_path .. ", 'e')")
   nmap('<c-w>\\', "by_text(" .. project_path .. ", 'tabe')")
   nmap('<c-s>\\', "by_text(" .. project_path .. ", 'tabe')")
+  nmap('g\\', "by_text(" .. project_path .. ", 'e', { query = vim.fn.expand('<cword>') })")
 end
 
 local function configure_buffer()
@@ -83,8 +84,7 @@ end
 local Projects = {
   configure_buffer = configure_buffer,
   parent_paths = parent_paths,
-
-  init = function ()
+  init = function()
     vim.cmd([[
       augroup dhleong_project_config
         autocmd!
