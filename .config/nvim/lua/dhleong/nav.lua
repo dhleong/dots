@@ -80,12 +80,12 @@ end
 function M.open_project(project_dir)
   if vim.fn.isdirectory(project_dir) == 1 then
     vim.bo.path = project_dir .. '**'
-    vim.cmd('lcd ' .. project_dir)
+    vim.cmd.lcd(project_dir)
 
     require 'dhleong.projects'.configure_buffer()
     M.in_project(project_dir, 'e')
   else
-    vim.cmd('edit ' .. project_dir)
+    vim.cmd.edit(project_dir)
   end
 end
 
@@ -222,7 +222,7 @@ function M.resume_by_text(project_dir)
     items = items,
     title = 'Text search: ' .. search.query,
   })
-  vim.cmd [[ copen ]]
+  vim.cmd.copen()
 
   if selected_index ~= -1 then
     vim.api.nvim_win_set_cursor(0, { selected_index, 0 })
@@ -231,7 +231,7 @@ end
 
 function M.lsp_in_new_tab(buffer_method)
   local cursor = vim.fn.getpos('.')
-  vim.cmd('tabe %')
+  vim.cmd.tabe('%')
   vim.api.nvim_win_set_cursor(0, { cursor[2], cursor[3] - 1 })
   vim.lsp.buf[buffer_method]()
 end
