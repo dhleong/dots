@@ -99,7 +99,7 @@ function M.in_project(project_dir, sink)
 end
 
 local function make_rg(opts)
-  local fuzzy = opts.fuzzy or '--fixed-strings'
+  local fuzzy = opts.fuzzy and '' or '--fixed-strings'
   return table.concat({
     'rg', '--column', '--line-number', '--no-heading', '--smart-case',
     fuzzy,
@@ -108,6 +108,10 @@ local function make_rg(opts)
     '--glob', "'!tsconfig.json'",
     '--',
   }, ' ')
+end
+
+local function bindings(entries)
+  return table.concat(entries, '+')
 end
 
 function M.by_text(project_dir, sink, opts)
@@ -132,9 +136,23 @@ function M.by_text(project_dir, sink, opts)
 
     -- Support using ctrl-f to narrow the search results with fuzzy matching
     -- Using ctrl-r will pop back out to the rg search
-    '--bind', 'ctrl-f:unbind(change,ctrl-f)+change-prompt(narrow> )+enable-search+clear-query+rebind(ctrl-r)',
     '--bind',
-    'ctrl-r:unbind(ctrl-r)+change-prompt(> )+disable-search+reload(' .. rg .. ' {q} || true)+rebind(change,ctrl-f)',
+    'ctrl-f:' .. bindings {
+      'unbind(change,ctrl-f)',
+      'change-prompt(narrow> )',
+      'enable-search',
+      'clear-query',
+      'rebind(ctrl-r)'
+    },
+
+    '--bind',
+    'ctrl-r:' .. bindings {
+      'unbind(ctrl-r)',
+      'change-prompt(> )',
+      'disable-search',
+      'reload(' .. rg .. ' {q} || true)',
+      'rebind(change,ctrl-f)'
+    },
   }
 
   if opts and opts.query then
