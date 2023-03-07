@@ -98,15 +98,21 @@ function M.in_project(project_dir, sink)
   }
 end
 
-function M.by_text(project_dir, sink, opts)
-  local rg = table.concat({
+local function make_rg(opts)
+  local fuzzy = opts.fuzzy or '--fixed-strings'
+  return table.concat({
     'rg', '--column', '--line-number', '--no-heading', '--smart-case',
-    '--fixed-strings', -- I almost never want to use regex here
+    fuzzy,
     '--glob', "'!*.lock'",
     '--glob', "'!package*.json'",
     '--glob', "'!tsconfig.json'",
     '--',
   }, ' ')
+end
+
+function M.by_text(project_dir, sink, opts)
+  -- NOTE: I almost never want regex, by default
+  local rg = make_rg { fuzzy = false }
 
   local options = {
     -- NOTE: use 4.. as the query and presentation target to handle Swift
@@ -118,9 +124,17 @@ function M.by_text(project_dir, sink, opts)
     -- Enable us to do something with the most recent query
     '--print-query',
 
+    '--prompt', '> ',
+
     -- Automatically create a new search with the query text on change; this is much
     -- faster than waiting for rg to load all text in the project
     '--bind', 'change:reload:' .. rg .. ' {q} || true',
+
+    -- Support using ctrl-f to narrow the search results with fuzzy matching
+    -- Using ctrl-r will pop back out to the rg search
+    '--bind', 'ctrl-f:unbind(change,ctrl-f)+change-prompt(narrow> )+enable-search+clear-query+rebind(ctrl-r)',
+    '--bind',
+    'ctrl-r:unbind(ctrl-r)+change-prompt(> )+disable-search+reload(' .. rg .. ' {q} || true)+rebind(change,ctrl-f)',
   }
 
   if opts and opts.query then
