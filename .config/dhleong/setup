@@ -29,10 +29,11 @@ has_nix() {
     which nix-env > /dev/null
 }
 
-ensure_brew_nix() {
+ensure_brew_apt() {
     cli_name=$1
     brew_name=$2
-    nix_name=$3
+    apt_name=$3
+    apt_repo=$4
 
     if has_cli $cli_name; then
         echo " Installed: $cli_name"
@@ -41,9 +42,25 @@ ensure_brew_nix() {
         brew install $brew_name
     elif has_nix && [ "$nix_name" ]; then
         echo "Installing: $cli_name..."
-        nix-env -i $nix_name
+        if [ $apt_repo != '' ]; then
+            sudo add-apt-repository -y $apt_repo
+        fi
+        sudo apt-get install -y $apt_name
     else
         echo "NOT Installing: $cli_name"
+    fi
+}
+
+ensure_git_repo() {
+    repo_name=$1
+
+    if [ -d "~/git/$repo_name" ]; then
+        echo " Cloned: git <- $repo_name"
+    else
+        echo "Cloning: git <- repo_name..."
+
+        mkdir -p ~/git
+        (cd ~/git && gh repo clone $repo_name)
     fi
 }
 
@@ -151,16 +168,26 @@ ensure_cask "iTerm" "iterm2"
 
 # I generally prefer neovim these days:
 ensure_cask "VimR" "vimr"
-ensure_brew_nix "nvim" "neovim" "--attr nixpkgs.neovim"
+ensure_brew_apt "nvim" "neovim" "neovim python3-neovim python3-venv" "ppa:neovim-ppa/unstable"
 
-if has_cli gh && has_cli hub; then
+if has_cli gh; then
     echo " Installed: github cli"
 elif is_mac; then
     echo "Installing: github cli..."
-    brew install gh hub
+    brew install gh
 else
-    echo "NOT Installing: github cli"
+    # Installation with apt is... tricky
+    echo "Installing: github cli"
+    type -p curl >/dev/null || sudo apt install curl -y
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+        && sudo apt update \
+        && sudo apt install gh -y
 fi
+
+ensure_brew_apt "diff-so-fancy" "diff-so-fancy" "diff-so-fancy" "ppa:aos1/diff-so-fancy"
+ensure_brew_apt "flake8" "flake8" "flake8"
 
 if has_cli rg && has_cli fzf; then
     echo " Installed: (various tools)"
@@ -173,6 +200,23 @@ elif has_nix; then
 else
     echo "NOT Installing: (various tools)"
 fi
+
+if has_cli bb; then
+    echo " Installed: babashka"
+elif is_mac; then
+    echo "Installing: babashka..."
+    brew install babashka
+else
+    curl -sL https://raw.githubusercontent.com/babashka/babashka/master/install --output install-babashka
+    chmod +x install-babashka
+    sudo ./install-babashka
+fi
+
+# Clone some repos that we rely on for vim. These are somewhat-actively developed,
+# so they're linked against a local checkout in my vimrc
+ensure_git_repo "lilium"
+ensure_git_repo "neo-latte"
+ensure_git_repo "vim-mirror"
 
 echo "Done!"
 echo ' - You may need to logout and back in for some settings to update'
