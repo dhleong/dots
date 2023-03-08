@@ -24,8 +24,8 @@ Plug 'vim-scripts/zenburn'
 Plug 'rhysd/vim-color-spring-night'
 
 vim.g.fzf_colors = {
-  ['bg+'] = { 'bg', 'Visual' },
-  ['pointer'] = { 'fg', 'SpecialComment', 'StatusLine' },
+      ['bg+'] = { 'bg', 'Visual' },
+      ['pointer'] = { 'fg', 'SpecialComment', 'StatusLine' },
 }
 
 Plug 'nvim-lualine/lualine.nvim'
@@ -50,8 +50,8 @@ vim.g['hubr#auto_ref_issues_args'] = 'state=open:assignee=dhleong:milestone?'
 
 -- ======= Testing / Debugging ============================== {{{
 
--- Plug 'vim-test/vim-test'
-Plug '~/git/vim-test'
+Plug 'vim-test/vim-test'
+-- Plug '~/git/vim-test'
 Plug '~/git/neo-latte'
 
 map.nno '<leader>tt' {
@@ -96,8 +96,8 @@ Plug 'tpope/vim-endwise'
 -- augmentations, like hyperstyle
 vim.g.endwise_no_mappings = 1
 
--- Plug 'SirVer/ultisnips'
-Plug '~/git/ultisnips'
+Plug 'SirVer/ultisnips'
+-- Plug '~/git/ultisnips'
 Plug '~/git/vim-cs-snippets'
 Plug 'honza/vim-snippets'
 
@@ -113,7 +113,7 @@ Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim' -- dependency of null-ls
 
-Plug 'b0o/schemastore.nvim' -- for jsonls
+Plug 'b0o/schemastore.nvim'  -- for jsonls
 
 Plug 'jose-elias-alvarez/null-ls.nvim'
 -- Plug '~/git/null-ls.nvim'
@@ -129,7 +129,7 @@ Plug 'ray-x/lsp_signature.nvim'
 
 -- ======= Text Documentation ============================= {{{{{{
 
-Plug '~/git/trot.nvim'
+Plug 'dhleong/trot.nvim'
 
 map.nno '<leader>K' {
   lua_module = 'trot',
@@ -214,7 +214,8 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people' { ft = 'clojure' }
 -- ======= React ==========================================
 
 Plug 'ap/vim-css-color'
-Plug '~/git/vim-hyperstyle'
+-- Plug '~/git/vim-hyperstyle'
+Plug 'dhleong/vim-hyperstyle'
 
 Plug 'windwp/nvim-ts-autotag'
 
