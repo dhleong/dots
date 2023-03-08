@@ -2404,7 +2404,7 @@ Marks and Annotations.Next Mark</string>
 	<key>ShowAutomaticProfileSwitchingBanner</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>StatusBarPosition</key>
