@@ -98,13 +98,16 @@ function Lsp.on_attach()
         return
       end
 
-      -- NOTE: We temporarily swap to "manual" fold method to avoid collapsing folds on save
-      local old_method = vim.wo.foldmethod
-      vim.wo.foldmethod = 'manual'
+      local on_fold = vim.fn.foldlevel('.') ~= 0
+      local on_open_fold = on_fold and vim.fn.foldclosed('.') == -1
 
       Lsp.format()
 
-      vim.wo.foldmethod = old_method
+      if on_open_fold then
+        -- Unfold it!
+        -- NOTE: It might be nice to preserve *all* folds at some point...
+        vim.cmd.normal { 'zA', bang = true }
+      end
     end
   })
 
