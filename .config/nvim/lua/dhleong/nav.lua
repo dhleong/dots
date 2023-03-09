@@ -155,15 +155,18 @@ function M.by_text(project_dir, sink, opts)
     },
   }
 
+  local initial_query = rg .. ' .'
+
   if opts and opts.query then
     table.insert(options, '--query')
     table.insert(options, opts.query)
+    initial_query = rg .. ' ' .. opts.query
   end
 
   fzf {
     dir = project_dir,
     options = options,
-    source = rg .. ' .',
+    source = initial_query,
     window = { width = 1.0, height = 0.8, yoffset = 0 },
     sinklist = function(output)
       local query = output[1]
