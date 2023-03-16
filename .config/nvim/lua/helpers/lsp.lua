@@ -78,6 +78,16 @@ local function on_attach(_, bufnr)
   }, bufnr)
 end
 
+local function with_otsukare(server, f)
+  local server_filetypes = server.filetypes or server.document_config.default_config.filetypes
+  for _, filetype in ipairs(server_filetypes) do
+    local ok, otsukare_module = pcall(require, 'otsukare.' .. filetype)
+    if ok and otsukare_module then
+      f(otsukare_module)
+    end
+  end
+end
+
 local configured = {}
 
 local Lsp = {}
@@ -176,20 +186,23 @@ function Lsp.config(server_name, provided_opts)
     setup_opts.capabilities = new_config
   end
 
+  -- Let otsukare update lsp setup opts
+  with_otsukare(server, function(m)
+    if m.lsp_on_before_setup then
+      m.lsp_on_before_setup(setup_opts)
+    end
+  end)
+
   -- Wrap any provided on_attach callback. Note that we call ours *last*
   setup_opts.on_attach = fn.add_hook_before(on_attach, setup_opts.on_attach)
   setup_opts.on_new_config = function(config, root_dir)
-    -- Integrate with otsukare
-    for _, filetype in ipairs(server_filetypes) do
-      local ok, otsukare_module = pcall(require, 'otsukare.' .. filetype)
-      if ok and otsukare_module then
-        config.on_attach = fn.add_hook_before(config.on_attach, otsukare_module.lsp_on_attach)
+    with_otsukare(server, function(m)
+      config.on_attach = fn.add_hook_before(config.on_attach, m.lsp_on_attach)
 
-        if otsukare_module.lsp_update_config then
-          otsukare_module.lsp_update_config(config, root_dir)
-        end
+      if m.lsp_update_config then
+        m.lsp_update_config(config, root_dir)
       end
-    end
+    end)
   end
 
   -- Setup the server!
