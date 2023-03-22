@@ -125,17 +125,19 @@ function Lsp.on_attach()
   prepare_mappings()
 end
 
+Lsp.auto_format_timeout_ms = 2500
+
 function Lsp.format()
   if vim.lsp.buf.format then
     vim.lsp.buf.format {
-      timeout_ms = 2000,
+      timeout_ms = Lsp.auto_format_timeout_ms,
       filter = function(client)
         return client.name ~= 'tsserver'
       end
     }
   else
     -- NOTE: This is deprecated:
-    vim.lsp.buf.formatting_seq_sync(nil, 2000)
+    vim.lsp.buf.formatting_seq_sync(nil, Lsp.auto_format_timeout_ms)
   end
 end
 
