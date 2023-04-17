@@ -2,6 +2,10 @@
 # A full setup script
 
 is_mac() {
+    if [ -z "$OSTYPE" ]; then
+        # Definitely not
+        return 1
+    fi
     [[ "$OSTYPE" == "darwin"* ]]
 }
 
