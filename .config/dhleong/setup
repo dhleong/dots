@@ -48,7 +48,7 @@ ensure_brew_apt() {
     elif is_mac && [ "$brew_name" ]; then
         echo "Installing: $cli_name..."
         brew install $brew_name
-    elif has_apt && [ "$nix_name" ]; then
+    elif has_apt; then
         echo "Installing: $cli_name..."
         if [ $apt_repo != '' ]; then
             sudo add-apt-repository -y $apt_repo
