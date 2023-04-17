@@ -127,6 +127,12 @@ else
     mkdir $HOME/.config
     mkdir $HOME/.zsh
 
+    # move away any existing dotfiles to avoid collision
+    mv $HOME/.bashrc $HOME/.bashrc.original 2> /dev/null
+    mv $HOME/.gitconfig $HOME/.gitconfig.original 2> /dev/null
+    mv $HOME/.zshrc $HOME/.zshrc.original 2> /dev/null
+    mv $HOME/.zshenv $HOME/.zshenv.original 2> /dev/null
+
     git clone git@github.com:dhleong/dotfiler.git $HOME/.dotfiles
     $HOME/.dotfiles/bin/dot add git@github.com:dhleong/dots.git
     $HOME/.dotfiles/bin/dot update
