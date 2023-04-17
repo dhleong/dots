@@ -65,7 +65,7 @@ ensure_git_repo() {
     if [ -d "$HOME/git/$repo_name" ]; then
         echo " Cloned: git <- $repo_name"
     else
-        echo "Cloning: git <- repo_name..."
+        echo "Cloning: git <- $repo_name..."
 
         mkdir -p ~/git
         (cd ~/git && gh repo clone $repo_name)
