@@ -185,6 +185,9 @@ if has_cli gh; then
 elif is_mac; then
     echo "Installing: github cli..."
     brew install gh
+
+    # Go ahead and login
+    gh auth login
 else
     # Installation with apt is... tricky
     echo "Installing: github cli"
@@ -194,6 +197,9 @@ else
         && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
         && sudo apt update \
         && sudo apt install gh -y
+
+    # Go ahead and login
+    gh auth login
 fi
 
 ensure_brew_apt "diff-so-fancy" "diff-so-fancy" "diff-so-fancy" "ppa:aos1/diff-so-fancy"
