@@ -29,8 +29,14 @@ has_cli() {
     which $1 > /dev/null
 }
 
+nix_env=nix-env
+if ! which nix-env > /dev/null; then
+    # In case it's not on the path, yet
+    nix_env=$HOME/.nix-profile/bin/nix-env
+fi
+
 has_nix() {
-    which nix-env > /dev/null
+    which $nix_env > /dev/null
 }
 
 has_apt() {
@@ -218,7 +224,7 @@ elif is_mac; then
     brew install ripgrep fzf zsh-completions
 elif has_nix; then
     echo "Installing: (various tools)..."
-    nix-env -i ripgrep -i fzf -i zsh-completions
+    $nix_env -i ripgrep -i fzf -i zsh-completions
 else
     echo "NOT Installing: (various tools)"
 fi
