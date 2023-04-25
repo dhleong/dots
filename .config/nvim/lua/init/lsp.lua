@@ -46,7 +46,6 @@ cmp.setup({
       vim.fn["UltiSnips#Anon"](args.body)
     end,
   },
-
   mapping = {
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<Tab>'] = cmp.mapping.select_next_item(),
@@ -54,16 +53,13 @@ cmp.setup({
     ['<Space>'] = try_accept_completion(' '),
     ['('] = try_accept_completion('('),
     ['.'] = try_accept_completion('.'),
-
     -- NOTE: The enter key is a bit special here; if we use the normal fallback
     -- from the cmdline window, we will end up performing a bunch of edits due to
     -- the fallback mappings from endwise (which would run *after* the cmdline
     -- window gets closed)
     ['<CR>'] = try_accept_completion { cmdwin = '<CR>' },
   },
-
   preselect = cmp.PreselectMode.None,
-
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
@@ -146,9 +142,9 @@ require 'null-ls'.setup {
         return find_file(params, '.eslintrc', '.eslintrc.js')
       end
     },
-    require('null-ls').builtins.diagnostics.flake8.with {
-      cwd = function(params)
-        return vim.fn.fnamemodify(params.bufname, ':h')
+    require('null-ls').builtins.diagnostics.ruff.with {
+      runtime_condition = function(params)
+        return find_file(params, '.ruff.toml')
       end,
     },
     require('null-ls').builtins.formatting.black,
