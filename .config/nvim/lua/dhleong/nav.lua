@@ -221,13 +221,18 @@ function M.resume_by_text(project_dir)
     end
   end
 
+  if #items == 0 then
+    print('No results')
+    return
+  end
+
   vim.fn.setqflist({}, 'r', {
     items = items,
     title = 'Text search: ' .. search.query,
   })
   vim.cmd.copen()
 
-  if selected_index ~= -1 then
+  if selected_index and selected_index ~= -1 then
     vim.api.nvim_win_set_cursor(0, { selected_index, 0 })
   end
 end
