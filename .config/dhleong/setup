@@ -195,9 +195,13 @@ if has_cli gh; then
 elif is_mac; then
     echo "Installing: github cli..."
     brew install gh
+elif has_nix; then
+    # Prefer nix if we have it; the apt approach below has stopped working on some machines...
+    echo "Installing: github cli..."
+    $nix_env -iA nixpkgs.gitAndTools.gh
 else
     # Installation with apt is... tricky
-    echo "Installing: github cli"
+    echo "Installing: github cli..."
     type -p curl >/dev/null || sudo apt install curl -y
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
         && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
