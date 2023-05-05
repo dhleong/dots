@@ -24,8 +24,8 @@ Plug 'vim-scripts/zenburn'
 Plug 'rhysd/vim-color-spring-night'
 
 vim.g.fzf_colors = {
-      ['bg+'] = { 'bg', 'Visual' },
-      ['pointer'] = { 'fg', 'SpecialComment', 'StatusLine' },
+  ['bg+'] = { 'bg', 'Visual' },
+  ['pointer'] = { 'fg', 'SpecialComment', 'StatusLine' },
 }
 
 Plug 'nvim-lualine/lualine.nvim'
@@ -83,6 +83,12 @@ Plug 'puremourning/vimspector'
 
 
 -- }}}
+
+-- ======= Misc Productivity ============================== {{{
+
+Plug 'tpope/vim-obsession'
+
+--- }}}
 
 -- ======= Text completion ================================== {{{
 
