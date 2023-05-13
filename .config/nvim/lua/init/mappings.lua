@@ -94,29 +94,30 @@ tnoremap('<C-L>', '<C-\\><C-N><C-W><C-L>')
 tnoremap('<C-J>', '<C-\\><C-N><C-W><C-J>')
 tnoremap('<C-K>', '<C-\\><C-N><C-W><C-K>')
 
--- Saving files with <cmd-s> in CLI mode (with help from iterm2)
--- Configure a key map to "Send text with 'vim' Special Chars" as <F-20>
-nnoremap('<F-20>', ':w<cr>')
-inoremap('<F-20>', '<esc>:w<cr>')
+if vim.fn.has('gui_running') == 0 then
+  -- Saving files with <cmd-s> in CLI mode (with help from iterm2)
+  -- Configure a key map to "Send text with 'vim' Special Chars" as <F-20>
+  nnoremap('<F-20>', ':w<cr>')
+  inoremap('<F-20>', '<esc>:w<cr>')
 
-nnoremap('<F-21>', ':tabe<cr>') -- Similarly, <cmd-t> ...
-inoremap('<F-21>', '<esc>:tabe<cr>')
-nnoremap('<F-22>', ':q<cr>') -- ... and <cmd-w>
-inoremap('<F-22>', '<esc>:q<cr>')
+  nnoremap('<F-21>', ':tabe<cr>') -- Similarly, <cmd-t> ...
+  inoremap('<F-21>', '<esc>:tabe<cr>')
+  nnoremap('<F-22>', ':q<cr>')    -- ... and <cmd-w>
+  inoremap('<F-22>', '<esc>:q<cr>')
 
-nnoremap('<F-23>', 'gt')
-nnoremap('<F-24>', 'gT')
-inoremap('<F-23>', '<esc>gt')
-inoremap('<F-24>', '<esc>gT')
-tnoremap('<F-23>', '<C-\\><C-N>gt')
-tnoremap('<F-24>', '<C-\\><C-N>gT')
+  nnoremap('<F-23>', 'gt')
+  nnoremap('<F-24>', 'gT')
+  inoremap('<F-23>', '<esc>gt')
+  inoremap('<F-24>', '<esc>gT')
+  tnoremap('<F-23>', '<C-\\><C-N>gt')
+  tnoremap('<F-24>', '<C-\\><C-N>gT')
 
--- In term mode, let cmd-k act like c-l to clear the screen. Since we're in
--- vim, we don't want to clear vim's UI
--- TODO maybe this should only be when not in GUI mode?
-inoremap('<F-25>', '<nop>')
-nnoremap('<F-25>', '<nop>')
-tnoremap('<F-25>', '<c-l>')
+  -- In term mode, let cmd-k act like c-l to clear the screen. Since we're in
+  -- vim, we don't want to clear vim's UI
+  inoremap('<F-25>', '<nop>')
+  nnoremap('<F-25>', '<nop>')
+  tnoremap('<F-25>', '<c-l>')
+end
 
 if vim.env.BROWSER then
   vim.cmd [[
