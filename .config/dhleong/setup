@@ -237,7 +237,7 @@ if has_cli bb; then
     echo " Installed: babashka"
 elif is_mac; then
     echo "Installing: babashka..."
-    brew install babashka
+    brew install borkdude/brew/babashka
 else
     curl -sL https://raw.githubusercontent.com/babashka/babashka/master/install --output install-babashka
     chmod +x install-babashka
