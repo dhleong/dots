@@ -108,7 +108,12 @@ vim.diagnostic.config {
   },
 }
 
-require 'mason'.setup()
+require 'mason'.setup {
+  pip = {
+    -- We tend to need to upgrade pip for eg ruff to get installed correctly
+    upgrade_pip = true,
+  },
+}
 require 'mason-lspconfig'.setup {
   automatic_installation = true,
 }
