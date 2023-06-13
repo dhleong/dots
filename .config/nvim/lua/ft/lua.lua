@@ -1,6 +1,13 @@
 local parsers = require "nvim-treesitter.parsers"
 local ts_utils = require "nvim-treesitter.ts_utils"
 
+local function get_node_text(node, buffer)
+  if vim.treesitter.get_node_text then
+    return vim.treesitter.get_node_text(node, buffer or 0)
+  end
+  return vim.treesitter.query.get_node_text(node, buffer or 0)
+end
+
 local M = {}
 
 function M.doc_default()
@@ -36,7 +43,7 @@ function M.doc()
   end
 
   -- Vim fns in the expression
-  local node_string = vim.treesitter.query.get_node_text(node:parent(), 0)
+  local node_string = get_node_text(node:parent(), 0)
   if vim.startswith(node_string, 'vim.fn.') then
     return M.doc_vim()
   elseif vim.startswith(node_string, 'vim.') then
