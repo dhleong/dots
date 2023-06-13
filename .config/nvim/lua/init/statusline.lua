@@ -1,6 +1,9 @@
 ---@alias LspMessage {loading: boolean, message: string|nil, name: string, title: string, percentage: number|nil}
 
 local function lsp_status_exists()
+  if vim.lsp.status then
+    return #vim.lsp.get_active_clients { bufnr = 0 } > 0
+  end
   local messages = vim.lsp.util.get_progress_messages()
   return #messages > 0
 end
@@ -35,6 +38,12 @@ local function preferred_message(messages)
 end
 
 local function lsp_status()
+  if vim.lsp.status then
+    local message = vim.lsp.status()
+    message = message:gsub('%%', '%%%%') -- Escape any % symbols
+    return message
+  end
+
   local messages = vim.lsp.util.get_progress_messages()
   if #messages == 0 then
     return
@@ -42,7 +51,7 @@ local function lsp_status()
 
   local selected_name = messages[1].name
 
-  local by_name = vim.tbl_filter(function (item)
+  local by_name = vim.tbl_filter(function(item)
     return item.name == selected_name
   end, messages)
 
@@ -50,25 +59,25 @@ local function lsp_status()
   return string.format('[%s] %s', selected_name, format_message(msg))
 end
 
-require'lualine'.setup {
+require 'lualine'.setup {
   options = {
     icons_enabled = false,
     theme = 'auto',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
+    component_separators = { left = '', right = '' },
+    section_separators = { left = '', right = '' },
     disabled_filetypes = {},
     always_divide_middle = true,
   },
   sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch'},
-    lualine_c = {'filename'},
-    lualine_x = {'filetype'},
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch' },
+    lualine_c = { 'filename' },
+    lualine_x = { 'filetype' },
     lualine_y = {
       'diagnostics',
-      {lsp_status, cond = lsp_status_exists}
+      { lsp_status, cond = lsp_status_exists }
     },
-    lualine_z = {'location'}
+    lualine_z = { 'location' }
   },
 }
 
