@@ -122,8 +122,13 @@ function M.by_text(project_dir, sink, opts)
     -- NOTE: use 4.. as the query and presentation target to handle Swift
     -- (and other code that uses colons).
     '--with-nth=1,4..',
-    '--nth=2..',
     '--delimiter=:',
+
+    -- NOTE: By disabling FZF search by default, it defaults to an interactive
+    -- interface for RG. Then, by removing nth we can use ctrl-f to search
+    -- within *those* results, letting us narrow by filename in addition to text.
+    -- '--nth=2..',
+    '--disabled',
 
     -- Enable us to do something with the most recent query
     '--print-query',
