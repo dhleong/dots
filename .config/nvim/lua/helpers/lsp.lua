@@ -125,7 +125,9 @@ function Lsp.on_attach()
   prepare_mappings()
 end
 
-Lsp.auto_format_timeout_ms = 2500
+-- NOTE: This is quite high but I generally want the formatting to happen even if
+-- it's super slow, so might as well just wait...
+Lsp.auto_format_timeout_ms = 5000
 
 function Lsp.format()
   if vim.lsp.buf.format then
