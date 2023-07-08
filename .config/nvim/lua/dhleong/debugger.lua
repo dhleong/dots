@@ -1,4 +1,4 @@
-local map = require'helpers.map'
+local map = require 'helpers.map'
 
 local debugger_mappings = {
   ['gk'] = '<Plug>VimspectorRunToCursor',
@@ -63,7 +63,7 @@ function M.handle_mappings()
 end
 
 function M.configure_watches()
-  set_mappings{
+  set_mappings {
     ['dd'] = '<del>',
   }
 end
@@ -78,15 +78,15 @@ function M.configure(opts)
   M.ft_configs[vim.bo.filetype] = opts
 
   -- Mappings:
-  map.nno'<leader>rq'{ vim_call = 'vimspector#Reset()' }
-  map.buf_nno'<leader>bc'{ vim_call = 'vimspector#ClearBreakpoints()' }
-  map.buf_nno'<leader>bt'{ vim_call = 'vimspector#ToggleBreakpoint()' }
+  map.nno '<leader>rq' { vim_call = 'vimspector#Reset()' }
+  map.buf_nno '<leader>bc' { vim_call = 'vimspector#ClearBreakpoints()' }
+  map.buf_nno '<leader>bt' { vim_call = 'vimspector#ToggleBreakpoint()' }
 
   -- Autocmd:
   vim.cmd([[
     augroup MyVimspectorConfigs
       autocmd!
-      autocmd BufEnter vimspector.Watches lua require'dhleong.debugger'.configure_watches()
+      autocmd BufEnter vimspector.Watches* lua require'dhleong.debugger'.configure_watches()
       autocmd BufWinEnter * lua require'dhleong.debugger'.handle_mappings()
       autocmd WinEnter * lua require'dhleong.debugger'.handle_mappings()
       autocmd User VimspectorUICreated lua require'dhleong.debugger'.handle_mappings()
