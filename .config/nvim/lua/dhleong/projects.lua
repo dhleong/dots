@@ -48,7 +48,7 @@ local function create_project_navigation_maps(paths)
   if paths.monorepo_root then
     nmap('<leader>m\\', "by_text('" .. paths.monorepo_root .. "', 'e')")
     nmap('<leader>m|', "resume_by_text('" .. paths.monorepo_root .. "', 'e')")
-    nmap('<leader>mg\\', "by_text(" .. paths.monorepo_root .. ", 'e', { query = vim.fn.expand('<cword>') })")
+    nmap('<leader>mg\\', "by_text('" .. paths.monorepo_root .. "', 'e', { query = vim.fn.expand('<cword>') })")
     nmap('<leader>m<c-p>', "in_project('" .. paths.monorepo_root .. "', 'e')")
   end
 end
