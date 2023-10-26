@@ -160,6 +160,7 @@ require 'null-ls'.setup {
         return find_file(params, '.prettierrc', '.prettierrc.js', '.prettierrc.json')
       end,
     },
+    require('null-ls').builtins.formatting.swiftformat,
     optional_require('lilium', { 'completer' }),
     require('dhleong.null_ls.filename'),
     optional_require('kodachi.null-ls.completion')
