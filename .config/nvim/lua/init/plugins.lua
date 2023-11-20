@@ -217,6 +217,12 @@ Plug 'guns/vim-sexp' { ft = 'clojure' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people' { ft = 'clojure' }
 
 
+-- ======= Godot ==========================================
+
+Plug 'habamax/vim-godot' { ft = 'gdscript' }
+
+vim.g.godot_executable = '/Applications/Godot.app'
+
 -- ======= React ==========================================
 
 Plug 'ap/vim-css-color'

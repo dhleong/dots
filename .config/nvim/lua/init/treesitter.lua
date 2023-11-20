@@ -18,7 +18,7 @@ require 'nvim-treesitter.configs'.setup {
 
   indent = {
     enable = true,
-    disable = { 'css', 'lua', 'rust', 'python' },
+    disable = { 'css', 'gdscript', 'lua', 'rust', 'python' },
   },
 
   -- Plugins:
@@ -27,9 +27,9 @@ require 'nvim-treesitter.configs'.setup {
     enable = true,
   },
 
-  context_commentstring = {
-    enable = true,
-  },
+  -- context_commentstring = {
+  --   enable = true,
+  -- },
 
   textobjects = {
     select = {
@@ -57,3 +57,7 @@ require 'nvim-treesitter.configs'.setup {
     }
   },
 }
+
+require('ts_context_commentstring').setup {}
+
+vim.g.skip_ts_context_commentstring_module = true
