@@ -152,6 +152,7 @@ require 'null-ls'.setup {
         return find_file(params, '.ruff.toml')
       end,
     },
+    require('null-ls').builtins.diagnostics.stylelint,
     require('null-ls').builtins.formatting.black,
     require('null-ls').builtins.formatting.prettier.with {
       runtime_condition = function(params)
