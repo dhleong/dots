@@ -1,3 +1,19 @@
+local godot_exe = '/Applications/Godot-Beta.app/Contents/MacOS/Godot'
+
+local function resolve_project_root()
+  -- Maybe we could rely on LSP?
+  return vim.fn.trim(vim.fn.system('git rev-parse --show-toplevel'))
+end
+
+vim.api.nvim_buf_create_user_command(0, "GodotOpenProject", function()
+  vim.system({
+    godot_exe,
+    '--editor',
+    '--path',
+    resolve_project_root()
+  })
+end, {})
+
 vim.keymap.set('n', '<leader>pr', function()
   vim.cmd('belowright split')
   vim.cmd.enew()
@@ -6,13 +22,15 @@ vim.keymap.set('n', '<leader>pr', function()
     win_id = vim.api.nvim_get_current_win()
   }
 
+  local path = resolve_project_root()
+
   -- TODO: don't hardcode the scene
 
   vim.fn.termopen(
     {
-      '/Applications/Godot.app/Contents/MacOS/Godot',
+      godot_exe,
       '--path',
-      vim.fn.getcwd(),
+      path,
       'res://Gameplay.tscn',
       '--',
       '--connect-to=localhost'
@@ -23,5 +41,4 @@ vim.keymap.set('n', '<leader>pr', function()
       end
     }
   )
-
 end, { buffer = true })
