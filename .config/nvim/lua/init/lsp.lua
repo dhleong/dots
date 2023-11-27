@@ -153,7 +153,11 @@ require 'null-ls'.setup {
       end,
     },
     require('null-ls').builtins.diagnostics.stylelint,
-    require('null-ls').builtins.formatting.black,
+    require('null-ls').builtins.formatting.ruff.with {
+      runtime_condition = function(params)
+        return find_file(params, '.ruff.toml')
+      end,
+    },
     require('null-ls').builtins.formatting.prettier.with {
       runtime_condition = function(params)
         -- Only run prettier if there's actually a config for it
