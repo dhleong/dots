@@ -1,2 +1,4 @@
 --smart-case
 --glob=!*.ts.map
+--glob=!*.html
+--glob=!*sdk.js
