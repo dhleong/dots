@@ -1480,7 +1480,7 @@ Marks and Annotations.Next Mark</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
-			<false/>
+			<integer>2</integer>
 			<key>Reduce Flicker</key>
 			<false/>
 			<key>Right Option Key Sends</key>
