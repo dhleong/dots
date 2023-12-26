@@ -118,9 +118,3 @@ if vim.fn.has('gui_running') == 0 then
   nnoremap('<F-25>', '<nop>')
   tnoremap('<F-25>', '<c-l>')
 end
-
-if vim.env.BROWSER then
-  vim.cmd [[
-      command! -nargs=1 OpenBrowser :silent !$BROWSER <q-args>
-  ]]
-end

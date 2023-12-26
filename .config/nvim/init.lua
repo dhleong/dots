@@ -8,6 +8,7 @@ vim.g.maplocalleader = " "
 
 require 'init.plugins'
 
+require 'init.commands'
 require 'init.settings'
 require 'init.mappings'
 require 'init.lsp'
@@ -15,4 +16,4 @@ require 'init.github'
 require 'init.statusline'
 require 'init.treesitter'
 
-require'dhleong.projects'.init()
+require 'dhleong.projects'.init()
