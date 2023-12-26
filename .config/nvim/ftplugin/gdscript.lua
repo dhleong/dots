@@ -6,11 +6,14 @@ local function resolve_project_root()
 end
 
 vim.api.nvim_buf_create_user_command(0, "GodotOpenProject", function()
-  vim.system({
-    godot_exe,
-    '--editor',
-    '--path',
-    resolve_project_root()
+  vim.loop.spawn(godot_exe, {
+    args = {
+      '--editor',
+      '--path',
+      resolve_project_root()
+    },
+    detached = true,
+    hide = true,
   })
 end, {})
 
@@ -41,4 +44,5 @@ vim.keymap.set('n', '<leader>pr', function()
       end
     }
   )
+  vim.cmd.normal('G')
 end, { buffer = true })
