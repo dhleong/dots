@@ -17,7 +17,7 @@ vim.o.expandtab = true
 
 vim.o.incsearch = true
 vim.o.ignorecase = true -- ignore case in search....
-vim.o.smartcase = true -- but if we WANT case, use it
+vim.o.smartcase = true  -- but if we WANT case, use it
 
 -- ======= Editing tweaks ===================================
 
@@ -38,7 +38,7 @@ vim.g.airline_theme = "spring_night"
 vim.o.termguicolors = true
 
 -- adjust splits behaviour
-vim.o.splitright = true -- horizontal splits should not open on the left...
+vim.o.splitright = true   -- horizontal splits should not open on the left...
 vim.o.equalalways = false -- 'no equal always'--don't resize my splits!
 
 -- show horrid tabs
