@@ -85,9 +85,7 @@ cmp.setup({
   },
 })
 
-local function find_file(params, ...)
-  local files = vim.tbl_flatten({ ... })
-
+local function find_file(params, files)
   local dir = params.bufname
   for _ = 1, 100 do
     local last_dir = dir
@@ -153,6 +151,14 @@ local function optional_require(ns, path)
   end
 end
 
+local function can_find_some_file(...)
+  local files = vim.tbl_flatten({ ... })
+  return function(params)
+    -- TODO Possibly, cache this per-buffer
+    return find_file(params, files)
+  end
+end
+
 require 'null-ls.config'.reset()
 require 'null-ls.sources'.reset()
 require 'null-ls'.setup {
@@ -160,27 +166,20 @@ require 'null-ls'.setup {
     require('null-ls').builtins.code_actions.eslint_d,
     require('null-ls').builtins.diagnostics.clj_kondo,
     require('null-ls').builtins.diagnostics.eslint_d.with {
-      runtime_condition = function(params)
-        return find_file(params, '.eslintrc', '.eslintrc.js')
-      end
+      runtime_condition = can_find_some_file('.eslintrc', '.eslintrc.js'),
     },
     require('null-ls').builtins.diagnostics.ruff.with {
-      runtime_condition = function(params)
-        return find_file(params, '.ruff.toml')
-      end,
+      runtime_condition = can_find_some_file('.ruff.toml'),
     },
     require('null-ls').builtins.diagnostics.stylelint,
     require('null-ls').builtins.formatting.ruff.with {
-      runtime_condition = function(params)
-        return find_file(params, '.ruff.toml')
-      end,
+      runtime_condition = can_find_some_file('.ruff.toml'),
+    },
+    require('null-ls').builtins.formatting.ruff_format.with {
+      runtime_condition = can_find_some_file('.ruff.toml'),
     },
     require('null-ls').builtins.formatting.prettier.with {
-      runtime_condition = function(params)
-        -- Only run prettier if there's actually a config for it
-        -- TODO cache this...
-        return find_file(params, '.prettierrc', '.prettierrc.js', '.prettierrc.json')
-      end,
+      runtime_condition = can_find_some_file('.prettierrc', '.prettierrc.js', '.prettierrc.json'),
     },
     require('null-ls').builtins.formatting.swiftformat,
     optional_require('lilium', { 'completer' }),
