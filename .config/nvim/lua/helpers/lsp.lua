@@ -68,11 +68,19 @@ local function prepare_events(filetype)
   ]], filetype, filetype, filetype))
 end
 
-local function on_attach(params, bufnr)
+local function on_attach(client, bufnr)
   -- lsp_signature is quite slow for some language servers in particular.
   -- We can disable it by passing `lsp_signature = { enabled = false }`
   -- in the `helper.config()` call
-  local lsp_signature_config = params.config.lsp_signature or {}
+  local lsp_signature_config = client.config.lsp_signature or {}
+
+  if not client.handlers['textDocument/definition'] then
+    local handler = require 'dhleong.nav'._handle_lsp_location
+    client.handlers['textDocument/declaration'] = handler
+    client.handlers['textDocument/definition'] = handler
+    client.handlers['textDocument/typeDefinition'] = handler
+    client.handlers['textDocument/implementation'] = handler
+  end
 
   if lsp_signature_config.enabled ~= false then
     local config = {

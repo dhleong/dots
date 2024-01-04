@@ -242,6 +242,30 @@ function M.resume_by_text(project_dir)
   end
 end
 
+---@param unused _ (unused)
+---@param result (table) result of LSP method; a location or a list of locations.
+---@param ctx (table) table containing the context of the request, including the method
+function M._handle_lsp_location(unused, result, ctx, config)
+  local no_results = vim.tbl_islist(result) and #result == 0
+  local same_buffer = ctx.bufnr == vim.fn.bufnr('%')
+  if not same_buffer then
+    -- NOTE: If there were no results anyway we probably don't care
+    if not no_results then
+      -- TODO Maybe we can open a qflist or something?
+      print('Definition results came in but I see you have moved on...')
+    end
+    return
+  end
+
+  if no_results then
+    -- TODO Can we get the word at ctx.params?
+    print('No results')
+    return
+  end
+
+  vim.lsp.handlers['textDocument/definition'](unused, result, ctx, config)
+end
+
 function M.lsp_in_new_tab(buffer_method)
   local cursor = vim.fn.getpos('.')
   vim.cmd.tabe('%')
