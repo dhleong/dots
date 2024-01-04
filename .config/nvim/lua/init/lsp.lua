@@ -65,6 +65,8 @@ cmp.setup({
     { name = 'ultisnips' },
   }, {
     { name = 'buffer' },
+  }, {
+    { name = 'nvim_lsp_signature_help' },
   }),
   sorting = {
     comparators = {

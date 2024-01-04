@@ -133,6 +133,8 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'lukas-reineke/cmp-under-comparator'
 
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+
 
 -- }}}
 

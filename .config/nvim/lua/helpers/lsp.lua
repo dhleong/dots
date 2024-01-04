@@ -68,14 +68,28 @@ local function prepare_events(filetype)
   ]], filetype, filetype, filetype))
 end
 
-local function on_attach(_, bufnr)
-  require 'lsp_signature'.on_attach({
-    bind = true,
-    handler_opts = {
-      border = 'rounded',
-    },
-    hint_prefix = '',
-  }, bufnr)
+local function on_attach(params, bufnr)
+  -- lsp_signature is quite slow for some language servers in particular.
+  -- We can disable it by passing `lsp_signature = { enabled = false }`
+  -- in the `helper.config()` call
+  local lsp_signature_config = params.config.lsp_signature or {}
+
+  if lsp_signature_config.enabled ~= false then
+    local config = {
+      bind = true,
+      cursorhold_update = lsp_signature_config.cursorhold_update ~= false,
+      handler_opts = {
+        border = 'rounded',
+      },
+      hint_prefix = '',
+    }
+    require 'lsp_signature'.on_attach(config, bufnr)
+
+    -- NOTE: Bit of a bug with lsp_signature: setting cursorhold_update=false
+    -- is *applied* on the first on_attach, but ignored (the relevant
+    -- autocmds are already created by the time it's saved)
+    require 'lsp_signature'.on_attach(config, bufnr)
+  end
 end
 
 local function with_otsukare(server, f)
