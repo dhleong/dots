@@ -14,6 +14,15 @@ local function entry_has_key(entry, key)
   end
 end
 
+local function fast_cmp_visible()
+  -- NOTE: cmp:visible() is quite slow, and we use it on a fairly
+  -- hot path. This hack reaches in to speed up the check
+  if not (cmp.core.view and cmp.core.view.custom_entries_view) then
+    return false
+  end
+  return cmp.core.view.custom_entries_view:visible()
+end
+
 ---@param key_or_config string|{ key:string, cmdwin: string }
 local function try_accept_completion(key_or_config)
   local key = key_or_config
@@ -24,8 +33,9 @@ local function try_accept_completion(key_or_config)
   end
 
   return cmp.mapping(function(fallback)
-    local entry = cmp.get_active_entry()
-    if cmp.visible() and entry then
+    if fast_cmp_visible() and cmp.get_active_entry() then
+      local entry = cmp.get_active_entry()
+
       cmp.confirm()
 
       if key and not entry_has_key(entry, key) then

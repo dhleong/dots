@@ -1,6 +1,6 @@
 require('helpers.lsp').config('gdscript', {
   lsp_signature = {
-    enabled = false,
+    enabled = true,
     cursorhold_update = false,
   },
 })
