@@ -76,3 +76,12 @@ vim.cmd([[
     autocmd BufEnter * silent! lcd %:p:h
   augroup END
 ]])
+
+
+-- ======= temp ===========================================
+
+vim.g['test#custom_runners'] = {
+  GDScript = {
+    'GUT',
+  },
+}
