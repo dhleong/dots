@@ -34,11 +34,17 @@ endfunction
 
 function! test#gdscript#gut#build_args(args) abort
   let file_res = 'res://' .. a:args[0]
+  let selected_file = fnamemodify(a:args[0], ':t')
+
+  " NOTE: The config file specified here doesn't exist; that
+  " is done to ensure the configs we provide are the only ones used
   let args = [
         \ '-s',
         \ '--headless',
         \ 'addons/gut/gut_cmdln.gd',
-        \ '-gtest=' .. file_res
+        \ '-gtest=' .. file_res,
+        \ '-gselect=' .. selected_file,
+        \ '-gexit',
         \ ]
 
   if len(a:args) > 1
