@@ -1,1 +1,3 @@
-require('helpers.lsp').config('clangd')
+require('helpers.lsp').config('clangd', {
+  filetypes = { 'c', 'cpp' },
+})
