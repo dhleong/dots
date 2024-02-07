@@ -20,9 +20,9 @@ end
 
 local function create_copy(for_register)
   local register = determine_usable_register(for_register)
-  return function(lines)
+  return function(lines, regtype)
     vim.b.lines = lines
-    vim.fn.setreg(register, lines)
+    vim.fn.setreg(register, lines, regtype)
 
     -- I only use tmux on remote systems; in such cases, attempt to use
     -- OSC52 to send copies back to the host system's clipboard:
