@@ -4,6 +4,9 @@ require 'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
 
+    -- Highlighting hangs the entire editor in very large python files
+    disable = { 'python' },
+
     additional_vim_regex_highlighting = {
       -- For endwise compat:
       'elixir', 'lua', 'ruby', 'vim',
