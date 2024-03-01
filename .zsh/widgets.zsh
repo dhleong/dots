@@ -133,7 +133,12 @@ _git-fzf-branch() {
         return
     fi
 
-    branch=$(echo $branches | fzf)
+    if [ $(echo $branches | wc -l) -gt 20 ]; then
+        branch=$(echo $branches | rg -v 'remotes/origin' | fzf --bind "ctrl-o:reload:$cmd+unbind(ctrl-o)")
+    else
+        branch=$(echo $branches | fzf)
+    fi
+
     if [ -n "$branch" ]; then
         # if we selected a remote branch, ensure that we don't check it out
         # in a detached state
