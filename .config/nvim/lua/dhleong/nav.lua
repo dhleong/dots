@@ -41,6 +41,10 @@ local function unpack_text_result(result)
   return file, line, col, text
 end
 
+local function bindings(entries)
+  return table.concat(entries, '+')
+end
+
 local M = {
   _last_search = {}
 }
@@ -89,10 +93,23 @@ function M.open_project(project_dir)
   end
 end
 
-function M.in_project(project_dir, sink)
+function M.in_project(project_dir, sink, opts)
+  local options = {}
+
+  if opts.monorepo_root then
+    -- NOTE: ctrl-m would be the most intuitive, but that's equivalent to hitting enter...
+    options = {
+      '--bind',
+      'ctrl-o:' .. bindings {
+        'reload(' .. vim.env.HOME .. '/bin/list-repo-files ' .. opts.monorepo_root .. ')',
+        'unbind:ctrl-o',
+      },
+    }
+  end
+
   fzf {
     dir = project_dir,
-    options = {},
+    options = options,
     source = vim.env.HOME .. '/bin/list-repo-files',
     sink = sink,
   }
@@ -108,10 +125,6 @@ local function make_rg(opts)
     '--glob', "'!tsconfig.json'",
     '--',
   }, ' ')
-end
-
-local function bindings(entries)
-  return table.concat(entries, '+')
 end
 
 function M.by_text(project_dir, sink, opts)
@@ -253,6 +266,8 @@ function M._handle_lsp_location(unused, result, ctx, config)
     if not no_results then
       -- TODO Maybe we can open a qflist or something?
       print('Definition results came in but I see you have moved on...')
+    else
+      print('Definition results came back empty but I see you have moved on...')
     end
     return
   end

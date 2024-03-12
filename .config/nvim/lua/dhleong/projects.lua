@@ -17,39 +17,56 @@ parent_paths = vim.tbl_map(function(path)
 end, parent_paths)
 
 local function create_project_navigation_maps(paths)
-  local function nmap(lhs, nav_call)
-    local lua_call = "require'dhleong.nav'." .. nav_call
-    vim.api.nvim_buf_set_keymap(0, 'n', lhs, '<cmd>lua ' .. lua_call .. '<cr>', {
-      noremap = true,
+  local function nmap(lhs, nav_call, project_dir, sink, opts)
+    vim.keymap.set('n', lhs, function()
+      local call_opts = vim.tbl_extend('force', {}, opts or {})
+      call_opts.opts = nil
+      if opts and opts.opts then
+        call_opts = vim.tbl_extend('force', call_opts, opts.opts())
+      end
+
+      local f = require 'dhleong.nav'[nav_call]
+
+      f(project_dir, sink, call_opts)
+    end, {
+      desc = 'nav.' .. nav_call,
       silent = true,
+      buffer = true,
     })
   end
 
   local project_dir = paths.project_dir
-  local project_path = 'nil'
   if project_dir then
-    project_path = '"' .. project_dir .. '"'
-
     -- NOTE: vim-test *must* be run from the project root, frustratingly. It supplies
     -- this "feature" to workaround that assumption, but it's global and doesn't support
     -- a buffer-local for... reasons :\
     vim.g['test#project_root'] = project_dir
   end
 
-  nmap('<c-p>', "in_project(" .. project_path .. ", 'e')")
-  nmap('<c-w><c-p>', "in_project(" .. project_path .. ", 'tabe')")
-  nmap('<c-s><c-p>', "in_project(" .. project_path .. ", 'vsplit')")
-  nmap('\\', "by_text(" .. project_path .. ", 'e')")
-  nmap('|', "resume_by_text(" .. project_path .. ", 'e')")
-  nmap('<c-w>\\', "by_text(" .. project_path .. ", 'tabe')")
-  nmap('<c-s>\\', "by_text(" .. project_path .. ", 'tabe')")
-  nmap('g\\', "by_text(" .. project_path .. ", 'e', { query = vim.fn.expand('<cword>') })")
+  local shared_opts = {
+    monorepo_root = paths.monorepo_root,
+  }
+  local dynamic_opts = function()
+    return { query = vim.fn.expand('<cword>') }
+  end
+
+  nmap('<c-p>', 'in_project', project_dir, 'e', shared_opts)
+  nmap('<c-w><c-p>', 'in_project', project_dir, 'tabe', shared_opts)
+  nmap('<c-s><c-p>', 'in_project', project_dir, 'vsplit', shared_opts)
+  nmap('\\', 'by_text', project_dir, 'e', shared_opts)
+  nmap('|', 'resume_by_text', project_dir, 'e', shared_opts)
+  nmap('<c-w>\\', 'by_text', project_dir, 'tabe', shared_opts)
+  nmap('<c-s>\\', 'by_text', project_dir, 'tabe', shared_opts)
+  nmap('g\\', 'by_text', project_dir, 'e', vim.tbl_extend('keep', {
+    opts = dynamic_opts
+  }, shared_opts))
+
 
   if paths.monorepo_root then
-    nmap('<leader>m\\', "by_text('" .. paths.monorepo_root .. "', 'e')")
-    nmap('<leader>m|', "resume_by_text('" .. paths.monorepo_root .. "', 'e')")
-    nmap('<leader>mg\\', "by_text('" .. paths.monorepo_root .. "', 'e', { query = vim.fn.expand('<cword>') })")
-    nmap('<leader>m<c-p>', "in_project('" .. paths.monorepo_root .. "', 'e')")
+    nmap('<leader>m\\', 'by_text', paths.monorepo_root, 'e')
+    nmap('<leader>m|', 'resume_by_text', paths.monorepo_root, 'e')
+    nmap('<leader>mg\\', 'by_text', paths.monorepo_root, 'e', { opts = dynamic_opts })
+    nmap('<leader>m<c-p>', 'in_project', paths.monorepo_root, 'e')
   end
 end
 
