@@ -80,8 +80,8 @@ vim.cmd([[
 
 -- ======= temp ===========================================
 
-vim.g['test#custom_runners'] = {
+vim.g['test#custom_runners'] = vim.tbl_extend('keep', vim.g['test#custom_runners'] or {}, {
   GDScript = {
     'GUT',
   },
-}
+})
