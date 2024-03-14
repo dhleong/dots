@@ -5,6 +5,9 @@ require('helpers.lsp').config('pyright', {
       vim.lsp.protocol.DiagnosticTag.Deprecated
     }
   end,
+  cmd_env = {
+    NODE_OPTIONS = '--max-old-space-size=8192',
+  },
   settings = {
     python = {
       analysis = {
