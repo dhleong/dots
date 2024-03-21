@@ -96,7 +96,7 @@ end
 function M.in_project(project_dir, sink, opts)
   local options = {}
 
-  if opts.monorepo_root then
+  if opts and opts.monorepo_root then
     -- NOTE: ctrl-m would be the most intuitive, but that's equivalent to hitting enter...
     options = {
       '--bind',
