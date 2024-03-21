@@ -6,14 +6,16 @@ vim.g.mapleader = " "
 -- Using the same as the "local leader" for now
 vim.g.maplocalleader = " "
 
-require 'init.plugins'
+local safe_require = require('helpers.init').safe_require
 
-require 'init.commands'
-require 'init.settings'
-require 'init.mappings'
-require 'init.lsp'
-require 'init.github'
-require 'init.statusline'
-require 'init.treesitter'
+safe_require 'init.plugins'
+
+safe_require 'init.commands'
+safe_require 'init.settings'
+safe_require 'init.mappings'
+safe_require 'init.lsp'
+safe_require 'init.github'
+safe_require 'init.statusline'
+safe_require 'init.treesitter'
 
 require 'dhleong.projects'.init()
