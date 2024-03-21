@@ -122,6 +122,7 @@ Plug 'nvim-lua/plenary.nvim' -- dependency of null-ls
 Plug 'b0o/schemastore.nvim'  -- for jsonls
 
 Plug 'nvimtools/none-ls.nvim'
+Plug 'nvimtools/none-ls-extras.nvim'
 -- Plug 'jose-elias-alvarez/null-ls.nvim'
 -- Plug '~/git/null-ls.nvim'
 

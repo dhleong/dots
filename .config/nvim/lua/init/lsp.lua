@@ -152,14 +152,23 @@ for _, language_file in ipairs(lsp_config_languages) do
   require('init.lsp.' .. language)
 end
 
-local function optional_require(ns, path)
+local function optional_require(ns, opts)
+  opts = opts or {}
+  local path = opts.path
   return function()
     local ok, mod = pcall(require, ns)
+    local result = nil
     if ok and path then
-      return mod[path[1]]
+      result = mod[path[1]]
     elseif ok then
-      return mod
+      result = mod
     end
+
+    if result and opts.with then
+      return result.with(opts.with)
+    end
+
+    return result
   end
 end
 
@@ -175,26 +184,34 @@ require 'null-ls.config'.reset()
 require 'null-ls.sources'.reset()
 require 'null-ls'.setup {
   sources = {
-    require('null-ls').builtins.code_actions.eslint_d,
+    optional_require('none-ls.code_actions.eslint_d'),
     require('null-ls').builtins.diagnostics.clj_kondo,
-    require('null-ls').builtins.diagnostics.eslint_d.with {
-      runtime_condition = can_find_some_file('.eslintrc', '.eslintrc.js'),
-    },
-    require('null-ls').builtins.diagnostics.ruff.with {
-      runtime_condition = can_find_some_file('.ruff.toml'),
-    },
+    optional_require('none-ls.diagnostics.eslint_d', {
+      with = {
+        runtime_condition = can_find_some_file('.eslintrc', '.eslintrc.js'),
+      },
+    }),
+    optional_require('none-ls.diagnostics.ruff', {
+      with = {
+        runtime_condition = can_find_some_file('.ruff.toml'),
+      },
+    }),
     require('null-ls').builtins.diagnostics.stylelint,
-    require('null-ls').builtins.formatting.ruff.with {
-      runtime_condition = can_find_some_file('.ruff.toml'),
-    },
-    require('null-ls').builtins.formatting.ruff_format.with {
-      runtime_condition = can_find_some_file('.ruff.toml'),
-    },
+    optional_require('none-ls.formatting.ruff', {
+      with = {
+        runtime_condition = can_find_some_file('.ruff.toml'),
+      },
+    }),
+    optional_require('none-ls.formatting.ruff_format', {
+      with = {
+        runtime_condition = can_find_some_file('.ruff.toml'),
+      },
+    }),
     require('null-ls').builtins.formatting.prettier.with {
       runtime_condition = can_find_some_file('.prettierrc', '.prettierrc.js', '.prettierrc.json'),
     },
     require('null-ls').builtins.formatting.swiftformat,
-    optional_require('lilium', { 'completer' }),
+    optional_require('lilium', { path = 'completer' }),
     require('dhleong.null_ls.filename'),
     optional_require('kodachi.null-ls.completion')
   },
