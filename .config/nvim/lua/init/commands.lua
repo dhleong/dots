@@ -21,7 +21,9 @@ vim.api.nvim_create_user_command(
       vim.cmd.profile('start', path)
       vim.cmd.profile('func', '*')
       vim.cmd.profile('file', '*')
-      plenary_profile.start(vim.fn.expand(lua_path))
+      plenary_profile.start(vim.fn.expand(lua_path), {
+        flame = opts.fargs[1] == 'flame',
+      })
       print('Started profiling to:', path, lua_path)
       print('Use `:Profile stop` when done')
     end
@@ -29,7 +31,7 @@ vim.api.nvim_create_user_command(
   {
     nargs = '?',
     complete = function()
-      return { "stop" }
+      return { 'stop', 'flame' }
     end,
   }
 )
