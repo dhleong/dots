@@ -1,3 +1,5 @@
+local Util = require("lazyvim.util")
+
 --- Helpers {{{
 local function cmp_helpers()
   local cmp = require 'cmp'
@@ -80,6 +82,17 @@ return {
     init = function()
       -- Intercept lazyvim's lsp keymaps and replace them with our own.
       require 'plugins.lsp.keymaps'.init()
+
+      -- Setup our handlers
+      Util.lsp.on_attach(function(client, _)
+        if not client.handlers['textDocument/definition'] then
+          local handler = require 'dhleong.nav'._handle_lsp_location
+          client.handlers['textDocument/declaration'] = handler
+          client.handlers['textDocument/definition'] = handler
+          client.handlers['textDocument/typeDefinition'] = handler
+          client.handlers['textDocument/implementation'] = handler
+        end
+      end)
     end,
   },
 
