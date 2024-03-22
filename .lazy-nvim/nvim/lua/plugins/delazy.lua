@@ -76,6 +76,7 @@ return {
 
   -- Let's disable a ton of plugins:
   { "akinsho/bufferline.nvim",     enabled = false },
+  { "echasnovski/mini.surround",   enabled = false },
   { "folke/noice.nvim",            enabled = false },
   { "folke/which-key.nvim",        enabled = false },
   { "lewis6991/gitsigns.nvim",     enabled = false },
