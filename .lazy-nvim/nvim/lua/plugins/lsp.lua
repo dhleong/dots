@@ -76,13 +76,16 @@ return {
   },
 
   {
+    'neovim/nvim-lspconfig',
+    init = function()
+      -- Intercept lazyvim's lsp keymaps and replace them with our own.
+      require 'plugins.lsp.keymaps'.init()
+    end,
+  },
+
+  {
     'hrsh7th/nvim-cmp',
-    keys = {
-      -- TODO: Is there a better place? Something like LspAttach and set buf local maps?
-      { '<m-cr>', function() vim.lsp.buf.code_action() end },
-      { '[c',     function() vim.diagnostic.goto_prev() end },
-      { ']c',     function() vim.diagnostic.goto_next() end },
-    },
+
     opts = function()
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
       local cmp = require("cmp")
