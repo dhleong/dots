@@ -78,7 +78,9 @@ return {
   { "akinsho/bufferline.nvim",     enabled = false },
   { "echasnovski/mini.surround",   enabled = false },
   { "folke/noice.nvim",            enabled = false },
+  { "folke/persistence.nvim",      enabled = false },
   { "folke/which-key.nvim",        enabled = false },
   { "lewis6991/gitsigns.nvim",     enabled = false },
+  { "nvimdev/dashboard-nvim",      enabled = false },
   { "nvim-neo-tree/neo-tree.nvim", enabled = false },
 }

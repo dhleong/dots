@@ -1,10 +1,11 @@
 return {
-  { 'tpope/vim-vinegar' },
+  { 'tpope/vim-vinegar', event = 'VeryLazy' },
   {
     'junegunn/fzf',
     build = './install --bin',
+    event = 'VeryLazy'
   },
-  { 'junegunn/fzf.vim' },
+  { 'junegunn/fzf.vim',  lazy = true },
   {
     dir = '.',
     event = 'VeryLazy',
