@@ -76,12 +76,14 @@ return {
 
   -- Let's disable a ton of plugins:
   { "bufferline.nvim", enabled = false },
-  { "mini.surround", enabled = false },
-  { "noice.nvim", enabled = false },
-  { "persistence.nvim", enabled = false },
-  { "which-key.nvim", enabled = false },
-  { "gitsigns.nvim", enabled = false },
   { "dashboard-nvim", enabled = false },
+  { "gitsigns.nvim", enabled = false },
+  { "mini.bufremove", enabled = false },
+  { "mini.surround", enabled = false },
   { "neo-tree.nvim", enabled = false },
+  { "noice.nvim", enabled = false },
+  { "nvim-web-devicons", enabled = false },
+  { "persistence.nvim", enabled = false },
   { "telescope.nvim", enabled = false },
+  { "which-key.nvim", enabled = false },
 }
