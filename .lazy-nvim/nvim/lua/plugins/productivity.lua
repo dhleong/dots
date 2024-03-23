@@ -1,5 +1,5 @@
 return {
-  { dir = '~/work/otsukare' },
+  { dir = "~/work/otsukare" },
 
-  { 'tpope/vim-obsession',  cmd = 'Obsession' },
+  { "tpope/vim-obsession", cmd = "Obsession" },
 }
