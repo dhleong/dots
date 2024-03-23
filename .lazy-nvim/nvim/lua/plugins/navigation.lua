@@ -5,7 +5,16 @@ return {
     build = "./install --bin",
     event = "VeryLazy",
   },
-  { "junegunn/fzf.vim", lazy = true },
+  {
+    "junegunn/fzf.vim",
+    lazy = true,
+    init = function()
+      vim.g.fzf_colors = {
+        ["bg+"] = { "bg", "Visual" },
+        ["pointer"] = { "fg", "SpecialComment", "StatusLine" },
+      }
+    end,
+  },
   {
     dir = ".",
     event = "VeryLazy",
