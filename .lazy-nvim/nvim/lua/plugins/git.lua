@@ -1,12 +1,12 @@
 return {
   {
-    'tpope/vim-fugitive',
-    event = 'VeryLazy',
+    "tpope/vim-fugitive",
+    event = "VeryLazy",
     config = function()
-      vim.cmd.source('~/.vim/init/github.vim')
+      vim.cmd.source("~/.vim/init/github.vim")
     end,
   },
-  { 'tpope/vim-rhubarb', cmd = 'GBrowse' },
+  { "tpope/vim-rhubarb", event = "VeryLazy" },
 
   -- FIXME: null-ls?
   -- { dir = '~/git/lilium', event = 'VeryLazy' }
