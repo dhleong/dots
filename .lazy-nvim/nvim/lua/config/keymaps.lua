@@ -65,6 +65,7 @@ mapOpenFile("vm", paths.config("keymaps.lua"))
 mapOpenFile("vp", paths.plugins(""))
 mapOpenFile("vs", paths.config("options.lua"))
 mapOpenFile("vb", vim.fn.stdpath("data") .. "/lazy")
+mapOpenFile("vl", vim.fn.stdpath("data") .. "/lazy/LazyVim/lua/lazyvim/plugins")
 
 mapOpenFile("eft", paths.plugins('/lang/" . &filetype . ".lua'))
 
