@@ -8,6 +8,5 @@ return {
   },
   { "tpope/vim-rhubarb", event = "VeryLazy" },
 
-  -- FIXME: null-ls?
-  -- { dir = '~/git/lilium', event = 'VeryLazy' }
+  { dir = "~/git/lilium", event = "VeryLazy" },
 }
