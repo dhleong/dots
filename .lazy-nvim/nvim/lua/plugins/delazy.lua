@@ -75,13 +75,13 @@ return {
   },
 
   -- Let's disable a ton of plugins:
-  { "akinsho/bufferline.nvim",       enabled = false },
-  { "echasnovski/mini.surround",     enabled = false },
-  { "folke/noice.nvim",              enabled = false },
-  { "folke/persistence.nvim",        enabled = false },
-  { "folke/which-key.nvim",          enabled = false },
-  { "lewis6991/gitsigns.nvim",       enabled = false },
-  { "nvimdev/dashboard-nvim",        enabled = false },
-  { "nvim-neo-tree/neo-tree.nvim",   enabled = false },
-  { "nvim-telescope/telescope.nvim", enabled = false },
+  { "bufferline.nvim", enabled = false },
+  { "mini.surround", enabled = false },
+  { "noice.nvim", enabled = false },
+  { "persistence.nvim", enabled = false },
+  { "which-key.nvim", enabled = false },
+  { "gitsigns.nvim", enabled = false },
+  { "dashboard-nvim", enabled = false },
+  { "neo-tree.nvim", enabled = false },
+  { "telescope.nvim", enabled = false },
 }
