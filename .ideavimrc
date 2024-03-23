@@ -47,6 +47,7 @@ nnoremap ]c :action GotoNextError<cr>
 
 nnoremap gid :action GotoImplementation<cr>
 nnoremap gpr :action ChooseRunConfiguration<cr>
+nnoremap gpd :action ChooseDebugConfiguration<cr>
 
 " 'sync'; so we don't have to use the mouse to do this
 " whenever we change gradle configs
