@@ -43,6 +43,7 @@
   "schemastore.nvim": { "branch": "main", "commit": "ed3f891a5deefcd94c62c8e375d1efb1ce53464b" },
   "todo-comments.nvim": { "branch": "main", "commit": "833d8dd8b07eeda37a09e99460f72a02616935cb" },
   "tokyonight.nvim": { "branch": "main", "commit": "fbe3a27378fdd51a8ddd04f57012455436916a62" },
+  "trot.nvim": { "branch": "main", "commit": "93105683fd064fe1cd5e21607704c4357a835ba0" },
   "trouble.nvim": { "branch": "main", "commit": "f1168feada93c0154ede4d1fe9183bf69bac54ea" },
   "vader.vim": { "branch": "master", "commit": "6fff477431ac3191c69a3a5e5f187925466e275a" },
   "vim-argwrap": { "branch": "master", "commit": "f3e26a5ad249d09467804b92e760d08b1cc457a1" },
