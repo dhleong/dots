@@ -81,6 +81,16 @@ return {
 
   {
     "neovim/nvim-lspconfig",
+
+    opts = {
+      diagnostics = {
+        float = {
+          -- Show the source of the diagnostic, always
+          source = true,
+        },
+      },
+    },
+
     init = function()
       -- Intercept lazyvim's lsp keymaps and replace them with our own.
       require("plugins.lsp.keymaps").init()
