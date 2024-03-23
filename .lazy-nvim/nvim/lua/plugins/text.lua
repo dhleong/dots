@@ -1,4 +1,25 @@
 return {
+  {
+    "LuaSnip",
+    keys = {
+      {
+        "<s-tab>",
+        function()
+          if require("luasnip").jumpable(-1) then
+            return "<Plug>luasnip-jump-prev"
+          elseif vim.fn.pumvisible() == 1 then
+            return "<c-p>"
+          else
+            return "<c-d>"
+          end
+        end,
+        expr = true,
+        silent = true,
+        mode = { "i" },
+      },
+    },
+  },
+
   -- visual-mode number incrementing
   { "vim-scripts/VisIncr", event = "VeryLazy" },
 
