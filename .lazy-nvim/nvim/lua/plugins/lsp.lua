@@ -62,9 +62,6 @@ end
 -- }}}
 
 return {
-  -- Why do I need this?
-  { import = "plugins.lang" },
-
   { "lukas-reineke/cmp-under-comparator" },
   {
     "ray-x/lsp_signature.nvim",
