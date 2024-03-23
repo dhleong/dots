@@ -2,7 +2,7 @@ local Util = require("lazyvim.util")
 
 --- Helpers {{{
 local function cmp_helpers()
-  local cmp = require 'cmp'
+  local cmp = require("cmp")
   local function entry_has_key(entry, key)
     if not entry.completion_item then
       return
@@ -30,9 +30,9 @@ local function cmp_helpers()
 
   ---@param key_or_config string|{ key:string, cmdwin: string }
   function M.try_accept_completion(key_or_config)
-    local key = ''
+    local key = ""
     local cmdwin = nil
-    if type(key_or_config) == 'table' then
+    if type(key_or_config) == "table" then
       key = key_or_config.key
       cmdwin = key_or_config.cmdwin
     else
@@ -46,15 +46,15 @@ local function cmp_helpers()
         cmp.confirm()
 
         if key and not entry_has_key(entry, key) then
-          vim.api.nvim_feedkeys(key, 'nt', false)
+          vim.api.nvim_feedkeys(key, "nt", false)
         end
-      elseif cmdwin and vim.fn.getcmdwintype() ~= '' then
+      elseif cmdwin and vim.fn.getcmdwintype() ~= "" then
         local to_feed = vim.api.nvim_replace_termcodes(cmdwin, true, false, true)
-        vim.api.nvim_feedkeys(to_feed, 'nt', true)
+        vim.api.nvim_feedkeys(to_feed, "nt", true)
       else
         fallback()
       end
-    end, { 'i', 'c' })
+    end, { "i", "c" })
   end
 
   return M
@@ -63,94 +63,92 @@ end
 
 return {
   -- Why do I need this?
-  { import = 'plugins.lang' },
+  { import = "plugins.lang" },
 
-  { 'lukas-reineke/cmp-under-comparator' },
+  { "lukas-reineke/cmp-under-comparator" },
   {
-    'ray-x/lsp_signature.nvim',
+    "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
     opts = {},
-    config = function(_, opts) require 'lsp_signature'.setup(opts) end
+    config = function(_, opts)
+      require("lsp_signature").setup(opts)
+    end,
   },
   {
-    'hrsh7th/cmp-nvim-lsp-signature-help',
+    "hrsh7th/cmp-nvim-lsp-signature-help",
     event = "VeryLazy",
   },
 
   {
-    'neovim/nvim-lspconfig',
+    "neovim/nvim-lspconfig",
     init = function()
       -- Intercept lazyvim's lsp keymaps and replace them with our own.
-      require 'plugins.lsp.keymaps'.init()
+      require("plugins.lsp.keymaps").init()
 
       -- Setup our handlers
       Util.lsp.on_attach(function(client, _)
-        if not client.handlers['textDocument/definition'] then
-          local handler = require 'dhleong.nav'._handle_lsp_location
-          client.handlers['textDocument/declaration'] = handler
-          client.handlers['textDocument/definition'] = handler
-          client.handlers['textDocument/typeDefinition'] = handler
-          client.handlers['textDocument/implementation'] = handler
+        if not client.handlers["textDocument/definition"] then
+          local handler = require("dhleong.nav")._handle_lsp_location
+          client.handlers["textDocument/declaration"] = handler
+          client.handlers["textDocument/definition"] = handler
+          client.handlers["textDocument/typeDefinition"] = handler
+          client.handlers["textDocument/implementation"] = handler
         end
       end)
     end,
   },
 
   {
-    'hrsh7th/nvim-cmp',
+    "hrsh7th/nvim-cmp",
 
-    opts = function()
-      vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
+    opts = function(_, opts)
       local cmp = require("cmp")
       local helpers = cmp_helpers()
-      return {
-        mapping = {
-          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-          ['<Tab>'] = cmp.mapping.select_next_item(),
-          ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-          ['<Space>'] = helpers.try_accept_completion(' '),
-          ['('] = helpers.try_accept_completion('('),
-          ['.'] = helpers.try_accept_completion('.'),
-          -- NOTE: The enter key is a bit special here; if we use the normal fallback
-          -- from the cmdline window, we will end up performing a bunch of edits due to
-          -- the fallback mappings from endwise (which would run *after* the cmdline
-          -- window gets closed)
-          ['<CR>'] = helpers.try_accept_completion { cmdwin = '<CR>' },
-        },
-        preselect = cmp.PreselectMode.None,
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-        }, {
-          { name = 'buffer' },
-        }, {
-          { name = 'nvim_lsp_signature_help' },
-        }),
 
-        sorting = {
-          comparators = {
-            cmp.config.compare.offset,
-            cmp.config.compare.exact,
-            cmp.config.compare.score,
-            require 'cmp-under-comparator'.under,
-            cmp.config.compare.recently_used,
-            cmp.config.compare.kind,
-            cmp.config.compare.sort_text,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
+      opts.completion.completeopt = "menu,menuone,noselect"
 
-            -- Prefer local vars in ties. Might also try .locality here
-            -- (which uses distance to cursor)
-            cmp.config.compare.scopes,
-          },
-        },
+      opts.mapping = {
+        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+        ["<Tab>"] = cmp.mapping.select_next_item(),
+        ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+        ["<Space>"] = helpers.try_accept_completion(" "),
+        ["("] = helpers.try_accept_completion("("),
+        ["."] = helpers.try_accept_completion("."),
+        -- NOTE: The enter key is a bit special here; if we use the normal fallback
+        -- from the cmdline window, we will end up performing a bunch of edits due to
+        -- the fallback mappings from endwise (which would run *after* the cmdline
+        -- window gets closed)
+        ["<CR>"] = helpers.try_accept_completion({ cmdwin = "<CR>" }),
+      }
+      opts.preselect = cmp.PreselectMode.None
+      opts.sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+      }, {
+        { name = "buffer" },
+      }, {
+        { name = "nvim_lsp_signature_help" },
+      })
 
-        experimental = {
-          ghost_text = {
-            hl_group = "CmpGhostText",
-          },
+      opts.sorting = {
+        comparators = {
+          cmp.config.compare.offset,
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          require("cmp-under-comparator").under,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+
+          -- Prefer local vars in ties. Might also try .locality here
+          -- (which uses distance to cursor)
+          cmp.config.compare.scopes,
         },
       }
+
+      return opts
     end,
   },
 }
