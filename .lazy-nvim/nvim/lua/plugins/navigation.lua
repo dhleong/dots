@@ -32,6 +32,13 @@ return {
           enabled = false,
         },
       },
+      search = {
+        -- Multi-window makes it harder for autojump to trigger...
+        multi_window = false,
+      },
+      jump = {
+        autojump = true,
+      },
     },
     keys = {
       {
