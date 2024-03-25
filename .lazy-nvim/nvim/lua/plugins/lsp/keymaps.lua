@@ -1,6 +1,7 @@
 local M = {}
 
 function M.build()
+  -- stylua: ignore
   return {
     { 'K',          vim.lsp.buf.hover },
     { 'gd',         vim.lsp.buf.definition },
@@ -11,7 +12,6 @@ function M.build()
     { '<leader>js', vim.lsp.buf.references },
     { '<leader>jr', vim.lsp.buf.rename },
 
-    -- TODO: Is there a better place? Something like LspAttach and set buf local maps?
     { '<m-cr>',     vim.lsp.buf.code_action },
     { '[c',         vim.diagnostic.goto_prev },
     { ']c',         vim.diagnostic.goto_next },
@@ -19,7 +19,7 @@ function M.build()
 end
 
 function M.init()
-  local keys = require 'lazyvim.plugins.lsp.keymaps'.get()
+  local keys = require("lazyvim.plugins.lsp.keymaps").get()
 
   -- Install our preferred keymaps
   local my_keys = M.build()
