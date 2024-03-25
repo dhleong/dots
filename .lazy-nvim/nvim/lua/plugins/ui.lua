@@ -13,25 +13,41 @@ return {
   },
 
   {
+    dir = ".",
+    name = "dhleong.ui",
+    init = function()
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.input = function(...)
+        return require("dhleong.ui").input(...)
+      end
+
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.select = function(...)
+        return require("dhleong.ui").select(...)
+      end
+    end,
+  },
+
+  {
     "nvim-lualine/lualine.nvim",
     opts = {
       options = {
         icons_enabled = false,
-        component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
+        component_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
         disabled_filetypes = {},
         always_divide_middle = true,
       },
       sections = {
-        lualine_a = { 'mode' },
-        lualine_b = { 'branch' },
-        lualine_c = { 'filename' },
-        lualine_x = { 'filetype' },
+        lualine_a = { "mode" },
+        lualine_b = { "branch" },
+        lualine_c = { "filename" },
+        lualine_x = { "filetype" },
         lualine_y = {
-          'diagnostics',
+          "diagnostics",
           -- { lsp_status, cond = lsp_status_exists }
         },
-        lualine_z = { 'location' }
+        lualine_z = { "location" },
       },
     },
   },

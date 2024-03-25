@@ -77,6 +77,7 @@ return {
   -- Let's disable a ton of plugins:
   { "bufferline.nvim", enabled = false },
   { "dashboard-nvim", enabled = false },
+  { "dressing.nvim", enabled = false },
   { "gitsigns.nvim", enabled = false },
   { "mini.bufremove", enabled = false },
   { "mini.surround", enabled = false },

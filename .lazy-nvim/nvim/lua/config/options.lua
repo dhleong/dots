@@ -5,6 +5,12 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Support loading lua modules from my current nvim config:
+local current_root = vim.fn.stdpath("config")
+if current_root:find(".lazy") then
+  vim.opt.rtp:prepend(vim.env.HOME .. "/.config/nvim")
+end
+
 vim.g.autoformat = true
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
