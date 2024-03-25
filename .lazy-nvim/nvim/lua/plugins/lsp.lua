@@ -57,6 +57,19 @@ local function cmp_helpers()
     end, { "i", "c" })
   end
 
+  function M.create_tab_handler(opts)
+    return cmp.mapping(function(fallback)
+      local luasnip = require("luasnip")
+      if vim.fn.pumvisible() ~= 0 or fast_cmp_visible() then
+        opts.select_next_fn()
+      elseif luasnip.jumpable(opts.jump_direction) then
+        luasnip.jump(opts.jump_direction)
+      else
+        fallback()
+      end
+    end, { "i", "s" })
+  end
+
   return M
 end
 -- }}}
@@ -115,8 +128,14 @@ return {
       opts.completion.completeopt = "menu,menuone,noselect"
 
       opts.mapping = {
-        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-        ["<Tab>"] = cmp.mapping.select_next_item(),
+        ["<S-Tab>"] = helpers.create_tab_handler({
+          select_next_fn = cmp.select_prev_item,
+          jump_direction = -1,
+        }),
+        ["<Tab>"] = helpers.create_tab_handler({
+          select_next_fn = cmp.select_next_item,
+          jump_direction = 1,
+        }),
         ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
         ["<Space>"] = helpers.try_accept_completion(" "),
         ["("] = helpers.try_accept_completion("("),

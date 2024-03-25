@@ -2,15 +2,19 @@ return {
   {
     "LuaSnip",
     keys = {
+      -- Configured as part of nvim-cmp in lsp.lua
+      { "<s-tab>", false },
+
+      -- If we used a cmp completion to fill a snippet
+      -- placeholder, we need a more convenient way to jump to
+      -- the next placeholder without leaving insert and coming back in
       {
-        "<s-tab>",
+        "<c-j>",
         function()
-          if require("luasnip").jumpable(-1) then
-            return "<Plug>luasnip-jump-prev"
-          elseif vim.fn.pumvisible() == 1 then
-            return "<c-p>"
+          if require("luasnip").jumpable(1) then
+            return "<Plug>luasnip-jump-next"
           else
-            return "<c-d>"
+            return "<c-j>"
           end
         end,
         expr = true,
@@ -18,6 +22,19 @@ return {
         mode = { "i" },
       },
     },
+
+    cmd = "SnipEdit",
+
+    config = function(_, opts)
+      -- Is there a better place to set up commands?
+      vim.api.nvim_create_user_command("SnipEdit", function(args)
+        require("luasnip.loaders").edit_snippet_files()
+      end, {})
+
+      require("luasnip").setup(opts)
+
+      require("luasnip.loaders.from_lua").load()
+    end,
   },
 
   -- visual-mode number incrementing
