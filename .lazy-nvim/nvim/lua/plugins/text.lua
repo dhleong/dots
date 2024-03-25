@@ -25,6 +25,13 @@ return {
       },
     },
 
+    opts = {
+      update_events = {
+        "TextChanged",
+        "TextChangedI",
+      },
+    }
+
     cmd = "SnipEdit",
 
     config = function(_, opts)
