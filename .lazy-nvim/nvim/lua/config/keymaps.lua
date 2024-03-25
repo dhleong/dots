@@ -74,6 +74,13 @@ mapOpenFile("eft", paths.plugins('/lang/" . &filetype . ".lua'))
 -- Muscle memory from macOS defaults
 inoremap("<m-bs>", "<c-w>")
 
+-- W is the same as w, but doesn't perform auto-formatting
+vim.api.nvim_create_user_command("W", function()
+  vim.b.autoformat = false
+  vim.cmd.write()
+  vim.b.autoformat = true
+end, {})
+
 -- ======= File navigation ==================================
 
 nnoremap("<leader>p", "<cmd>lua require'dhleong.nav'.projects()<cr>")
