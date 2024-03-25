@@ -2,7 +2,9 @@ return {
   {
     "LuaSnip",
     keys = {
-      -- Configured as part of nvim-cmp in lsp.lua
+      -- These two are configured as part of nvim-cmp in lsp.lua,
+      -- to avoid tab not working correctly on a cold start
+      { "<tab>", false, mode = { "i", "s" } },
       { "<s-tab>", false },
 
       -- If we used a cmp completion to fill a snippet
