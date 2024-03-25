@@ -30,7 +30,7 @@ return {
         "TextChanged",
         "TextChangedI",
       },
-    }
+    },
 
     cmd = "SnipEdit",
 
