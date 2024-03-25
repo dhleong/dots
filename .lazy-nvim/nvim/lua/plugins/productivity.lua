@@ -4,6 +4,13 @@ return {
   { "tpope/vim-obsession" },
 
   {
+    "todo-comments.nvim",
+    opts = {
+      signs = false,
+    },
+  },
+
+  {
     "dhleong/trot.nvim",
     keys = {
       {
