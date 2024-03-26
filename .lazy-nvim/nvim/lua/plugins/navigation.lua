@@ -1,5 +1,6 @@
 return {
   { "tpope/vim-vinegar", event = "VeryLazy" },
+
   {
     "junegunn/fzf",
     build = "./install --bin",
@@ -15,6 +16,7 @@ return {
       }
     end,
   },
+
   {
     dir = ".",
     event = "VeryLazy",
