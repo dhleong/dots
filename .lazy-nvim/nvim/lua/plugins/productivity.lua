@@ -1,5 +1,13 @@
+local otsukare_dir = "~/work/otsukare"
 return {
-  { dir = "~/work/otsukare" },
+  {
+    dir = otsukare_dir,
+    import = "otsukare.lazy",
+    cond = function()
+      local full_path = vim.fn.expand(otsukare_dir)
+      return vim.fn.isdirectory(full_path) == 1
+    end,
+  },
 
   { "tpope/vim-obsession" },
 
