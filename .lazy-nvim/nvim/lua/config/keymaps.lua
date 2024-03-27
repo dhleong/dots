@@ -5,9 +5,9 @@
 -- Laziness:
 vim.cmd.source("~/.vim/init/mappings.vim")
 
--- NOTE: We're not using vim-mirror at the moment, so we're
+-- NOTE: We're not using vim-mirror or vim-endwise at the moment, so we're
 -- tweaking the imported mapping here to compensate
-vim.keymap.set("i", "<Enter>", "<C-R>=dhleong#text#TryCleanWhitespace()<cr><Plug>DiscretionaryEnd", {
+vim.keymap.set("i", "<Enter>", "<C-R>=dhleong#text#TryCleanWhitespace()<cr>", {
   silent = true,
 })
 

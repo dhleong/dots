@@ -55,14 +55,17 @@ return {
   { "tpope/vim-sleuth", event = "VeryLazy" },
   { "tpope/vim-surround", event = "VeryLazy" },
 
+  -- Replaces my old tpope/vim-endwise plugin, since endwise requires regex syntax enabled
   {
-    "tpope/vim-endwise",
-    event = "VeryLazy",
-    init = function()
-      -- we manually map in mappings.vim to avoid breaking other <cr> map
-      -- augmentations, like hyperstyle
-      vim.g.endwise_no_mappings = 1
-    end,
+    "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "RRethy/nvim-treesitter-endwise",
+    },
+    opts = {
+      endwise = {
+        enable = true,
+      },
+    },
   },
 
   -- Convert between single-line and wrapped argument lists
