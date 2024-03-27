@@ -76,6 +76,7 @@ end
 
 return {
   { "lukas-reineke/cmp-under-comparator" },
+
   {
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
@@ -176,9 +177,11 @@ return {
           cmp.config.compare.length,
           cmp.config.compare.order,
 
-          -- Prefer local vars in ties. Might also try .locality here
-          -- (which uses distance to cursor)
-          cmp.config.compare.scopes,
+          -- Prefer local/nearby vars in ties.
+          -- NOTE: .scopes is disabled atm because it is SLOW. Esp in elixir,
+          -- it causes hangs when entering insert mode, or opening the cmdline
+          -- cmp.config.compare.scopes, -- This uses scopes
+          cmp.config.compare.locality, -- This uses distance to cursor
         },
       }
 
