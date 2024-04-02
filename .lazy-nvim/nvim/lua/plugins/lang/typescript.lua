@@ -43,22 +43,12 @@ return {
       servers = {
         tsserver = {
           settings = tsserver_settings,
-        },
-      },
 
-      -- Don't use tsserver or eslint's formatting
-      setup = {
-        tsserver = function()
-          local lspFormattingDisabled = {
-            tsserver = true,
-            eslint = true,
-          }
-          require("lazyvim.util").lsp.on_attach(function(client)
-            if lspFormattingDisabled[client.name] then
-              client.server_capabilities.documentFormattingProvider = false
-            end
-          end)
-        end,
+          -- Don't use tsserver or eslint's formatting
+          on_attach = function(client)
+            client.server_capabilities.documentFormattingProvider = false
+          end,
+        },
       },
     },
   },
