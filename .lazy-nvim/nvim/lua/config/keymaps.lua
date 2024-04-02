@@ -60,7 +60,7 @@ end
 
 -- }}}
 
-mapOpenFile("ev", paths.nvim("init.lua"))
+mapOpenFile("ev", paths.config("lazy.lua"))
 mapOpenFile("vm", paths.config("keymaps.lua"))
 mapOpenFile("vp", paths.plugins(""))
 mapOpenFile("vs", paths.config("options.lua"))
