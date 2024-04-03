@@ -10,7 +10,15 @@ return {
       vim.cmd.source("~/.vim/init/github.vim")
     end,
   },
-  { "tpope/vim-rhubarb", event = "VeryLazy" },
 
-  { dir = "~/git/lilium", event = "VeryLazy" },
+  {
+    dir = "~/git/lilium",
+    ft = "gitcommit",
+    lazy = true,
+    cmd = {
+      "LiliumInfo",
+      "GBrowse",
+    },
+    opts = {},
+  },
 }
