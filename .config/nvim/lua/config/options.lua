@@ -6,10 +6,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Support loading lua modules from my current nvim config:
-local current_root = vim.fn.stdpath("config")
-if type(current_root) == "string" and current_root:find(".lazy") then
-  vim.opt.rtp:prepend(vim.env.HOME .. "/.config/nvim")
-end
+-- (Eventually should migrate these in, probably)
+vim.opt.rtp:prepend(vim.env.HOME .. "/.old-nvim/nvim")
 
 vim.g.autoformat = true
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
@@ -33,7 +31,7 @@ vim.o.expandtab = true
 
 vim.o.incsearch = true
 vim.o.ignorecase = true -- ignore case in search....
-vim.o.smartcase = true -- but if we WANT case, use it
+vim.o.smartcase = true  -- but if we WANT case, use it
 
 -- ======= Editing tweaks ===================================
 
@@ -53,7 +51,7 @@ end
 -- ======= Visual tweaks ====================================
 
 -- adjust splits behaviour
-vim.o.splitright = true -- horizontal splits should not open on the left...
+vim.o.splitright = true   -- horizontal splits should not open on the left...
 vim.o.equalalways = false -- 'no equal always'--don't resize my splits!
 
 -- show horrid tabs

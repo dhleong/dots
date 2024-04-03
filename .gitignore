@@ -12,6 +12,9 @@
 .config/nvim/autoload/plug.vim
 .config/nvim/bundle
 .config/nvim/sessions
+.old-nvim/nvim/autoload/plug.vim
+.old-nvim/nvim/bundle
+.old-nvim/nvim/sessions
 
 # don't commit custom zsh plugins
 .zsh/plugins
