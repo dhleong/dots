@@ -1,5 +1,10 @@
 return {
-  { "tpope/vim-vinegar", event = "VeryLazy" },
+  {
+    "tpope/vim-vinegar",
+    keys = {
+      { "-", "<Plug>VinegarUp" },
+    },
+  },
 
   {
     "junegunn/fzf",
