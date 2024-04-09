@@ -15,9 +15,13 @@ return {
     dir = "~/git/lilium",
     ft = "gitcommit",
     lazy = true,
+    event = "VeryLazy",
     cmd = {
       "LiliumInfo",
-      "GBrowse",
+      -- "GBrowse",  -- Sadly, doing this doesn't work
+    },
+    dependencies = {
+      "tpope/vim-fugitive",
     },
     opts = {},
   },
