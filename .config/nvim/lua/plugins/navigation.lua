@@ -46,6 +46,9 @@ return {
       jump = {
         autojump = true,
       },
+
+      -- Disable flash maps for f/F etc. They break muscle memory in weird ways
+      keys = {},
     },
     keys = {
       {
