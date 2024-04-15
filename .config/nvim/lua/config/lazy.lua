@@ -29,6 +29,10 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
+  dev = {
+    path = "~/git",
+    fallback = true,
+  },
   install = { colorscheme = { "spring-night", "tokyonight" } },
   checker = { enabled = false }, -- very noisy
   performance = {

@@ -12,7 +12,8 @@ return {
   },
 
   {
-    dir = "~/git/lilium",
+    "dhleong/lilium",
+    dev = true,
     ft = "gitcommit",
     lazy = true,
     event = "VeryLazy",
