@@ -134,7 +134,11 @@ end
 -- ======= Other commands ==================================
 
 if vim.env.BROWSER then
-  vim.cmd([[
-      command! -nargs=1 OpenBrowser :silent !$BROWSER <q-args>
-  ]])
+  vim.api.nvim_create_user_command("OpenBrowser", function(opts)
+    local result = vim.system({ vim.env.BROWSER, opts.args }):wait()
+    if result.code ~= 0 then
+      print(result.stdout)
+      print(result.stderr)
+    end
+  end, { nargs = 1 })
 end
