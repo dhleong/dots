@@ -1,4 +1,24 @@
 return {
+  -- TODO: Add to hearth?
+  {
+    dir = ".",
+    init = function()
+      vim.filetype.add({
+        pattern = {
+          [".*"] = {
+            "clojure",
+            {
+              priority = -math.huge,
+              function(_, bufnr)
+                local content = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ""
+                return vim.startswith(content, "#!/usr/bin/env bb")
+              end,
+            },
+          },
+        },
+      })
+    end,
+  },
 
   { "tpope/vim-fireplace", ft = "clojure" },
 
