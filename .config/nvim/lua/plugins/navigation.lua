@@ -38,6 +38,20 @@ return {
         search = {
           enabled = false,
         },
+
+        -- By default, flash will try to repeat the motion when you type `f`, but
+        -- I often do something like `fhdf.` to jump to an `h` and delete to the period,
+        -- for example. With the default behavior, the `df` would delete to the next `h`
+        -- which is unexpected. We have `;` and `,` to do that, if we want
+        char = {
+          char_actions = function(_)
+            -- See :help flash.nvim-flash.nvim-configuration for more info
+            return {
+              [";"] = "next",
+              [","] = "prev",
+            }
+          end,
+        },
       },
       search = {
         -- Multi-window makes it harder for autojump to trigger...
@@ -46,9 +60,6 @@ return {
       jump = {
         autojump = true,
       },
-
-      -- Disable flash maps for f/F etc. They break muscle memory in weird ways
-      keys = {},
     },
     keys = {
       {
