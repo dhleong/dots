@@ -134,7 +134,7 @@ _git-fzf-branch() {
     fi
 
     if [ $(echo $branches | wc -l) -gt 20 ]; then
-        branch=$(echo $branches | rg -v 'remotes/origin' | fzf --bind "ctrl-o:reload:$cmd+unbind(ctrl-o)")
+        branch=$(echo $branches | rg -v 'remotes/origin' | fzf --bind "ctrl-o:reload($cmd)+unbind(ctrl-o)")
     else
         branch=$(echo $branches | fzf)
     fi
