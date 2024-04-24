@@ -8,6 +8,10 @@ return {
     },
     config = function()
       vim.cmd.source("~/.vim/init/github.vim")
+
+      -- Having Gbrowse declared but a no-op can make it kinda annoying
+      -- to actually get to GBrowse
+      pcall(vim.api.nvim_del_user_command, "Gbrowse")
     end,
   },
 
