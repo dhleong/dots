@@ -1,4 +1,3 @@
 return {
-  -- for jsonls
-  { "b0o/schemastore.nvim" },
+  { import = "lazyvim.plugins.extras.lang.json" },
 }
