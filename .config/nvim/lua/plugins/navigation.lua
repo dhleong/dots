@@ -16,6 +16,14 @@ return {
         ["<C-h>"] = false,
         ["<C-l>"] = false,
         ["<C-r>"] = "actions.refresh",
+        ["%"] = function()
+          local filename = vim.fn.input("Enter filename: ")
+          if filename ~= "" then
+            require("oil.actions").cd.callback()
+            local dir = require("oil").get_current_dir()
+            vim.cmd.edit(dir .. "/" .. filename)
+          end
+        end,
       },
     },
     init = function()
