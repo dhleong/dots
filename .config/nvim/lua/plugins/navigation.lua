@@ -1,9 +1,33 @@
 return {
+  -- {
+  --   "tpope/vim-vinegar",
+  --   keys = {
+  --     { "-", "<Plug>VinegarUp" },
+  --   },
+  -- },
+
   {
-    "tpope/vim-vinegar",
+    "stevearc/oil.nvim",
     keys = {
-      { "-", "<Plug>VinegarUp" },
+      { "-", "<cmd>Oil<cr>" },
     },
+    opts = {
+      keymaps = {
+        ["<C-h>"] = false,
+        ["<C-l>"] = false,
+        ["<C-r>"] = "actions.refresh",
+      },
+    },
+    init = function()
+      -- If any of the files in the arglist were directories, ensure that
+      -- oil.nvim is loaded so we can view them properly!
+      for _, f in ipairs(vim.fn.argv()) do
+        if vim.fn.isdirectory(f) == 1 then
+          require("lazy").load({ plugins = { "oil.nvim" } })
+          break
+        end
+      end
+    end,
   },
 
   {
