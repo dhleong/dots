@@ -151,10 +151,16 @@ end
 
 if vim.env.BROWSER then
   vim.api.nvim_create_user_command("OpenBrowser", function(opts)
-    local result = vim.system({ vim.env.BROWSER, opts.args }):wait()
-    if result.code ~= 0 then
-      print(result.stdout)
-      print(result.stderr)
+    local cmd = { vim.env.BROWSER, opts.args }
+    if vim.fn.has("nvim-0.10") == 1 then
+      local result = vim.system(cmd):wait()
+      if result.code ~= 0 then
+        print(result.stdout)
+        print(result.stderr)
+      end
+    else
+      -- vimr is still on 0.9 :'(
+      vim.fn.system(cmd)
     end
   end, { nargs = 1 })
 end
