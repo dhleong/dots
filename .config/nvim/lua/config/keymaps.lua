@@ -74,6 +74,22 @@ mapOpenFile("eft", paths.plugins('/lang/" . &filetype . ".lua'))
 -- Muscle memory from macOS defaults
 inoremap("<m-bs>", "<c-w>")
 
+if vim.g.gui_vimr then
+  -- Manually map these to :write because the default behavior does not
+  -- play well with oil.nvim for some reason.
+  nnoremap("<D-s>", ":w<cr>")
+  inoremap("<D-s>", function()
+    vim.cmd.write()
+  end)
+
+  -- Similarly, the builtin shortcut from vimr doesn't correctly handle
+  -- having multiple windows into the same buffer open, so it'll whine
+  -- when you try to close a window with unsaved changes unnecesarily.
+  -- NOTE: You may need to manually clear the mapping for this; it doesn't
+  -- seem to respect this override like it does with d-s
+  nnoremap("<D-w>", ":q<cr>")
+end
+
 -- W is the same as w, but doesn't perform auto-formatting
 vim.api.nvim_create_user_command("W", function()
   vim.b.autoformat = false
