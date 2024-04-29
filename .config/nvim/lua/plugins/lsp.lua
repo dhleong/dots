@@ -80,23 +80,31 @@ return {
     },
   },
 
-  { "lukas-reineke/cmp-under-comparator" },
-
   {
-    "ray-x/lsp_signature.nvim",
-    event = "VeryLazy",
+    -- LSP status overlay
+    "j-hui/fidget.nvim",
     opts = {},
-    config = function(_, opts)
-      require("lsp_signature").setup(opts)
-    end,
-  },
-  {
-    "hrsh7th/cmp-nvim-lsp-signature-help",
-    event = "VeryLazy",
   },
 
   {
     "neovim/nvim-lspconfig",
+
+    dependencies = {
+      { "lukas-reineke/cmp-under-comparator" },
+
+      {
+        "ray-x/lsp_signature.nvim",
+        event = "VeryLazy",
+        opts = {},
+        config = function(_, opts)
+          require("lsp_signature").setup(opts)
+        end,
+      },
+      {
+        "hrsh7th/cmp-nvim-lsp-signature-help",
+        event = "VeryLazy",
+      },
+    },
 
     opts = {
       diagnostics = {
