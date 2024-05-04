@@ -31,7 +31,7 @@ vim.o.expandtab = true
 
 vim.o.incsearch = true
 vim.o.ignorecase = true -- ignore case in search....
-vim.o.smartcase = true  -- but if we WANT case, use it
+vim.o.smartcase = true -- but if we WANT case, use it
 
 -- ======= Editing tweaks ===================================
 
@@ -51,7 +51,7 @@ end
 -- ======= Visual tweaks ====================================
 
 -- adjust splits behaviour
-vim.o.splitright = true   -- horizontal splits should not open on the left...
+vim.o.splitright = true -- horizontal splits should not open on the left...
 vim.o.equalalways = false -- 'no equal always'--don't resize my splits!
 
 -- show horrid tabs
@@ -73,6 +73,23 @@ vim.o.undofile = true
 
 if vim.fn.executable("/bin/zsh") ~= 0 then
   vim.go.shell = "/bin/zsh"
+end
+
+-- ======= GUI stuff =======================================
+
+if vim.g.neovide then
+  vim.o.guifont = "Victor Mono Medium:h15"
+
+  vim.g.neovide_cursor_animation_length = 0.07
+  vim.g.neovide_cursor_animate_command_line = false
+  vim.g.neovide_cursor_trail_size = 0.02
+  vim.g.neovide_cursor_vfx_mode = "pixiedust"
+  vim.g.neovide_scroll_animation_length = 0.1
+  vim.g.neovide_hide_mouse_when_typing = true
+
+  -- It might be possible to make this look nice, but right now it's
+  -- just distracting:
+  vim.g.neovide_floating_shadow = false
 end
 
 -- ======= temp ===========================================

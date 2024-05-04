@@ -74,9 +74,10 @@ mapOpenFile("eft", paths.plugins('/lang/" . &filetype . ".lua'))
 -- Muscle memory from macOS defaults
 inoremap("<m-bs>", "<c-w>")
 
-if vim.g.gui_vimr then
-  -- Manually map these to :write because the default behavior does not
-  -- play well with oil.nvim for some reason.
+if vim.g.gui_vimr or vim.g.neovide then
+  -- Manually map these to :write because the vimr's default behavior does
+  -- not play well with oil.nvim for some reason (and neovide does not
+  -- provide any).
   nnoremap("<D-s>", ":w<cr>")
   inoremap("<D-s>", function()
     vim.cmd.write()
@@ -88,6 +89,20 @@ if vim.g.gui_vimr then
   -- NOTE: You may need to manually clear the mapping for this; it doesn't
   -- seem to respect this override like it does with d-s
   nnoremap("<D-w>", ":q<cr>")
+end
+
+if vim.g.neovide then
+  -- Neovide-exclusive keymaps:
+  nnoremap("<D-n>", function()
+    vim.fn.system("open --new -b com.neovide.neovide")
+  end)
+
+  nnoremap("<D-t>", ":tabe<cr>")
+
+  vim.keymap.set("n", "<D-v>", '"+P') -- Paste normal mode
+  vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
+  vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
+  vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
 end
 
 -- W is the same as w, but doesn't perform auto-formatting
