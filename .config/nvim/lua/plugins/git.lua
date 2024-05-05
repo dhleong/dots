@@ -34,14 +34,6 @@ return {
     config = function()
       vim.cmd.source("~/.vim/init/github.vim")
 
-      vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufReadPost" }, {
-        group = vim.api.nvim_create_augroup("FugitiveStatusFixGroup", {
-          clear = true,
-        }),
-        pattern = "fugitive://*",
-        callback = ensure_gq_mapped,
-      })
-
       -- Having Gbrowse declared but a no-op can make it kinda annoying
       -- to actually get to GBrowse
       pcall(vim.api.nvim_del_user_command, "Gbrowse")
