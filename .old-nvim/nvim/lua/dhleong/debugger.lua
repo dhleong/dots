@@ -1,27 +1,34 @@
-local map = require 'helpers.map'
+local map = require("helpers.map")
 
 local debugger_mappings = {
-  ['gk'] = '<Plug>VimspectorRunToCursor',
-  ['gi'] = '<Plug>VimspectorStepInto',
-  ['gn'] = '<Plug>VimspectorStepOver',
-  ['go'] = '<Plug>VimspectorStepOut',
-  ['gp'] = '<Plug>VimspectorPause',
-  ['gr'] = '<Plug>VimspectorContinue',
-  ['gq'] = ':call vimspector#Reset()<cr>',
+  ["gk"] = "<Plug>VimspectorRunToCursor",
+  ["gi"] = "<Plug>VimspectorStepInto",
+  ["gn"] = "<Plug>VimspectorStepOver",
+  ["go"] = "<Plug>VimspectorStepOut",
+  ["gp"] = "<Plug>VimspectorPause",
+  ["gr"] = "<Plug>VimspectorContinue",
+  ["gq"] = ":call vimspector#Reset()<cr>",
 }
 
 ---@alias DebuggerOpts { adapter: string }
 
 local function set_mappings(mappings_map)
   for keys, mapping in pairs(mappings_map) do
-    vim.cmd('nmap <buffer> ' .. keys .. ' ' .. mapping)
+    vim.cmd("nmap <buffer> " .. keys .. " " .. mapping)
   end
 end
 
 local function restore_original_mappings()
+  local maps = vim.b.dhleong_vimspector_original_maps
+  if maps == nil then
+    return
+  end
+
   for keys, _ in pairs(debugger_mappings) do
-    -- NOTE: Ignore if already unmapped
-    pcall(vim.cmd, 'nunmap <buffer> ' .. keys)
+    if maps[keys] then
+      -- NOTE: Ignore if already unmapped
+      pcall(vim.cmd, "nunmap <buffer> " .. keys)
+    end
   end
   set_mappings(vim.b.dhleong_vimspector_original_maps or {})
 end
@@ -36,7 +43,7 @@ local function stash_original_mappings()
   vim.b.dhleong_vimspector_original_maps = to_stash
 
   for keys, _ in pairs(debugger_mappings) do
-    local mapped = vim.fn.maparg(keys, 'n', 0, 1)
+    local mapped = vim.fn.maparg(keys, "n", 0, 1)
     if mapped.buffer then
       to_stash[keys] = mapped.rhs
     end
@@ -63,24 +70,29 @@ function M.handle_mappings()
 end
 
 function M.configure_watches()
-  set_mappings {
-    ['dd'] = '<del>',
-  }
+  set_mappings({
+    ["dd"] = "<del>",
+  })
 end
 
 ---@param opts DebuggerOpts
 function M.configure(opts)
+  if not vim.g.loaded_vimspector then
+    -- Haven't actually loaded vimspector; just skip it all
+    return
+  end
+
   if not opts.adapter then
-    print('Incomplete debugger config')
+    print("Incomplete debugger config")
     return
   end
 
   M.ft_configs[vim.bo.filetype] = opts
 
   -- Mappings:
-  map.nno '<leader>rq' { vim_call = 'vimspector#Reset()' }
-  map.buf_nno '<leader>bc' { vim_call = 'vimspector#ClearBreakpoints()' }
-  map.buf_nno '<leader>bt' { vim_call = 'vimspector#ToggleBreakpoint()' }
+  map.nno("<leader>rq")({ vim_call = "vimspector#Reset()" })
+  map.buf_nno("<leader>bc")({ vim_call = "vimspector#ClearBreakpoints()" })
+  map.buf_nno("<leader>bt")({ vim_call = "vimspector#ToggleBreakpoint()" })
 
   -- Autocmd:
   vim.cmd([[
