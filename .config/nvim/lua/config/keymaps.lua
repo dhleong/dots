@@ -91,20 +91,6 @@ if vim.g.gui_vimr or vim.g.neovide then
   nnoremap("<D-w>", ":q<cr>")
 end
 
-if vim.g.neovide then
-  -- Neovide-exclusive keymaps:
-  nnoremap("<D-n>", function()
-    vim.fn.system("open --new -b com.neovide.neovide")
-  end)
-
-  nnoremap("<D-t>", ":tabe<cr>")
-
-  vim.keymap.set("n", "<D-v>", '"+P') -- Paste normal mode
-  vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
-  vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
-  vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
-end
-
 -- W is the same as w, but doesn't perform auto-formatting
 vim.api.nvim_create_user_command("W", function()
   vim.b.autoformat = false
