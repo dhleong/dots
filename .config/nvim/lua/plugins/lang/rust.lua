@@ -34,6 +34,18 @@ return {
   { "rustaceanvim", enable = false },
 
   {
+    "Saecki/crates.nvim",
+    opts = function(_, opts)
+      opts.src = nil
+      opts.completion = {
+        cmp = {
+          enabled = true,
+        },
+      }
+    end,
+  },
+
+  {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
