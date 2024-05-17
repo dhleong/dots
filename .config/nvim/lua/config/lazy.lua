@@ -7,6 +7,20 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
+-- NOTE: This is a hack to suppress some deprecation warnings on the latest nightly:
+-- Let's remove as soon as we can
+if vim.islist then
+  vim.tbl_islist = vim.islist
+end
+
+if vim.lsp.get_clients then
+  vim.lsp.buf_get_clients = function(opts)
+    opts = opts or {}
+    opts.bufnr = 0
+    return vim.lsp.get_clients(opts)
+  end
+end
+
 require("lazy").setup({
   spec = {
     -- add LazyVim and import (some of!) its plugins
