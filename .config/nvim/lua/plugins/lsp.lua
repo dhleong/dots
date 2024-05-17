@@ -29,10 +29,12 @@ local function cmp_helpers()
   ---@param key_or_config string|{ key:string, cmdwin: string }
   function M.try_accept_completion(key_or_config)
     local key = ""
+    local pair = nil
     local cmdwin = nil
     if type(key_or_config) == "table" then
       key = key_or_config.key
       cmdwin = key_or_config.cmdwin
+      pair = key_or_config.pair
     else
       key = key_or_config
     end
@@ -44,7 +46,13 @@ local function cmp_helpers()
         cmp.confirm()
 
         if key and not entry_has_key(entry, key) then
-          vim.api.nvim_feedkeys(key, "nt", false)
+          local keys = key
+          if pair then
+            keys = keys .. pair .. "<left>"
+          end
+
+          local to_feed = vim.api.nvim_replace_termcodes(keys, true, false, true)
+          vim.api.nvim_feedkeys(to_feed, "nt", false)
         end
       elseif cmdwin and vim.fn.getcmdwintype() ~= "" then
         local to_feed = vim.api.nvim_replace_termcodes(cmdwin, true, false, true)
@@ -153,7 +161,7 @@ return {
         }),
         ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
         ["<Space>"] = helpers.try_accept_completion(" "),
-        ["("] = helpers.try_accept_completion("("),
+        ["("] = helpers.try_accept_completion({ key = "(", pair = ")" }),
         ["."] = helpers.try_accept_completion("."),
         -- NOTE: The enter key is a bit special here; if we use the normal fallback
         -- from the cmdline window, we will end up performing a bunch of edits due to
