@@ -1,6 +1,10 @@
 return {
   {
     "stevearc/oil.nvim",
+    keys = {
+      { "-", "<cmd>Oil<cr>" },
+    },
+    lazy = false,
     opts = {
       keymaps = {
         ["<C-h>"] = false,
