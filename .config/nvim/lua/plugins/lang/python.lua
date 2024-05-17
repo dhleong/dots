@@ -2,6 +2,14 @@ return {
   { import = "lazyvim.plugins.extras.lang.python" },
 
   {
+    "hrsh7th/nvim-cmp",
+    opts = function(_, opts)
+      -- NOTE: LazyVim's auto_brackets conflict with our own handling
+      opts.auto_brackets = {}
+    end,
+  },
+
+  {
     "conform.nvim",
     opts = {
       formatters_by_ft = {
