@@ -124,20 +124,19 @@ zle -N _fzf-history-widget
 _git-fzf-branch() {
     setopt localoptions pipefail 2> /dev/null
 
-    # list subdirs from all project dirs
-    cmd='git branch -a | rg -v -F \* | ~/.dotfiles/dots/bin/filter-branches'
-    branches=$(eval $cmd)
+    # By default we only list local branches, since that's *way* faster,
+    # and also just *way* more common. But I can hit <c-o> to load in
+    # the remote branches if I ever need that.
+    full_cmd='git branch -a | rg -v -F \* | ~/.dotfiles/dots/bin/filter-branches'
+    local_only_cmd='git branch | rg -v -F \* | ~/.dotfiles/dots/bin/filter-branches'
+    branches=$(eval $local_only_cmd)
     if [ -z "$branches" ]; then
         echo "\nYou're on the only branch"
         zle reset-prompt
         return
     fi
 
-    if [ $(echo $branches | wc -l) -gt 20 ]; then
-        branch=$(echo $branches | rg -v 'remotes/origin' | fzf --bind "ctrl-o:reload($cmd)+unbind(ctrl-o)")
-    else
-        branch=$(echo $branches | fzf)
-    fi
+    branch=$(echo $branches | fzf --bind "ctrl-o:reload($full_cmd)+unbind(ctrl-o)")
 
     if [ -n "$branch" ]; then
         # if we selected a remote branch, ensure that we don't check it out
