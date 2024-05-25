@@ -34,7 +34,10 @@ return {
       vim.g.neovide_cursor_vfx_mode = "pixiedust"
       vim.g.neovide_scroll_animation_length = 0.1
       vim.g.neovide_hide_mouse_when_typing = true
-      vim.g.neovide_remember_window_size = true
+
+      -- NOTE: This might be nice if it worked more consistently, but it
+      -- doesn't seem to handle changes in pixel density correctly
+      -- vim.g.neovide_remember_window_size = true
 
       -- It might be possible to make this look nice, but right now it's
       -- just distracting:
