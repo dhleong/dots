@@ -68,7 +68,7 @@ local function cmp_helpers()
       local ok, luasnip = pcall(require, "luasnip")
       if vim.fn.pumvisible() ~= 0 or fast_cmp_visible() then
         opts.select_next_fn()
-      elseif ok and luasnip.jumpable(opts.jump_direction) then
+      elseif ok and luasnip.locally_jumpable(opts.jump_direction) then
         luasnip.jump(opts.jump_direction)
       else
         fallback()
