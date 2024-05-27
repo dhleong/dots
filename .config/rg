@@ -2,3 +2,5 @@
 --glob=!*.ts.map
 --glob=!*.html
 --glob=!*sdk.js
+--glob=!*lock.yaml
+--glob=!*lock.json
