@@ -31,7 +31,9 @@ end
 if vim.lsp.get_clients then
   vim.lsp.buf_get_clients = function(opts)
     opts = opts or {}
-    opts.bufnr = 0
+    if type(opts) ~= "table" then
+      opts = { bufnr = opts }
+    end
     return vim.lsp.get_clients(opts)
   end
 end
