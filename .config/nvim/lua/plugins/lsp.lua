@@ -15,30 +15,39 @@ local function cmp_helpers()
     end
   end
 
+  local function entry_is_kind(entry, kinds)
+    return vim.tbl_contains(kinds, entry.completion_item.kind)
+  end
+
   local function fast_cmp_visible()
     -- NOTE: cmp:visible() is quite slow, and we use it on a fairly
     -- hot path. This hack reaches in to speed up the check
+    ---@diagnostic disable-next-line: invisible
     if not (cmp.core.view and cmp.core.view.custom_entries_view) then
       return false
     end
+    ---@diagnostic disable-next-line: invisible
     return cmp.core.view.custom_entries_view:visible()
   end
 
   local M = {}
 
-  ---@param key_or_config string|{ key:string, cmdwin: string }
+  ---@param key_or_config string|{ key:string, pair:string|nil, cmdwin: string, on_methods:string|nil }
   function M.try_accept_completion(key_or_config)
     local key = ""
     local pair = nil
     local cmdwin = nil
+    local on_methods = nil
     if type(key_or_config) == "table" then
       key = key_or_config.key
       cmdwin = key_or_config.cmdwin
       pair = key_or_config.pair
+      on_methods = key_or_config.on_methods
     else
       key = key_or_config
     end
 
+    local Kind = cmp.lsp.CompletionItemKind
     return cmp.mapping(function(fallback)
       if fast_cmp_visible() and cmp.get_active_entry() then
         local entry = cmp.get_active_entry()
@@ -52,6 +61,11 @@ local function cmp_helpers()
           end
 
           local to_feed = vim.api.nvim_replace_termcodes(keys, true, false, true)
+          vim.api.nvim_feedkeys(to_feed, "nt", false)
+        elseif on_methods and entry_is_kind(entry, { Kind.Function, Kind.Method }) then
+          -- If we weren't given a pair to complete, we might have some keys
+          -- to feed for methods (typically, auto-brackets)
+          local to_feed = vim.api.nvim_replace_termcodes(on_methods, true, false, true)
           vim.api.nvim_feedkeys(to_feed, "nt", false)
         end
       elseif cmdwin and vim.fn.getcmdwintype() ~= "" then
@@ -167,7 +181,7 @@ return {
         -- from the cmdline window, we will end up performing a bunch of edits due to
         -- the fallback mappings from endwise (which would run *after* the cmdline
         -- window gets closed)
-        ["<CR>"] = helpers.try_accept_completion({ cmdwin = "<CR>" }),
+        ["<CR>"] = helpers.try_accept_completion({ cmdwin = "<CR>", on_methods = "()<left>" }),
       }
       opts.preselect = cmp.PreselectMode.None
       opts.sources = cmp.config.sources({
