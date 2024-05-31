@@ -62,7 +62,11 @@ local function cmp_helpers()
 
           local to_feed = vim.api.nvim_replace_termcodes(keys, true, false, true)
           vim.api.nvim_feedkeys(to_feed, "nt", false)
-        elseif on_methods and entry_is_kind(entry, { Kind.Function, Kind.Method }) then
+        elseif
+          on_methods
+          and entry_is_kind(entry, { Kind.Function, Kind.Method })
+          and not entry_has_key(entry, string.sub(on_methods, 0, 1))
+        then
           -- If we weren't given a pair to complete, we might have some keys
           -- to feed for methods (typically, auto-brackets)
           local to_feed = vim.api.nvim_replace_termcodes(on_methods, true, false, true)
