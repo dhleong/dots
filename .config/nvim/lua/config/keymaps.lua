@@ -58,6 +58,35 @@ local function mapOpenFile(leaderMap, path)
   nnoremap("<Leader>t" .. leaderMap, ":tabe " .. with_path)
 end
 
+local function edit_ft_snippet_files(opts)
+  local o = opts or {}
+  local current_ft = vim.o.filetype
+
+  require("luasnip.loaders").edit_snippet_files(vim.tbl_extend("keep", o, {
+    ft_filter = function(ft)
+      return ft == current_ft
+    end,
+    format = function(file, source_name)
+      if source_name == "vscode" then
+        return nil
+      end
+      return file
+    end,
+    extend = function(ft, ft_paths)
+      if #ft_paths == 0 then
+        -- Provide a default if we don't have a file for this type yet
+        return {
+          {
+            "$CONFIG/luasnippets/" .. ft .. ".lua",
+            vim.fn.stdpath("config") .. "/luasnippets/" .. ft .. ".lua",
+          },
+        }
+      end
+
+      return {}
+    end,
+  }))
+end
 -- }}}
 
 mapOpenFile("ev", paths.config("lazy.lua"))
@@ -68,6 +97,14 @@ mapOpenFile("vb", vim.fn.stdpath("data") .. "/lazy")
 mapOpenFile("vl", vim.fn.stdpath("data") .. "/lazy/LazyVim/lua/lazyvim/plugins")
 
 mapOpenFile("eft", paths.plugins('/lang/" . &filetype . ".lua'))
+
+-- "edit file(type) snippets"
+nnoremap("<leader>efs", edit_ft_snippet_files)
+nnoremap("<leader>tefs", function()
+  edit_ft_snippet_files({
+    edit = vim.cmd.tabedit,
+  })
+end)
 
 -- ======= Text manipulation ================================
 
