@@ -26,10 +26,6 @@ return {
     "junegunn/fzf",
     build = "./install --bin",
     event = "VeryLazy",
-  },
-  {
-    "junegunn/fzf.vim",
-    lazy = true,
     init = function()
       vim.g.fzf_colors = {
         ["bg+"] = { "bg", "Visual" },
