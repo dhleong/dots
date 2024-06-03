@@ -173,6 +173,18 @@ function M.by_text(project_dir, sink, opts)
     },
   }
 
+  -- Give us an opportunity to exit a monorepo project to search
+  -- across the entire monorepo. It's too tricky (impossible?) to convert
+  -- the existing fzf instance, so we echo a sentinel value with the
+  -- current query and rebuild
+  if opts and opts.monorepo_root then
+    table.insert(options,'--bind')
+    table.insert(options, 'ctrl-o:' .. bindings {
+      'transform-query(cat <<< ::MONOREPO::{q})',
+      'print-query',
+    })
+  end
+
   local initial_query = rg .. ' .'
 
   if opts and opts.query then
@@ -188,6 +200,14 @@ function M.by_text(project_dir, sink, opts)
     window = { width = 1.0, height = 0.8, yoffset = 0 },
     sinklist = function(output)
       local query = output[1]
+      if vim.startswith(query, "::MONOREPO::") then
+        -- Restart text search across the whole monorepo
+        M.by_text(opts.monorepo_root, sink, vim.tbl_extend('force', opts, {
+          monorepo_root = nil
+        }))
+        return
+      end
+
       local file, line, col = unpack_text_result(output[2])
       if not file and not line then
         print('Unexpected input: ' .. output[2])
