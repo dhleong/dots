@@ -94,17 +94,20 @@ function M.open_project(project_dir)
 end
 
 function M.in_project(project_dir, sink, opts)
-  local options = {}
+  local options = {
+    '--tiebreak', 'end,index',
+    '--scheme=path',
+  }
 
   if opts and opts.monorepo_root then
     -- NOTE: ctrl-m would be the most intuitive, but that's equivalent to hitting enter...
-    options = {
+    vim.list_extend(options, {
       '--bind',
       'ctrl-o:' .. bindings {
         'reload(' .. vim.env.HOME .. '/bin/list-repo-files ' .. opts.monorepo_root .. ')',
         'unbind:ctrl-o',
       },
-    }
+    })
   end
 
   fzf {
