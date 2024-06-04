@@ -13,19 +13,21 @@ function filter_ignored() {
 function files_from_git() {
     cd $path
 
-    filesRelative=$(git ls-tree -r --name-only HEAD 2> /dev/null)
-    if [ -z "$filesRelative" ]; then
-        # not a git repo
+    # NOTE: Printing directly with --format gives like a ~100x speedup
+    # (~4.5s -> 0.04s) over the the old approach (see git history)
+    git ls-tree -r HEAD \
+        --format="$path/%(path)" \
+        2> /dev/null
+    if [[ $? -ne 0 ]]; then
+        # Not a git repo
         return 1
     fi
 
-    echo "$filesRelative" | while read -r line; do
-        echo "$path/$line"
-    done
-
-    # also find untracked (but not ignored) files
-    untrackedRelative=$(git ls-files --others --exclude-standard)
-    echo "$untrackedRelative" | while read -r line; do
+    # Also find untracked (but not ignored) files
+    # We can't use --format here (it conflicts with --others) but the number
+    # of files here is typically very small, so nbd. This command is itself
+    # somewhat slow, unfortunately, so the read loop may not matter
+    git ls-files --others --exclude-standard | while read -r line; do
         echo "$path/$line"
     done
 }
