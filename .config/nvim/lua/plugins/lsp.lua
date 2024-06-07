@@ -1,6 +1,16 @@
 --- Helpers {{{
 local function cmp_helpers()
   local cmp = require("cmp")
+
+  local function char_after_cursor_is(ch)
+    local line = vim.api.nvim_get_current_line()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local col = cursor[2]
+
+    local next_ch = string.sub(line, col + 1, col + 1)
+    return next_ch == ch
+  end
+
   local function entry_has_key(entry, key)
     if not entry.completion_item then
       return
@@ -66,6 +76,7 @@ local function cmp_helpers()
           on_methods
           and entry_is_kind(entry, { Kind.Function, Kind.Method })
           and not entry_has_key(entry, string.sub(on_methods, 0, 1))
+          and not char_after_cursor_is(string.sub(on_methods, 0, 1))
         then
           -- If we weren't given a pair to complete, we might have some keys
           -- to feed for methods (typically, auto-brackets)
