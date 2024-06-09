@@ -124,7 +124,7 @@ local function make_rg(opts)
     'rg', '--column', '--line-number', '--no-heading', '--smart-case',
     fuzzy,
     '--glob', "'!*.lock'",
-    '--glob', "'!package*.json'",
+    '--glob', "'!package-*.json'",
     '--glob', "'!tsconfig.json'",
     '--',
   }, ' ')
