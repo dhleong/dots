@@ -40,19 +40,33 @@ return {
     end,
   },
 
+  -- {
+  --   "dhleong/lilium",
+  --   dev = true,
+  --   ft = "gitcommit",
+  --   lazy = true,
+  --   event = "VeryLazy",
+  --   cmd = {
+  --     "LiliumInfo",
+  --     -- "GBrowse",  -- Sadly, doing this doesn't work
+  --   },
+  --   dependencies = {
+  --     "tpope/vim-fugitive",
+  --   },
+  --   opts = {},
+  --   init = function()
+  --     require("lilium.lsp").setup()
+  --   end,
+  -- },
+
   {
     "dhleong/lilium",
     dev = true,
-    ft = "gitcommit",
-    lazy = true,
-    event = "VeryLazy",
-    cmd = {
-      "LiliumInfo",
-      -- "GBrowse",  -- Sadly, doing this doesn't work
+    lazy = false,
+    opts = {
+      -- NOTE: It'd be nice if we could use the normal lazy lsp init
+      -- but for some reason that doesn't work...?
+      setup_lsp = {},
     },
-    dependencies = {
-      "tpope/vim-fugitive",
-    },
-    opts = {},
   },
 }
