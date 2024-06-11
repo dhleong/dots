@@ -20,6 +20,10 @@ return {
       { "<D-v>", '"+P"', mode = "v" },
       { "<D-v>", '<C-R>+"', mode = "c" },
 
+      -- NOTE: The cursor movement is a cheeky way to remove the highlighting.
+      -- It may be a bad idea
+      { "<D-v>", '<C-\\><C-N>"+pa<left><right>', mode = "t" },
+
       -- NOTE: Neovide's docs suggest:
       --   '<ESC>l"+Pli'
       -- but that fails on blank lines....
