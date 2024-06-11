@@ -30,7 +30,11 @@ return {
       { "<D-v>", '<esc>"+gpa', mode = "i" },
     },
     config = function()
-      vim.o.guifont = "Victor Mono Medium:h15"
+      vim.o.guifont = table.concat({
+        -- NOTE: We can only specify options at the end, it seems. This feels like a neovide bug
+        "Maple Mono",
+        "Victor Mono Medium:h15",
+      }, ",")
 
       vim.g.neovide_cursor_animation_length = 0.07
       vim.g.neovide_cursor_animate_command_line = false
