@@ -17,6 +17,8 @@ vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 -- Unload buffers when all windows are abandoned
 vim.o.hidden = false
 
+vim.o.autochdir = true
+
 -- ======= Indent-related ===================================
 
 vim.o.autoindent = true
