@@ -31,7 +31,7 @@ return {
   { import = "lazyvim.plugins.extras.lang.rust" },
 
   -- Feels like a bit much to me atm; may try again later:
-  { "rustaceanvim", enable = false },
+  { "rustaceanvim", enabled = false },
 
   {
     "Saecki/crates.nvim",
