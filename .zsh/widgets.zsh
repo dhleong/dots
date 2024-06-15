@@ -123,6 +123,7 @@ zle -N _fzf-history-widget
 
 _git-fzf-branch() {
     setopt localoptions pipefail 2> /dev/null
+    ONLY_BRANCH_MESSAGE="(You're on the only branch)"
 
     # By default we only list local branches, since that's *way* faster,
     # and also just *way* more common. But I can hit <c-o> to load in
@@ -131,14 +132,17 @@ _git-fzf-branch() {
     local_only_cmd='git branch | rg -v -F \* | ~/.dotfiles/dots/bin/filter-branches'
     branches=$(eval $local_only_cmd)
     if [ -z "$branches" ]; then
-        echo "\nYou're on the only branch"
-        zle reset-prompt
-        return
+        # echo "\nYou're on the only branch"
+        # zle reset-prompt
+        # return
+        branches=$ONLY_BRANCH_MESSAGE
     fi
 
     branch=$(echo $branches | fzf --bind "ctrl-o:reload($full_cmd)+unbind(ctrl-o)")
 
-    if [ -n "$branch" ]; then
+    if [ "$branch" = "$ONLY_BRANCH_MESSAGE" ]; then
+        # nop
+    elif [ -n "$branch" ]; then
         # if we selected a remote branch, ensure that we don't check it out
         # in a detached state
         branch=$(echo $branch | sed 's/remotes\/[^/]*\///')
