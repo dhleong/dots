@@ -1,5 +1,11 @@
 local M = {}
 
+local function diagnostic_jump(count)
+  return function()
+    vim.diagnostic.jump({ count = count, float = true })
+  end
+end
+
 function M.build()
   -- stylua: ignore
   return {
@@ -13,8 +19,8 @@ function M.build()
     { '<leader>jr', vim.lsp.buf.rename },
 
     { '<m-cr>',     vim.lsp.buf.code_action },
-    { '[c',         vim.diagnostic.goto_prev },
-    { ']c',         vim.diagnostic.goto_next },
+    { '[c',         diagnostic_jump(-1) },
+    { ']c',         diagnostic_jump(1) },
   }
 end
 
