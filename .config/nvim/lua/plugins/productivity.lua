@@ -18,6 +18,7 @@ return {
     },
   },
 
+  { import = "lazyvim.plugins.extras.ui.treesitter-context" },
   {
     "nvim-treesitter-context",
     -- NOTE: Before 0.10 nvim has a bug where it complains about
