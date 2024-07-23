@@ -123,6 +123,9 @@ return {
     opts = {},
   },
 
+  -- Lazy defaults to native snippets, but I like luasnip
+  { import = "lazyvim.plugins.extras.coding.luasnip" },
+
   {
     "neovim/nvim-lspconfig",
 
