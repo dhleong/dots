@@ -31,4 +31,15 @@ return {
   { "guns/vim-clojure-static", ft = "clojure" },
   { "guns/vim-sexp", ft = "clojure" },
   { "tpope/vim-sexp-mappings-for-regular-people", ft = "clojure" },
+
+  {
+    "dhleong/mini-unpairs",
+    dir = ".",
+    opts = {
+      clojure = { "`", "'" },
+    },
+    config = function(_, opts)
+      require("dhleong.mini-unpairs").setup(opts)
+    end,
+  },
 }
