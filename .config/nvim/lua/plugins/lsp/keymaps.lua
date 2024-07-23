@@ -2,7 +2,13 @@ local M = {}
 
 local function diagnostic_jump(count)
   return function()
-    vim.diagnostic.jump({ count = count, float = true })
+    if vim.diagnostic.jump then
+      vim.diagnostic.jump({ count = count, float = true })
+    elseif count < 0 then
+      vim.diagnostic.goto_prev()
+    else
+      vim.diagnostic.goto_next()
+    end
   end
 end
 
