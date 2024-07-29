@@ -10,6 +10,37 @@ return {
         ["<C-h>"] = false,
         ["<C-l>"] = false,
         ["<C-r>"] = "actions.refresh",
+        ["<CR>"] = function()
+          local oil = require("oil")
+          local entry = oil.get_cursor_entry()
+          if not entry or entry.id then
+            -- Normal behavior
+            oil.select()
+          else
+            -- Save first and open the file that was (probably) "pending"
+            -- This lets us created a file in a nested path and open it
+            -- directly
+            local oil_bufnr = vim.api.nvim_get_current_buf()
+            oil.save({ confirm = true }, function()
+              -- Hackily borrowed from oil. Would be nice if we could
+              -- just pass an entry to select()
+              local util = require("oil.util")
+              local config = require("oil.config")
+              util.get_edit_path(oil_bufnr, entry, function(normalized_url)
+                local filebufnr = vim.fn.bufadd(normalized_url)
+                local entry_is_file = not vim.endswith(normalized_url, "/")
+
+                if entry_is_file or config.buf_options.buflisted then
+                  vim.bo[filebufnr].buflisted = true
+                end
+
+                vim.cmd.buffer({ filebufnr, mods = {
+                  keepalt = true,
+                } })
+              end)
+            end)
+          end
+        end,
         ["%"] = function()
           local filename = vim.fn.input("Enter filename: ")
           if filename ~= "" then
