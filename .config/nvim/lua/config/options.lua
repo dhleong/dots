@@ -50,6 +50,9 @@ elseif vim.env.TMUX then
   vim.g.clipboard = require("dhleong.clipboard").create()
 end
 
+-- Support moving onto folds with eg {} without opening them
+vim.opt.foldopen:remove({ "block" })
+
 -- ======= Visual tweaks ====================================
 
 -- adjust splits behaviour
