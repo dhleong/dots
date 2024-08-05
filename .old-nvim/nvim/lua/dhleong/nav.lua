@@ -74,6 +74,11 @@ function M.link()
     local remote = vim.fn.FugitiveRemoteUrl()
     local homepage = vim.fn["rhubarb#HomepageForUrl"](remote)
     url = homepage .. "/issues/" .. string.sub(url, 2)
+  else
+    local ok, otsukare_nav = pcall(require, "otsukare.nav")
+    if ok then
+      url = otsukare_nav.expand_link(url) or url
+    end
   end
 
   local lines = vim.fn.system({ browser, url })
