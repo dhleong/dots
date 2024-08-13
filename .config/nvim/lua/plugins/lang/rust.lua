@@ -30,6 +30,19 @@ end
 return {
   { import = "lazyvim.plugins.extras.lang.rust" },
 
+  {
+    "dhleong/mini-unpairs",
+    dir = ".",
+    opts = {
+      -- It *is* used for chars, but probably much more commonly
+      -- for lifetimes where this is annoying
+      rust = { ["'"] = { neigh_pattern = "[^&]." } },
+    },
+    config = function(_, opts)
+      require("dhleong.mini-unpairs").setup(opts)
+    end,
+  },
+
   -- Feels like a bit much to me atm; may try again later:
   { "rustaceanvim", enabled = false },
 

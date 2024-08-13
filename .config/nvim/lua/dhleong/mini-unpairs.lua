@@ -1,8 +1,22 @@
 local M = {}
 
 function M.unmap_mini_keys(keys)
-  for _, key in ipairs(keys) do
-    vim.keymap.set("i", key, key, { buffer = 0, remap = false })
+  local ok, MiniPairs = pcall(require, "mini.pairs")
+  if not ok then
+    return
+  end
+
+  for key_or_index, config_or_key in pairs(keys) do
+    if type(key_or_index) == "number" then
+      local key = config_or_key
+      vim.keymap.set("i", key, key, { buffer = 0, remap = false })
+    elseif type(key_or_index) == "string" then
+      local key = key_or_index
+      local config = config_or_key
+      local existing = MiniPairs.config.mappings[key]
+      local merged_config = vim.tbl_extend("keep", config, existing)
+      MiniPairs.map_buf(0, "i", key, merged_config, {})
+    end
   end
 end
 
