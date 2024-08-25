@@ -36,7 +36,7 @@ return {
     opts = {
       -- It *is* used for chars, but probably much more commonly
       -- for lifetimes where this is annoying
-      rust = { ["'"] = { neigh_pattern = "[^&]." } },
+      rust = { ["'"] = { neigh_pattern = "[^&<]." } },
     },
     config = function(_, opts)
       require("dhleong.mini-unpairs").setup(opts)
@@ -105,5 +105,18 @@ return {
       opts.ensure_installed = opts.ensure_installed or {}
       vim.list_extend(opts.ensure_installed, { "codelldb" })
     end,
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    opts = {
+      skip_on_methods = {
+        -- Rust doesn't need our on_methods bracket insertion, because
+        -- it provides them already via snippets or something. If it
+        -- *doesn't* provide them, it's probably an attribute in a
+        -- proc_macro or something, so we don't need it
+        rust = true,
+      },
+    },
   },
 }

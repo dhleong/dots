@@ -1,6 +1,7 @@
 --- Helpers {{{
-local function cmp_helpers()
+local function cmp_helpers(cmp_opts)
   local cmp = require("cmp")
+  local skip_on_methods = cmp_opts.skip_on_methods
 
   local function char_after_cursor_is(ch)
     local line = vim.api.nvim_get_current_line()
@@ -27,6 +28,38 @@ local function cmp_helpers()
 
   local function entry_is_kind(entry, kinds)
     return vim.tbl_contains(kinds, entry.completion_item.kind)
+  end
+
+  local function should_skip_on_methods()
+    local ft = vim.bo.filetype
+    if not skip_on_methods or not skip_on_methods[ft] then
+      return false
+    end
+
+    local config = skip_on_methods[ft]
+    if config == true then
+      return true
+    end
+
+    -- NOTE: This may not work, and was not actually necessary for
+    -- rust (why I built this) but keeping around for reference in case
+    -- it becomes needed later.
+    local lang = require("nvim-treesitter.parsers").ft_to_lang(ft)
+    local ts_utils = require("nvim-treesitter.ts_utils")
+    local node = ts_utils.get_node_at_cursor()
+    if not node then
+      return false
+    end
+
+    for _, query_str in ipairs(config) do
+      local query = vim.treesitter.query.parse(lang, query_str)
+      local captures = query:iter_captures(node, 0)
+      if captures() then
+        return true
+      end
+    end
+
+    return false
   end
 
   local function fast_cmp_visible()
@@ -77,6 +110,7 @@ local function cmp_helpers()
           and entry_is_kind(entry, { Kind.Function, Kind.Method })
           and not entry_has_key(entry, string.sub(on_methods, 0, 1))
           and not char_after_cursor_is(string.sub(on_methods, 0, 1))
+          and not should_skip_on_methods()
         then
           -- If we weren't given a pair to complete, we might have some keys
           -- to feed for methods (typically, auto-brackets)
@@ -178,8 +212,9 @@ return {
 
     opts = function(_, opts)
       local cmp = require("cmp")
-      local helpers = cmp_helpers()
+      local helpers = cmp_helpers(opts)
 
+      opts.skip_on_methods = nil
       opts.completion.completeopt = "menu,menuone,noselect"
 
       opts.mapping = {
