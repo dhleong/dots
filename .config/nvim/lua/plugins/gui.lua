@@ -18,7 +18,7 @@ return {
 
       { "<D-v>", '"+P"', mode = "n" },
       { "<D-v>", '"+P"', mode = "v" },
-      { "<D-v>", '<C-R>+"', mode = "c" },
+      { "<D-v>", "<C-R>+", mode = "c" },
 
       -- NOTE: The cursor movement is a cheeky way to remove the highlighting.
       -- It may be a bad idea
