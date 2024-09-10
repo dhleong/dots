@@ -19,6 +19,16 @@ return {
     end,
   },
 
+  {
+    "hrsh7th/nvim-cmp",
+    opts = {
+      skip_on_methods = {
+        -- Clojure is a lisp! We don't need to add anything
+        clojure = true,
+      },
+    },
+  },
+
   { "tpope/vim-fireplace", ft = "clojure" },
 
   -- Async semantic highlighting
