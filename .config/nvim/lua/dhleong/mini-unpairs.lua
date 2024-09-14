@@ -14,7 +14,7 @@ function M.unmap_mini_keys(keys)
       local key = key_or_index
       local config = config_or_key
       local existing = MiniPairs.config.mappings[key]
-      local merged_config = vim.tbl_extend("keep", config, existing)
+      local merged_config = vim.tbl_extend("force", {}, existing or {}, config)
       MiniPairs.map_buf(0, "i", key, merged_config, {})
     end
   end
