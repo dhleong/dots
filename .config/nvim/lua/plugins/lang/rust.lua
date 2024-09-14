@@ -36,7 +36,10 @@ return {
     opts = {
       -- It *is* used for chars, but probably much more commonly
       -- for lifetimes where this is annoying
-      rust = { ["'"] = { neigh_pattern = "[^&<]." } },
+      rust = {
+        ["'"] = { neigh_pattern = "[^&<]." },
+        [">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\>]." },
+      },
     },
     config = function(_, opts)
       require("dhleong.mini-unpairs").setup(opts)
