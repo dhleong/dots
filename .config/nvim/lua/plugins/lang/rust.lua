@@ -46,6 +46,28 @@ return {
     end,
   },
 
+  --- This obviously is unnecessary in rust. Not sure why it runs in
+  --- rust by default... but it breaks our mini-unpairs config for
+  --- closing the `>` bracket, so... disable here. This helps when
+  --- rust's completion includes brackets for a type, eg:
+  ---
+  ---   impl<T> Deref for YourType<_>
+  ---                     ^^^^^^^^^|^
+  ---
+  --- In this case the cursor will be at the _ and, with this fix, you
+  --- can type the generic param and then `>` to go smoothly *over* the
+  --- closing bracket. Without the fix, we just insert a duplicate >
+  {
+    "nvim-ts-autotag",
+    opts = {
+      per_filetype = {
+        ["rust"] = {
+          enable_close = false,
+        },
+      },
+    },
+  },
+
   -- Feels like a bit much to me atm; may try again later:
   { "rustaceanvim", enabled = false },
 
