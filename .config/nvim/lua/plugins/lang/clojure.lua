@@ -36,7 +36,17 @@ return {
 
   -- My extra clojure utils
   -- TODO: Make these lazier?
-  { "dhleong/vim-hearth", dev = true },
+  {
+    "dhleong/vim-hearth",
+    dev = true,
+    keys = {
+      { "cpt", ":call hearth#test#RunForBuffer()<cr>", ft = "clojure" },
+      { "glc", ":call hearth#repl#Connect()<cr>", ft = "clojure" },
+    },
+    init = function()
+      vim.g.hearth_create_maps = false
+    end,
+  },
 
   { "guns/vim-clojure-static", ft = "clojure" },
   { "guns/vim-sexp", ft = "clojure" },
