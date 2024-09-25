@@ -26,3 +26,5 @@
     path = ~/work/.gitconfig
 [init]
 	defaultBranch = main
+[help]
+	autocorrect = prompt
