@@ -50,8 +50,6 @@ export PATH="$NPM_PACKAGES/bin:$PATH"
 
 export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
 
-export PATH=$PATH:$HOME/.cargo/bin
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -60,8 +58,13 @@ then
     source $HOME/.zshenv.local
 fi
 
-if [ -f "$HOME/.cargo/env" ]; then
-    source "$HOME/.cargo/env"
+# A bit hacky: On some machines I use, .cargo/env is initialized in a system-wide
+# zprofile. In order to let zprofile order things as it prefers, we skip initializing
+# it here in that case.
+if [ -z "/etc/zsh/zprofile" ]; then
+    if [ -f "$HOME/.cargo/env" ]; then
+        source "$HOME/.cargo/env"
+    fi
 fi
 
 export GRAALVM_VERSION="19.3.1"
@@ -72,8 +75,6 @@ fi
 
 # Checking for fastlane updates is unnecessarily slow and noisy
 export FASTLANE_SKIP_UPDATE_CHECK=1
-
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 # enable persistent history in elixir/erlang shells
 export ERL_AFLAGS="-kernel shell_history enabled"
