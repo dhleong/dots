@@ -61,7 +61,7 @@ fi
 # A bit hacky: On some machines I use, .cargo/env is initialized in a system-wide
 # zprofile. In order to let zprofile order things as it prefers, we skip initializing
 # it here in that case.
-if [ -z "/etc/zsh/zprofile" ]; then
+if ! [ -f "/etc/zsh/zprofile" ]; then
     if [ -f "$HOME/.cargo/env" ]; then
         source "$HOME/.cargo/env"
     fi
