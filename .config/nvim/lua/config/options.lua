@@ -39,15 +39,15 @@ vim.o.smartcase = true -- but if we WANT case, use it
 
 vim.o.clipboard = "unnamedplus" -- Sync with system clipboard
 
-if vim.fn.has("nvim-0.10") == 1 and vim.env.SSH_TTY then
+if vim.env.TMUX then
+  -- The OSC 52 integration doesn't seem to play nice with tmux (at least, in
+  -- my env; it just no-ops. In another env where SSH_TTY wasn't set, it'd hang
+  -- waiting for the shell) so in such cases, just use my custom clipboard implementation.
+  vim.g.clipboard = require("dhleong.clipboard").create()
+elseif vim.fn.has("nvim-0.10") == 1 and vim.env.SSH_TTY then
   -- If in ssh on an appropriate version of nvim, clear &clipboard
   -- to make sure the OSC 52 integration works automatically.
   vim.o.clipboard = ""
-elseif vim.env.TMUX then
-  -- The OSC 52 integration doesn't seem to play nice with tmux (at least, in
-  -- my env where SSH_TTY isn't set anyway; it hangs waiting for the shell)
-  -- so in such cases, just use my custom clipboard implementation.
-  vim.g.clipboard = require("dhleong.clipboard").create()
 end
 
 -- Support moving onto folds with eg {} without opening them
