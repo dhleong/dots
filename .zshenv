@@ -57,11 +57,11 @@ if [ -z "$TMUX" ]; then
     if [ -d $GRAALVM_HOME ]; then
         export PATH="$PATH:$GRAALVM_HOME/bin"
     fi
+fi
 
-    if [ -f "$HOME/.zshenv.local" ]
-    then
-        source $HOME/.zshenv.local
-    fi
+if [ -f "$HOME/.zshenv.local" ]
+then
+    source $HOME/.zshenv.local
 fi
 
 if [ -f "$HOME/lib/android-sdk" ]; then
