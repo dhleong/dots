@@ -1,0 +1,4 @@
+#!/bin/bash
+# Expects to be called from .tmux.conf
+tmux new-window -n 'tmux.setup'
+tmux send-keys '~/.config/dhleong/setup' C-m
