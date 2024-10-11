@@ -56,7 +56,7 @@ ensure_brew_apt() {
 		brew install $brew_name
 	elif has_apt; then
 		echo "Installing: $cli_name..."
-		if [ $apt_repo != '' ]; then
+		if [ "$apt_repo" != '' ]; then
 			sudo add-apt-repository -y $apt_repo --no-update
 			sudo apt update -o DPkg::Lock::Timeout=60
 
@@ -203,6 +203,7 @@ ensure_cask "iTerm" "iterm2"
 # I generally prefer neovim these days:
 ensure_cask "VimR" "vimr"
 ensure_brew_apt "nvim" "neovim" "neovim python3-neovim python3-venv" "ppa:neovim-ppa/unstable"
+ensure_cask "Neovide" "neovide"
 
 if has_cli gh; then
 	echo " Installed: github cli"
@@ -234,6 +235,7 @@ fi
 
 ensure_brew_apt "diff-so-fancy" "diff-so-fancy" "diff-so-fancy" "ppa:aos1/diff-so-fancy"
 ensure_brew_apt "flake8" "flake8" "flake8"
+ensure_brew_apt "http" "httpie" "httpie"
 
 if has_cli rg && has_cli fzf; then
 	echo " Installed: (various tools)"
