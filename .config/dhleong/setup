@@ -244,7 +244,9 @@ elif is_mac; then
 	brew install ripgrep fzf zsh-completions
 elif has_nix; then
 	echo "Installing: (various tools)..."
-	$nix_env -i ripgrep -i fzf -i zsh-completions
+	# NOTE: nix-env can't seem to find these for some reason...?
+	# $nix_env -i ripgrep -i fzf -i zsh-completions
+	sudo apt-get install ripgrep fzf
 else
 	echo "NOT Installing: (various tools)"
 fi
