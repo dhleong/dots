@@ -902,6 +902,8 @@ Marks and Annotations.Next Mark</string>
 	<true/>
 	<key>IRMemory</key>
 	<integer>4</integer>
+	<key>NeverBlockSystemShutdown</key>
+	<true/>
 	<key>NeverWarnAboutShortLivedSessions_A78E4FB6-F136-4DB8-8B30-A2B3875356C0</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_A78E4FB6-F136-4DB8-8B30-A2B3875356C0_selection</key>
