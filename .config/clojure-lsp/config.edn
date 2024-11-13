@@ -1,3 +1,4 @@
 {:cljfmt {:legacy/merge-indents? true
-          :indents {as-> [[:inner 0]]}}}
+          :indents {as-> [[:inner 0]]
+                    #re "^with-" [[:inner 0]]}}}
 
