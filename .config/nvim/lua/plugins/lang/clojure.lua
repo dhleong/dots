@@ -42,6 +42,8 @@ return {
     keys = {
       { "cpt", ":call hearth#test#RunForBuffer()<cr>", ft = "clojure" },
       { "glc", ":call hearth#repl#Connect()<cr>", ft = "clojure" },
+      { "<leader>st", ":call hearth#nav#find#Test()<cr>", ft = "clojure" },
+      { "<leader>nt", ":call hearth#nav#create#Test()<cr>", ft = "clojure" },
     },
     init = function()
       vim.g.hearth_create_maps = false
