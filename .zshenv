@@ -59,7 +59,10 @@ if [ -z "$TMUX" ]; then
     fi
 fi
 
-if [ -f "$HOME/.zshenv.local" ]
+if [ -d "$HOME/.zshenv.local" ]
+then
+    source $HOME/.zshenv.local/*
+elif [ -f "$HOME/.zshenv.local" ]
 then
     source $HOME/.zshenv.local
 fi
