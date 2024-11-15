@@ -14,6 +14,15 @@ else
     export EDITOR=vim
 fi
 
+if [ -f "$HOME/lib/android-sdk" ]; then
+    export ANDROID_HOME=~/lib/android-sdk
+else
+    export ANDROID_HOME=$HOME/Library/Android/sdk
+fi
+if [ -f "$HOME/lib/android-ndk" ]; then
+    export ANDROID_NDK=~/lib/android-ndk
+fi
+
 # Don't re-add values to the PATH when loaded from tmux
 if [ -z "$TMUX" ]; then
     export PATH=$PATH:$ANDROID_HOME
@@ -65,15 +74,6 @@ then
 elif [ -f "$HOME/.zshenv.local" ]
 then
     source $HOME/.zshenv.local
-fi
-
-if [ -f "$HOME/lib/android-sdk" ]; then
-    export ANDROID_HOME=~/lib/android-sdk
-else
-    export ANDROID_HOME=$HOME/Library/Android/sdk
-fi
-if [ -f "$HOME/lib/android-ndk" ]; then
-    export ANDROID_NDK=~/lib/android-ndk
 fi
 
 # Path to your oh-my-zsh installation.
