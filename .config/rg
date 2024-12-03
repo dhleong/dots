@@ -4,3 +4,5 @@
 --glob=!*sdk.js
 --glob=!*lock.yaml
 --glob=!*lock.json
+--glob=!*.lock
+--glob=!*.svg
