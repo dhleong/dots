@@ -336,7 +336,7 @@ function M.projects()
   local parent_paths = require("dhleong.projects").parent_paths
   local dirs = vim.tbl_map(function(path)
     if vim.fn.isdirectory(path) == 1 then
-      return path .. "*"
+      return path .. "*/"
     end
   end, parent_paths)
   dirs = vim.tbl_filter(not_nil, dirs)
