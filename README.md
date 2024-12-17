@@ -14,14 +14,15 @@ work, but you'd be better off just looking through them and trying things
 you find interesting rather than copying everything verbatim.
 
 However, if you're actually me on a new computer, or if you just insist
-on using my config files, I use [dotfiler][1] to install them right now.
+on using my config files, I use [doteur][1] to install them right now.
 It looks like this:
 
 ```bash
-$ git clone git@github.com:dhleong/dotfiler.git .dotfiles
+$ brew install babashka/brew/bbin
+$ bbin install io.github.dhleong/doteur
 
-$ .dotfiles/bin/dot add git@github.com:dhleong/dots.git
-$ .dotfiles/bin/dot update
+$ doteur add git@github.com:dhleong/dots.git
+$ doteur update
 ```
 
 ### Full automated setup
@@ -30,5 +31,4 @@ $ .dotfiles/bin/dot update
 sh -c "$(curl -fsSL https://raw.github.com/dhleong/dots/master/.config/dhleong/setup)"
 ```
 
-[1]: https://github.com/svetlyak40wt/dotfiler
-[2]: https://github.com/dhleong/dotfiler
+[1]: https://github.com/dhleong/doteur
