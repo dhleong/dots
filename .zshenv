@@ -38,6 +38,7 @@ if [ -z "$TMUX" ]; then
     export PATH=$PATH:~/code/depot_tools
     export PATH=$PATH:~/code/flutter/bin
     export PATH=$PATH:~/.dotfiles/bin
+    export PATH=$PATH:~/.local/bin
 
     export GOPATH=$HOME/code/go
     export GOBIN=$GOPATH/bin
