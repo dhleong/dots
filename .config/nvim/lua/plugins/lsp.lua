@@ -160,52 +160,52 @@ return {
   -- Lazy defaults to native snippets, but I like luasnip
   { import = "lazyvim.plugins.extras.coding.luasnip" },
 
-  {
-    "neovim/nvim-lspconfig",
+  -- {
+  --   "neovim/nvim-lspconfig",
 
-    dependencies = {
-      { "lukas-reineke/cmp-under-comparator" },
+  --   dependencies = {
+  --     { "lukas-reineke/cmp-under-comparator" },
 
-      {
-        "ray-x/lsp_signature.nvim",
-        event = "VeryLazy",
-        opts = {},
-        config = function(_, opts)
-          require("lsp_signature").setup(opts)
-        end,
-      },
-      {
-        "hrsh7th/cmp-nvim-lsp-signature-help",
-        event = "VeryLazy",
-      },
-    },
+  --     {
+  --       "ray-x/lsp_signature.nvim",
+  --       event = "VeryLazy",
+  --       opts = {},
+  --       config = function(_, opts)
+  --         require("lsp_signature").setup(opts)
+  --       end,
+  --     },
+  --     {
+  --       "hrsh7th/cmp-nvim-lsp-signature-help",
+  --       event = "VeryLazy",
+  --     },
+  --   },
 
-    opts = {
-      diagnostics = {
-        float = {
-          -- Show the source of the diagnostic, always
-          source = true,
-        },
-      },
-    },
+  --   opts = {
+  --     diagnostics = {
+  --       float = {
+  --         -- Show the source of the diagnostic, always
+  --         source = true,
+  --       },
+  --     },
+  --   },
 
-    init = function()
-      -- Intercept lazyvim's lsp keymaps and replace them with our own.
-      require("plugins.lsp.keymaps").init()
-      local Util = require("lazyvim.util")
+  --   init = function()
+  --     -- Intercept lazyvim's lsp keymaps and replace them with our own.
+  --     require("plugins.lsp.keymaps").init()
+  --     local Util = require("lazyvim.util")
 
-      -- Setup our handlers
-      Util.lsp.on_attach(function(client, _)
-        if not client.handlers["textDocument/definition"] then
-          local handler = require("dhleong.nav")._handle_lsp_location
-          client.handlers["textDocument/declaration"] = handler
-          client.handlers["textDocument/definition"] = handler
-          client.handlers["textDocument/typeDefinition"] = handler
-          client.handlers["textDocument/implementation"] = handler
-        end
-      end)
-    end,
-  },
+  --     -- Setup our handlers
+  --     Util.lsp.on_attach(function(client, _)
+  --       if not client.handlers["textDocument/definition"] then
+  --         local handler = require("dhleong.nav")._handle_lsp_location
+  --         client.handlers["textDocument/declaration"] = handler
+  --         client.handlers["textDocument/definition"] = handler
+  --         client.handlers["textDocument/typeDefinition"] = handler
+  --         client.handlers["textDocument/implementation"] = handler
+  --       end
+  --     end)
+  --   end,
+  -- },
 
   {
     "hrsh7th/nvim-cmp",
