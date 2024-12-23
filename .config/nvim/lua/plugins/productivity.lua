@@ -1,13 +1,13 @@
 local otsukare_dir = "~/work/otsukare"
 return {
-  {
-    dir = otsukare_dir,
-    import = "otsukare.lazy",
-    cond = function()
-      local full_path = vim.fn.expand(otsukare_dir)
-      return vim.fn.isdirectory(full_path) == 1
-    end,
-  },
+  -- {
+  --   dir = otsukare_dir,
+  --   import = "otsukare.lazy",
+  --   cond = function()
+  --     local full_path = vim.fn.expand(otsukare_dir)
+  --     return vim.fn.isdirectory(full_path) == 1
+  --   end,
+  -- },
 
   { "tpope/vim-obsession" },
 
@@ -29,7 +29,17 @@ return {
 
   {
     "dhleong/trot.nvim",
+    dev = true,
     keys = {
+      {
+        "<leader>k",
+        function()
+          require("trot").open_search({
+            tool = "sprint",
+          })
+        end,
+        desc = "Search in Sprint",
+      },
       {
         "<leader>K",
         function()

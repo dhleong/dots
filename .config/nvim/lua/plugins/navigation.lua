@@ -78,7 +78,7 @@ return {
   },
 
   {
-    dir = ".",
+    dir = "~/.old-nvim/nvim/lua/dhleong",
     event = "VeryLazy",
     name = "My projects",
     config = function()

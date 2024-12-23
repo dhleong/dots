@@ -1,3 +1,13 @@
+---@diagnostic disable-next-line: duplicate-set-field
+vim.ui.input = function(...)
+  return require("dhleong.ui").input(...)
+end
+
+---@diagnostic disable-next-line: duplicate-set-field
+vim.ui.select = function(...)
+  return require("dhleong.ui").select(...)
+end
+
 return {
   { "rhysd/vim-color-spring-night" },
   {
@@ -10,22 +20,6 @@ return {
         vim.o.termguicolors = true
       end,
     },
-  },
-
-  {
-    dir = ".",
-    name = "dhleong.ui",
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        return require("dhleong.ui").input(...)
-      end
-
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.select = function(...)
-        return require("dhleong.ui").select(...)
-      end
-    end,
   },
 
   {
