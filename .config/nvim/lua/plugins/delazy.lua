@@ -76,10 +76,22 @@ return {
 
   -- Let's disable a ton of plugins:
   { "bufferline.nvim", enabled = false },
-  -- { "dashboard-nvim", enabled = false },
-  -- { "dressing.nvim", enabled = false },
-  { "snacks.input", enabled = false },
-  { "snacks.dashboard", enabled = false },
+  {
+    "snacks.nvim",
+    opts = {
+      dashboard = { enabled = false },
+      indent = { enabled = false },
+      input = { enabled = false },
+      scroll = { enabled = false },
+      toggle = { enabled = false },
+    },
+    init = function()
+      -- snacks.scroll is disabled, but just in case there are any
+      -- other lingering animations... disable them:
+      vim.g.snacks_animate = false
+    end,
+  },
+  -- This may come back in some form, but I don't want its mappings:
   { "fzf-lua", enabled = false },
   { "gitsigns.nvim", enabled = false },
   { "mini.bufremove", enabled = false },
