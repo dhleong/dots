@@ -17,7 +17,6 @@ return {
         ["("] = { "accept", "fallback" },
         ["."] = {
           function(cmp)
-            -- Insert the . after accepting the completion
             return cmp.accept({
               callback = function()
                 vim.api.nvim_feedkeys(".", "i", false)

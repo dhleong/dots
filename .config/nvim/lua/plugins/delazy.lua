@@ -80,7 +80,6 @@ return {
     "snacks.nvim",
     opts = {
       dashboard = { enabled = false },
-      indent = { enabled = false },
       input = { enabled = false },
       scroll = { enabled = false },
       toggle = { enabled = false },
