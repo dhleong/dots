@@ -90,8 +90,6 @@ return {
       vim.g.snacks_animate = false
     end,
   },
-  -- This may come back in some form, but I don't want its mappings:
-  { "fzf-lua", enabled = false },
   { "gitsigns.nvim", enabled = false },
   { "mini.bufremove", enabled = false },
   { "mini.surround", enabled = false },
@@ -99,6 +97,5 @@ return {
   { "noice.nvim", enabled = false },
   { "nvim-web-devicons", enabled = false },
   { "persistence.nvim", enabled = false },
-  { "telescope.nvim", enabled = false },
   { "which-key.nvim", enabled = false },
 }

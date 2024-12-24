@@ -74,6 +74,13 @@ end
 vim.o.undodir = undodir
 vim.o.undofile = true
 
+-- ======= LazyVim config ===================================
+
+-- LazyVim defaults to 'fzf-lua' (via "auto") which adds a bunch
+-- of mappings I don't want.
+-- It may come back in some form... later
+vim.g.lazyvim_picker = "none"
+
 -- ======= Misc =============================================
 
 if vim.fn.executable("/bin/zsh") ~= 0 then
