@@ -27,5 +27,10 @@ return {
         },
       },
     },
+
+    init = function()
+      -- Intercept lazyvim's lsp keymaps and replace them with our own.
+      require("plugins.lsp.keymaps").init()
+    end,
   },
 }
