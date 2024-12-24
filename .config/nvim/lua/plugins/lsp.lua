@@ -16,18 +16,11 @@ return {
   { import = "lazyvim.plugins.extras.coding.luasnip" },
 
   {
-    "blink.cmp",
-    optional = true,
-    opts = {
-      keymap = {
-        preset = "default",
-        ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
-        ["<Tab>"] = { "snippet_forward", "select_next", "fallback" },
-        ["<CR>"] = { "accept", "fallback" },
-      },
-    },
+    import = "plugins.lsp.blink",
+    enabled = function()
+      return LazyVim.cmp_engine() == "blink.cmp"
+    end,
   },
-
   {
     import = "plugins.lsp.cmp",
     enabled = function()
