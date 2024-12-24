@@ -18,6 +18,10 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.lang.typescript" },
     -- { import = "lazyvim.plugins.extras.lang.json" },
     -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
+
+    -- Uncomment to switch back to nvim-cmp:
+    -- { import = "lazyvim.plugins.extras.coding.nvim-cmp" },
+
     -- Import all the language-specific setup (*first*, so configs for cmp get picked up
     -- for use in our local changes)
     { import = "plugins.lang" },
