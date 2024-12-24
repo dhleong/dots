@@ -107,3 +107,5 @@ if [ -f "$HOME/.zshrc.local" ]
 then
     source $HOME/.zshrc.local
 fi
+
+source /Users/daniel.leong/.nix-profile/etc/profile.d/nix.sh
