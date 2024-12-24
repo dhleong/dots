@@ -7,6 +7,15 @@ return {
         list = {
           selection = "auto_insert",
         },
+
+        menu = {
+          draw = {
+            columns = {
+              { "label", "label_description", gap = 1 },
+              { "kind" },
+            },
+          },
+        },
       },
 
       keymap = {
