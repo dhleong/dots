@@ -45,6 +45,8 @@ return {
     },
     lazy = false,
     opts = {
+      -- Disable the icon column:
+      columns = {},
       keymaps = {
         ["<C-h>"] = false,
         ["<C-l>"] = false,
