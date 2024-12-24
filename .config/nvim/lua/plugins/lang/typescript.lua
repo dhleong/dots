@@ -43,7 +43,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        tsserver = {
+        ts_ls = {
           settings = tsserver_settings,
 
           -- Don't use tsserver or eslint's formatting
