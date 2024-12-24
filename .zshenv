@@ -71,7 +71,9 @@ fi
 
 if [ -d "$HOME/.zshenv.local" ]
 then
-    source $HOME/.zshenv.local/*
+    for file in $HOME/.zshenv.local/*; do
+        source "$file"
+    done
 elif [ -f "$HOME/.zshenv.local" ]
 then
     source $HOME/.zshenv.local
