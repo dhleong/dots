@@ -27,6 +27,8 @@ local function debug_nearest()
   })
 end
 
+local diagnostics = vim.g.lazyvim_rust_diagnostics or "rust-analyzer"
+
 return {
   { import = "lazyvim.plugins.extras.lang.rust" },
 
@@ -77,7 +79,7 @@ return {
       opts.src = nil
       opts.completion = {
         cmp = {
-          enabled = true,
+          enabled = LazyVim.cmp_engine() == "nvim-cmp",
         },
       }
     end,
@@ -88,6 +90,7 @@ return {
     opts = {
       servers = {
         rust_analyzer = {
+          enabled = diagnostics == "rust-analyzer",
           capabilities = {
             -- See: https://github.com/neovim/neovim/issues/23291
             workspace = {
@@ -134,6 +137,7 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
+    optional = true,
     opts = {
       skip_on_methods = {
         -- Rust doesn't need our on_methods bracket insertion, because
