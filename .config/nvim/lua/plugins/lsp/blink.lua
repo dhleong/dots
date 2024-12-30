@@ -20,8 +20,10 @@ return {
 
       keymap = {
         preset = "default",
-        ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
-        ["<Tab>"] = { "snippet_forward", "select_next", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+        ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+        ["<C-j>"] = { "snippet_forward", "fallback" },
+        ["<C-k>"] = { "snippet_backward", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
         ["("] = { "accept", "fallback" },
         ["."] = {
@@ -34,6 +36,19 @@ return {
           end,
           "fallback",
         },
+      },
+
+      -- Overwrite Lazy's version here because it doesn't use "local" checks
+      snippets = {
+        active = function(filter)
+          if filter and filter.direction then
+            return require("luasnip").locally_jumpable(filter.direction)
+          end
+          return require("luasnip").in_snippet()
+        end,
+        jump = function(direction)
+          require("luasnip").jump(direction)
+        end,
       },
     },
 
