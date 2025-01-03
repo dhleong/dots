@@ -67,7 +67,7 @@ _fzf-find-project-dir() {
     wild_dirs=()
     for dir in $PROJECT_DIRS; do
         if [ -d $dir ]; then
-            wild_dirs+=("$dir/*")
+            wild_dirs+=("$dir/*/")
         fi
     done
     cmd="ls -d $wild_dirs | rg -v :"
