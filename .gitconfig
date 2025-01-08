@@ -28,3 +28,5 @@
 	defaultBranch = main
 [help]
 	autocorrect = prompt
+[url "\"git@github.com:\""]
+	insteadOf = \"https://github.com/\"
