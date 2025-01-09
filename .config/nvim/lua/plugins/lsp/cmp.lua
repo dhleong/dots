@@ -143,8 +143,6 @@ local function cmp_helpers(cmp_opts)
 end
 -- }}}
 
-print("loading cmp")
-
 return {
   {
     "neovim/nvim-lspconfig",
