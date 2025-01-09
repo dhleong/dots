@@ -5,7 +5,10 @@ return {
     opts = {
       completion = {
         list = {
-          selection = "auto_insert",
+          selection = {
+            preselect = false,
+            auto_insert = true,
+          },
         },
 
         menu = {
@@ -24,6 +27,7 @@ return {
         ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
         ["<C-j>"] = { "snippet_forward", "fallback" },
         ["<C-k>"] = { "snippet_backward", "fallback" },
+        ["<C-n>"] = { "fallback" },
         ["<CR>"] = { "accept", "fallback" },
         ["("] = { "accept", "fallback" },
         ["."] = {
