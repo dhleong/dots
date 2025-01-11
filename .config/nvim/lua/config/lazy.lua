@@ -10,12 +10,6 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 -- Some compat stuff to suppress noisy warnings:
 require("config.compat")
 
--- NOTE: I use nvim-cmp in coder because blink doesn't support lilium-lsp very
--- well, and I use it quite a bit time there...
-if vim.env.CODER then
-  vim.g.lazyvim_cmp = "nvim-cmp"
-end
-
 require("lazy").setup({
   spec = {
     -- add LazyVim and import (some of!) its plugins
