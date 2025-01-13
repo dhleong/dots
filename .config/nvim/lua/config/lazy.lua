@@ -18,7 +18,6 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.lang.typescript" },
     -- { import = "lazyvim.plugins.extras.lang.json" },
     -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
-
     -- Import all the language-specific setup (*first*, so configs for cmp get picked up
     -- for use in our local changes)
     { import = "plugins.lang" },
