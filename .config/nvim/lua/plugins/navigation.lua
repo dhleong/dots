@@ -101,6 +101,12 @@ return {
         -- for example. With the default behavior, the `df` would delete to the next `h`
         -- which is unexpected. We have `;` and `,` to do that, if we want
         char = {
+          -- This behavior is kinda broken. Example:
+          --    write_killswitch = write_killswitch
+          -- If you try to change `write` to `delete` with `cfe delete fw .`
+          -- the dot-repeat will instead do a `cfw` instead of `cfe`...
+          enabled = false,
+
           char_actions = function(_)
             -- See :help flash.nvim-flash.nvim-configuration for more info
             return {
