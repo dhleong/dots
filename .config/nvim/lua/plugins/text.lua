@@ -59,7 +59,10 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      "RRethy/nvim-treesitter-endwise",
+      -- NOTE: RRethy is canonical, but might be abandoned? It hasn't been updated to
+      -- fix an incompatibility despite an open PR...
+      -- "RRethy/nvim-treesitter-endwise",
+      "metiulekm/nvim-treesitter-endwise",
     },
     opts = {
       endwise = {

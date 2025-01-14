@@ -45,6 +45,8 @@ return {
     },
     lazy = false,
     opts = {
+      -- Disable the icon column:
+      columns = {},
       keymaps = {
         ["<C-h>"] = false,
         ["<C-l>"] = false,
@@ -78,7 +80,7 @@ return {
   },
 
   {
-    dir = ".",
+    dir = "~/.old-nvim/nvim/lua/dhleong",
     event = "VeryLazy",
     name = "My projects",
     config = function()

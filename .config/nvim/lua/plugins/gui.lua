@@ -1,6 +1,6 @@
 return {
   {
-    dir = ".",
+    dir = "..",
     event = "VeryLazy",
     name = "neovide",
     cond = vim.g.neovide == true,
@@ -29,7 +29,7 @@ return {
       -- but that fails on blank lines....
       { "<D-v>", '<esc>"+gpa', mode = "i" },
     },
-    config = function()
+    init = function()
       vim.o.guifont = table.concat({
         -- NOTE: We can only specify options at the end, it seems. This feels like a neovide bug
         "Maple Mono",

@@ -29,7 +29,17 @@ return {
 
   {
     "dhleong/trot.nvim",
+    dev = true,
     keys = {
+      {
+        "<leader>k",
+        function()
+          require("trot").open_search({
+            tool = "sprint",
+          })
+        end,
+        desc = "Search in Sprint",
+      },
       {
         "<leader>K",
         function()
