@@ -81,6 +81,8 @@ vim.o.undofile = true
 -- It may come back in some form... later
 vim.g.lazyvim_picker = "none"
 
+vim.g.lazyvim_rust_diagnostics = "bacon-ls"
+
 -- ======= Misc =============================================
 
 if vim.fn.executable("/bin/zsh") ~= 0 then

@@ -27,7 +27,7 @@ local function debug_nearest()
   })
 end
 
-local diagnostics = vim.g.lazyvim_rust_diagnostics or "rust-analyzer"
+-- local diagnostics = vim.g.lazyvim_rust_diagnostics or "rust-analyzer"
 
 return {
   { import = "lazyvim.plugins.extras.lang.rust" },
@@ -70,8 +70,8 @@ return {
     },
   },
 
-  -- Feels like a bit much to me atm; may try again later:
-  { "rustaceanvim", enabled = false },
+  -- -- Feels like a bit much to me atm; may try again later:
+  -- { "rustaceanvim", enabled = false },
 
   {
     "Saecki/crates.nvim",
@@ -85,40 +85,40 @@ return {
     end,
   },
 
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        rust_analyzer = {
-          enabled = diagnostics == "rust-analyzer",
-          capabilities = {
-            -- See: https://github.com/neovim/neovim/issues/23291
-            workspace = {
-              didChangeWatchedFiles = {
-                dynamicRegistration = false,
-              },
-            },
-          },
-          settings = {
-            ["rust-analyzer"] = {
-              check = {
-                -- experimental, for monorepos
-                workspace = false,
-              },
-              diagnostics = {
-                enable = true,
-                disabled = { "unresolved-macro-call", "unresolved-proc-macro" },
-                enableExperimental = true,
-              },
-              procMacro = {
-                enable = true,
-              },
-            },
-          },
-        },
-      },
-    },
-  },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   opts = {
+  --     servers = {
+  --       rust_analyzer = {
+  --         -- enabled = diagnostics == "rust-analyzer",
+  --         capabilities = {
+  --           -- See: https://github.com/neovim/neovim/issues/23291
+  --           workspace = {
+  --             didChangeWatchedFiles = {
+  --               dynamicRegistration = false,
+  --             },
+  --           },
+  --         },
+  --         settings = {
+  --           ["rust-analyzer"] = {
+  --             check = {
+  --               -- experimental, for monorepos
+  --               workspace = false,
+  --             },
+  --             diagnostics = {
+  --               -- enable = diagnostics == "rust-analyzer",
+  --               disabled = { "unresolved-macro-call", "unresolved-proc-macro" },
+  --               enableExperimental = true,
+  --             },
+  --             procMacro = {
+  --               enable = true,
+  --             },
+  --           },
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 
   {
     "mason-nvim-dap.nvim",
