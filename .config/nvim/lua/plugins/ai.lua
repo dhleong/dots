@@ -47,7 +47,13 @@ return {
 
       {
         "<leader>ce",
-        ":CodeCompanion /explain<cr>",
+        function()
+          local prompt = "/explain"
+          if vim.diagnostic.get(0, { lnum = vim.fn.line(".") }) then
+            prompt = "/lsp"
+          end
+          vim.cmd.CodeCompanion(prompt)
+        end,
         mode = { "n", "v" },
       },
 
