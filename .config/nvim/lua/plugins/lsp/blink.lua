@@ -42,16 +42,18 @@ return {
         },
       },
 
-      -- Overwrite Lazy's version here because it doesn't use "local" checks
       snippets = {
+        -- Overwrite LazyVim's expand fn which uses vim.snippet, overriding the
+        -- luasnip preset in blink.
+        expand = function(snippet)
+          require("luasnip").lsp_expand(snippet)
+        end,
+        -- Overwrite Blink's default version here because it doesn't use "local" checks
         active = function(filter)
           if filter and filter.direction then
             return require("luasnip").locally_jumpable(filter.direction)
           end
           return require("luasnip").in_snippet()
-        end,
-        jump = function(direction)
-          require("luasnip").jump(direction)
         end,
       },
     },
