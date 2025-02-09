@@ -1,4 +1,8 @@
 {:cljfmt {:legacy/merge-indents? true
           :indents {as-> [[:inner 0]]
-                    #re "^with-" [[:inner 0]]}}}
+                    #re "^with-" [[:inner 0]]}}
+
+ ; NOTE: vim-hearth already handles this for us, and includes templates for
+ ; things like -test namespaces!
+ :auto-add-ns-to-new-files? false}
 
