@@ -79,7 +79,7 @@ return {
       opts.src = nil
       opts.completion = {
         cmp = {
-          enabled = LazyVim.cmp_engine() == "nvim-cmp",
+          enabled = LazyVim.has_extra("coding.nvim-cmp"),
         },
       }
     end,

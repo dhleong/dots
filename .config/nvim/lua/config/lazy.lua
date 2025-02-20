@@ -10,6 +10,9 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 -- Some compat stuff to suppress noisy warnings:
 require("config.compat")
 
+-- For now, anyway:
+vim.g.lazyvim_check_order = false
+
 require("lazy").setup({
   spec = {
     -- add LazyVim and import (some of!) its plugins

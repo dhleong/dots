@@ -18,13 +18,13 @@ return {
   {
     import = "plugins.lsp.blink",
     enabled = function()
-      return LazyVim.cmp_engine() == "blink.cmp"
+      return not LazyVim.has_extra("coding.blink.cmp")
     end,
   },
   {
     import = "plugins.lsp.cmp",
     enabled = function()
-      return LazyVim.cmp_engine() == "nvim-cmp"
+      return LazyVim.has_extra("coding.nvim-cmp")
     end,
   },
 }
