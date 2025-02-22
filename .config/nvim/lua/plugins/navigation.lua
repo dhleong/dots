@@ -103,6 +103,7 @@ return {
       }
     end,
     opts = {
+      "hide",
       keymap = {
         -- Disable bulitin keybinds
         builtin = { false },
