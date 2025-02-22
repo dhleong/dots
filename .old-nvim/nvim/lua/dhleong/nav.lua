@@ -286,10 +286,15 @@ function M.by_text_fzflua(project_dir, sink, opts)
   local base = {
     winopts = {
       title = dir_name(project_dir),
+      preview = {
+        flip_columns = 150,
+        vertical = "up:35%",
+      },
     },
     header = {}, -- Disable the header; can't read it anyway
     fzf_opts = {
       ["--layout"] = "default",
+      ["--style"] = "minimal",
     },
     actions = {
       ["default"] = {
