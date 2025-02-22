@@ -324,6 +324,8 @@ function M.by_text_fzflua(project_dir, sink, opts)
               query = fzf_lua.get_last_query(),
             })
           end,
+          noclose = true,
+          reuse = true,
         },
       },
     })
