@@ -76,10 +76,7 @@ vim.o.undofile = true
 
 -- ======= LazyVim config ===================================
 
--- LazyVim defaults to 'fzf-lua' (via "auto") which adds a bunch
--- of mappings I don't want.
--- It may come back in some form... later
-vim.g.lazyvim_picker = "none"
+vim.g.lazyvim_picker = "fzf"
 
 vim.g.lazyvim_rust_diagnostics = "bacon-ls"
 

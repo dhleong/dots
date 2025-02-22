@@ -1,4 +1,4 @@
-local function select_current_entry()
+local function select_current_entry() -- {{{
   local oil = require("oil")
   local entry = oil.get_cursor_entry()
 
@@ -35,7 +35,7 @@ local function select_current_entry()
       end)
     end)
   end
-end
+end -- }}}
 
 return {
   {
@@ -77,6 +77,48 @@ return {
         ["pointer"] = { "fg", "SpecialComment", "StatusLine" },
       }
     end,
+  },
+
+  {
+    "fzf-lua",
+    enabled = vim.g.lazyvim_picker == "fzf",
+    -- LazyVim adds a bunch of mappings I don't want by default.
+    -- Let's pick and choose
+    keys = function(_, old)
+      local function old_mapping_for(keys)
+        for _, map in ipairs(old) do
+          if map[1] == keys then
+            return map[2]
+          end
+        end
+      end
+
+      return {
+        -- "LSP symbols"
+        {
+          "<leader>ls",
+          old_mapping_for("<leader>sS"),
+          desc = "LSP Symbols",
+        },
+      }
+    end,
+    opts = {
+      keymap = {
+        -- Disable bulitin keybinds
+        builtin = { false },
+        fzf = { false },
+      },
+      winopts = {
+        preview = {
+          -- Defaults to 100; I prefer the vertical layout unless I have a *lot* of room!
+          flip_columns = 200,
+          vertical = "up:35%",
+        },
+      },
+      fzf_opts = {
+        ["--cycle"] = true,
+      },
+    },
   },
 
   {

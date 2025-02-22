@@ -144,7 +144,26 @@ local function make_rg(opts)
   }, " ")
 end
 
-function M.by_text(project_dir, sink, opts)
+local function open_text_result(sink, result)
+  local file, line, col = unpack_text_result(result)
+  if not file and not line then
+    print("Unexpected input: " .. result)
+    return
+  end
+
+  if type(sink) == "string" then
+    vim.cmd[sink](file)
+    vim.api.nvim_win_set_cursor(0, {
+      tonumber(line, 10),
+      tonumber(col, 10) - 1,
+    })
+    vim.cmd([[normal! zz]])
+  else
+    sink(file, { line = line, col = col })
+  end
+end
+
+function M.by_text_legacy(project_dir, sink, opts)
   -- NOTE: I almost never want regex, by default
   local rg = make_rg({ fuzzy = false })
 
@@ -221,7 +240,7 @@ function M.by_text(project_dir, sink, opts)
       local query = output[1]
       if vim.startswith(query, MONOREPO_TEXT_SWITCH_PREFIX) then
         -- Restart text search across the whole monorepo
-        M.by_text(
+        M.by_text_legacy(
           opts.monorepo_root,
           sink,
           vim.tbl_extend("force", opts, {
@@ -232,18 +251,7 @@ function M.by_text(project_dir, sink, opts)
         return
       end
 
-      local file, line, col = unpack_text_result(output[2])
-      if not file and not line then
-        print("Unexpected input: " .. output[2])
-        return
-      end
-
-      vim.cmd(sink .. " " .. file)
-      vim.api.nvim_win_set_cursor(0, {
-        tonumber(line, 10),
-        tonumber(col, 10) - 1,
-      })
-      vim.cmd([[normal! zz]])
+      open_text_result(sink, output[2])
 
       if query ~= "" then
         M._preserve_search_results({
@@ -257,7 +265,87 @@ function M.by_text(project_dir, sink, opts)
   })
 end
 
+function M.by_text_fzflua(project_dir, sink, opts)
+  local o = opts or {}
+  -- local rg = make_rg({ fuzzy = false })
+
+  local fzf_lua = require("fzf-lua")
+
+  local function dir_name(dir)
+    if not dir then
+      return ""
+    end
+
+    local mod = ":t"
+    if vim.endswith(dir, "/") then
+      mod = ":h:t"
+    end
+    return " " .. vim.fn.fnamemodify(dir, mod) .. " "
+  end
+
+  local base = {
+    winopts = {
+      title = dir_name(project_dir),
+    },
+    header = {}, -- Disable the header; can't read it anyway
+    fzf_opts = {
+      ["--layout"] = "default",
+    },
+    actions = {
+      ["default"] = {
+        fn = function(output, local_opts)
+          open_text_result(sink, local_opts.cwd .. output[1])
+        end,
+      },
+      ["ctrl-f"] = { fzf_lua.actions.grep_lgrep },
+    },
+  }
+
+  local function perform_search(base_opts, extra_opts)
+    fzf_lua.live_grep_native(vim.tbl_extend("force", base_opts, extra_opts))
+  end
+
+  if opts.monorepo_root then
+    local non_monorepo = base
+    base = vim.tbl_deep_extend("force", base, {
+      actions = {
+        ["ctrl-o"] = {
+          fn = function()
+            perform_search(non_monorepo, {
+              winopts = {
+                title = dir_name(opts.monorepo_root),
+              },
+              cwd = opts.monorepo_root,
+              query = fzf_lua.get_last_query(),
+            })
+          end,
+        },
+      },
+    })
+  end
+
+  perform_search(base, {
+    cwd = project_dir,
+    query = o.query,
+  })
+end
+
+function M.by_text(project_dir, sink, opts)
+  local ok, _ = pcall(require, "fzf-lua")
+  if ok and vim.g.lazyvim_picker == "fzf" then
+    M.by_text_fzflua(project_dir, sink, opts)
+  else
+    M.by_text_legacy(project_dir, sink, opts)
+  end
+end
+
 function M.resume_by_text(project_dir)
+  local ok, fzf_lua = pcall(require, "fzf-lua")
+  if ok and vim.g.lazyvim_picker == "fzf" then
+    fzf_lua.resume()
+    return
+  end
+
   local search = M._last_search[project_dir]
   if not search then
     print("[WARN] No search to resume for " .. project_dir)
@@ -348,6 +436,7 @@ function M.projects()
   end
 
   local cmd = "ls -d " .. table.concat(dirs, " ")
+
   ui.fzf({
     source = cmd,
     sink = M.open_project,
