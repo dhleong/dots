@@ -108,4 +108,6 @@ then
     source $HOME/.zshrc.local
 fi
 
-source /Users/daniel.leong/.nix-profile/etc/profile.d/nix.sh
+if [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+    source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+fi
