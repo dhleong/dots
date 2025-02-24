@@ -265,6 +265,10 @@ function M.by_text_legacy(project_dir, sink, opts)
   })
 end
 
+local function fzf_hl(color, text)
+  return require("fzf-lua.utils").ansi_codes[color](text)
+end
+
 function M.by_text_fzflua(project_dir, sink, opts)
   local o = opts or {}
   -- local rg = make_rg({ fuzzy = false })
@@ -291,7 +295,7 @@ function M.by_text_fzflua(project_dir, sink, opts)
         vertical = "up:35%",
       },
     },
-    header = {}, -- Disable the header; can't read it anyway
+    header = {}, -- Disable the default header; it's very messy
     fzf_opts = {
       ["--layout"] = "default",
       ["--style"] = "minimal",
@@ -313,6 +317,9 @@ function M.by_text_fzflua(project_dir, sink, opts)
   if opts.monorepo_root then
     local non_monorepo = base
     base = vim.tbl_deep_extend("force", base, {
+      header = {
+        fzf_hl("magenta", "ctrl-o") .. " switch to monorepo-wide search",
+      },
       actions = {
         ["ctrl-o"] = {
           fn = function()
