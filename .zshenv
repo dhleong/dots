@@ -89,6 +89,3 @@ export FASTLANE_SKIP_UPDATE_CHECK=1
 export ERL_AFLAGS="-kernel shell_history enabled"
 
 export RIPGREP_CONFIG_PATH="$HOME/.config/rg"
-
-# Not sure why but git is being a derp right now
-export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o 'IdentitiesOnly yes'"
