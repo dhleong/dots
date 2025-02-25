@@ -115,7 +115,7 @@ function M.by_text(project_dir, sink, opts)
     actions = {
       ["default"] = {
         fn = function(output, local_opts)
-          M._open_text_result(sink, local_opts.cwd .. output[1])
+          require("dhleong.nav")._open_text_result(sink, local_opts.cwd .. output[1])
         end,
       },
       ["ctrl-f"] = { fzf_lua.actions.grep_lgrep },
