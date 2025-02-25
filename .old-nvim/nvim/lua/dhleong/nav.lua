@@ -99,7 +99,7 @@ function M.open_project(project_dir)
   end
 end
 
-function M.in_project(project_dir, sink, opts)
+function M.in_project_legacy(project_dir, sink, opts)
   local options = {
     "--tiebreak",
     "end,index",
@@ -125,6 +125,15 @@ function M.in_project(project_dir, sink, opts)
   })
 end
 
+function M.in_project(project_dir, sink, opts)
+  local ok, _ = pcall(require, "fzf-lua")
+  if ok and vim.g.lazyvim_picker == "fzf" then
+    require("dhleong.nav.fzf_lua").in_project(project_dir, sink, opts)
+  else
+    M.in_project_legacy(project_dir, sink, opts)
+  end
+end
+
 local function make_rg(opts)
   local fuzzy = opts.fuzzy and "" or "--fixed-strings"
   return table.concat({
@@ -144,7 +153,7 @@ local function make_rg(opts)
   }, " ")
 end
 
-local function open_text_result(sink, result)
+function M._open_text_result(sink, result)
   local file, line, col = unpack_text_result(result)
   if not file and not line then
     print("Unexpected input: " .. result)
@@ -251,7 +260,7 @@ function M.by_text_legacy(project_dir, sink, opts)
         return
       end
 
-      open_text_result(sink, output[2])
+      M._open_text_result(sink, output[2])
 
       if query ~= "" then
         M._preserve_search_results({
@@ -265,89 +274,10 @@ function M.by_text_legacy(project_dir, sink, opts)
   })
 end
 
-local function fzf_hl(color, text)
-  return require("fzf-lua.utils").ansi_codes[color](text)
-end
-
-function M.by_text_fzflua(project_dir, sink, opts)
-  local o = opts or {}
-  -- local rg = make_rg({ fuzzy = false })
-
-  local fzf_lua = require("fzf-lua")
-
-  local function dir_name(dir)
-    if not dir then
-      return ""
-    end
-
-    local mod = ":t"
-    if vim.endswith(dir, "/") then
-      mod = ":h:t"
-    end
-    return " " .. vim.fn.fnamemodify(dir, mod) .. " "
-  end
-
-  local base = {
-    winopts = {
-      title = dir_name(project_dir),
-      preview = {
-        flip_columns = 150,
-        vertical = "up:35%",
-      },
-    },
-    header = {}, -- Disable the default header; it's very messy
-    fzf_opts = {
-      ["--layout"] = "default",
-      ["--style"] = "minimal",
-    },
-    actions = {
-      ["default"] = {
-        fn = function(output, local_opts)
-          open_text_result(sink, local_opts.cwd .. output[1])
-        end,
-      },
-      ["ctrl-f"] = { fzf_lua.actions.grep_lgrep },
-    },
-  }
-
-  local function perform_search(base_opts, extra_opts)
-    fzf_lua.live_grep_native(vim.tbl_extend("force", base_opts, extra_opts))
-  end
-
-  if opts.monorepo_root then
-    local non_monorepo = base
-    base = vim.tbl_deep_extend("force", base, {
-      header = {
-        fzf_hl("magenta", "ctrl-o") .. " switch to monorepo-wide search",
-      },
-      actions = {
-        ["ctrl-o"] = {
-          fn = function()
-            perform_search(non_monorepo, {
-              winopts = {
-                title = dir_name(opts.monorepo_root),
-              },
-              cwd = opts.monorepo_root,
-              query = fzf_lua.get_last_query(),
-            })
-          end,
-          noclose = true,
-          reuse = true,
-        },
-      },
-    })
-  end
-
-  perform_search(base, {
-    cwd = project_dir,
-    query = o.query,
-  })
-end
-
 function M.by_text(project_dir, sink, opts)
   local ok, _ = pcall(require, "fzf-lua")
   if ok and vim.g.lazyvim_picker == "fzf" then
-    M.by_text_fzflua(project_dir, sink, opts)
+    require("dhleong.nav.fzf_lua").by_text(project_dir, sink, opts)
   else
     M.by_text_legacy(project_dir, sink, opts)
   end
