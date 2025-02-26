@@ -67,6 +67,8 @@ if [ -z "$TMUX" ]; then
     if [ -d $GRAALVM_HOME ]; then
         export PATH="$PATH:$GRAALVM_HOME/bin"
     fi
+
+    PATH="$PATH:$HOME/.local/share/nvim/lazy/fzf/bin"
 fi
 
 if [ -d "$HOME/.zshenv.local" ]
