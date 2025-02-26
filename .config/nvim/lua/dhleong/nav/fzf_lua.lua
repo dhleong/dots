@@ -111,7 +111,14 @@ function M.by_text(project_dir, sink, opts)
         vertical = "up:35%",
       },
     },
+    hls = {
+      -- When using brackets in the query, we get errors about vim.regexp
+      -- if we don't disable this highlight group:
+      search = false,
+    },
     header = {}, -- Disable the default header; it's very messy
+    -- I tend not to want regex when using text search (I like using brackets!)
+    rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings -- ",
     actions = {
       ["default"] = {
         fn = function(output, local_opts)
