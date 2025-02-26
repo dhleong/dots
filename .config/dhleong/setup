@@ -245,8 +245,10 @@ elif is_mac; then
 elif has_nix; then
 	echo "Installing: (various tools)..."
 	# NOTE: nix-env can't seem to find these for some reason...?
+	# NOTE: apt's version of fzf is too old for fzf-lua. But we already
+	# install it from source thanks to neovim, so... let's just skip it
 	# $nix_env -i ripgrep -i fzf -i zsh-completions
-	sudo apt-get install ripgrep fzf
+	sudo apt-get install ripgrep
 else
 	echo "NOT Installing: (various tools)"
 fi
