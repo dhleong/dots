@@ -117,6 +117,7 @@ function M.by_text(project_dir, sink, opts)
       search = false,
     },
     header = {}, -- Disable the default header; it's very messy
+    no_esc = true,
     -- I tend not to want regex when using text search (I like using brackets!)
     rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings -- ",
     actions = {
@@ -137,7 +138,7 @@ function M.by_text(project_dir, sink, opts)
 
   perform_search(base, {
     cwd = project_dir,
-    query = o.query,
+    search = o.query,
   })
 end
 
