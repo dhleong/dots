@@ -23,53 +23,76 @@ if [ -f "$HOME/lib/android-ndk" ]; then
     export ANDROID_NDK=~/lib/android-ndk
 fi
 
-# Don't re-add values to the PATH when loaded from tmux
-if [ -z "$TMUX" ]; then
-    export PATH=$PATH:$ANDROID_HOME
-    export PATH=$PATH:$ANDROID_HOME/platform-tools
-    export PATH=$PATH:$ANDROID_HOME/tools
-    export PATH=$PATH:/usr/local/git/bin
-    export PATH=~/bin:$PATH
-    export NDK=$ANDROID_NDK
-    export PATH=$PATH:$NDK
+# Borrowed from: https://unix.stackexchange.com/a/480523
++path.append() { # {{{
+    # For each passed dirname...
+    local dirname
+    for   dirname; do
+        # Strip the trailing directory separator if any from this dirname,
+        # reducing this dirname to the canonical form expected by the
+        # test for uniqueness performed below.
+        dirname="${dirname%/}"
 
-    export PATH=$PATH:/usr/local/mysql/bin
-    export PATH=$PATH:/lib/gradle/bin
-    export PATH=$PATH:~/code/depot_tools
-    export PATH=$PATH:~/code/flutter/bin
-    export PATH=$PATH:~/.dotfiles/bin
-    export PATH=$PATH:~/.local/bin
+        # If this dirname is either relative, duplicate, or nonextant, then
+        # silently ignore this dirname and continue to the next. Note that the
+        # extancy test is the least performant test and hence deferred.
+        [[ "${dirname:0:1}" == '/' &&
+           ":${PATH}:" != *":${dirname}:"* &&
+           -d "${dirname}" ]] || continue
 
-    export GOPATH=$HOME/code/go
-    export GOBIN=$GOPATH/bin
-    export GO111MODULE="auto"
-    export PATH=$PATH:$GOBIN
+        # Else, this is an existing absolute unique dirname. In this case,
+        # append this dirname to the current ${PATH}.
+        PATH="${PATH}:${dirname}"
+    done
 
-    export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-    export NPM_PACKAGES=${HOME}/.npm-packages
-    export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-    export PATH="/usr/local/bin:$PATH"
-    export PATH="$NPM_PACKAGES/bin:$PATH"
+    # Strip an erroneously leading delimiter from the current ${PATH} if any,
+    # a common edge case when the initial ${PATH} is the empty string.
+    PATH="${PATH#:}"
 
-    export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
+    # Export the current ${PATH} to subprocesses. Although system-wide scripts
+    # already export the ${PATH} by default on most systems, "Bother free is
+    # the way to be."
+    export PATH
+} # }}}
 
-    # A bit hacky: On some machines I use, .cargo/env is initialized in a system-wide
-    # zprofile. In order to let zprofile order things as it prefers, we skip initializing
-    # it here in that case.
-    if ! [ -f "/etc/zsh/zprofile" ]; then
-        if [ -f "$HOME/.cargo/env" ]; then
-            source "$HOME/.cargo/env"
-        fi
++path.append $ANDROID_HOME $ANDROID_HOME/platform-tools $ANDROID_HOME/tools
++path.append $ANDROID_NDK
++path.append /usr/local/git/bin
++path.append ~/bin
+
++path.append /usr/local/mysql/bin /lib/gradle/bin
++path.append ~/code/depot_tools ~/code/flutter/bin
++path.append ~/.dotfiles/bin ~/.local/bin
+
+export GOPATH=$HOME/code/go
+export GOBIN=$GOPATH/bin
+export GO111MODULE="auto"
++path.append $GOBIN
+
+export NPM_PACKAGES=${HOME}/.npm-packages
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+# export PATH="/usr/local/bin:$PATH"
+# export PATH="$NPM_PACKAGES/bin:$PATH"
++path.append /usr/local/bin
++path.append $NPM_PACKAGES
+
+# export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
++path.append /usr/local/opt/postgresql@9.6/bin
+
+# A bit hacky: On some machines I use, .cargo/env is initialized in a system-wide
+# zprofile. In order to let zprofile order things as it prefers, we skip initializing
+# it here in that case.
+if ! [ -f "/etc/zsh/zprofile" ]; then
+    if [ -f "$HOME/.cargo/env" ]; then
+        source "$HOME/.cargo/env"
     fi
-
-    export GRAALVM_VERSION="19.3.1"
-    export GRAALVM_HOME="/Library/Java/JavaVirtualMachines/graalvm-ce-java8-${GRAALVM_VERSION}/Contents/Home"
-    if [ -d $GRAALVM_HOME ]; then
-        export PATH="$PATH:$GRAALVM_HOME/bin"
-    fi
-
-    PATH="$PATH:$HOME/.local/share/nvim/lazy/fzf/bin"
 fi
+
+export GRAALVM_VERSION="19.3.1"
+export GRAALVM_HOME="/Library/Java/JavaVirtualMachines/graalvm-ce-java8-${GRAALVM_VERSION}/Contents/Home"
++path.append "$GRAALVM_HOME/bin"
+
++path.append "$HOME/.local/share/nvim/lazy/fzf/bin"
 
 if [ -d "$HOME/.zshenv.local" ]
 then
