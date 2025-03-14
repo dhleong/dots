@@ -37,14 +37,23 @@ local function enrich(base, perform_search, opts)
       actions = {
         ["ctrl-o"] = {
           fn = function()
-            perform_search(non_monorepo, {
+            local monorepo_params = {
               prompt = base.prompt and make_dirname_prompt(opts.monorepo_root),
               winopts = {
                 title = dirname(opts.monorepo_root),
               },
               cwd = opts.monorepo_root,
-              query = fzf_lua.get_last_query(),
-            })
+            }
+
+            -- Things that use no_esc need `search` for that to
+            -- work properly. This API is silly but...
+            if base.no_esc then
+              monorepo_params.search = fzf_lua.get_last_query()
+            else
+              monorepo_params.query = fzf_lua.get_last_query()
+            end
+
+            perform_search(non_monorepo, monorepo_params)
           end,
           noclose = true,
           reuse = true,
