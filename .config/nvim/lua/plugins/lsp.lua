@@ -22,6 +22,21 @@ return {
   { import = "lazyvim.plugins.extras.coding.luasnip" },
 
   {
+    "nvim-lspconfig",
+    opts = {
+      diagnostics = {
+        signs = {
+          text = {
+            -- pyright in particular uses hints for things that are "okay"
+            -- like not accessing a parameter in an abstract method.
+            [vim.diagnostic.severity.HINT] = "",
+          },
+        },
+      },
+    },
+  },
+
+  {
     import = "plugins.lsp.blink",
     enabled = function()
       return not LazyVim.has_extra("coding.blink.cmp")
