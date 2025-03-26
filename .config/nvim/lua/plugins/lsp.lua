@@ -1,8 +1,14 @@
+local function toggle_local_diagnostics()
+  local bufnr = vim.fn.bufnr("%")
+  vim.cmd.Trouble("diagnostics", "toggle", "filter.buf=" .. bufnr)
+end
+
 return {
   {
     "trouble.nvim",
-    opts = {
-      icons = false,
+    keys = {
+      { "<leader>dd", toggle_local_diagnostics, desc = "Toggle diagnostics" },
+      { "<leader>xx", toggle_local_diagnostics, desc = "Toggle diagnostics" },
     },
   },
 
