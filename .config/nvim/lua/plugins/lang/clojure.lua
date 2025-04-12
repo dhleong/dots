@@ -1,24 +1,25 @@
-return {
-  -- TODO: Add to hearth?
-  {
-    dir = ".",
-    init = function()
-      vim.filetype.add({
-        pattern = {
-          [".*"] = {
-            priority = -math.huge,
-            function(_, bufnr)
-              local content = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ""
-              if vim.startswith(content, "#!/usr/bin/env bb") then
-                return "clojure"
-              end
-            end,
-          },
-        },
-      })
-    end,
+-- TODO: Add to hearth?
+vim.filetype.add({
+  extension = {
+    fnl = "fennel",
+    -- fnl = "clojure",
   },
+  pattern = {
+    [".*"] = {
+      priority = -math.huge,
+      function(_, bufnr)
+        local content = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ""
+        if vim.startswith(content, "#!/usr/bin/env bb") then
+          return "clojure"
+        end
+      end,
+    },
+  },
+})
 
+local filetypes = { "clojure", "fennel" }
+
+return {
   {
     "hrsh7th/nvim-cmp",
     opts = {
@@ -29,7 +30,7 @@ return {
     },
   },
 
-  { "tpope/vim-fireplace", ft = "clojure" },
+  { "tpope/vim-fireplace", ft = filetypes },
 
   -- Async semantic highlighting
   { "dhleong/vim-mantel", dev = true },
@@ -40,19 +41,20 @@ return {
     "dhleong/vim-hearth",
     dev = true,
     keys = {
-      { "cpt", ":call hearth#test#RunForBuffer()<cr>", ft = "clojure" },
-      { "glc", ":call hearth#repl#Connect()<cr>", ft = "clojure" },
-      { "<leader>st", ":call hearth#nav#find#Test()<cr>", ft = "clojure" },
-      { "<leader>nt", ":call hearth#nav#create#Test()<cr>", ft = "clojure" },
+      { "cpt", ":call hearth#test#RunForBuffer()<cr>", ft = filetypes },
+      { "glc", ":call hearth#repl#Connect()<cr>", ft = filetypes },
+      { "<leader>st", ":call hearth#nav#find#Test()<cr>", ft = filetypes },
+      { "<leader>nt", ":call hearth#nav#create#Test()<cr>", ft = filetypes },
     },
     init = function()
       vim.g.hearth_create_maps = false
+      vim.g.hearth_enable_fennel = true
     end,
   },
 
-  { "guns/vim-clojure-static", ft = "clojure" },
-  { "guns/vim-sexp", ft = "clojure" },
-  { "tpope/vim-sexp-mappings-for-regular-people", ft = "clojure" },
+  { "guns/vim-clojure-static", ft = filetypes },
+  { "guns/vim-sexp", ft = filetypes },
+  { "tpope/vim-sexp-mappings-for-regular-people", ft = filetypes },
 
   {
     "dhleong/mini-unpairs",
