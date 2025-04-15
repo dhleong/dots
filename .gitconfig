@@ -9,6 +9,7 @@
     co = checkout
     new = !git init && git symbolic-ref HEAD refs/heads/main
     when = log --pretty=format:'%Cgreen%h %Cred%d %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all --grep
+    stash-staged = !git stash push -- $(git diff --name-only --cached)
 [color]
     ui = auto
 [push]
