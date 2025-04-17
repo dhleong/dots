@@ -1,18 +1,19 @@
 -- TODO: Add to hearth?
 vim.filetype.add({
   extension = {
-    fnl = "fennel",
-    -- fnl = "clojure",
+    -- fnl = "fennel",
+    fnl = "clojure",
   },
   pattern = {
-    [".*"] = {
-      priority = -math.huge,
+    -- NOTE: This is a HACK to avoid collision with snacks.nvim's bigfile detection
+    ["..*"] = {
       function(_, bufnr)
         local content = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ""
         if vim.startswith(content, "#!/usr/bin/env bb") then
           return "clojure"
         end
       end,
+      { priority = -math.huge },
     },
   },
 })
