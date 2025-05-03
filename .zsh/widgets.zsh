@@ -1,3 +1,13 @@
+function _allow_gui_editor() {
+    # In a python virtualenv, we should prefer the cli editor to preserve that.
+    # At some point it'd be nice to properly activate virtualenvs within gui but eh
+    if ! [ -z "$VIRTUAL_ENV" ]; then
+        return 1
+    fi
+
+    return 0
+}
+
 # ======= Custom widgets ===================================
 
 _up-directory() {
@@ -45,11 +55,8 @@ _fzf-find-file() {
     fi
 
     # with no command, we wanted to edit the file
-    if $(which vimr > /dev/null); then
-        BUFFER="vimr $file"
-        zle accept-line
-    elif [ -d /Applications/MacVim.app ]; then
-        BUFFER="mvim $file"
+    if which neovide > /dev/null && _allow_gui_editor; then
+        BUFFER="neovide $file"
         zle accept-line
     else
         BUFFER="$EDITOR $file"
