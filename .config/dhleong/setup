@@ -120,7 +120,7 @@ if is_mac; then
     fi
 
     # 1pass (needed to authenticate with github)
-    ensure_cask "1Password 7" "1password"
+    ensure_cask "1Password" "1password"
 fi
 
 # github config (for cloning dotfiles)
@@ -202,7 +202,7 @@ elif is_mac; then
 fi
 
 # iterm2 shell integration
-if [ -f "$HOME/.iterm2_shell_integration" ]; then
+if [ -f "$HOME/.iterm2_shell_integration.zsh" ]; then
     echo " Installed: iTerm2 shell integration"
 elif is_mac; then
     echo "Installing: iTerm2 shell integration"
