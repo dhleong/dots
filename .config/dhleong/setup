@@ -2,197 +2,197 @@
 # A full setup script
 
 is_mac() {
-	if [ -z "$OSTYPE" ]; then
-		# Definitely not
-		return 1
-	fi
-	[[ "$OSTYPE" == "darwin"* ]]
+    if [ -z "$OSTYPE" ]; then
+        # Definitely not
+        return 1
+    fi
+    [[ "$OSTYPE" == "darwin"* ]]
 }
 
 ensure_cask() {
-	dotAppName=$1
-	brewName=$2
+    dotAppName=$1
+    brewName=$2
 
-	if ! is_mac; then
-		return
-	fi
+    if ! is_mac; then
+        return
+    fi
 
-	if [ -d "/Applications/$dotAppName.app" ]; then
-		echo " Installed: $dotAppName"
-	else
-		echo "Installing: $dotAppName (cask $brewName)..."
-		brew install --cask $brewName
-	fi
+    if [ -d "/Applications/$dotAppName.app" ]; then
+        echo " Installed: $dotAppName"
+    else
+        echo "Installing: $dotAppName (cask $brewName)..."
+        brew install --cask $brewName
+    fi
 }
 
 has_cli() {
-	which $1 >/dev/null
+    which $1 >/dev/null
 }
 
 nix_env=nix-env
 if ! which nix-env >/dev/null; then
-	# In case it's not on the path, yet
-	nix_env=$HOME/.nix-profile/bin/nix-env
+    # In case it's not on the path, yet
+    nix_env=$HOME/.nix-profile/bin/nix-env
 fi
 
 has_nix() {
-	which $nix_env >/dev/null
+    which $nix_env >/dev/null
 }
 
 has_apt() {
-	which apt-get >/dev/null
+    which apt-get >/dev/null
 }
 
 ensure_brew_apt() {
-	cli_name=$1
-	brew_name=$2
-	apt_name=$3
-	apt_repo=$4
+    cli_name=$1
+    brew_name=$2
+    apt_name=$3
+    apt_repo=$4
 
-	if has_cli $cli_name; then
-		echo " Installed: $cli_name"
-	elif is_mac && [ "$brew_name" ]; then
-		echo "Installing: $cli_name..."
-		brew install $brew_name
-	elif has_apt; then
-		echo "Installing: $cli_name..."
-		if [ "$apt_repo" != '' ]; then
-			sudo add-apt-repository -y $apt_repo --no-update
-			sudo apt update -o DPkg::Lock::Timeout=60
+    if has_cli $cli_name; then
+        echo " Installed: $cli_name"
+    elif is_mac && [ "$brew_name" ]; then
+        echo "Installing: $cli_name..."
+        brew install $brew_name
+    elif has_apt; then
+        echo "Installing: $cli_name..."
+        if [ "$apt_repo" != '' ]; then
+            sudo add-apt-repository -y $apt_repo --no-update
+            sudo apt update -o DPkg::Lock::Timeout=60
 
-			if [ $? -ne 0 ]; then
-				echo " -> Failed to add repo '$apt_repo', skipping $cli_name"
-				return 1
-			fi
-		fi
-		sudo apt-get -o DPkg::Lock::Timeout=60 install -y $apt_name
-	else
-		echo "NOT Installing: $cli_name"
-	fi
+            if [ $? -ne 0 ]; then
+                echo " -> Failed to add repo '$apt_repo', skipping $cli_name"
+                return 1
+            fi
+        fi
+        sudo apt-get -o DPkg::Lock::Timeout=60 install -y $apt_name
+    else
+        echo "NOT Installing: $cli_name"
+    fi
 }
 
 ensure_git_repo() {
-	repo_name=$1
+    repo_name=$1
 
-	if [ -d "$HOME/git/$repo_name" ]; then
-		echo " Cloned: git <- $repo_name"
-	else
-		echo "Cloning: git <- $repo_name..."
+    if [ -d "$HOME/git/$repo_name" ]; then
+        echo " Cloned: git <- $repo_name"
+    else
+        echo "Cloning: git <- $repo_name..."
 
-		mkdir -p ~/git
-		(cd ~/git && gh repo clone $repo_name)
-	fi
+        mkdir -p ~/git
+        (cd ~/git && gh repo clone $repo_name)
+    fi
 }
 
 if is_mac; then
-	# install command line tools:
-	xcode-select --install
+    # install command line tools:
+    xcode-select --install
 
-	# some can't-live-without macos settings:
+    # some can't-live-without macos settings:
 
-	# Faster mouse movement
-	defaults write -g com.apple.trackpad.scaling 3
+    # Faster mouse movement
+    defaults write -g com.apple.trackpad.scaling 3
 
-	# Disable “natural” (Lion-style) scrolling
-	defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+    # Disable “natural” (Lion-style) scrolling
+    defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
-	# homebrew
-	if has_cli brew; then
-		echo " Installed: homebrew"
-	else
-		echo "Installing: homebrew..."
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	fi
+    # homebrew
+    if has_cli brew; then
+        echo " Installed: homebrew"
+    else
+        echo "Installing: homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
 
-	# 1pass (needed to authenticate with github)
-	ensure_cask "1Password 7" "1password"
+    # 1pass (needed to authenticate with github)
+    ensure_cask "1Password 7" "1password"
 fi
 
 # github config (for cloning dotfiles)
 if [ -d "$HOME/.ssh" ]; then
-	echo "     Setup: github"
+    echo "     Setup: github"
 elif is_mac; then
-	echo "Setting up: github"
-	echo " - New ssh key; enter email: "
-	read email
-	ssh-keygen -t ed25519 -C $email
+    echo "Setting up: github"
+    echo " - New ssh key; enter email: "
+    read email
+    ssh-keygen -t ed25519 -C $email
 
-	eval "$(ssh-agent -s)"
+    eval "$(ssh-agent -s)"
 
-	mkdir -p $HOME/.ssh
-	cat >$HOME/.ssh/config <<EOL
+    mkdir -p $HOME/.ssh
+    cat >$HOME/.ssh/config <<EOL
 Host *
   AddKeysToAgent yes
   UseKeychain yes
   IdentityFile ~/.ssh/id_ed25519
 EOL
 
-	ssh-add -K $HOME/.ssh/id_ed25519
-	pbcopy <$HOME/.ssh/id_ed25519.pub
+    ssh-add -K $HOME/.ssh/id_ed25519
+    pbcopy <$HOME/.ssh/id_ed25519.pub
 
-	echo " - Public key copied to clipboard; opening github to add..."
-	open https://github.com/settings/keys
+    echo " - Public key copied to clipboard; opening github to add..."
+    open https://github.com/settings/keys
 
-	read -p " - Press enter to continue"
+    read -p " - Press enter to continue"
 fi
 
 # dotfiles, finally
 if [ -d "$HOME/.dotfiles" ]; then
-	echo " Installed: dotfiles"
+    echo " Installed: dotfiles"
 else
-	echo "Installing: personal dotfiles..."
+    echo "Installing: personal dotfiles..."
 
-	# create these before updating dots, so dotfiler doesn't cause all
-	# local-specific config to try to go into our dots repo
-	mkdir $HOME/.config
-	mkdir $HOME/.zsh
+    # create these before updating dots, so dotfiler doesn't cause all
+    # local-specific config to try to go into our dots repo
+    mkdir $HOME/.config
+    mkdir $HOME/.zsh
 
-	# move away any existing dotfiles to avoid collision
-	mv $HOME/.bashrc $HOME/.bashrc.original 2>/dev/null
-	mv $HOME/.gitconfig $HOME/.gitconfig.original 2>/dev/null
-	mv $HOME/.zshrc $HOME/.zshrc.original 2>/dev/null
-	mv $HOME/.zshenv $HOME/.zshenv.original 2>/dev/null
+    # move away any existing dotfiles to avoid collision
+    mv $HOME/.bashrc $HOME/.bashrc.original 2>/dev/null
+    mv $HOME/.gitconfig $HOME/.gitconfig.original 2>/dev/null
+    mv $HOME/.zshrc $HOME/.zshrc.original 2>/dev/null
+    mv $HOME/.zshenv $HOME/.zshenv.original 2>/dev/null
 
-	git clone git@github.com:dhleong/dotfiler.git $HOME/.dotfiles
-	$HOME/.dotfiles/bin/dot add git@github.com:dhleong/dots.git
-	$HOME/.dotfiles/bin/dot update
+    git clone git@github.com:dhleong/dotfiler.git $HOME/.dotfiles
+    $HOME/.dotfiles/bin/dot add git@github.com:dhleong/dots.git
+    $HOME/.dotfiles/bin/dot update
 fi
 
 # oh-my-zsh, making sure not to overwrite the local zshrc
 if [ -d "$HOME/.oh-my-zsh" ]; then
-	echo " Installed: oh-my-zsh"
+    echo " Installed: oh-my-zsh"
 else
-	# NOTE: We pass RUNZSH=no to avoid this script starting a zsh terminal and blocking the rest of the install
-	echo "Installing: oh-my-zsh..."
-	RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --keep-zshrc
+    # NOTE: We pass RUNZSH=no to avoid this script starting a zsh terminal and blocking the rest of the install
+    echo "Installing: oh-my-zsh..."
+    RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --keep-zshrc
 
-	# Install zsh-syntax-highlighting
-	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    # Install zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 fi
 
 # fonts
 if [ -f "$HOME/Library/Fonts/Inconsolata for Powerline.otf" ]; then
-	echo " Installed: Inconsolata font"
+    echo " Installed: Inconsolata font"
 elif is_mac; then
-	echo "Installing: Inconsolata font..."
-	curl "https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/Inconsolata%20for%20Powerline.otf" \
-		-o "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
+    echo "Installing: Inconsolata font..."
+    curl "https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/Inconsolata%20for%20Powerline.otf" \
+        -o "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
 
-	# open to ensure it's available
-	open "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
+    # open to ensure it's available
+    open "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
 
-	# Also just use brew to install victor mono
-	brew tap homebrew/cask-fonts
-	ensure_cask font-victor-mono
+    # Also just use brew to install victor mono
+    brew tap homebrew/cask-fonts
+    ensure_cask font-victor-mono
 fi
 
 # iterm2 shell integration
 if [ -f "$HOME/.iterm2_shell_integration" ]; then
-	echo " Installed: iTerm2 shell integration"
+    echo " Installed: iTerm2 shell integration"
 elif is_mac; then
-	echo "Installing: iTerm2 shell integration"
-	curl -L https://iterm2.com/shell_integration/zsh \
-		-o ~/.iterm2_shell_integration.zsh
+    echo "Installing: iTerm2 shell integration"
+    curl -L https://iterm2.com/shell_integration/zsh \
+        -o ~/.iterm2_shell_integration.zsh
 fi
 
 # a few more apps to get started:
@@ -206,31 +206,31 @@ ensure_brew_apt "nvim" "neovim" "neovim python3-neovim python3-venv" "ppa:neovim
 ensure_cask "Neovide" "neovide"
 
 if has_cli gh; then
-	echo " Installed: github cli"
+    echo " Installed: github cli"
 elif is_mac; then
-	echo "Installing: github cli..."
-	brew install gh
+    echo "Installing: github cli..."
+    brew install gh
 elif has_nix; then
-	# Prefer nix if we have it; the apt approach below has stopped working on some machines...
-	echo "Installing: github cli..."
-	$nix_env -iA nixpkgs.gitAndTools.gh
+    # Prefer nix if we have it; the apt approach below has stopped working on some machines...
+    echo "Installing: github cli..."
+    $nix_env -iA nixpkgs.gitAndTools.gh
 else
-	# Installation with apt is... tricky
-	echo "Installing: github cli..."
-	type -p curl >/dev/null || sudo apt install curl -y
-	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg &&
-		sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg &&
-		echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null &&
-		sudo apt update &&
-		sudo apt install gh -y
+    # Installation with apt is... tricky
+    echo "Installing: github cli..."
+    type -p curl >/dev/null || sudo apt install curl -y
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg &&
+        sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg &&
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null &&
+        sudo apt update &&
+        sudo apt install gh -y
 fi
 
 if ! gh auth status 2>/dev/null; then
-	# Go ahead and login
-	echo "Activating: github cli auth"
-	gh auth login
+    # Go ahead and login
+    echo "Activating: github cli auth"
+    gh auth login
 else
-	echo " Activated: github cli auth"
+    echo " Activated: github cli auth"
 fi
 
 ensure_brew_apt "diff-so-fancy" "diff-so-fancy" "diff-so-fancy" "ppa:aos1/diff-so-fancy"
@@ -238,30 +238,30 @@ ensure_brew_apt "flake8" "flake8" "flake8"
 ensure_brew_apt "http" "httpie" "httpie"
 
 if has_cli rg && has_cli fzf; then
-	echo " Installed: (various tools)"
+    echo " Installed: (various tools)"
 elif is_mac; then
-	echo "Installing: (various tools)..."
-	brew install ripgrep fzf zsh-completions
+    echo "Installing: (various tools)..."
+    brew install ripgrep fzf zsh-completions
 elif has_nix; then
-	echo "Installing: (various tools)..."
-	# NOTE: nix-env can't seem to find these for some reason...?
-	# NOTE: apt's version of fzf is too old for fzf-lua. But we already
-	# install it from source thanks to neovim, so... let's just skip it
-	# $nix_env -i ripgrep -i fzf -i zsh-completions
-	sudo apt-get install ripgrep
+    echo "Installing: (various tools)..."
+    # NOTE: nix-env can't seem to find these for some reason...?
+    # NOTE: apt's version of fzf is too old for fzf-lua. But we already
+    # install it from source thanks to neovim, so... let's just skip it
+    # $nix_env -i ripgrep -i fzf -i zsh-completions
+    sudo apt-get install ripgrep
 else
-	echo "NOT Installing: (various tools)"
+    echo "NOT Installing: (various tools)"
 fi
 
 if has_cli bb; then
-	echo " Installed: babashka"
+    echo " Installed: babashka"
 elif is_mac; then
-	echo "Installing: babashka..."
-	brew install borkdude/brew/babashka
+    echo "Installing: babashka..."
+    brew install borkdude/brew/babashka
 else
-	curl -sL https://raw.githubusercontent.com/babashka/babashka/master/install --output install-babashka
-	chmod +x install-babashka
-	sudo ./install-babashka
+    curl -sL https://raw.githubusercontent.com/babashka/babashka/master/install --output install-babashka
+    chmod +x install-babashka
+    sudo ./install-babashka
 fi
 
 # Clone some repos that we rely on for vim. These are somewhat-actively developed,
@@ -275,6 +275,6 @@ echo ' - You may need to logout and back in for some settings to update'
 echo ' - gh and hub are not setup automatically'
 
 if is_mac; then
-	echo ' - Remap capslock to escape by hand... not sure how to automate'
-	echo ' - Brewfile can be loaded by running `brew bundle` in ~/.dotfiles'
+    echo ' - Remap capslock to escape by hand... not sure how to automate'
+    echo ' - Brewfile can be loaded by running `brew bundle` in ~/.dotfiles'
 fi
