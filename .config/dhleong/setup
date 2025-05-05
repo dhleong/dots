@@ -25,6 +25,21 @@ ensure_cask() {
     fi
 }
 
+ensure_borkdude() {
+    cli_name=$1
+    repo_name=$2
+    org_name=$3
+
+    if has_cli $cli_name; then
+        echo " Installed: $repo_name"
+    elif is_mac; then
+        echo "Installing: $repo_name..."
+        brew install borkdude/brew/$repo_name
+    else
+        bash <(curl -s https://raw.githubusercontent.com/$org_name/$repo_name/master/install)
+    fi
+}
+
 has_cli() {
     which $1 >/dev/null
 }
@@ -253,16 +268,8 @@ else
     echo "NOT Installing: (various tools)"
 fi
 
-if has_cli bb; then
-    echo " Installed: babashka"
-elif is_mac; then
-    echo "Installing: babashka..."
-    brew install borkdude/brew/babashka
-else
-    curl -sL https://raw.githubusercontent.com/babashka/babashka/master/install --output install-babashka
-    chmod +x install-babashka
-    sudo ./install-babashka
-fi
+ensure_borkdude bb "babashka" "babashka"
+ensure_borkdude jet "jet" "borkdude"
 
 # Clone some repos that we rely on for vim. These are somewhat-actively developed,
 # so they're linked against a local checkout in my vimrc
