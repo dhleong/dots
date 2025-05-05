@@ -196,9 +196,9 @@ elif is_mac; then
     # open to ensure it's available
     open "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
 
-    # Also just use brew to install victor mono
+    # Also just use brew to install maple-mono
     brew tap homebrew/cask-fonts
-    ensure_cask font-victor-mono
+    ensure_cask font-maple-mono
 fi
 
 # iterm2 shell integration
