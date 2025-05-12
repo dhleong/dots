@@ -92,6 +92,7 @@ return {
   },
   { "gitsigns.nvim", enabled = false },
   { "mini.bufremove", enabled = false },
+  { "mini.icons", enabled = false },
   { "mini.surround", enabled = false },
   { "neo-tree.nvim", enabled = false },
   { "noice.nvim", enabled = false },
