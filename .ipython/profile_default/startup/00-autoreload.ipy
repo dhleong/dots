@@ -1,3 +1,6 @@
-import autoreload
+#  May or may not need this import:
+try:
+    import autoreload
+except: pass
 %load_ext autoreload
 %autoreload 2
