@@ -1,4 +1,5 @@
 local preferred_adapter = "anthropic"
+local default_buffer_content = "#buffer @editor"
 
 local function get_visual_selection() -- {{{
   local mode = vim.fn.mode()
@@ -100,7 +101,7 @@ return {
           local config = require("codecompanion.config")
           chat:add_buf_message({
             role = config.constants.USER_ROLE,
-            content = "#buffer\n\n",
+            content = default_buffer_content .. "\n\n",
           })
           chat.ui:open()
         end,
@@ -110,6 +111,12 @@ return {
     opts = {
       display = {
         chat = {
+          window = {
+            layout = "float",
+            border = "rounded",
+            width = 60,
+            col = vim.o.columns - 60,
+          },
           show_token_count = false,
           start_in_insert_mode = true,
         },
