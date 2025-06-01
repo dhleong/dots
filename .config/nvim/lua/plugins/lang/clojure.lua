@@ -50,6 +50,9 @@ return {
     init = function()
       vim.g.hearth_create_maps = false
       vim.g.hearth_enable_fennel = true
+
+      vim.g.hearth_ignored_build_ids = { ":ci" }
+      vim.g.hearth_ignored_build_regex = ":ci.*"
     end,
   },
 

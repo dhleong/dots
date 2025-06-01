@@ -8,9 +8,6 @@ vim.bo.formatoptions = vim.bo.formatoptions .. 'r'
 -- hearth configs
 --
 
-vim.g.hearth_ignored_build_ids = { ':ci' }
-vim.g.hearth_ignored_build_regex = ':ci.*'
-
 --
 -- vim-clojure-static configs
 --
