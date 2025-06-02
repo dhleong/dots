@@ -1,3 +1,5 @@
 # This file ensures doteur generates a directory for .zshenv.local so different
 # environments can contribute local files without conflicts, and we can also have
 # an uncommitted machine-local file if we like
+
+*.zsh
