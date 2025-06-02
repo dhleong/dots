@@ -1,5 +1,12 @@
 local preferred_adapter = "anthropic"
-local default_buffer_content = "#buffer @editor"
+local function default_buffer_content()
+  local content = {
+    "#buffer @editor",
+    "Current line: #" .. vim.fn.line("."),
+  }
+
+  return table.concat(content, "\n")
+end
 
 local function get_visual_selection() -- {{{
   local mode = vim.fn.mode()
@@ -101,7 +108,7 @@ return {
           local config = require("codecompanion.config")
           chat:add_buf_message({
             role = config.constants.USER_ROLE,
-            content = default_buffer_content .. "\n\n",
+            content = default_buffer_content() .. "\n\n",
           })
           chat.ui:open()
         end,
