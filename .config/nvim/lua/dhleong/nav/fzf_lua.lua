@@ -18,6 +18,18 @@ local function make_dirname_prompt(dir)
   return dirname(dir) .. "❯ "
 end
 
+local function install_last_query(base, params)
+  local fzf_lua = require("fzf-lua")
+
+  -- Things that use no_esc need `search` for that to
+  -- work properly. This API is silly but...
+  if base.no_esc then
+    params.search = fzf_lua.get_last_query()
+  else
+    params.query = fzf_lua.get_last_query()
+  end
+end
+
 local function enrich(base, perform_search, opts)
   local fzf_lua = require("fzf-lua")
 
@@ -27,12 +39,17 @@ local function enrich(base, perform_search, opts)
     ["--style"] = "minimal",
   }
 
+  local base_header = ""
+  if base.header and base.header[1] then
+    base_header = base.header[1]
+  end
+
   -- Support "widening" as appropriate
   if opts.monorepo_root then
     local non_monorepo = base
     return vim.tbl_deep_extend("force", base, {
       header = {
-        fzf_hl("magenta", "ctrl-o") .. " switch to monorepo-wide search",
+        fzf_hl("magenta", "ctrl-o") .. " switch to monorepo-wide search" .. "  " .. base_header,
       },
       actions = {
         ["ctrl-o"] = {
@@ -45,14 +62,7 @@ local function enrich(base, perform_search, opts)
               cwd = opts.monorepo_root,
             }
 
-            -- Things that use no_esc need `search` for that to
-            -- work properly. This API is silly but...
-            if base.no_esc then
-              monorepo_params.search = fzf_lua.get_last_query()
-            else
-              monorepo_params.query = fzf_lua.get_last_query()
-            end
-
+            install_last_query(non_monorepo, monorepo_params)
             perform_search(non_monorepo, monorepo_params)
           end,
           noclose = true,
@@ -115,6 +125,7 @@ function M.by_text(project_dir, sink, opts)
 
   local fzf_lua = require("fzf-lua")
 
+  local source_only_header = fzf_hl("magenta", "ctrl-s") .. " remove test files"
   local base = {
     winopts = {
       title = dirname(project_dir),
@@ -128,7 +139,10 @@ function M.by_text(project_dir, sink, opts)
       -- if we don't disable this highlight group:
       search = false,
     },
-    header = {}, -- Disable the default header; it's very messy
+    header = {
+      -- NOTE: Replace the default header; it's very messy
+      source_only_header,
+    },
     no_esc = true,
     -- I tend not to want regex when using text search (I like using brackets!)
     rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings -- ",
@@ -147,6 +161,33 @@ function M.by_text(project_dir, sink, opts)
   end
 
   base = enrich(base, perform_search, o)
+
+  local source_only_globs = {
+    "!**/tests/**",
+    "!**/test/**",
+    "!test_*",
+  }
+  base.actions["ctrl-s"] = {
+    fn = function()
+      local glob_opts = "--glob '" .. table.concat(source_only_globs, "' --glob '") .. "'"
+      local source_only_params = {
+        header = {
+          vim.fn.substitute(base.header[1], source_only_header, "", ""),
+        },
+        rg_opts = glob_opts .. " " .. base.rg_opts,
+        actions = {
+          -- make this into a no-op
+          ["ctrl-s"] = { fn = function() end },
+        },
+        cwd = project_dir,
+      }
+
+      install_last_query(base, source_only_params)
+      perform_search(base, source_only_params)
+    end,
+    noclose = true,
+    reuse = true,
+  }
 
   perform_search(base, {
     cwd = project_dir,
