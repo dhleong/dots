@@ -90,7 +90,10 @@ function M.in_project(project_dir, sink, opts)
 
     actions = {
       ["default"] = function(selected, local_opts)
-        vim.cmd[sink](local_opts.cwd .. "/" .. selected[1])
+        local entry = selected[1]
+        if entry then
+          vim.cmd[sink](local_opts.cwd .. "/" .. entry)
+        end
       end,
     },
   }
