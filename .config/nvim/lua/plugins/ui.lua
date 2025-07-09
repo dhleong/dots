@@ -45,4 +45,17 @@ return {
       },
     },
   },
+
+  {
+    "snacks.nvim",
+    keys = {
+      {
+        "<leader>dn",
+        function()
+          Snacks.notifier.hide()
+        end,
+        desc = "Dismiss all notifications",
+      },
+    },
+  },
 }
