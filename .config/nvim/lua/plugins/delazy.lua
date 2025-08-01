@@ -99,4 +99,14 @@ return {
   { "nvim-web-devicons", enabled = false },
   { "persistence.nvim", enabled = false },
   { "which-key.nvim", enabled = false },
+
+  {
+    "nvim-lspconfig",
+    opts = function()
+      -- NOTE: This used to live in the lsp plugin init() functions,
+      -- but doing it here seems to catch things like the fzf extras
+      -- more consistently
+      require("plugins.lsp.keymaps").init()
+    end,
+  },
 }

@@ -3,6 +3,9 @@ local function toggle_local_diagnostics()
   vim.cmd.Trouble("diagnostics", "toggle", "filter.buf=" .. bufnr)
 end
 
+-- Remove some default lsp keymaps
+vim.cmd("nnoremap <nowait> gr gr")
+
 return {
   {
     "trouble.nvim",
