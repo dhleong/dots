@@ -1,6 +1,13 @@
 #!/bin/bash
 # A full setup script
 
+brew=brew
+nix_env=nix-env
+if ! which nix-env >/dev/null; then
+    # In case it's not on the path, yet
+    nix_env=$HOME/.nix-profile/bin/nix-env
+fi
+
 is_mac() {
     if [ -z "$OSTYPE" ]; then
         # Definitely not
@@ -21,7 +28,7 @@ ensure_cask() {
         echo " Installed: $dotAppName"
     else
         echo "Installing: $dotAppName (cask $brewName)..."
-        brew install --cask $brewName
+        $brew install --cask $brewName
     fi
 }
 
@@ -43,12 +50,6 @@ ensure_borkdude() {
 has_cli() {
     which $1 >/dev/null
 }
-
-nix_env=nix-env
-if ! which nix-env >/dev/null; then
-    # In case it's not on the path, yet
-    nix_env=$HOME/.nix-profile/bin/nix-env
-fi
 
 has_nix() {
     which $nix_env >/dev/null
@@ -117,6 +118,7 @@ if is_mac; then
     else
         echo "Installing: homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        brew=/opt/homebrew/bin/brew
     fi
 
     # 1pass (needed to authenticate with github)
@@ -197,7 +199,7 @@ elif is_mac; then
     open "$HOME/Library/Fonts/Inconsolata for Powerline.otf"
 
     # Also just use brew to install maple-mono
-    brew tap homebrew/cask-fonts
+    $brew tap homebrew/cask-fonts
     ensure_cask font-maple-mono
 fi
 
@@ -224,7 +226,7 @@ if has_cli gh; then
     echo " Installed: github cli"
 elif is_mac; then
     echo "Installing: github cli..."
-    brew install gh
+    $brew install gh
 elif has_nix; then
     # Prefer nix if we have it; the apt approach below has stopped working on some machines...
     echo "Installing: github cli..."
@@ -256,7 +258,7 @@ if has_cli rg && has_cli fzf; then
     echo " Installed: (various tools)"
 elif is_mac; then
     echo "Installing: (various tools)..."
-    brew install ripgrep fzf zsh-completions
+    $brew install ripgrep fzf zsh-completions
 elif has_nix; then
     echo "Installing: (various tools)..."
     # NOTE: nix-env can't seem to find these for some reason...?

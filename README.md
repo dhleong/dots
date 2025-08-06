@@ -28,7 +28,7 @@ $ doteur update
 ### Full automated setup
 
 ```bash
-sh -c "$(curl -fsSL https://raw.github.com/dhleong/dots/master/.config/dhleong/setup)"
+bash -c "$(curl -fsSL https://raw.github.com/dhleong/dots/master/.config/dhleong/setup)"
 ```
 
 [1]: https://github.com/dhleong/doteur
