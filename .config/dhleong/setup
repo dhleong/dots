@@ -200,7 +200,7 @@ elif is_mac; then
 
     # Also just use brew to install maple-mono
     $brew tap homebrew/cask-fonts
-    ensure_cask font-maple-mono
+    $brew install --cask font-maple-mono
 fi
 
 # iterm2 shell integration
