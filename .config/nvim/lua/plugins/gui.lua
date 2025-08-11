@@ -32,7 +32,7 @@ return {
     init = function()
       vim.o.guifont = table.concat({
         -- NOTE: We can only specify options at the end, it seems. This feels like a neovide bug
-        "Maple Mono",
+        "Maple Mono:h15",
       }, ",")
 
       vim.g.neovide_cursor_animation_length = 0.07
