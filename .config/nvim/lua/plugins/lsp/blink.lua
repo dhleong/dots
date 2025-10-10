@@ -48,7 +48,7 @@ return {
           },
         },
 
-        sources = { "cmdline_history", "lsp", "buffer", "cmdline" },
+        sources = { "cmdline_history", "buffer", "cmdline" },
       },
 
       keymap = {
