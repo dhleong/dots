@@ -27,6 +27,9 @@ return {
   {
     "nvim-lspconfig",
     opts = {
+      folds = {
+        enabled = false,
+      },
       diagnostics = {
         signs = {
           text = {
