@@ -1,6 +1,20 @@
 return {
   {
     "blink.cmp",
+    opts = {
+      sources = {
+        providers = {
+          cmdline_history = {
+            name = "Cmdline History",
+            module = "dhleong.blink.cmdline",
+          },
+        },
+      },
+    },
+  },
+
+  {
+    "blink.cmp",
     optional = true,
     opts = {
       completion = {
@@ -33,6 +47,8 @@ return {
             auto_show = true,
           },
         },
+
+        sources = { "cmdline_history", "lsp", "buffer", "cmdline" },
       },
 
       keymap = {
