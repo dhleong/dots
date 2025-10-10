@@ -21,6 +21,20 @@ return {
         },
       },
 
+      cmdline = {
+        -- enabled = false,
+        completion = {
+          menu = {
+            -- NOTE: Lazy disables auto_show when searching
+            -- (getcmdtype() != ":") but that disables in cmdline
+            -- windows as well, which is no bueno. Actually kind
+            -- of like suggestions in these cases anyway, but if
+            -- I change my mind we can introduce a function here
+            auto_show = true,
+          },
+        },
+      },
+
       keymap = {
         preset = "default",
         ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
