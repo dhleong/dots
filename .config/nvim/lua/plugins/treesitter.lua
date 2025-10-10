@@ -1,5 +1,13 @@
 return {
   {
+    "nvim-treesitter",
+    opts = {
+      folds = {
+        enable = false,
+      },
+    },
+  },
+  {
     "nvim-treesitter/nvim-treesitter-textobjects",
     opts = function(_, opts)
       -- Reconfigure the [c and ]c navigation mappings to use
