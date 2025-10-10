@@ -1,5 +1,4 @@
 local parsers = require "nvim-treesitter.parsers"
-local ts_utils = require "nvim-treesitter.ts_utils"
 
 local function get_node_text(node, buffer)
   if vim.treesitter.get_node_text then
@@ -26,7 +25,7 @@ function M.doc()
     return M.doc_default()
   end
 
-  local node = ts_utils.get_node_at_cursor()
+  local node = vim.treesitter.get_node()
   if not node then
     return M.doc_default()
   end
