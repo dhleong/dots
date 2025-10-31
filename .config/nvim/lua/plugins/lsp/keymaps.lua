@@ -32,9 +32,11 @@ end
 function M.build()
   -- stylua: ignore
   return {
-    { 'K',          vim.lsp.buf.hover },
-    { 'gd',         vim.lsp.buf.definition, has = "definition" },
-    { 'gid',        vim.lsp.buf.implementation },
+    { 'K',   vim.lsp.buf.hover },
+    { 'gd',  vim.lsp.buf.definition, has = "definition" },
+    { 'gid', vim.lsp.buf.implementation },
+    { 'gyd', vim.lsp.buf.type_definition, desc = "Goto T[ype] Definition" },
+    { 'gD',  vim.lsp.buf.declaration, desc = "Goto Declaration" },
 
     { '<c-w>gd',    function() require 'dhleong.nav'.lsp_in_new_tab('definition') end },
     { '<c-w>gid',   function() require 'dhleong.nav'.lsp_in_new_tab('implementation') end },
