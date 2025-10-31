@@ -1,6 +1,20 @@
 return {
   {
     "blink.cmp",
+    opts = {
+      sources = {
+        providers = {
+          cmdline_history = {
+            name = "Cmdline History",
+            module = "dhleong.blink.cmdline",
+          },
+        },
+      },
+    },
+  },
+
+  {
+    "blink.cmp",
     optional = true,
     opts = {
       completion = {
@@ -19,6 +33,22 @@ return {
             },
           },
         },
+      },
+
+      cmdline = {
+        -- enabled = false,
+        completion = {
+          menu = {
+            -- NOTE: Lazy disables auto_show when searching
+            -- (getcmdtype() != ":") but that disables in cmdline
+            -- windows as well, which is no bueno. Actually kind
+            -- of like suggestions in these cases anyway, but if
+            -- I change my mind we can introduce a function here
+            auto_show = true,
+          },
+        },
+
+        sources = { "cmdline_history", "buffer", "cmdline" },
       },
 
       keymap = {

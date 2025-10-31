@@ -27,6 +27,9 @@ return {
   {
     "nvim-lspconfig",
     opts = {
+      folds = {
+        enabled = false,
+      },
       diagnostics = {
         signs = {
           text = {
@@ -37,6 +40,14 @@ return {
         },
       },
     },
+  },
+
+  -- Replace all the default LazyVim keymaps with our own:
+  {
+    "nvim-lspconfig",
+    opts = function(_, opts)
+      opts.servers["*"].keys = require("plugins.lsp.keymaps").build()
+    end,
   },
 
   {

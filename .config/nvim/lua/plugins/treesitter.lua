@@ -1,10 +1,18 @@
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter",
+    opts = {
+      folds = {
+        enable = false,
+      },
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
     opts = function(_, opts)
       -- Reconfigure the [c and ]c navigation mappings to use
       -- [k and ]k instead, to avoid conflicts with our diagnostics maps
-      for _, config in pairs(opts.textobjects.move) do
+      for _, config in pairs(opts.move.keys) do
         if type(config) == "table" then
           config["]k"] = config["]c"]
           config["[k"] = config["[c"]

@@ -13,6 +13,12 @@ require("config.compat")
 -- For now, anyway:
 vim.g.lazyvim_check_order = false
 
+-- NOTE: We need this for now due to some upstream fixes that
+-- haven't landed in a release yet
+-- (specifically: https://github.com/saghen/blink.cmp/pull/2140)
+-- Whenever 1.8.0 is released, we should be able to go back
+vim.g.lazyvim_blink_main = true
+
 require("lazy").setup({
   spec = {
     -- add LazyVim and import (some of!) its plugins
