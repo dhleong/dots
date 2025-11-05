@@ -7,6 +7,9 @@ return {
     opts = {
       servers = {
         lua_ls = {
+          keys = {
+            { "gK", vim.lsp.buf.hover, desc = "LSP hover" },
+          },
           Lua = {
             diagnostics = {
               globals = { "vim" },

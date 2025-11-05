@@ -29,10 +29,19 @@ local function diagnostic_jump(count)
   end
 end
 
+local function show_doc()
+  -- This is a little yuck...
+  if vim.o.filetype == "lua" then
+    require("ft.lua").doc()
+  else
+    vim.lsp.buf.hover()
+  end
+end
+
 function M.build()
   -- stylua: ignore
   return {
-    { 'K',   vim.lsp.buf.hover },
+    { 'K',   show_doc },
     { 'gd',  vim.lsp.buf.definition, has = "definition" },
     { 'gid', vim.lsp.buf.implementation },
     { 'gyd', vim.lsp.buf.type_definition, desc = "Goto T[ype] Definition" },
