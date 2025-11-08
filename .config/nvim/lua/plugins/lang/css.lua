@@ -1,6 +1,6 @@
 return {
   { "ap/vim-css-color", ft = { "css", "tsx" } },
-  { "dhleong/vim-hyperstyle", ft = "css" },
+  { "dhleong/nvim-hyperstyle", ft = "css" },
 
   {
     "neovim/nvim-lspconfig",
