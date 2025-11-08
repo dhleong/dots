@@ -1,9 +1,5 @@
 -- TODO: Add to hearth?
 vim.filetype.add({
-  extension = {
-    -- fnl = "fennel",
-    fnl = "clojure",
-  },
   pattern = {
     -- NOTE: This is a HACK to avoid collision with snacks.nvim's bigfile detection
     ["..*"] = {
@@ -23,6 +19,7 @@ local filetypes = { "clojure", "fennel" }
 return {
   {
     "hrsh7th/nvim-cmp",
+    optional = true,
     opts = {
       skip_on_methods = {
         -- Clojure is a lisp! We don't need to add anything
@@ -43,7 +40,14 @@ return {
     dev = true,
     keys = {
       { "cpt", ":call hearth#test#RunForBuffer()<cr>", ft = filetypes },
-      { "glc", ":call hearth#repl#Connect()<cr>", ft = filetypes },
+      {
+        "glc",
+        function()
+          vim.fn["fireplace#activate"]()
+          vim.fn["hearth#repl#Connect"]()
+        end,
+        ft = filetypes,
+      },
       { "<leader>st", ":call hearth#nav#find#Test()<cr>", ft = filetypes },
       { "<leader>nt", ":call hearth#nav#create#Test()<cr>", ft = filetypes },
     },
