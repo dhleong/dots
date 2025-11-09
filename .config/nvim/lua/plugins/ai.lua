@@ -1,4 +1,4 @@
-local AI_PLUGIN = "codecompanion"
+local AI_PLUGIN = "opencode"
 
 return {
   {
@@ -34,5 +34,10 @@ return {
   {
     import = "plugins.ai.codecompanion",
     enabled = AI_PLUGIN == "codecompanion",
+  },
+
+  {
+    import = "plugins.ai.opencode",
+    enabled = AI_PLUGIN == "opencode",
   },
 }
