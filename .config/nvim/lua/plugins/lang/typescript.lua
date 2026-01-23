@@ -1,13 +1,18 @@
+local extra_max_memory = {
+  maxTsServerMemory = 16184,
+}
+
 local tsserver_settings = {
-  -- NOTE: For whatever reason, these don't seem to be respected...
   javascript = {
     showUnused = false,
     suggestionActions = {
       enabled = false,
     },
+    tsserver = extra_max_memory,
   },
   typescript = {
     showUnused = false,
+    tsserver = extra_max_memory,
   },
 
   -- So for now we ignore specific annoying ones
