@@ -6,7 +6,7 @@ if [ $# -ge 1 ]; then
 fi
 
 function filter_ignored() {
-    rg -v '/(node_modules|cljs-runtime|target\/|nashorn_code_cache|Pods|.expo)'
+    rg -v '/(node_modules|cljs-runtime|target[/]|nashorn_code_cache|Pods|.expo)'
 }
 
 function files_from_git() {
