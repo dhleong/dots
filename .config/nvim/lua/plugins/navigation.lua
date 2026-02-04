@@ -104,6 +104,7 @@ return {
     end,
     opts = {
       "hide",
+      fzf_bin = vim.env.HOME .. "/.local/share/nvim/lazy/fzf/bin/fzf",
       keymap = {
         -- Disable bulitin keybinds
         builtin = { false },
