@@ -1,3 +1,9 @@
+local text_search_globs = {
+  -- NOTE: These live in ~/.config/rg but fzf_lua nixes that. Perhaps
+  -- we could read that file...?
+  "--glob=!**.jsona",
+}
+
 local function fzf_hl(color, text)
   return require("fzf-lua.utils").ansi_codes[color](text)
 end
@@ -31,8 +37,6 @@ local function install_last_query(base, params)
 end
 
 local function enrich(base, perform_search, opts)
-  local fzf_lua = require("fzf-lua")
-
   -- Apply common options:
   base.fzf_opts = {
     ["--layout"] = "default",
@@ -125,6 +129,8 @@ function M.by_text(project_dir, sink, opts)
 
   local fzf_lua = require("fzf-lua")
 
+  local globs = table.concat(text_search_globs, " ")
+
   local source_only_header = fzf_hl("magenta", "ctrl-s") .. " remove test files"
   local base = {
     winopts = {
@@ -145,7 +151,9 @@ function M.by_text(project_dir, sink, opts)
     },
     no_esc = true,
     -- I tend not to want regex when using text search (I like using brackets!)
-    rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings -- ",
+    rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings "
+      .. globs
+      .. " -- ",
     actions = {
       ["default"] = {
         fn = function(output, local_opts)
