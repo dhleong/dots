@@ -1,0 +1,11 @@
+#!/bin/bash
+
+configured_less() {
+    less --tabs=4 -RFX <&0
+}
+
+if which diff-so-fancy >/dev/null 2>/dev/null; then
+    diff-so-fancy <&0 | configured_less
+else
+    configured_less <&0
+fi
