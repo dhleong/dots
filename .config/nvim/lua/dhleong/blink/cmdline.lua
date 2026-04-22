@@ -1,5 +1,20 @@
 local fuzzy = require("blink.cmp.fuzzy")
-local utils = require("blink.cmp.sources.lib.utils")
+
+local function is_command_line(types)
+  -- NOTE: inlined from https://github.com/saghen/blink.cmp/blob/90d14caca4ae557665ab105080c27d5f289a2e30/lua/blink/cmp/sources/cmdline/utils.lua#L28
+  -- to avoid churn if it moves or changes again
+  local mode = vim.api.nvim_get_mode().mode
+  if mode ~= "c" and vim.fn.getcmdwintype() == "" then
+    return false
+  end
+
+  if not types or #types == 0 then
+    return true
+  end
+
+  local cmdtype = mode == "c" and vim.fn.getcmdtype() or vim.fn.getcmdwintype()
+  return vim.tbl_contains(types, cmdtype)
+end
 
 local source = {}
 
@@ -10,7 +25,7 @@ function source.new()
 end
 
 function source:enabled()
-  return vim.bo.ft ~= "vim" and utils.is_command_line({ "@" })
+  return vim.bo.ft ~= "vim" and is_command_line({ "@" })
 end
 
 function source:get_completions(_, callback)
