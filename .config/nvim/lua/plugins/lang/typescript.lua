@@ -49,7 +49,17 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        tsgo = {
+          enabled = true,
+          settings = tsserver_settings,
+
+          -- Don't use tsserver or eslint's formatting
+          on_attach = function(client)
+            client.server_capabilities.documentFormattingProvider = false
+          end,
+        },
         vtsls = {
+          enabled = false,
           settings = tsserver_settings,
 
           -- Don't use tsserver or eslint's formatting

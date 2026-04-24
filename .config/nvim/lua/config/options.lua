@@ -78,7 +78,7 @@ vim.o.undofile = true
 
 vim.g.lazyvim_picker = "fzf"
 
-vim.g.lazyvim_rust_diagnostics = "bacon-ls"
+-- vim.g.lazyvim_rust_diagnostics = "bacon-ls"
 
 -- ======= Misc =============================================
 
