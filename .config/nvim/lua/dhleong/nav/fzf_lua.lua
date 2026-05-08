@@ -1,7 +1,8 @@
-local text_search_globs = {
+local search_globs = {
   -- NOTE: These live in ~/.config/rg but fzf_lua nixes that. Perhaps
   -- we could read that file...?
   "--glob=!**.jsona",
+  "--glob=!i18n/*.json",
 }
 
 local function fzf_hl(color, text)
@@ -87,6 +88,8 @@ function M.in_project(project_dir, sink, opts)
 
   local fzf_lua = require("fzf-lua")
 
+  local globs = table.concat(search_globs, " ")
+
   local base = {
     winopts = {
       width = 0.6,
@@ -102,6 +105,7 @@ function M.in_project(project_dir, sink, opts)
     -- Provide context in the prompt IF in a monorepo
     prompt = o.monorepo_root and make_dirname_prompt(cwd),
 
+    rg_opts = globs,
     actions = {
       ["default"] = function(selected, local_opts)
         local entry = selected[1]
@@ -129,7 +133,7 @@ function M.by_text(project_dir, sink, opts)
 
   local fzf_lua = require("fzf-lua")
 
-  local globs = table.concat(text_search_globs, " ")
+  local globs = table.concat(search_globs, " ")
 
   local source_only_header = fzf_hl("magenta", "ctrl-s") .. " remove test files"
   local base = {
