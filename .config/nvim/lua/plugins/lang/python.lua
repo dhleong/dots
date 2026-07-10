@@ -28,6 +28,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        pyrefly = {},
         pyright = {
           settings = {
             python = {
