@@ -49,12 +49,45 @@ return {
   {
     "snacks.nvim",
     keys = {
+      -- Yes it's a duplicate because I keep forgetting
+      {
+        "<leader>cn",
+        function()
+          Snacks.notifier.hide()
+        end,
+        desc = "Clear all notifications",
+      },
       {
         "<leader>dn",
         function()
           Snacks.notifier.hide()
         end,
         desc = "Dismiss all notifications",
+      },
+    },
+  },
+
+  {
+    "catgoose/nvim-colorizer.lua",
+    event = "BufReadPre",
+    opts = {
+      filetypes = {
+        "*",
+        clojure = {
+          parsers = {
+            hex = {
+              aarrggbb = true,
+            },
+            names = {
+              enable = false,
+              custom = function()
+                return {
+                  [":brown"] = "#875f00",
+                }
+              end,
+            },
+          },
+        },
       },
     },
   },
