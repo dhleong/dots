@@ -1,4 +1,5 @@
 vim.api.nvim_create_user_command("PruneWindowlessBufs", function()
+  ---@diagnostic disable-next-line: assign-type-mismatch
   local bufinfos = vim.fn.getbufinfo({ buflisted = true })
   vim.tbl_map(function(bufinfo)
     if bufinfo.changed == 0 and (not bufinfo.windows or #bufinfo.windows == 0) then
@@ -58,5 +59,14 @@ return {
         desc = "Search in Dash",
       },
     },
+  },
+
+  {
+    "dhleong/nook.nvim",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+    },
+    dev = true,
+    opts = {},
   },
 }
