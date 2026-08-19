@@ -66,6 +66,10 @@ return {
     dependencies = {
       "nvim-neotest/nvim-nio",
     },
+    keys = {
+      { "cql", "cqp<up><cr>", remap = true },
+    },
+    lazy = false,
     dev = true,
     opts = {},
   },
