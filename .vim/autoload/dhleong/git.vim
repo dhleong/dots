@@ -2,13 +2,15 @@ func! s:parentBranchIsh()
     " NOTE: if on the default branch, this may return "some" previous branch
 
     " based on: https://stackoverflow.com/a/17843908
-    let branch = system('git show-branch '
+    let branches = systemlist('git show-branch '
                 \.'| sed "s/].*//" '
                 \.'| grep "\*" '
                 \.'| grep -v "$(git rev-parse --abbrev-ref HEAD)"'
                 \.'| head -n1 '
                 \.'| sed "s/^.*\[//"')
-    return trim(branch)
+    " NOTE: We might get some warnings if there are too many local branches;
+    " this -1 drops all of those
+    return trim(branches[-1])
 endfunc
 
 func! dhleong#git#CurrentBranch()
