@@ -1,16 +1,43 @@
 func! s:parentBranchIsh()
     " NOTE: if on the default branch, this may return "some" previous branch
 
-    " based on: https://stackoverflow.com/a/17843908
-    let branches = systemlist('git show-branch '
-                \.'| sed "s/].*//" '
-                \.'| grep "\*" '
-                \.'| grep -v "$(git rev-parse --abbrev-ref HEAD)"'
-                \.'| head -n1 '
-                \.'| sed "s/^.*\[//"')
-    " NOTE: We might get some warnings if there are too many local branches;
-    " this -1 drops all of those
-    return trim(branches[-1])
+    " NOTE: we deliberately *don't* use `git show-branch` here: it refuses to
+    " look at more than 26 refs and silently drops the rest, and once the
+    " default branch is one of the dropped ones it cheerfully reports some
+    " entirely unrelated branch as the parent.
+    let defaultBranch = dhleong#git#DefaultBranch()
+
+    " %(ahead-behind:HEAD) gives us "<ahead> <behind>" per branch, where
+    " <behind> counts the commits HEAD has that the branch doesn't -- ie
+    " exactly the distance from our fork point to HEAD. Nearest fork point
+    " wins. Anything that *contains* HEAD (our own branch, or a branch stacked
+    " on top of us) has <behind> == 0, so it drops out without a special case.
+    let nearest = ''
+    let nearestDistance = -1
+    for line in systemlist('git for-each-ref refs/heads '
+                \.'--format="%(ahead-behind:HEAD) %(refname:short)" 2>/dev/null')
+        let parts = split(trim(line))
+        if len(parts) < 3
+            continue
+        endif
+
+        let distance = str2nr(parts[1])
+        let branch = parts[2]
+        if distance <= 0
+            " this branch contains HEAD, so it can't be our parent
+            continue
+        endif
+
+        " on a tie prefer the default branch, so that eg a stale branch parked
+        " on the same commit doesn't win
+        if nearestDistance < 0 || distance < nearestDistance
+                    \ || (distance == nearestDistance && branch ==# defaultBranch)
+            let nearestDistance = distance
+            let nearest = branch
+        endif
+    endfor
+
+    return nearest
 endfunc
 
 func! dhleong#git#CurrentBranch()
@@ -40,7 +67,7 @@ func! dhleong#git#ParentBranch()
     endif
 
     let rawParent = s:parentBranchIsh()
-    if rawParent == defaultBranch
+    if rawParent ==# '' || rawParent ==# defaultBranch
         return ''
     endif
 
