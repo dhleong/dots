@@ -1,4 +1,6 @@
-(ns init)
+(ns init
+  (:require
+   [saya.core :as saya]))
 
 #_{:clojure-lsp/ignore [:clojure-lsp/unused-public-var]}
 (def nav-maps
@@ -12,6 +14,10 @@
    ["<" #send "se"]
    ["M" #send "sw"]
 
-   ["P" #send "up"]
    ^{:modes "n"}
-   ["p" #send "down"]])
+   ["gk" #send "up"]
+   ^{:modes "n"}
+   ["gj" #send "down"]])
+
+(saya/config
+ :clipboard :unnamedplus)
