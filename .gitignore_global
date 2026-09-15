@@ -55,3 +55,5 @@ AmplifyShaderEditor.meta
 # gradle task name cache for zsh plugin
 .gradletasknamecache
 
+# In general we want to ignore jars, but gradle-wrapper.jar is cool
+!gradle-wrapper.jar
