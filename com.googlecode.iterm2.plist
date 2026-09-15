@@ -19,19 +19,46 @@ The script should do this: \(ai.prompt)</string>
 	<key>AITermAPI</key>
 	<integer>2</integer>
 	<key>AIVectorStore</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>AiMaxTokens</key>
-	<integer>1000000</integer>
+	<integer>1050000</integer>
 	<key>AiModel</key>
-	<string>gpt-4.1</string>
+	<string>gpt-5.5</string>
 	<key>AiResponseMaxTokens</key>
-	<integer>32768</integer>
+	<integer>128000</integer>
 	<key>AitermURL</key>
 	<string>https://api.openai.com/v1/responses</string>
 	<key>AllowClipboardAccess</key>
 	<true/>
 	<key>BracketedPasteMode</key>
 	<true/>
+	<key>CodeReviewSavedPrompts</key>
+	<data>
+	W3sibmFtZSI6IkRlZmF1bHQiLCJ0ZXh0IjoiUmV2aWV3IHRoZSBwZW5kaW5nIGNoYW5n
+	ZXMgaW4gdGhpcyByZXBvLiBGbGFnIGlzc3VlcyBhIGNhcmVmdWwgbWFpbnRhaW5lciB3
+	b3VsZCBibG9jayBvbiBiZWZvcmUgbWVyZ2UsIGluIHJvdWdobHkgdGhpcyBvcmRlcjpc
+	biAgMS4gQ29ycmVjdG5lc3Mg4oCUIGxvZ2ljIGVycm9ycywgYnJva2VuIGludmFyaWFu
+	dHMsIG1pc3NlZCBlZGdlIGNhc2VzLCBvZmYtYnktb25lLCByYWNlcywgbGlmZXRpbWVc
+	L21lbW9yeSBidWdzLCBlcnJvciBwYXRocyB0aGF0IHN3YWxsb3cgZmFpbHVyZXMuXG4g
+	IDIuIFNlY3VyaXR5IOKAlCBpbmplY3Rpb24sIGF1dGhuXC9hdXRoeiBtaXN0YWtlcywg
+	c2VjcmV0IGhhbmRsaW5nLCB1bnNhZmUgZGVzZXJpYWxpemF0aW9uLCB1bnNhZmUgZGVm
+	YXVsdHMsIFRPQ1RPVS5cbiAgMy4gUmVsaWFiaWxpdHkgJiBwZXJmb3JtYW5jZSDigJQg
+	YmxvY2tpbmcgdGhlIHdyb25nIHRocmVhZCwgdW5ib3VuZGVkIHJlc291cmNlIHVzZSwg
+	YWNjaWRlbnRhbCBPKE7CsiksIHJldHJpZXMgd2l0aG91dCBiYWNrb2ZmLCBzaWxlbnQg
+	ZmFpbHVyZSBwYXRocy5cbiAgNC4gQ29udHJhY3QgcmlzayDigJQgYmVoYXZpb3IgY2hh
+	bmdlcyBjYWxsZXJzIHJlbHkgb24sIHNpbGVudGx5IGNoYW5nZWQgZGVmYXVsdHMsIGJy
+	b2tlbiBiYWNrd2FyZCBjb21wYXRpYmlsaXR5LCBtaXNzaW5nIG1pZ3JhdGlvbnMuXG5c
+	bkZvciBlYWNoIGZpbmRpbmcgY2l0ZSBgZmlsZTpsaW5lYCwgZXhwbGFpbiAqd2h5KiBp
+	dCBpcyB3cm9uZyAobm90IHdoYXQgdGhlIGNvZGUgZG9lcyksIGFuZCBwcm9wb3NlIGEg
+	Y29uY3JldGUgZml4IHdoZW4gb25lIGlzIG9idmlvdXMuIEJlIGNhbGlicmF0ZWQ6IGlm
+	IGEgZmluZGluZyBpcyBub3QgaGlnaC1jb25maWRlbmNlLCBzYXkgc28gb3Igc2tpcCBp
+	dC4gVmVyaWZ5IGNsYWltcyBhZ2FpbnN0IHRoZSBhY3R1YWwgY29kZSByYXRoZXIgdGhh
+	biBpbmZlcnJpbmcgZnJvbSBuYW1lcy5cblxuU2tpcCBwdXJlIHN0eWxlLCBmb3JtYXR0
+	aW5nLCBuYW1pbmcsIGFuZCBhbnl0aGluZyBhIGxpbnRlciBvciBDSSBhbHJlYWR5IGVu
+	Zm9yY2VzLlxuXG5JZiB5b3UgZmluZCBub3RoaW5nIHdvcnRoIGZpeGluZywgc2F5IHNv
+	IHBsYWlubHkuIiwidXVpZCI6IjgxN0MzQUJGLTYwRUEtNDg2Ri1BN0FGLURERjAzQ0M4
+	NEUwMCJ9XQ==
+	</data>
 	<key>ConvertDosNewlines</key>
 	<true/>
 	<key>Custom Color Presets</key>
@@ -1556,6 +1583,7 @@ Marks and Annotations.Next Mark</string>
 				<string>&amp;coder</string>
 				<string>/home/discord/*&amp;ssh</string>
 				<string>&amp;nvim</string>
+				<string>&amp;ssh</string>
 			</array>
 			<key>Character Encoding</key>
 			<integer>4</integer>
@@ -1907,10 +1935,45 @@ Marks and Annotations.Next Mark</string>
 	<integer>5</integer>
 	<key>TabViewType</key>
 	<integer>1</integer>
+	<key>TmuxUsesDedicatedProfile</key>
+	<false/>
 	<key>UseBorder</key>
+	<false/>
+	<key>UseTmuxStatusBar</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
+	<key>Workgroups</key>
+	<data>
+	W3sibmFtZSI6IkNsYXVkZSBDb2RlIiwidW5pcXVlSWRlbnRpZmllciI6ImJ1aWx0aW4u
+	Y2xhdWRlQ29kZSIsInNlc3Npb25zIjpbeyJtb2RlIjoicmVndWxhciIsInRvb2xiYXJJ
+	dGVtcyI6W3sia2luZCI6Im1vZGVTd2l0Y2hlciJ9LHsia2luZCI6ImdpdFN0YXR1cyJ9
+	LHsia2luZCI6ImF1dG9SZXF1ZXN0UmV2aWV3V2hlbklkbGUifV0sInVybFN0cmluZyI6
+	IiIsInBlckZpbGVDb21tYW5kIjoiIiwidW5pcXVlSWRlbnRpZmllciI6ImJ1aWx0aW4u
+	Y2xhdWRlQ29kZS5tYWluIiwia2luZCI6eyJraW5kIjoicm9vdCJ9LCJjb21tYW5kIjoi
+	IiwiZGlzcGxheU5hbWUiOiJDaGF0In0seyJtb2RlIjoiZGlmZiIsInRvb2xiYXJJdGVt
+	cyI6W3sia2luZCI6Im1vZGVTd2l0Y2hlciJ9LHsia2luZCI6ImNoYW5nZWRGaWxlU2Vs
+	ZWN0b3IifSx7ImtpbmQiOiJnaXRCYXNlU2VsZWN0b3IifSx7ImZvcndhcmRTaG9ydGN1
+	dCI6eyJzZXJpYWxpemVkIjoiMHhmNzAzLTB4MzQwMDAwLTB4N2MifSwicmVsb2FkU2hv
+	cnRjdXQiOnsic2VyaWFsaXplZCI6IjB4NzItMHgxMDAwMDAtMHhmIn0sImtpbmQiOiJu
+	YXZpZ2F0aW9uIiwiYmFja1Nob3J0Y3V0Ijp7InNlcmlhbGl6ZWQiOiIweGY3MDItMHgz
+	NDAwMDAtMHg3YiJ9fV0sInVybFN0cmluZyI6IiIsInBhcmVudElEIjoiYnVpbHRpbi5j
+	bGF1ZGVDb2RlLm1haW4iLCJwZXJGaWxlQ29tbWFuZCI6ImdpdCBkaWZmdG9vbCAteSAt
+	eCB2aW1kaWZmIFxcKGdpdEJhc2UpIC0tIFxcKGZpbGUpIiwidW5pcXVlSWRlbnRpZmll
+	ciI6ImJ1aWx0aW4uY2xhdWRlQ29kZS5kaWZmIiwia2luZCI6eyJraW5kIjoicGVlciJ9
+	LCJjb21tYW5kIjoiZ2l0IGRpZmZ0b29sIC15IC14IHZpbWRpZmYgXFwoZ2l0QmFzZSki
+	LCJkaXNwbGF5TmFtZSI6IkRpZmYifSx7Im1vZGUiOiJjb2RlUmV2aWV3IiwidG9vbGJh
+	ckl0ZW1zIjpbeyJraW5kIjoibW9kZVN3aXRjaGVyIn0seyJzaG9ydGN1dCI6eyJzZXJp
+	YWxpemVkIjoiMHg3Mi0weDEwMDAwMC0weGYifSwia2luZCI6InJlbG9hZCJ9LHsia2lu
+	ZCI6ImF1dG9TZW5kQ2xpcHBpbmdzV2hlbklkbGUifV0sInVybFN0cmluZyI6IiIsInBh
+	cmVudElEIjoiYnVpbHRpbi5jbGF1ZGVDb2RlLm1haW4iLCJwZXJGaWxlQ29tbWFuZCI6
+	IiIsInVuaXF1ZUlkZW50aWZpZXIiOiJidWlsdGluLmNsYXVkZUNvZGUucmV2aWV3Iiwi
+	a2luZCI6eyJraW5kIjoicGVlciJ9LCJjb21tYW5kIjoiY2xhdWRlIFxcKGNvZGVSZXZp
+	ZXdQcm9tcHQpIC0tYXBwZW5kLXN5c3RlbS1wcm9tcHQtZmlsZSAnXFwoY29kZVJldmll
+	d1N5c3RlbVByb21wdEZpbGUpJyAtLXNldHRpbmdzICdcXChpdGVybTIuYXBwQnVuZGxl
+	UGF0aClcL0NvbnRlbnRzXC9SZXNvdXJjZXNcL2NvZGUtcmV2aWV3LXNldHRpbmdzLnR4
+	dCciLCJkaXNwbGF5TmFtZSI6IkNvZGUgUmV2aWV3In1dfV0=
+	</data>
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewPreferredModeKey</key>
