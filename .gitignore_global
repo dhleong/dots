@@ -57,3 +57,6 @@ AmplifyShaderEditor.meta
 
 # In general we want to ignore jars, but gradle-wrapper.jar is cool
 !gradle-wrapper.jar
+
+# We've configured rust-analyzer to use this dir for its builds; always ignore it
+.target-rust-analyzer
