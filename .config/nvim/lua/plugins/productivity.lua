@@ -9,6 +9,10 @@ vim.api.nvim_create_user_command("PruneWindowlessBufs", function()
   end, bufinfos)
 end, { desc = "Wipeout all buffers not shown in a window" })
 
+vim.api.nvim_create_user_command("Tabor", function()
+  vim.cmd(":.+1,$tabdo :tabc")
+end, { desc = "Close tabs to the right of the current" })
+
 local otsukare_dir = "~/work/otsukare"
 return {
   {
@@ -72,5 +76,10 @@ return {
     lazy = false,
     dev = true,
     opts = {},
+  },
+
+  {
+    "dhleong/kodachi",
+    dev = true,
   },
 }
