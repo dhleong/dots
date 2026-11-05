@@ -160,6 +160,36 @@ tnoremap("<C-L>", "<C-\\><C-N><C-W><C-L>")
 tnoremap("<C-J>", "<C-\\><C-N><C-W><C-J>")
 tnoremap("<C-K>", "<C-\\><C-N><C-W><C-K>")
 
+-- Shift-Enter for tmux running in a terminal (e.g. pi under plexr): nvim's
+-- terminal only encodes <S-CR> for apps that turn on the kitty keyboard
+-- protocol, which tmux never asks for, so tmux would get a plain <CR>. Send
+-- it as CSI u instead, which tmux reads as Shift-Enter. Other apps get <S-CR>
+-- as before.
+local function has_tmux(pid, depth)
+  local proc = vim.api.nvim_get_proc(pid)
+  if proc and proc.name == "tmux" then
+    return true
+  end
+  if depth >= 8 then
+    return false
+  end
+  for _, child in ipairs(vim.api.nvim_get_proc_children(pid)) do
+    if has_tmux(child, depth + 1) then
+      return true
+    end
+  end
+  return false
+end
+
+vim.keymap.set("t", "<S-CR>", function()
+  local pid = vim.b.terminal_job_pid
+  if pid and has_tmux(pid, 0) then
+    vim.api.nvim_chan_send(vim.bo.channel, "\27[13;2u")
+  else
+    vim.api.nvim_feedkeys(vim.keycode("<S-CR>"), "n", false)
+  end
+end, { silent = true, desc = "Shift-Enter that reaches tmux" })
+
 if vim.fn.has("gui_running") == 0 then
   -- Saving files with <cmd-s> in CLI mode (with help from iterm2)
   -- Configure a key map to "Send text with 'vim' Special Chars" as <F-20>
