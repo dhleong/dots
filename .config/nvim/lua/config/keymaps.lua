@@ -213,6 +213,11 @@ if vim.fn.has("gui_running") == 0 then
   inoremap("<F-25>", "<nop>")
   nnoremap("<F-25>", "<nop>")
   tnoremap("<F-25>", "<c-l>")
+
+  -- Compat for inserting emdash in various term modes that send
+  -- unusual things:
+  inoremap("<M-_>", "—")
+  inoremap("<M-S-_>", "—")
 end
 
 -- ======= Other commands ==================================
