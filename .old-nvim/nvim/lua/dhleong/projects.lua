@@ -86,8 +86,11 @@ local function choose_project_path(proj_dir, proj_name, file_in_dir)
       -- NOTE: file_in_dir will start with / so we start @2 to join cleanly
       -- with proj_dir which will also end with /
       -- The -1 is to account for this initial +1 offset since sub takes a length
-      local dir = proj_dir .. file_in_dir:sub(2, worktree_end - 1)
-      return dir
+      if worktree_end then
+        return proj_dir .. file_in_dir:sub(2, worktree_end - 1)
+      end
+      -- At the root of the worktree
+      return proj_dir .. file_in_dir:sub(2)
     end
   end
   return proj_dir .. proj_name
